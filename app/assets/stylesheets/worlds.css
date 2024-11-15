@@ -1,0 +1,32 @@
+/* Button group styles */
+.btn-group {
+    display: flex;
+    gap: 10px;  /* Space between buttons */
+}
+
+.btn-active {
+  background-color: #007bff; /* Change this to your desired highlight color */
+  color: white;
+}
+
+/* Button styles */
+.btn-option {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+/* Active button style */
+.btn-option.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* Hover effect */
+.btn-option:hover {
+    background-color: #e7e7e7;
+}
