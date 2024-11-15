@@ -1,0 +1,42 @@
+<h1>Welcome Back <%= @current_user.name %>!</h1>
+<h2>Pick an Adventure to Continue</h2>
+
+<% if @user_worlds.present? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th hidden>World Name</th>
+        <th hidden>Play World</th>
+        <th hidden>Delete World</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @user_worlds.each do |user_world| %>
+      <% world = World.find_by(id: user_world.world_id) %>
+        <tr>
+          <td><%= world[:world_name] %></td>
+          <td>
+            <%= form_with url: landing_path, method: :get, local: true do |form| %>
+              <%= form.submit 'Play', class: 'btn btn-primary' %>
+            <% end %><td>
+            <td>
+            <%= button_to 'Delete', world_path(id: user_world.id), method: :delete, data: { confirm: 'Are you sure you want to delete this world?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Welcome to your worlds!</p>
+<% end %>
+
+<h2>Start a New Adventure</h2>
+<% if @user_worlds.length < 3 %>
+  <%= form_with url: character_path, method: :get, local: true do |form| %>
+      <%= form.submit '+', class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+
+<%= form_with url: logout_path, method: :delete, model: @user, local: true do |form| %>
+  <%= form.submit 'Logout', class: 'btn btn-primary' %>
+<% end %>

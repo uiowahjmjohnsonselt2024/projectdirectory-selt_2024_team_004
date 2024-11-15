@@ -1,0 +1,84 @@
+<h1>Select Your Swashbuckler</h1>
+<!-- landing_path-->
+<%= form_with url: create_world_path, local: true, method: :post do |form| %>
+  <div>
+    <div class="btn-group" role="group">
+      <%= button_tag "Male", type: "button", class: "btn btn-option", id: "male", data: { group: "gender", value: 1 } %>
+      <%= button_tag "Female", type: "button", class: "btn btn-option", id: "female", data: { group: "gender", value: 2 } %>
+    </div>
+    <div class="btn-group" role="group">
+      <%= button_tag "Option 1", type: "button", class: "btn btn-option", id: "preload1", data: { group: "preload", value: 1 } %>
+      <%= button_tag "Option 2", type: "button", class: "btn btn-option", id: "preload2", data: { group: "preload", value: 2 } %>
+      <%= button_tag "Option 3", type: "button", class: "btn btn-option", id: "preload3", data: { group: "preload", value: 3 } %>
+    </div>
+    <div class="btn-group" role="group">
+      <%= button_tag "Captain", type: "button", class: "btn btn-option", id: "captain", data: { group: "role", value: 1 } %>
+      <%= button_tag "Doctor", type: "button", class: "btn btn-option", id: "doctor", data: { group: "role", value: 2 } %>
+      <%= button_tag "Navigator", type: "button", class: "btn btn-option", id: "navigator", data: { group: "role", value: 3 } %>
+    </div>
+  </div>
+  
+  <!-- Hidden fields to store the selections -->
+  <%= form.hidden_field :gender, id: "gender_selection" %>
+  <%= form.hidden_field :preload, id: "preload_selection" %>
+  <%= form.hidden_field :role, id: "role_selection" %>
+  
+  <div>
+    Description
+  </div>
+  
+  <%= form.submit "Time to Set Sail!", class: "btn btn-primary" %>
+<% end %>
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const buttons = document.querySelectorAll(".btn-option");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", function(event) {
+      event.preventDefault(); // Prevents navigation
+
+      const group = this.getAttribute("data-group");
+      const value = this.getAttribute("data-value");
+
+      // Set the hidden field based on the group
+      if (group === "gender") {
+        document.getElementById("gender_selection").value = value;
+      } else if (group === "preload") {
+        document.getElementById("preload_selection").value = value;
+      } else if (group === "role") {
+        document.getElementById("role_selection").value = value;
+      }
+
+      // Remove active class from all buttons in the same group
+      document.querySelectorAll(`.btn-option[data-group="${group}"]`).forEach(btn => btn.classList.remove("btn-active"));
+
+      // Add active class to the clicked button
+      this.classList.add("btn-active");
+    });
+  });
+});
+</script>
+
+<style>
+  .btn-active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+.btn-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-option {
+  padding: 10px 20px;
+  min-width: 100px; /* Ensures all buttons are at least 100px wide */
+  text-align: center; /* Centers text within the button */
+}
+
+
+</style>

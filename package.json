@@ -1,0 +1,23 @@
+{
+  "name": "temp_project",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0-alpha",
+    "@rails/activestorage": "^6.0.0-alpha",
+    "@rails/ujs": "^6.0.0-alpha",
+    "@rails/webpacker": "5.4.4",
+    "turbolinks": "^5.2.0",
+    "webpack": "5.96.1",
+    "webpack-cli": "5.1.4"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+  "babel-loader": "^8.3.0",
+  "@babel/core": "^7.20.0",
+  "@babel/preset-env": "^7.20.0"
+},
+  "engines": {
+    "node": "16.x",
+    "yarn": "1.22.22"
+  }
+}
