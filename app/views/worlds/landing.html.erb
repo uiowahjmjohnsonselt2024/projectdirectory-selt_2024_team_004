@@ -1,0 +1,78 @@
+<div class="container">
+  <h1 class="title">Pretty Pirates</h1>
+
+  <div class="grid">
+    <% (1..36).each do |i| %>
+      <div class="grid-item">Tile <%= i %></div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Button in the lower left -->
+<div class="footer">
+  <%= link_to 'Exit World', worlds_path, class: 'btn btn-primary' %>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center horizontally */
+        justify-content: center; /* Center vertically */
+        height: 100vh;
+    }
+
+    .container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr); /* 3 columns */
+        gap: 20px; /* Space between grid items */
+        justify-items: center; /* Center grid items horizontally */
+        align-items: center; /* Center grid items vertically */
+    }
+
+    .grid-item {
+        width: 100px;
+        height: 100px;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .footer {
+        position: absolute; /* Stick the footer to the bottom */
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .footer .btn {
+        text-decoration: none;
+        color: white;
+        background-color: #007bff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .footer .btn:hover {
+        background-color: #0056b3;
+    }
+</style>

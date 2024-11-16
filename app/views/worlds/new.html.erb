@@ -1,0 +1,71 @@
+<div class="character-selection-container">
+  <h1 class="character-selection-title">Select Your Swashbuckler</h1>
+
+  <%= stylesheet_link_tag 'roles', media: 'all', 'data-turbo-track': 'reload' %>
+  
+  <%= form_with url: create_world_path, local: true, method: :post, class: "character-selection-form" do |form| %>
+    <div class="btn-group-container">
+      <div class="btn-group gender-group" role="group">
+        <%= button_tag "Male", type: "button", class: "btn btn-option gender-btn", id: "male", data: { group: "gender", value: 1 } %>
+        <%= button_tag "Female", type: "button", class: "btn btn-option gender-btn", id: "female", data: { group: "gender", value: 2 } %>
+      </div>
+      
+      <div class="btn-group preload-group" role="group">
+        <%= button_tag "Red", type: "button", class: "btn btn-option preload-btn", id: "preload1", data: { group: "preload", value: 1 } %>
+        <%= button_tag "Purple", type: "button", class: "btn btn-option preload-btn", id: "preload2", data: { group: "preload", value: 2 } %>
+        <%= button_tag "Green", type: "button", class: "btn btn-option preload-btn", id: "preload3", data: { group: "preload", value: 3 } %>
+      </div>
+      
+      <div class="btn-group role-group" role="group">
+        <%= button_tag "Captain", type: "button", class: "btn btn-option role-btn", id: "captain", data: { group: "role", value: 1 } %>
+        <%= button_tag "Doctor", type: "button", class: "btn btn-option role-btn", id: "doctor", data: { group: "role", value: 2 } %>
+        <%= button_tag "Navigator", type: "button", class: "btn btn-option role-btn", id: "navigator", data: { group: "role", value: 3 } %>
+      </div>
+    </div>
+    
+    <div class="description-container">
+    <!-- <p class="description-text">Description</p> -->
+    </div>
+    
+    <!-- Hidden fields to store the selections -->
+    <%= form.hidden_field :gender, id: "gender_selection" %>
+    <%= form.hidden_field :preload, id: "preload_selection" %>
+    <%= form.hidden_field :role, id: "role_selection" %>
+    
+    <div class="submit-btn-container">
+      <%= form.submit "Time to Set Sail!", class: "btn btn-primary submit-btn" %>
+    </div>
+  <% end %>
+</div>
+
+<script> 
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".btn-option");
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevents navigation
+
+      const group = this.getAttribute("data-group");
+      const value = this.getAttribute("data-value");
+
+      // Set the hidden field based on the group
+      if (group === "gender") {
+        document.getElementById("gender_selection").value = value;
+      } else if (group === "preload") {
+        document.getElementById("preload_selection").value = value;
+      } else if (group === "role") {
+        document.getElementById("role_selection").value = value;
+      }
+
+      // Remove active class from all buttons in the same group
+      document
+        .querySelectorAll(`.btn-option[data-group="${group}"]`)
+        .forEach((btn) => btn.classList.remove("btn-active"));
+
+      // Add active class to the clicked button
+      this.classList.add("btn-active");
+    });
+  });
+});
+</script>
