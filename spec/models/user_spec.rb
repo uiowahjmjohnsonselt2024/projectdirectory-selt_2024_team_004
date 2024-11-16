@@ -17,7 +17,7 @@ RSpec.describe User, type: :model do
       let(:valid_user) do
         user = User.new
         user.name = 'John Doe'
-        user.email = 'john.doe@example.com'
+        user.email = 'John.Doe@example.com'
         user.password = 'StrongPassword#123'
         user.password_confirmation = 'StrongPassword#123'
         user
@@ -41,6 +41,20 @@ RSpec.describe User, type: :model do
       it 'should be invalid is password confirmation does not match' do
         valid_user.password_confirmation = 'differentPassword'
         expect(valid_user).not_to be_valid
+      end
+
+      # Test before_save to ensure email is downcase and session token is created
+      context 'when the user is saved' do
+        before do
+          valid_user.save
+        end
+
+        it 'should downcase the email before saving' do
+          expect(valid_user.email).to eq('john.doe@example.com')
+        end
+        it 'should create a session token before saving' do
+          expect(valid_user.session_token).not_to be_nil
+        end
       end
     end
   end
