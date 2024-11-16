@@ -1,4 +1,4 @@
 {
-  "heroku_url": "https://frozen-garden-67482-ba65f3da42b8.herokuapp.com/",
+  "heroku_url": "https://frozen-garden-67482-ba65f3da42b8.herokuapp.com",
   "instructions": "Change the string associated with heroku_url to your heroku application url to be graded."
 }
