@@ -68,6 +68,14 @@ RSpec.describe User, type: :model do
 
         expect(valid_user.worlds).to include(world1, world2)
       end
+
+      # Test has_secure_password
+      it 'authenticates with a valid password' do
+        expect(valid_user.authenticate('StrongPassword#123')).to eq(valid_user)
+      end
+      it 'does not authenticate an invalid password' do
+        expect(valid_user.authenticate('wrongPassword')).to eq(false)
+      end
     end
   end
 end
