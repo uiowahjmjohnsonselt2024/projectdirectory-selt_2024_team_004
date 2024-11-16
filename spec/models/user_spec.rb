@@ -56,6 +56,18 @@ RSpec.describe User, type: :model do
           expect(valid_user.session_token).not_to be_nil
         end
       end
+
+      # Test has many relationships and through
+      it 'should be able to have many worlds through user worlds' do
+        world1 = World.create
+        world2 = World.create
+
+        # Create the associations through user_worlds
+        user_world1 = UserWorld.create(user: valid_user, world: world1)
+        user_world2 = UserWorld.create(user: valid_user, world: world2)
+
+        expect(valid_user.worlds).to include(world1, world2)
+      end
     end
   end
 end
