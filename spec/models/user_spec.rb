@@ -30,6 +30,18 @@ RSpec.describe User, type: :model do
                         long to exceed the maximum length and make the instance variable name invalid."
         expect(valid_user).not_to be_valid
       end
+      it 'should be invalid if email does not match regex' do
+        valid_user.email = 'not a valid email'
+        expect(valid_user).not_to be_valid
+      end
+      it 'should be invalid if password is too short' do
+        valid_user.password = 'a'
+        expect(valid_user).not_to be_valid
+      end
+      it 'should be invalid is password confirmation does not match' do
+        valid_user.password_confirmation = 'differentPassword'
+        expect(valid_user).not_to be_valid
+      end
     end
   end
 end
