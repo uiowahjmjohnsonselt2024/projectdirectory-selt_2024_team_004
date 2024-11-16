@@ -9,7 +9,7 @@ class WorldsController < ApplicationController
     #@worlds parameter will be a list of all the world keys the current user has
     puts params
     puts @current_user.name
-    if @current_user 
+    if @current_user
       @user_worlds = @current_user.user_worlds
     else
       flash[:alert] = "Please log in to view your worlds."
@@ -23,7 +23,6 @@ class WorldsController < ApplicationController
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-    # @current_user.user_worlds.create!(@user_world)
       flash[:notice] = "World created successfully!"
       redirect_to worlds_path
     end
