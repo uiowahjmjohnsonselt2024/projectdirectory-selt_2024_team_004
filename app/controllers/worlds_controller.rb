@@ -3,7 +3,6 @@ class WorldsController < ApplicationController
   def new
     # Renders the character form
     @world_id = params[:world_id]
-    redirect_to new_world_path
   end
 
   def index

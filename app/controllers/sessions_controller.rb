@@ -8,10 +8,8 @@ class SessionsController < ApplicationController
       session[:session_token] = user.session_token
       @current_user = user
       redirect_to worlds_url, notice: "Logged in successfully!"
-      puts "heyyy"
     else
       flash.now[:warning] = "Invalid email or password"
-      puts "nOOOO"
       render 'new'
     end
   end

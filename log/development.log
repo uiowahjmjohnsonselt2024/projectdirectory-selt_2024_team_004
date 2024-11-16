@@ -9274,3 +9274,38 @@ Processing by WorldsController#index as HTML
 Completed 200 OK in 3ms (Views: 1.9ms | ActiveRecord: 0.2ms | Allocations: 3582)
 
 
+Started GET "/landing?commit=Play" for 127.0.0.1 at 2024-11-15 21:12:34 -0600
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "qrn9t0vz5DPslWSZXJxRng"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.9ms | Allocations: 521)
+Completed 200 OK in 14ms (Views: 3.7ms | ActiveRecord: 0.5ms | Allocations: 12762)
+
+
+Started GET "/world" for 127.0.0.1 at 2024-11-15 21:12:44 -0600
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "qrn9t0vz5DPslWSZXJxRng"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.4ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:4
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:15
+  Rendered worlds/index.html.erb (Duration: 36.6ms | Allocations: 13629)
+Completed 200 OK in 62ms (Views: 35.5ms | ActiveRecord: 2.8ms | Allocations: 17758)
+
+
+Started GET "/new_world?commit=%2B" for 127.0.0.1 at 2024-11-15 21:12:47 -0600
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "qrn9t0vz5DPslWSZXJxRng"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.9ms | Allocations: 3213)
+Completed 200 OK in 14ms (Views: 6.6ms | ActiveRecord: 0.2ms | Allocations: 4516)
+
+
