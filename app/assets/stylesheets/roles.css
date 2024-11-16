@@ -1,0 +1,99 @@
+.character-selection-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .character-selection-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Button Groups */
+  .btn-group-container {
+    margin-bottom: 20px;
+  }
+  
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .gender-group .btn-option {
+    background-color: #f0f8ff;
+  }
+  
+  .preload-group .btn-option {
+    background-color: #fff7e6;
+  }
+  
+  .role-group .btn-option {
+    background-color: #e6fff7;
+  }
+  
+  /* Button Styles */
+  .btn-option {
+    padding: 10px 15px;
+    min-width: 100px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn-option:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+  }
+  
+  .btn-active {
+    background-color: #0056b3; /* A slightly darker blue for contrast */
+    color: black; /* Keep text white */
+    border-color: #004085; /* Darker blue for border */
+    font-weight: bold; /* Make the text slightly bolder for better readability */
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3); /* Add a subtle shadow to make white text stand out */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Optional: Add a slight shadow for a 3D effect */
+  }  
+  
+  /* Description Text */
+  .description-container {
+    margin: 20px 0;
+  }
+  
+  .description-text {
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  /* Submit Button */
+  .submit-btn-container {
+    margin-top: 20px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+  

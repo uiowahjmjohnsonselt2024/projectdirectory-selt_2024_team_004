@@ -16,7 +16,7 @@
   "@babel/core": "^7.20.0",
   "@babel/preset-env": "^7.20.0"
 },
-  "engines": {
+"engines": {
     "node": ">=16.x <=20.x",
     "yarn": "1.22.22"
   }
