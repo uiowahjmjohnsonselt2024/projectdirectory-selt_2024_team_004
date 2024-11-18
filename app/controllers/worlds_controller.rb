@@ -65,4 +65,11 @@ class WorldsController < ApplicationController
 
     redirect_to some_other_path, notice: "Your adventure begins!"
   end
+
+  def api_call
+    client = OpenAI::Client.new(
+      access_token: "access_token_goes_here",
+      log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
+    )
+  end
 end
