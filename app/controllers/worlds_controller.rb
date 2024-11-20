@@ -45,7 +45,6 @@ class WorldsController < ApplicationController
     redirect_to worlds_path
   end
 
-  #Might be able to combined these three
   def user_roles
     @gender = params[:gender]
     @preload = params[:preload]
@@ -53,7 +52,9 @@ class WorldsController < ApplicationController
     
     if @gender && @preload && @role
       @image_key = "#{@gender}_#{@preload}_#{@role}"
-      @image_path = "images/#{@image_key}.jpg"
+      @image_path = "/assets/images/#{@image_key}.png"
+    else
+      @image_path = "/assets/images/1_1_1.png"
     end
   end
 

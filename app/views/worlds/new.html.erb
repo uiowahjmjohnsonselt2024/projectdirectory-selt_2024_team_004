@@ -22,7 +22,7 @@
         <%= button_tag "Navigator", type: "button", class: "btn btn-option role-btn", id: "navigator", data: { group: "role", value: 3 } %>
       </div>
     </div>
-    
+
     <div class="description-container">
     <!-- <p class="description-text">Description</p> -->
     </div>
@@ -31,7 +31,11 @@
     <%= form.hidden_field :gender, id: "gender_selection" %>
     <%= form.hidden_field :preload, id: "preload_selection" %>
     <%= form.hidden_field :role, id: "role_selection" %>
-    
+
+    <div class="image-container">
+      <%= image_tag asset_path('1_1_1.png'), alt: 'Character Image', id: 'character_image', class: 'character-image' %>
+    </div>
+
     <div class="submit-btn-container">
       <%= form.submit "Time to Set Sail!", class: "btn btn-primary submit-btn" %>
     </div>
@@ -41,6 +45,14 @@
 <script> 
 document.addEventListener("DOMContentLoaded", function () {
   const buttons = document.querySelectorAll(".btn-option");
+    let gender = 1;
+    let preload = 1;
+    let role = 1;
+
+  function updateImage() {
+    const imagePath = `/assets/images/${gender}_${preload}_${role}.png`;
+    document.getElementById("character_image").src = imagePath;
+  }
 
   buttons.forEach((button) => {
     button.addEventListener("click", function (event) {
@@ -65,6 +77,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Add active class to the clicked button
       this.classList.add("btn-active");
+
+      //Update the character image
+      updateImage();
     });
   });
 });
