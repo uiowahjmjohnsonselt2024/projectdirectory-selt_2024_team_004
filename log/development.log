@@ -28677,3 +28677,15 @@ Processing by WorldsController#landing as HTML
 Completed 200 OK in 9ms (Views: 3.6ms | ActiveRecord: 0.5ms | Allocations: 5913)
 
 
+Started GET "/landing?commit=Play" for ::1 at 2024-11-22 17:14:41 -0600
+  [1m[35m (14.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 21.9ms | Allocations: 706)
+Completed 200 OK in 372ms (Views: 85.0ms | ActiveRecord: 30.7ms | Allocations: 12527)
+
+
