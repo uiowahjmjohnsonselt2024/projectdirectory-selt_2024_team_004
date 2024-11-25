@@ -6,13 +6,7 @@
       <button class="dropdown-button">Menu</button>
       <div class="dropdown-content">
         <a href="#">Settings</a>
-        <a href="#">Store</a>
-        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-          <%= form.hidden_field :id, value: @character.id %>
-          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
-        <% end %>
+        <a href="#" id="store-link">Store</a>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
@@ -20,63 +14,31 @@
 
   <div class="grid">
     <% (1..36).each do |i| %>
-      <div class="grid-item"
-           data-x="<%= (i % 6) %>"
-           data-y="<%= (i / 6).floor %>">
-           Tile <%= i %>
-      </div>
+      <div class="grid-item">Tile <%= i %></div>
     <% end %>
-    <div class="character"
-         style="position: absolute; top: <%= @character.y_coord %>px; left: <%= @character.x_coord %>px;">
-      <%= image_tag asset_path(@character.image_code), width: '100', height: '100' %>
+  </div>
+</div>
+
+<div id="store-modal" class="modal">
+  <div class="modal-content">
+    <div class="store-banner">
+      <h2 class="store-title">Store</h2>
+    </div>
+    <span class="close-button">&times;</span>
+    <div class="store-grid">
+      <div class="store-grid-item">Item 1</div>
+      <div class="store-grid-item">Item 2</div>
+      <div class="store-grid-item">Item 3</div>
+      <div class="store-grid-item">Item 4</div>
+      <!--<div class="store-grid-item">
+        <img src="path_to_image.jpg" alt="Item 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+      </div>-->
     </div>
   </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const character = document.querySelector('.character'); // Select the character element
-        const xCoordField = document.querySelector('#x-coord');
-        const yCoordField = document.querySelector('#y-coord');
-        const saveWorldButton = document.querySelector('#save-world-button');
-
-        let xCoord = <%= @character.x_coord %>; // Initial X coordinate
-        let yCoord = <%= @character.y_coord %>; // Initial Y coordinate
-
-        // Update the character's position based on the arrow key pressed
-        function moveCharacter() {
-            character.style.left = (xCoord * 2) + 'px';
-            character.style.top = (yCoord * 2) + 'px';
-        }
-
-        // Listen for keydown events
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowUp') {
-                yCoord -= (window.innerHeight*0.85)/12; // Move up
-            } else if (e.key === 'ArrowDown') {
-                yCoord += (window.innerHeight*0.85)/12; // Move down
-            } else if (e.key === 'ArrowLeft') {
-                xCoord -= window.innerWidth/12; // Move left
-            } else if (e.key === 'ArrowRight') {
-                xCoord += window.innerWidth/12; // Move right
-            }
-
-            xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
-            yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
 
 
-            moveCharacter();
-        });
-
-        saveWorldButton.addEventListener('click', function (e) {
-            xCoordField.value = xCoord; // Set the x coordinate
-            yCoordField.value = yCoord; // Set the y coordinate
-        });
-
-        // Initial position of the character
-        moveCharacter();
-    });
-</script>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -84,13 +46,11 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Center horizontally */
-        justify-content: center; /* Center vertically */
+        align-items: center;
+        justify-content: center;
         height: 100vh;
     }
-    .character {
-        transition: top 0.3s ease, left 0.3s ease;
-    }
+
     .container {
         text-align: center;
         display: flex;
@@ -155,16 +115,20 @@
         font-size: 0.9rem;
     }
 
+    .dropdown-content a:hover {
+        background-color: #f0f0f0;
+    }
+
     .dropdown-menu-container:hover .dropdown-content {
         display: block;
      }
 
     .grid {
         display: grid;
-        grid-template-columns: repeat(6, 1fr); /* 3 columns */
-        gap: 5px; /* Space between grid items */
-        justify-items: center; /* Center grid items horizontally */
-        align-items: center; /* Center grid items vertically */
+        grid-template-columns: repeat(6, 1fr);
+        gap: 5px;
+        justify-items: center;
+        align-items: center;
         height: 89%;
         width: 100%;
     }
@@ -179,31 +143,120 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
-    .dropdown-content a:hover,
-    #save-world-button:hover {
-        background-color: #f0f0f0;
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1001;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
     }
-    .dropdown-content form,
-    .dropdown-content .btn {
-        margin: 0; /* Remove default margins */
-        padding: 0; /* Optional: ensure consistent spacing */
-    }
-    .dropdown-content form {
-        display: block; /* Ensure it behaves like a dropdown link */
-        width: 100%; /* Ensure it spans the dropdown width */
-    }
-    .dropdown-content .btn {
-        width: 100%; /* Stretch button to fit dropdown */
-        box-sizing: border-box; /* Include padding in width */
-        background: none;
-        border: none;
-        display: block;
-        padding: 10px 10px;
-        text-decoration: none;
-        color: #000000;
-        font-size: 0.9rem;
-        cursor: pointer;
+
+    .modal-content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 15vw;
+        height: 15vw;
+        max-width: 80vh;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
         text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .close-button {
+        color: #aaa;
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+        color: #000;
+        text-decoration: none;
+    }
+
+    .store-banner {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        width: 100%;
+        padding: 0.5rem 0.5rem;
+        text-align: center;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .store-title {
+        font-size: 2rem;
+        color: #ffffff; /* White text to match banner style */
+        margin: 0;
+    }
+
+    .store-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        align-items: center;
+        justify-items: center;
+    }
+
+    .store-grid-item {
+        width: 80%;
+        aspect-ratio: 1 / 1;
+        background-color: #f0f0f0;
+        border: 2px solid #007bff;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #007bff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get the elements
+        const storeLink = document.getElementById('store-link'); // The store link in the dropdown
+        const modal = document.getElementById('store-modal'); // The modal element
+        const closeButton = modal.querySelector('.close-button'); // The close button in the modal
+
+        // Function to open the modal
+        const openModal = () => {
+            modal.style.display = 'flex'; // Display the modal as a flexbox
+        };
+
+        // Function to close the modal
+        const closeModal = () => {
+            modal.style.display = 'none'; // Hide the modal
+        };
+
+        // Open modal when the store link is clicked
+        storeLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            openModal(); // Show the modal
+        });
+
+        // Close modal when the close button is clicked
+        closeButton.addEventListener('click', closeModal);
+    });
+</script>
