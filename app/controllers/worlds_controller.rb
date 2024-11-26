@@ -69,7 +69,7 @@ class WorldsController < ApplicationController
 
   def api_call
     client = OpenAI::Client.new(
-      access_token: "sk-proj-8eh6vdKNh6jedL0d1Wg8EMTjfdFnit-1mZdI_ydVA-uhaIMPLD3YCq5XLseNB13sfjBgNF3WcNT3BlbkFJLob1PGSBsnDW_HVzVI9UoAI8dT3nL61p1ujEbJfrTfKgw_u60T8B_k4Cr0-jCJ021",
+      access_token: "api key",
       log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
     )
   end
