@@ -20227,3 +20227,2259 @@ Processing by WorldsController#index as HTML
 Completed 200 OK in 3ms (Views: 1.9ms | ActiveRecord: 0.1ms | Allocations: 4050)
 
 
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 11:02:22 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 29.9ms | Allocations: 5215)
+Completed 200 OK in 39ms (Views: 34.0ms | ActiveRecord: 0.4ms | Allocations: 7531)
+
+
+Started POST "/world" for ::1 at 2024-11-26 11:02:25 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"PD2N9CkURcV52PY93szRJMb5T6Zl6LtIJ+kE0/ZJJvVHQxfYC9zqq74qBKqN6ULAMBRLQ+qSdtKhZ+3BTpepPw==", "gender"=>"1", "preload"=>"2", "role"=>"3", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.8ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "6795e1933c97560bd8ac"], ["last_played", "2024-11-26 16:02:25.502728"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.6ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 60"], ["id", 60]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.8ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "185dae43c6eb8559e457"], ["user_role", "1_2_3.png"], ["owner", 1], ["user_id", 3], ["world_id", 60]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.6ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "6f6f998f68d314f70430"], ["image_code", "1_2_3.png"], ["shards", 10], ["world_id", 60]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 33ms (ActiveRecord: 7.9ms | Allocations: 14461)
+
+
+Started GET "/world" for ::1 at 2024-11-26 11:02:25 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 7.3ms | Allocations: 4477)
+Completed 200 OK in 11ms (Views: 7.7ms | ActiveRecord: 0.3ms | Allocations: 5765)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 11:02:26 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 1.9ms | Allocations: 1584)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.2ms | Allocations: 2754)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path(@character.image_code), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started DELETE "/worlds/52" for ::1 at 2024-11-26 16:46:27 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"75OyBLxCc4+MyltG68iQqY8bc2y71CxPHQ8ZIZMul7N7Ft7pN0Mu8d+I+8YfxgnhyAYYxmAPYFFbdTUQDYjpyQ==", "id"=>"52"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 52], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 60]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.4ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 52]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 60]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.1ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 13]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.0ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 60]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 19ms (ActiveRecord: 1.8ms | Allocations: 30327)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:46:27 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 3.6ms | Allocations: 3620)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.1ms | Allocations: 6389)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:46:28 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 6.5ms | Allocations: 5209)
+Completed 200 OK in 10ms (Views: 7.2ms | ActiveRecord: 0.2ms | Allocations: 6483)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:46:31 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"FfM7YRUmwaFRfWe7lQldsxHhdHw1gVnEK+zw40bEZoxujaFNN+5uz5aPlSzGLM5X5wxwmbr7lF6tYhnx/hrpRg==", "gender"=>"1", "preload"=>"1", "role"=>"2", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "3b0c158d5444fb56c2be"], ["last_played", "2024-11-26 21:46:31.858105"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.6ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 61"], ["id", 61]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "a121c46e3ccc27597ae9"], ["user_role", "1_1_2.png"], ["owner", 1], ["user_id", 3], ["world_id", 61]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.6ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "82d1e0cb62119edfe5d9"], ["image_code", "1_1_2.png"], ["shards", 10], ["world_id", 61]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 27ms (ActiveRecord: 6.8ms | Allocations: 11500)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:46:31 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 7.0ms | Allocations: 6808)
+Completed 200 OK in 9ms (Views: 7.6ms | ActiveRecord: 0.3ms | Allocations: 8214)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:46:33 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 1.2ms | Allocations: 1587)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.1ms | Allocations: 2776)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path(@character.image_code), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:48:34 -0500
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Completed 404 Not Found in 7ms (ActiveRecord: 0.6ms | Allocations: 9091)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Character without an ID):
+  
+app/controllers/worlds_controller.rb:58:in `landing'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:49:14 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 8ms (ActiveRecord: 0.6ms | Allocations: 7757)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 916)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 920)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 916)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:14 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 924)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 930)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 926)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.3ms | Allocations: 914)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 914)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 916)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 922)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 928)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 928)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 930)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 914)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 914)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 916)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:15 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 908)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 927)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 910)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 914)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 896)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms | Allocations: 926)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 920)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 934)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:19 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 920)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 924)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 2ms (ActiveRecord: 0.1ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 8ms (ActiveRecord: 0.2ms | Allocations: 906)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 926)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 908)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 904)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 902)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 898)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 918)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 916)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 926)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 912)
+
+
+Started GET "/landing" for ::1 at 2024-11-26 16:49:20 -0500
+Processing by WorldsController#landing as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Redirected to http://localhost:3000/landing
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 914)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:49:50 -0500
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.5ms | Allocations: 1149)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.5ms | Allocations: 9230)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path(@character.image_code), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:51:04 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.4ms | Allocations: 1149)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.6ms | Allocations: 9230)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path(@character.image_code), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:51:41 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 2.8ms | Allocations: 1602)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 0.4ms | Allocations: 3884)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path("#{@character.image_code}"), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:51:44 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.7ms | Allocations: 1190)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.2ms | Allocations: 2276)
+
+
+  
+ActionView::Template::Error (undefined method `image_code' for nil:NilClass):
+    16:     <% (1..36).each do |i| %>
+    17:       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
+    18:     <% end %>
+    19:     <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path("#{@character.image_code}"), width: '100', height: 'auto'%></div>
+    20:   </div>
+    21: </div>
+    22: 
+  
+app/views/worlds/landing.html.erb:19
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:52:13 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 19.1ms | Allocations: 752)
+Completed 200 OK in 34ms (Views: 26.0ms | ActiveRecord: 0.3ms | Allocations: 3062)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:52:38 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 2.6ms | Allocations: 750)
+Completed 200 OK in 12ms (Views: 6.4ms | ActiveRecord: 0.4ms | Allocations: 3057)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:52:41 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 10.3ms | Allocations: 5210)
+Completed 200 OK in 13ms (Views: 11.0ms | ActiveRecord: 0.2ms | Allocations: 6469)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:52:43 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"6ktCvPYGJBaMMQcT4+bLF3zlyzgPLcdek2kBbGuK9JGRNdiQ1M6LeEvD9YSww1jzigjP3YBXCsQV5+h+01R7Ww==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.8ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "8dce65ee27593c34f67e"], ["last_played", "2024-11-26 21:52:43.494916"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.3ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 62"], ["id", 62]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (1.6ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "2ee90caff09de5b58794"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 62]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.4ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "016d233f30c887723933"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 62]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 67ms (ActiveRecord: 8.4ms | Allocations: 33594)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:52:43 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 62], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 6.1ms | Allocations: 5888)
+Completed 200 OK in 8ms (Views: 6.2ms | ActiveRecord: 0.4ms | Allocations: 7611)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:52:44 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.5ms | Allocations: 340)
+Completed 200 OK in 3ms (Views: 1.1ms | ActiveRecord: 0.2ms | Allocations: 1438)
+
+
+Started DELETE "/worlds/54" for ::1 at 2024-11-26 16:52:47 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"pp9i5XIjuF/72AHFidRq5L56zmekS0qUzcxV3tQ6JkL+V57Qk2/CynMyz5TN7oFK8lrfHKHgLuTFwoETNMgHRg==", "id"=>"54"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 54], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 62], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 62]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.6ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 54]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.3ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 62]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.8ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 15]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.3ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 62]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 21ms (ActiveRecord: 4.9ms | Allocations: 9637)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:52:47 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.5ms | Allocations: 3984)
+Completed 200 OK in 7ms (Views: 4.8ms | ActiveRecord: 0.3ms | Allocations: 5129)
+
+
+Started DELETE "/worlds/53" for ::1 at 2024-11-26 16:52:48 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"uVQTuTRmtRezl0xMLApIMCw5GFSwj3hy6S+YBtanfvEOFeaEBBH8bdHjJCzGEyn55jIsr/hR2eyF170RxDJHbA==", "id"=>"53"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 53], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 61]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.7ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 53]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 61]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.9ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 14]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.3ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 61]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 18ms (ActiveRecord: 4.5ms | Allocations: 8683)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:52:48 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 5.6ms | Allocations: 2929)
+Completed 200 OK in 8ms (Views: 6.0ms | ActiveRecord: 0.4ms | Allocations: 4048)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:53:19 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 3.2ms | Allocations: 5169)
+Completed 200 OK in 9ms (Views: 4.1ms | ActiveRecord: 0.5ms | Allocations: 14340)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:53:21 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"u5W7wZvIGgAa8fSebY8VR9n3x2MTEGI8Uf6lCX73vXXA6yHtuQC1bt0DBgk+qoajLxrDhpxqr6bXcEwbxikyvw==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (1.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "bfa8698e81354e2d2eb0"], ["last_played", "2024-11-26 21:53:21.440661"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (2.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.6ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 63"], ["id", 63]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.5ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "f3122fd447f2597f4542"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 63]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.5ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "b1e3969d86772f7672c9"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 63]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 47ms (ActiveRecord: 9.6ms | Allocations: 26573)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:53:21 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 63], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 5.8ms | Allocations: 4831)
+Completed 200 OK in 9ms (Views: 5.9ms | ActiveRecord: 0.3ms | Allocations: 6568)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:53:22 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Completed 404 Not Found in 2ms (ActiveRecord: 0.2ms | Allocations: 1270)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Character without an ID):
+  
+app/controllers/worlds_controller.rb:58:in `landing'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:54:04 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.9ms | Allocations: 2042)
+Completed 200 OK in 12ms (Views: 1.7ms | ActiveRecord: 0.9ms | Allocations: 15632)
+
+
+Started DELETE "/worlds/55" for ::1 at 2024-11-26 16:54:55 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Gb4RpmDbd6+Mnxj89IxCej5HYSl16wKRkmylwvnPaUkLPQOOrop/qi3PXKo3C3cCm4M0B3xgJ90VETcFVWEnYw==", "id"=>"55"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 55], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 63], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 63]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.2ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 55]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 63]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.2ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 16]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.0ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 63]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 20ms (ActiveRecord: 2.5ms | Allocations: 31907)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:54:55 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 2.3ms | Allocations: 3137)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.1ms | Allocations: 4871)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:54:55 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.0ms | Allocations: 4681)
+Completed 200 OK in 7ms (Views: 5.7ms | ActiveRecord: 0.2ms | Allocations: 5793)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:54:57 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"n6+ATVqQbS4exj1/I/NPjHD4hAjgJZjrTC6gSPaSnJXk0RpheFjCQNk0z+hw1txohhWA7W9fVXHKoElaTkwTXw==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "6729ff705288281f83c0"], ["last_played", "2024-11-26 21:54:57.970419"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.7ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 64"], ["id", 64]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.9ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "3ca4534e2500222a7460"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 64]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (1.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "26a5a69c928dd80cfd5b"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 64]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 27ms (ActiveRecord: 7.7ms | Allocations: 11546)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:54:57 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 64], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 17.6ms | Allocations: 6049)
+Completed 200 OK in 20ms (Views: 18.1ms | ActiveRecord: 0.3ms | Allocations: 8075)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:54:59 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.3ms | Allocations: 1960)
+
+
+  
+NoMethodError (undefined method `image_code' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:59:in `landing'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:55:17 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mCharacter Load (0.1ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 0.5ms | Allocations: 344)
+Completed 200 OK in 12ms (Views: 1.1ms | ActiveRecord: 0.5ms | Allocations: 12062)
+
+
+Started DELETE "/worlds/56" for ::1 at 2024-11-26 16:56:23 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"MSHD8T20lBRAn8LJB1sQWgE853StR5mCkIYT8J3rrBr+116JNRnfmp7o79DJxnhtAdNx5jWwjItUMuXVXmahNA==", "id"=>"56"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 56], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 64], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 64]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.2ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 56]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 64]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.1ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 17]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.0ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 64]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 19ms (ActiveRecord: 2.4ms | Allocations: 31901)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:56:23 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 3.5ms | Allocations: 3137)
+Completed 200 OK in 5ms (Views: 3.8ms | ActiveRecord: 0.1ms | Allocations: 4863)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:56:24 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 4.7ms | Allocations: 4681)
+Completed 200 OK in 8ms (Views: 5.4ms | ActiveRecord: 0.2ms | Allocations: 5779)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:56:26 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"0tMhxk2qTsCwLg+uWsZLW/gP7uy8K2xJuYgmwLc8Oo+prbvqb2Lhrnfc/TkJ49i/DuLqCTNRodM/Bs/SD+K1RQ==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.5ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "bf383f760e2ea5306765"], ["last_played", "2024-11-26 21:56:26.106331"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.3ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 65"], ["id", 65]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.4ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "32ea5029f429126207a7"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 65]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.3ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "2d30ffd269a59af9d3e4"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 65]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 16ms (ActiveRecord: 4.7ms | Allocations: 11526)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:56:26 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 65], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.3ms | Allocations: 3987)
+Completed 200 OK in 6ms (Views: 4.5ms | ActiveRecord: 0.3ms | Allocations: 5120)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:56:26 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Completed 404 Not Found in 2ms (ActiveRecord: 0.1ms | Allocations: 1266)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Character without an ID):
+  
+app/controllers/worlds_controller.rb:59:in `landing'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:57:55 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.6ms | Allocations: 11404)
+
+
+  
+NoMethodError (undefined method `world_id' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:59:in `landing'
+Started DELETE "/worlds/57" for ::1 at 2024-11-26 16:58:05 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"8tFevXV5RsM6Np2KqeLwknkYHCp/VRH6ogua4eeZY27Ci5frZ2pz/k+w9CRPe5WWwxjyvABjXnjjIeeWRF09eg==", "id"=>"57"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 57], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 65], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.3ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 65]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.7ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 57]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.1ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 65]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.4ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 18]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.1ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 65]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 40ms (ActiveRecord: 5.4ms | Allocations: 22529)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:58:05 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 7.0ms | Allocations: 8371)
+Completed 200 OK in 12ms (Views: 9.5ms | ActiveRecord: 0.3ms | Allocations: 13651)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 16:58:06 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 6.7ms | Allocations: 5209)
+Completed 200 OK in 10ms (Views: 7.4ms | ActiveRecord: 0.2ms | Allocations: 6466)
+
+
+Started POST "/world" for ::1 at 2024-11-26 16:58:08 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"fbS4a6w89dIR42VeT45z3BTK0hK65UG3mxASJaHYd/IGyiJHjvRavNYRl8kcq+A44ifW9zWfjC0dnvs3GQb4OA==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "0141fa089dff28364246"], ["last_played", "2024-11-26 21:58:08.447063"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.2ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 66"], ["id", 66]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "fa6229c17bd3edbf0fbe"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 66]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.3ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "d43f0bfaa29eef919e47"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 66]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 12ms (ActiveRecord: 3.9ms | Allocations: 11510)
+
+
+Started GET "/world" for ::1 at 2024-11-26 16:58:08 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 66], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 3.2ms | Allocations: 4018)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.2ms | Allocations: 5172)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 16:58:09 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.3ms | Allocations: 1914)
+
+
+  
+NoMethodError (undefined method `world_id' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:59:in `landing'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 17:00:30 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.4ms | Allocations: 1913)
+
+
+  
+NoMethodError (undefined method `world_id' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:59:in `landing'
+Started DELETE "/worlds/58" for ::1 at 2024-11-26 17:00:33 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Tff8uFE+wTsdtLwEMNBcbsmpyOBUBp5vJqOT3790iKUgZ0z4wBgLigMRfM36E7N4rAGMO3g3ogtdKQAC/k07IA==", "id"=>"58"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 58], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 66], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 66]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.7ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 58]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (1.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 66]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.6ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 19]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.3ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 66]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 20ms (ActiveRecord: 5.7ms | Allocations: 8680)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:00:33 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 17.1ms | Allocations: 3433)
+Completed 200 OK in 21ms (Views: 19.4ms | ActiveRecord: 0.3ms | Allocations: 5763)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 17:00:34 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 6.6ms | Allocations: 5214)
+Completed 200 OK in 10ms (Views: 7.3ms | ActiveRecord: 0.2ms | Allocations: 6463)
+
+
+Started POST "/world" for ::1 at 2024-11-26 17:00:36 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"DS7TxRz+agLYquD4tMRs9iYCxcqnDtmGyqQx5VAiuzJ2UEnpPjbFbB9YEm/n4f8S0O/BLyh0FBxMKtj36Pw0+A==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.6ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "ac9479daf67f2f396cc8"], ["last_played", "2024-11-26 22:00:36.234391"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.9ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 67"], ["id", 67]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.9ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "0bfcd5dd52a148402dc9"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 67]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "92a66c08f7e760cbba2b"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 67]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 26ms (ActiveRecord: 8.3ms | Allocations: 10337)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:00:36 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 67], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.2ms | Allocations: 4577)
+Completed 200 OK in 6ms (Views: 4.5ms | ActiveRecord: 0.3ms | Allocations: 5701)
+
+
+Started GET "/landing?id=59&commit=Play" for ::1 at 2024-11-26 17:00:37 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"59", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 59], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 67], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.3ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+Completed 404 Not Found in 6ms (ActiveRecord: 0.7ms | Allocations: 3913)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Character with 'id'={:id=>"ac9479daf67f2f396cc8"}):
+  
+app/controllers/worlds_controller.rb:60:in `landing'
+Started GET "/landing?id=59&commit=Play" for ::1 at 2024-11-26 17:01:29 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"59", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 59], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 67], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", nil], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+Completed 404 Not Found in 14ms (ActiveRecord: 1.1ms | Allocations: 21618)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Character with 'id'={:world_id=>"ac9479daf67f2f396cc8"}):
+  
+app/controllers/worlds_controller.rb:60:in `landing'
+Started DELETE "/worlds/59" for ::1 at 2024-11-26 17:22:13 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"TeHPS4akLNN17TJp4rqCFoH5nb1gqLWrDnnMgjhYpUGD3cyLI00m5U+oThxvxClqPhvB3WhPffmFlCfcMVNsQg==", "id"=>"59"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 59], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 67], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 67]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.6ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 59]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 67]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.2ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 20]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.0ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 67]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 21ms (ActiveRecord: 2.2ms | Allocations: 30351)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:22:13 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 2.5ms | Allocations: 3137)
+Completed 200 OK in 4ms (Views: 2.8ms | ActiveRecord: 0.1ms | Allocations: 4863)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 17:22:15 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.9ms | Allocations: 4682)
+Completed 200 OK in 9ms (Views: 6.6ms | ActiveRecord: 0.2ms | Allocations: 5797)
+
+
+Started POST "/world" for ::1 at 2024-11-26 17:22:17 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"5Xpu8DKElMFFBlbcJkl1fsSI1IhfTt3CDuGclbQ0A4KeBPTcEEw7r4L0pEt1bOaaMmXQbdA0EFiIb3WHDOqMSA==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (1.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "d3071a25dd47bf0aa5d6"], ["last_played", "2024-11-26 22:22:17.762406"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.9ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 68"], ["id", 68]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.8ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "36c147bacc51772bd36d"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 68]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.7ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "d698ded2e23891d57ebd"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 68]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 25ms (ActiveRecord: 7.1ms | Allocations: 11887)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:22:17 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 68], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.8ms | Allocations: 4574)
+Completed 200 OK in 7ms (Views: 5.1ms | ActiveRecord: 0.3ms | Allocations: 5713)
+
+
+Started GET "/landing?id=60&commit=Play" for ::1 at 2024-11-26 17:22:19 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"60", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.2ms | Allocations: 1226)
+
+
+  
+NoMethodError (undefined method `world' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:58:in `landing'
+Started GET "/landing?id=60&commit=Play" for ::1 at 2024-11-26 17:22:41 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"60", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.5ms | Allocations: 8024)
+
+
+  
+NoMethodError (undefined method `world_id' for nil:NilClass):
+  
+app/controllers/worlds_controller.rb:58:in `landing'
+Started DELETE "/worlds/60" for ::1 at 2024-11-26 17:23:20 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Xxb8xTWbot5lcsG6GpqgXLXrIIwatGGihW7dCXGJWw6RuPgkwan/g5Di8B/Qjfcy8cpV5gIgbggb+KIdN9LnHQ==", "id"=>"60"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 60], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `destroy'
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 68], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `destroy'
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 68]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[36mUserWorld Destroy (0.2ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 60]]
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:35:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 68]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mCharacter Destroy (0.4ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 21]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mWorld Destroy (0.1ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 68]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 20ms (ActiveRecord: 2.6ms | Allocations: 31934)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:23:20 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 2.4ms | Allocations: 3137)
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.1ms | Allocations: 4859)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 17:23:20 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.4ms | Allocations: 4681)
+Completed 200 OK in 8ms (Views: 6.1ms | ActiveRecord: 0.2ms | Allocations: 5803)
+
+
+Started POST "/world" for ::1 at 2024-11-26 17:23:22 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"X9OjRKmG2LPCgpYS7FazcC3Q1dXxnJZ2K+QNzc5LekIkrTloi0533QVwZIW/cyCU2z3RMH7mW+ytauTfdpX1iA==", "gender"=>"1", "preload"=>"2", "role"=>"1", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "09941d306628f68ce93e"], ["last_played", "2024-11-26 22:23:22.848055"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.7ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 69"], ["id", 69]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (1.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "3ec12a808b8abd4b808d"], ["user_role", "1_2_1.png"], ["owner", 1], ["user_id", 3], ["world_id", 69]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.7ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "84bf286d37712b9f121d"], ["image_code", "1_2_1.png"], ["shards", 10], ["world_id", 69]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 27ms (ActiveRecord: 8.0ms | Allocations: 11514)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:23:22 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.7ms | Allocations: 4575)
+Completed 200 OK in 7ms (Views: 5.0ms | ActiveRecord: 0.3ms | Allocations: 5714)
+
+
+Started GET "/landing?id=61&commit=Play" for ::1 at 2024-11-26 17:23:24 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"61", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 1.4ms | Allocations: 749)
+Completed 200 OK in 8ms (Views: 2.0ms | ActiveRecord: 0.6ms | Allocations: 4421)
+
+
+Started GET "/landing?id=61&commit=Play" for ::1 at 2024-11-26 17:26:19 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"61", "commit"=>"Play"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 4.2ms | Allocations: 1344)
+Completed 200 OK in 20ms (Views: 9.8ms | ActiveRecord: 0.9ms | Allocations: 5772)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:26:24 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 10.4ms | Allocations: 5083)
+Completed 200 OK in 14ms (Views: 10.9ms | ActiveRecord: 0.4ms | Allocations: 6370)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-26 17:26:33 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 7.6ms | Allocations: 9069)
+Completed 200 OK in 12ms (Views: 8.7ms | ActiveRecord: 0.1ms | Allocations: 11578)
+
+
+Started POST "/world" for ::1 at 2024-11-26 17:26:41 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"AiwMpgArtWH83giGkCVNJzQk6OKZhMkDsZ4Ebu+pGQx5UpaKIuMaDzss+hHDAN7DwsnsBxb+BJk3EO18V3eWxg==", "gender"=>"1", "preload"=>"2", "role"=>"2", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[36mWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "3dda403cca46cc21832d"], ["last_played", "2024-11-26 22:26:41.949703"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (1.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:22:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Update (0.6ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 70"], ["id", 70]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mUserWorld Create (0.8ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "a9b943035fbf563ade1a"], ["user_role", "1_2_2.png"], ["owner", 1], ["user_id", 3], ["world_id", 70]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mCharacter Create (0.6ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "cb71635f26e821b8fe59"], ["image_code", "1_2_2.png"], ["shards", 10], ["world_id", 70]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 26ms (ActiveRecord: 7.7ms | Allocations: 10331)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:26:41 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 70], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 7.2ms | Allocations: 6096)
+Completed 200 OK in 9ms (Views: 7.3ms | ActiveRecord: 0.4ms | Allocations: 7216)
+
+
+Started GET "/landing?id=62&commit=Play" for ::1 at 2024-11-26 17:26:43 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"62", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 62], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 70], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 70], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 2.6ms | Allocations: 934)
+Completed 200 OK in 10ms (Views: 3.4ms | ActiveRecord: 0.6ms | Allocations: 4178)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:26:50 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 70], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 14.2ms | Allocations: 9725)
+Completed 200 OK in 17ms (Views: 14.5ms | ActiveRecord: 0.8ms | Allocations: 11110)
+
+
+Started GET "/landing?id=61&commit=Play" for ::1 at 2024-11-26 17:26:52 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"61", "commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 61], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:58:in `landing'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:59:in `landing'
+  [1m[36mCharacter Load (0.1ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 69], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:60:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 2.3ms | Allocations: 933)
+Completed 200 OK in 9ms (Views: 3.1ms | ActiveRecord: 0.6ms | Allocations: 4191)
+
+
+Started GET "/world" for ::1 at 2024-11-26 17:27:39 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DtB66DZXVKiqoqjINrRXSg"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 3]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 69], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 70], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 10.1ms | Allocations: 6093)
+Completed 200 OK in 13ms (Views: 10.3ms | ActiveRecord: 0.7ms | Allocations: 7225)
+
+

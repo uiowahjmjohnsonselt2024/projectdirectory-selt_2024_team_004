@@ -54,12 +54,9 @@ class WorldsController < ApplicationController
     end
   end
 
-  def start_game
-    puts 'params'
-    puts params
-
-    @new_world = @world.
-
-    redirect_to some_other_path, notice: "Your adventure begins!"
+  def landing
+    @user_world = UserWorld.find_by(id: params[:id])
+    @world = @user_world.world
+    @character = @world.characters.first
   end
 end

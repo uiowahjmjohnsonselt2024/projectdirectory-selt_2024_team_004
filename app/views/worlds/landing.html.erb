@@ -16,7 +16,7 @@
     <% (1..36).each do |i| %>
       <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
     <% end %>
-    <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path('1_2_2.png'), width: '100', height: 'auto'%></div>
+    <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path(@character.image_code), width: '100', height: 'auto'%></div>
   </div>
 </div>
 
