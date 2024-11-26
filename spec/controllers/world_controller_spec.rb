@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'rails_helper'
 require 'action_controller_workaround'
 
-describe WorldsController type: controller do
+describe WorldsController do #type: controller do <- was getting an error on "controller"
   describe 'Creating a new world' do
     it "should yield a valid request when the create world button is selected" do
       get new_world_path
