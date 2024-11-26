@@ -29551,3 +29551,945 @@ Processing by WorldsController#landing as HTML
 Completed 200 OK in 123ms (Views: 65.2ms | ActiveRecord: 6.5ms | Allocations: 12502)
 
 
+Started GET "/" for ::1 at 2024-11-25 14:16:24 -0600
+  [1m[35m (20.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 53158.7ms | Allocations: 467556)
+Completed 200 OK in 53344ms (Views: 53216.7ms | ActiveRecord: 0.0ms | Allocations: 471163)
+
+
+Started POST "/login" for ::1 at 2024-11-25 14:17:22 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"oEDc9LiN6IzD2y2eok2wSHD7XjtjJlGlFsjLT9frguf/SecTm5idkDF2P8fDx21PDgEW5UB2i/g/WTIFvVbGgw==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (5.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 333ms (ActiveRecord: 39.4ms | Allocations: 8777)
+
+
+Started GET "/world" for ::1 at 2024-11-25 14:17:23 -0600
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (4.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (7.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 4]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (4.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 913.8ms | Allocations: 15178)
+Completed 200 OK in 1300ms (Views: 871.8ms | ActiveRecord: 52.2ms | Allocations: 19709)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-25 14:17:26 -0600
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 880.5ms | Allocations: 5583)
+Completed 200 OK in 888ms (Views: 881.3ms | ActiveRecord: 1.0ms | Allocations: 6890)
+
+
+  
+ActionController::RoutingError (No route matches [GET] "/assets/images/1_1_1.png"):
+  
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:11:in `block in call'
+activesupport (6.0.6.1) lib/active_support/logger_silence.rb:36:in `silence'
+activesupport (6.0.6.1) lib/active_support/logger.rb:64:in `block (3 levels) in broadcast'
+activesupport (6.0.6.1) lib/active_support/logger_silence.rb:36:in `silence'
+activesupport (6.0.6.1) lib/active_support/logger.rb:62:in `block (2 levels) in broadcast'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:11:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 14:17:32 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 3.0ms | Allocations: 592)
+Completed 200 OK in 11ms (Views: 3.8ms | ActiveRecord: 1.1ms | Allocations: 1837)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 14:33:14 -0600
+  [1m[35m (7.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (7.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 29.2ms | Allocations: 808)
+Completed 200 OK in 338ms (Views: 107.8ms | ActiveRecord: 38.1ms | Allocations: 12586)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:07:55 -0600
+  [1m[35m (24.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 162.9ms | Allocations: 200238)
+Completed 500 Internal Server Error in 389ms (ActiveRecord: 30.7ms | Allocations: 211857)
+
+
+  
+ActionView::Template::Error (The asset "shard.png" is not present in the asset pipeline.
+):
+    27:     <span class="close-button">&times;</span>
+    28:     <div class="store-grid">
+    29:       <div class="store-grid-item">
+    30:         <%= image_tag "shard.png", alt: "Item 1", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"%>
+    31:       </div>
+    32:       <div class="store-grid-item">
+    33:         <%= image_tag "pile_of_shards.png", alt: "Item 2", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"%>
+  
+app/views/worlds/landing.html.erb:30
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:09:12 -0600
+  [1m[35m (4.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46197.9ms | Allocations: 471163)
+Completed 500 Internal Server Error in 46340ms (ActiveRecord: 9.1ms | Allocations: 482922)
+
+
+  
+ActionView::Template::Error (The asset "pile_of_shards.png" is not present in the asset pipeline.
+):
+    30:         <%= image_tag 'shards/shard.png', alt: "Item 1", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"%>
+    31:       </div>
+    32:       <div class="store-grid-item">
+    33:         <%= image_tag "pile_of_shards.png", alt: "Item 2", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"%>
+    34:       </div>
+    35:       <div class="store-grid-item">
+    36:         <%= image_tag "pirate_hat_of_shards.png", alt: "Item 3", style: "width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"%>
+  
+app/views/worlds/landing.html.erb:33
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:13:20 -0600
+  [1m[35m (4.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:13:26 -0600
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 25769.4ms | Allocations: 699775)
+Completed 200 OK in 25843ms (Views: 25787.9ms | ActiveRecord: 6.9ms | Allocations: 711475)
+
+
+  Rendered worlds/landing.html.erb (Duration: 25422.4ms | Allocations: 491536)
+Completed 200 OK in 25426ms (Views: 25423.0ms | ActiveRecord: 1.2ms | Allocations: 492722)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:28:47 -0600
+  [1m[35m (22.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (12.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47642.1ms | Allocations: 459242)
+Completed 200 OK in 47973ms (Views: 47713.7ms | ActiveRecord: 50.6ms | Allocations: 471066)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:35:42 -0600
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43546.5ms | Allocations: 459489)
+Completed 200 OK in 43887ms (Views: 43588.4ms | ActiveRecord: 39.5ms | Allocations: 471209)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:38:54 -0600
+  [1m[35m (9.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44123.2ms | Allocations: 459285)
+Completed 200 OK in 44482ms (Views: 44223.7ms | ActiveRecord: 34.0ms | Allocations: 471041)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 15:47:15 -0600
+  [1m[35m (4.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (12.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47151.8ms | Allocations: 459248)
+Completed 200 OK in 47423ms (Views: 47208.3ms | ActiveRecord: 33.3ms | Allocations: 471075)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:06:50 -0600
+  [1m[35m (5.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (6.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 37652.5ms | Allocations: 459278)
+Completed 200 OK in 37908ms (Views: 37744.9ms | ActiveRecord: 16.7ms | Allocations: 471070)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:10:57 -0600
+  [1m[35m (5.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46077.9ms | Allocations: 459387)
+Completed 200 OK in 46286ms (Views: 46136.2ms | ActiveRecord: 12.0ms | Allocations: 471167)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:20:49 -0600
+  [1m[35m (10.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (14.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 39492.8ms | Allocations: 459234)
+Completed 200 OK in 39801ms (Views: 39578.1ms | ActiveRecord: 25.5ms | Allocations: 471081)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:22:51 -0600
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 45591.1ms | Allocations: 459455)
+Completed 200 OK in 45724ms (Views: 45621.3ms | ActiveRecord: 10.2ms | Allocations: 471156)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:23:52 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 131.9ms | Allocations: 2068)
+Completed 200 OK in 136ms (Views: 132.9ms | ActiveRecord: 1.1ms | Allocations: 3239)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:24:42 -0600
+  [1m[35m (3.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (6.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 35858.7ms | Allocations: 459362)
+Completed 200 OK in 36139ms (Views: 35913.6ms | ActiveRecord: 33.8ms | Allocations: 471144)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:25:58 -0600
+  [1m[35m (22.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44292.6ms | Allocations: 459225)
+Completed 200 OK in 44548ms (Views: 44318.1ms | ActiveRecord: 39.4ms | Allocations: 471001)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:29:59 -0600
+  [1m[35m (10.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 38029.0ms | Allocations: 459229)
+Completed 200 OK in 38276ms (Views: 38074.0ms | ActiveRecord: 35.5ms | Allocations: 471052)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:31:17 -0600
+  [1m[35m (12.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 42055.9ms | Allocations: 459308)
+Completed 200 OK in 42298ms (Views: 42088.0ms | ActiveRecord: 10.0ms | Allocations: 471149)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:33:48 -0600
+  [1m[35m (5.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (9.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44020.5ms | Allocations: 459429)
+Completed 200 OK in 44335ms (Views: 44121.1ms | ActiveRecord: 39.4ms | Allocations: 471164)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:35:18 -0600
+  [1m[35m (7.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (6.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44144.1ms | Allocations: 459317)
+Completed 200 OK in 44349ms (Views: 44168.3ms | ActiveRecord: 23.7ms | Allocations: 471088)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:37:33 -0600
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 48101.1ms | Allocations: 459462)
+Completed 200 OK in 48245ms (Views: 48131.8ms | ActiveRecord: 20.3ms | Allocations: 471169)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:39:53 -0600
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (9.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 37667.9ms | Allocations: 459231)
+Completed 200 OK in 38100ms (Views: 37779.9ms | ActiveRecord: 50.0ms | Allocations: 471046)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:44:55 -0600
+  [1m[35m (5.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43546.7ms | Allocations: 459454)
+Completed 200 OK in 43735ms (Views: 43573.2ms | ActiveRecord: 9.0ms | Allocations: 471157)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:46:38 -0600
+  [1m[35m (11.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46083.5ms | Allocations: 459251)
+Completed 200 OK in 46216ms (Views: 46142.9ms | ActiveRecord: 13.4ms | Allocations: 471067)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:48:47 -0600
+  [1m[35m (8.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43391.4ms | Allocations: 459315)
+Completed 200 OK in 43639ms (Views: 43422.5ms | ActiveRecord: 38.3ms | Allocations: 471089)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:50:18 -0600
+  [1m[35m (17.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (8.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 41261.1ms | Allocations: 459286)
+Completed 200 OK in 41415ms (Views: 41294.1ms | ActiveRecord: 17.4ms | Allocations: 471050)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:52:25 -0600
+  [1m[35m (19.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44428.4ms | Allocations: 459246)
+Completed 200 OK in 44634ms (Views: 44491.0ms | ActiveRecord: 13.4ms | Allocations: 471009)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:56:11 -0600
+  [1m[35m (3.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (6.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 49355.5ms | Allocations: 459104)
+Completed 200 OK in 49503ms (Views: 49386.5ms | ActiveRecord: 18.6ms | Allocations: 470588)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 16:59:13 -0600
+  [1m[35m (3.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (3.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 45217.5ms | Allocations: 459457)
+Completed 200 OK in 45312ms (Views: 45242.3ms | ActiveRecord: 9.5ms | Allocations: 471166)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:02:48 -0600
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (9.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (9.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46342.2ms | Allocations: 459300)
+Completed 200 OK in 46687ms (Views: 46409.1ms | ActiveRecord: 39.0ms | Allocations: 471087)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:08:33 -0600
+  [1m[35m (17.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43078.1ms | Allocations: 459452)
+Completed 200 OK in 43185ms (Views: 43117.6ms | ActiveRecord: 7.6ms | Allocations: 471169)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:11:05 -0600
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47150.9ms | Allocations: 459439)
+Completed 200 OK in 47303ms (Views: 47207.9ms | ActiveRecord: 20.4ms | Allocations: 471170)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:13:14 -0600
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46705.2ms | Allocations: 459304)
+Completed 200 OK in 46785ms (Views: 46721.1ms | ActiveRecord: 6.0ms | Allocations: 471090)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:14:40 -0600
+  [1m[35m (25.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (11.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44600.4ms | Allocations: 459226)
+Completed 200 OK in 44958ms (Views: 44681.7ms | ActiveRecord: 48.4ms | Allocations: 471038)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:16:07 -0600
+  [1m[35m (4.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 35520.7ms | Allocations: 459433)
+Completed 200 OK in 35664ms (Views: 35574.0ms | ActiveRecord: 5.5ms | Allocations: 471146)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:17:07 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 101.1ms | Allocations: 2065)
+Completed 200 OK in 104ms (Views: 101.8ms | ActiveRecord: 1.0ms | Allocations: 3230)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:17:09 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 75.6ms | Allocations: 2065)
+Completed 200 OK in 79ms (Views: 76.3ms | ActiveRecord: 1.2ms | Allocations: 3235)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:19:26 -0600
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44342.0ms | Allocations: 459387)
+Completed 200 OK in 44411ms (Views: 44358.9ms | ActiveRecord: 7.0ms | Allocations: 471165)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:22:43 -0600
+  [1m[35m (9.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47397.3ms | Allocations: 459390)
+Completed 200 OK in 47760ms (Views: 47508.1ms | ActiveRecord: 42.3ms | Allocations: 471166)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:25:00 -0600
+  [1m[35m (16.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (12.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47309.9ms | Allocations: 459302)
+Completed 200 OK in 47690ms (Views: 47376.7ms | ActiveRecord: 40.2ms | Allocations: 471070)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:26:39 -0600
+  [1m[35m (14.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 44346.2ms | Allocations: 459364)
+Completed 200 OK in 44523ms (Views: 44399.6ms | ActiveRecord: 12.0ms | Allocations: 471083)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:28:40 -0600
+  [1m[35m (12.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (8.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (5.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 49623.4ms | Allocations: 459260)
+Completed 200 OK in 49977ms (Views: 49712.3ms | ActiveRecord: 33.3ms | Allocations: 471102)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:35:42 -0600
+  [1m[35m (15.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (9.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 45678.9ms | Allocations: 459321)
+Completed 200 OK in 45935ms (Views: 45725.3ms | ActiveRecord: 43.2ms | Allocations: 471081)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:37:25 -0600
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 40563.3ms | Allocations: 459444)
+Completed 200 OK in 40794ms (Views: 40624.9ms | ActiveRecord: 13.3ms | Allocations: 471157)
+
+
+Started GET "/landing?commit=Play" for 127.0.0.1 at 2024-11-25 17:38:49 -0600
+  [1m[35m (11.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43629.8ms | Allocations: 459387)
+Completed 200 OK in 43698ms (Views: 43646.5ms | ActiveRecord: 5.6ms | Allocations: 471165)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:40:12 -0600
+  [1m[35m (17.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 42533.2ms | Allocations: 459228)
+Completed 200 OK in 42667ms (Views: 42585.5ms | ActiveRecord: 6.6ms | Allocations: 471059)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:41:45 -0600
+  [1m[35m (8.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 46288.6ms | Allocations: 459374)
+Completed 200 OK in 46541ms (Views: 46375.1ms | ActiveRecord: 39.1ms | Allocations: 471101)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:51:07 -0600
+  [1m[35m (10.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 39913.5ms | Allocations: 459465)
+Completed 200 OK in 39981ms (Views: 39929.5ms | ActiveRecord: 6.1ms | Allocations: 471221)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:52:14 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 122.9ms | Allocations: 2065)
+Completed 200 OK in 126ms (Views: 123.9ms | ActiveRecord: 0.9ms | Allocations: 3234)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:53:15 -0600
+  [1m[35m (19.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (4.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 41893.3ms | Allocations: 459520)
+Completed 200 OK in 42070ms (Views: 41949.4ms | ActiveRecord: 19.3ms | Allocations: 471223)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:54:45 -0600
+  [1m[35m (5.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 39150.4ms | Allocations: 459600)
+Completed 200 OK in 39357ms (Views: 39196.3ms | ActiveRecord: 41.4ms | Allocations: 471311)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:56:53 -0600
+  [1m[35m (8.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (3.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43168.7ms | Allocations: 459615)
+Completed 200 OK in 43423ms (Views: 43240.4ms | ActiveRecord: 17.4ms | Allocations: 471331)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 17:59:03 -0600
+  [1m[35m (13.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (8.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43933.8ms | Allocations: 459455)
+Completed 200 OK in 44208ms (Views: 43996.8ms | ActiveRecord: 39.6ms | Allocations: 471245)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:04:39 -0600
+  [1m[35m (6.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (7.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43260.2ms | Allocations: 459454)
+Completed 200 OK in 43444ms (Views: 43309.1ms | ActiveRecord: 28.4ms | Allocations: 471242)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:11:00 -0600
+  [1m[35m (2.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 40408.6ms | Allocations: 459608)
+Completed 200 OK in 40564ms (Views: 40471.3ms | ActiveRecord: 8.9ms | Allocations: 471319)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:15:32 -0600
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 38716.6ms | Allocations: 459549)
+Completed 200 OK in 39060ms (Views: 38889.7ms | ActiveRecord: 15.3ms | Allocations: 471319)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:17:37 -0600
+  [1m[35m (3.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (11.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43030.4ms | Allocations: 459590)
+Completed 200 OK in 43277ms (Views: 43082.6ms | ActiveRecord: 39.1ms | Allocations: 471331)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:23:33 -0600
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 37745.1ms | Allocations: 459638)
+Completed 200 OK in 37890ms (Views: 37758.0ms | ActiveRecord: 19.6ms | Allocations: 471353)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:25:24 -0600
+  [1m[35m (6.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 42283.6ms | Allocations: 459629)
+Completed 200 OK in 42515ms (Views: 42350.4ms | ActiveRecord: 12.5ms | Allocations: 471356)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:30:01 -0600
+  [1m[35m (12.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (4.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 40321.3ms | Allocations: 459574)
+Completed 200 OK in 40625ms (Views: 40376.8ms | ActiveRecord: 20.6ms | Allocations: 471353)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:31:58 -0600
+  [1m[35m (4.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 40996.0ms | Allocations: 459575)
+Completed 200 OK in 41178ms (Views: 41017.0ms | ActiveRecord: 13.6ms | Allocations: 471345)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:34:34 -0600
+  [1m[35m (4.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (4.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 38777.2ms | Allocations: 459501)
+Completed 200 OK in 38985ms (Views: 38825.8ms | ActiveRecord: 23.4ms | Allocations: 471261)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:36:35 -0600
+  [1m[35m (5.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 41032.6ms | Allocations: 459639)
+Completed 200 OK in 41099ms (Views: 41047.3ms | ActiveRecord: 6.2ms | Allocations: 471358)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:38:59 -0600
+  [1m[35m (17.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 41355.9ms | Allocations: 459432)
+Completed 200 OK in 41446ms (Views: 41367.9ms | ActiveRecord: 5.9ms | Allocations: 471270)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:40:32 -0600
+  [1m[35m (4.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 42191.2ms | Allocations: 459576)
+Completed 200 OK in 42285ms (Views: 42210.6ms | ActiveRecord: 6.5ms | Allocations: 471367)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:43:15 -0600
+  [1m[35m (4.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 43097.6ms | Allocations: 459577)
+Completed 200 OK in 43170ms (Views: 43116.2ms | ActiveRecord: 8.8ms | Allocations: 471357)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:47:29 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 69.0ms | Allocations: 2065)
+Completed 200 OK in 73ms (Views: 69.8ms | ActiveRecord: 1.3ms | Allocations: 3224)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:48:37 -0600
+  [1m[35m (3.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 39413.9ms | Allocations: 459568)
+Completed 200 OK in 39548ms (Views: 39500.1ms | ActiveRecord: 4.0ms | Allocations: 471338)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-25 18:50:48 -0600
+  [1m[35m (5.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 47558.2ms | Allocations: 459590)
+Completed 200 OK in 47625ms (Views: 47574.8ms | ActiveRecord: 5.2ms | Allocations: 471366)
+
+
+Started GET "/landing?commit=Play" for 127.0.0.1 at 2024-11-25 18:54:33 -0600
+  [1m[35m (5.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 39171.6ms | Allocations: 459498)
+Completed 200 OK in 39239ms (Views: 39185.4ms | ActiveRecord: 5.6ms | Allocations: 471264)
+
+

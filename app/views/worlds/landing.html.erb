@@ -19,6 +19,31 @@
   </div>
 </div>
 
+<div id="purchase-modal" class="modal">
+  <div class="modal-content">
+    <div class="store-banner">
+      <h2 class="store-title">Purchase Item</h2>
+    </div>
+    <span class="close-button">&times;</span>
+    <div class="purchase-form">
+      <h3 id="item-name"></h3>
+      <p id="item-price"></p>
+      <form id="purchase-form">
+        <label for="card-number">Card Number:</label>
+        <input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
+
+        <label for="expiration-date">Expiration Date:</label>
+        <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY" required>
+
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
+
+        <button type="submit" class="btn">Purchase</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div id="store-modal" class="modal">
   <div class="modal-content">
     <div class="store-banner">
@@ -26,18 +51,41 @@
     </div>
     <span class="close-button">&times;</span>
     <div class="store-grid">
-      <div class="store-grid-item">Item 1</div>
-      <div class="store-grid-item">Item 2</div>
-      <div class="store-grid-item">Item 3</div>
-      <div class="store-grid-item">Item 4</div>
-      <!--<div class="store-grid-item">
-        <img src="path_to_image.jpg" alt="Item 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-      </div>-->
+      <div class="store-grid-item">
+        <button class="item-button" data-name="Sea Shard (1)" data-price="$0.75 USD">
+          <div class="item-content">
+            <%= image_tag "shards/shard.png", alt: "Item 1", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+            <p class="item-price">Sea Shard (1): <br>$0.75 USD</p>
+          </div>
+        </button>
+      </div>
+      <div class="store-grid-item">
+        <button class="item-button" data-name="Pile o' Shards (10)" data-price="$7.00 USD">
+          <div class="item-content">
+            <%= image_tag "shards/pile_of_shards.png", alt: "Item 2", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+            <p class="item-price">Pile o' Shards (10): <br>$7.00 USD</p>
+          </div>
+        </button>
+      </div>
+      <div class="store-grid-item">
+        <button class="item-button" data-name="Hat o' Shards! (50)" data-price="$30.00 USD">
+          <div class="item-content">
+            <%= image_tag "shards/pirate_hat_of_shards.png", alt: "Item 3", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+            <p class="item-price">Hat o' Shards! (50): <br>$30.00 USD<br>20% Off!</p>
+          </div>
+        </button>
+      </div>
+      <div class="store-grid-item">
+        <button class="item-button" data-name="Chest o' Shards! (100)" data-price="$50.00 USD">
+          <div class="item-content">
+            <%= image_tag "shards/treasure_chest_of_shards.png", alt: "Item 4", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+            <p class="item-price">Chest o' Shards! (100): <br>$50.00 USD<br>33% Off!</p>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </div>
-
-
 
 <style>
     body {
@@ -159,10 +207,10 @@
 
     .modal-content {
         background-color: #ffffff;
-        padding: 20px;
+        padding: 0;
         border-radius: 10px;
-        width: 15vw;
-        height: 15vw;
+        width: 30vw;
+        aspect-ratio: 1 / 1;
         max-width: 80vh;
         max-height: 80vh;
         display: flex;
@@ -175,9 +223,9 @@
     }
 
     .close-button {
-        color: #aaa;
+        color: #ff0000;
         position: absolute;
-        top: 10px;
+        top: 2%;
         right: 15px;
         font-size: 28px;
         font-weight: bold;
@@ -186,15 +234,16 @@
 
     .close-button:hover,
     .close-button:focus {
-        color: #000;
+        color: #ffffff;
         text-decoration: none;
     }
 
     .store-banner {
         background: linear-gradient(135deg, #007bff, #0056b3);
         width: 100%;
-        padding: 0.5rem 0.5rem;
+        padding: 0.75rem 0;
         text-align: center;
+        justify-content: flex-start;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -210,7 +259,8 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        gap: 12px;
+        gap: 2px;
+        padding: 2px 0;
         width: 100%;
         aspect-ratio: 1 / 1;
         align-items: center;
@@ -218,42 +268,137 @@
     }
 
     .store-grid-item {
-        width: 80%;
-        aspect-ratio: 1 / 1;
+        display: flex;
+        flex-direction: column; /* Stack image and price vertically */
+        align-items: center; /* Center align both elements */
+        justify-content: flex-start; /* Start stacking from the top */
+        width: 80%; /* Width of the grid item */
+        aspect-ratio: 1 / 1; /* Keep the grid item square */
         background-color: #f0f0f0;
         border: 2px solid #007bff;
         border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        color: #007bff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px; /* Add padding for spacing */
+    }
+
+    .item-button {
+        display: flex;
+        flex-direction: column; /* Stack image and text vertically */
+        align-items: center; /* Center-align the content */
+        justify-content: flex-start;
+        width: 100%; /* Make the button span the entire grid item */
+        height: 100%; /* Make the button span the entire grid item */
+        border: none; /* Remove the default button border */
+        background: none; /* Remove the default button background */
+        padding: 20px; /* Remove default padding */
+        cursor: pointer; /* Indicate that it’s clickable */
+    }
+
+    .item-content {
+        display: flex;
+        flex-direction: column; /* Stack image and text */
+        align-items: center; /* Center-align image and text */
+        justify-content: center;
+        width: 100%; /* Ensure full width */
+        height: 100%; /* Ensure full height */
+    }
+
+    .item-price {
+        margin-top: 8px; /* Space between the image and price */
+        font-size: 1rem;
+        color: #0056b3;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .purchase-form {
+        text-align: left;
+        width: 50%;
+        margin: auto;
+        z-index: 2000;
+    }
+
+    .purchase-form label {
+        display: block;
+        margin: 10px 0 5px;
+        z-index: 2000;
+    }
+
+    .purchase-form input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .purchase-form .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .purchase-form .btn:hover {
+        background-color: #0056b3;
     }
 
 </style>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Get the elements
+        const storeItems = document.querySelectorAll('.item-button');
+        const purchaseModal = document.getElementById('purchase-modal');
+        const purchaseCloseButton = purchaseModal.querySelector('.close-button');
+        const purchaseForm = document.getElementById('purchase-form');
+        const itemNameElement = document.getElementById('item-name');
+        const itemPriceElement = document.getElementById('item-price');
         const storeLink = document.getElementById('store-link'); // The store link in the dropdown
-        const modal = document.getElementById('store-modal'); // The modal element
-        const closeButton = modal.querySelector('.close-button'); // The close button in the modal
+        const storemodal = document.getElementById('store-modal'); // The modal element
+        const closeButton = storemodal.querySelector('.close-button'); // The close button in the modal
 
         // Function to open the modal
         const openModal = () => {
-            modal.style.display = 'flex'; // Display the modal as a flexbox
+            storemodal.style.display = 'flex'; // Display the modal as a flexbox
         };
 
         // Function to close the modal
         const closeModal = () => {
-            modal.style.display = 'none'; // Hide the modal
+            storemodal.style.display = 'none'; // Hide the modal
         };
+
+        // Handle form submission (mock functionality)
+        purchaseForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            alert('Thank you for your purchase!');
+            purchaseModal.style.display = 'none'; // Close modal after purchase
+        });
 
         // Open modal when the store link is clicked
         storeLink.addEventListener('click', (event) => {
             event.preventDefault(); // Prevent default link behavior
             openModal(); // Show the modal
+        });
+
+        storeItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                const itemName = item.getAttribute('data-name');
+                const itemPrice = item.getAttribute('data-price');
+
+                itemNameElement.textContent = itemName;
+                itemPriceElement.textContent = `Price: ${itemPrice}`;
+
+                closeModal();
+                purchaseModal.style.display = 'flex'; // Show purchase modal
+            });
+        });
+
+        // Close purchase modal
+        purchaseCloseButton.addEventListener('click', () => {
+            purchaseModal.style.display = 'none';
         });
 
         // Close modal when the close button is clicked
