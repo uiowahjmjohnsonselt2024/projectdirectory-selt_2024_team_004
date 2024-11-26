@@ -15,5 +15,6 @@ class User < ActiveRecord::Base
     self.session_token = SecureRandom.urlsafe_base64
   end
   has_many :user_worlds
+  has_many :characters
   has_many :worlds, :through => :user_worlds
 end

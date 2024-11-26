@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_15_202751) do
+ActiveRecord::Schema.define(version: 2024_11_25_220704) do
+
+  create_table "characters", force: :cascade do |t|
+    t.string "character_id"
+    t.string "image_code"
+    t.integer "shards"
+    t.integer "x_coord"
+    t.integer "y_coord"
+    t.integer "world_id", null: false
+    t.index ["character_id"], name: "index_characters_on_character_id", unique: true
+    t.index ["world_id"], name: "index_characters_on_world_id"
+  end
 
   create_table "user_worlds", force: :cascade do |t|
     t.string "user_world_id"
@@ -42,6 +53,7 @@ ActiveRecord::Schema.define(version: 2024_11_15_202751) do
     t.index ["world_id"], name: "index_worlds_on_world_id", unique: true
   end
 
+  add_foreign_key "characters", "worlds"
   add_foreign_key "user_worlds", "users"
   add_foreign_key "user_worlds", "worlds"
 end

@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get    'roles', to: 'worlds#user_roles', as:'role'
   get 'landing', to: 'worlds#landing', as: 'landing'
   resources :worlds, only: [:index, :new, :create, :destroy]
+
+  post 'update_position', to: 'players#update_position', as:'position'
 end

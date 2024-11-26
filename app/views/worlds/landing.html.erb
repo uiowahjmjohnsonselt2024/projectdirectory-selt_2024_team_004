@@ -14,8 +14,9 @@
 
   <div class="grid">
     <% (1..36).each do |i| %>
-      <div class="grid-item">Tile <%= i %></div>
+      <div class="grid-item" data-x="<%= (i % 6) %>" data-y="<%= (i / 6).floor %>">Tile <%= i %></div>
     <% end %>
+    <div class="character" style="position: absolute; top: 0; left: 0;"><%= image_tag asset_path('1_2_2.png'), width: '100', height: 'auto'%></div>
   </div>
 </div>
 
@@ -124,3 +125,37 @@
         border-radius: 5px;
     }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const gridItems = document.querySelectorAll('.grid-item');
+
+        gridItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const targetX = parseInt(this.getAttribute('data-x'));
+                const targetY = parseInt(this.getAttribute('data-y'));
+
+                // Send the target coordinates to the Rails backend
+                fetch('/update_position', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': document.querySelector("meta[name='csrf-token']").content
+                    },
+                    body: JSON.stringify({ x: targetX, y: targetY })
+                })
+                  .then(response => response.json())
+                  .then(data => {
+                      // Handle the new player position (update the view)
+                      moveCharacterTo(data.x, data.y);
+                  });
+            });
+        });
+
+        function moveCharacterTo(x, y) {
+            const characterElement = document.querySelector('.character');
+            // Assuming grid items are 60px by 60px, adjust accordingly
+            const gridSize = 60; // adjust this if needed
+            characterElement.style.transform = `translate(${x * gridSize}px, ${y * gridSize}px)`;
+        }
+    });
+</script>
