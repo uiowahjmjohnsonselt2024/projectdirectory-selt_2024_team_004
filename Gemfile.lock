@@ -110,6 +110,7 @@ GEM
     database_cleaner-core (2.0.1)
     date (3.4.0)
     diff-lcs (1.5.1)
+    docile (1.4.1)
     erubi (1.13.0)
     execjs (2.10.0)
     ffi (1.16.3)
@@ -281,6 +282,12 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.13.1)
+    simplecov_json_formatter (0.1.4)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -354,6 +361,7 @@ DEPENDENCIES
   rubocop-rails
   sass-rails (~> 5)
   selenium-webdriver
+  simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3

@@ -97,7 +97,8 @@
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.6.18, Remote: ruby-2.6.10-p210) [gem]" level="application" />
   </component>
-  <component name="RakeTasksCache-v2">
+  <component name="RakeTasksCache-v2" failedReloadsCounter="1">
+    <option name="failedReloadsCounter" value="1" />
     <option name="myRootTask">
       <RakeTaskImpl id="rake">
         <subtasks>
