@@ -8,6 +8,6 @@ class World < ActiveRecord::Base
   end
 
   has_many :user_worlds
-  has_many :characters
+  has_many :characters, dependent: :destroy
   has_many :users, :through => :user_worlds
 end

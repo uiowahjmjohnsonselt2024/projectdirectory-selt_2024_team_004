@@ -17,13 +17,11 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
-    puts "Image path: #{@image_path.inspect}"
 
     @world = World.new(last_played: DateTime.now, progress: 0)
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-      puts "hello World ID: #{@world.id.inspect}"
       Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 0, y_coord: 0)
       flash[:notice] = "World created successfully!"
       redirect_to worlds_path
