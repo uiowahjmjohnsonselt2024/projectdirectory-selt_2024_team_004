@@ -15731,3 +15731,199 @@ Processing by WorldsController#index as HTML
 Completed 200 OK in 13ms (Views: 9.6ms | ActiveRecord: 0.5ms | Allocations: 6205)
 
 
+Started GET "/" for ::1 at 2024-11-26 10:08:28 -0500
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 1667.2ms | Allocations: 1587385)
+Completed 200 OK in 1722ms (Views: 1699.5ms | ActiveRecord: 0.0ms | Allocations: 1598133)
+
+
+Started POST "/login" for ::1 at 2024-11-26 10:08:34 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"NgL14N+8jMIxnC2YxRxD5wnrpZp3gHc3/5M9cM6TF43OlzCcCSzCp4YUDKsEJZU+7my2RGAIY2WHu9ZIcEqQUA==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 3.5ms | Allocations: 3873)
+Completed 200 OK in 238ms (Views: 4.3ms | ActiveRecord: 1.4ms | Allocations: 12877)
+
+
+Started GET "/signup" for ::1 at 2024-11-26 10:08:36 -0500
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Rendered users/new.html.erb (Duration: 7.5ms | Allocations: 3171)
+Completed 200 OK in 10ms (Views: 9.0ms | ActiveRecord: 0.0ms | Allocations: 4327)
+
+
+Started POST "/signup" for ::1 at 2024-11-26 10:08:46 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"sTomSARnmRdrg9ZDvL60BrNP/atJx7s6hzk+V35VJN0Lk1GEBeGG/tYdW63C/8NF1z3j+91i7YL3c/j+vCgauQ==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"sTomSARnmRdrg9ZDvL60BrNP/atJx7s6hzk+V35VJN0Lk1GEBeGG/tYdW63C/8NF1z3j+91i7YL3c/j+vCgauQ==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456!NIko", "password_confirmation"=>"6456!NIko"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  Rendering users/new.html.erb
+  Rendered users/new.html.erb (Duration: 2.0ms | Allocations: 2562)
+Completed 200 OK in 225ms (Views: 2.4ms | ActiveRecord: 0.3ms | Allocations: 7238)
+
+
+Started POST "/signup" for ::1 at 2024-11-26 10:08:53 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"6PRDAOSrWiEzwzblzYSvpLiLxvuEtRJEEngHkm6FPalSXTTM5S1FyI5duwuzxdjn3PnYqxAQRPxiMsE7rPgDzQ==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"6PRDAOSrWiEzwzblzYSvpLiLxvuEtRJEEngHkm6FPalSXTTM5S1FyI5duwuzxdjn3PnYqxAQRPxiMsE7rPgDzQ==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456!NIko", "password_confirmation"=>"6456!NIko"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  Rendering users/new.html.erb
+  Rendered users/new.html.erb (Duration: 2.0ms | Allocations: 2554)
+Completed 200 OK in 223ms (Views: 2.4ms | ActiveRecord: 0.4ms | Allocations: 6739)
+
+
+Started GET "/login" for ::1 at 2024-11-26 10:08:54 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 7.1ms | Allocations: 3900)
+Completed 200 OK in 9ms (Views: 7.9ms | ActiveRecord: 0.0ms | Allocations: 4379)
+
+
+Started POST "/login" for ::1 at 2024-11-26 10:08:58 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"5pxbbdoutVEbBAP8raV1nApgBsjG8h8tFQ4kRL/UCnYeCZ4RDL77NKyMIs9snKNF7ecVFtF6C39tJs98AQ2Nqw==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 2.5ms | Allocations: 3866)
+Completed 200 OK in 221ms (Views: 3.5ms | ActiveRecord: 0.1ms | Allocations: 5020)
+
+
+Started POST "/login" for ::1 at 2024-11-26 10:09:02 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"wVsAu2Oc9ZMDuliqo+E5KdLVp/omTK/pL7nOlOdfH0w5zsXHtQy79rQyeZli2O/wNVK0JDHEu7tXkSWsWYaYkQ==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 2.1ms | Allocations: 3868)
+Completed 200 OK in 220ms (Views: 2.6ms | ActiveRecord: 0.2ms | Allocations: 13712)
+
+
+Started POST "/login" for ::1 at 2024-11-26 10:09:06 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"J/BpyqcKxDy8eKHwwzeVgJtGX/vnZQ+KCAr+q04YWvbfZay2cZqKWQvwgMMCDkNZfMFMJfDtG9hwIhWT8MHdKw==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 219ms (ActiveRecord: 0.1ms | Allocations: 1336)
+
+
+Started GET "/world" for ::1 at 2024-11-26 10:09:06 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "z7htjjc5LFs3TEWnP-RbsQ"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.6ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 25.6ms | Allocations: 16416)
+Completed 200 OK in 38ms (Views: 24.7ms | ActiveRecord: 2.5ms | Allocations: 20902)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-26 10:09:08 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "z7htjjc5LFs3TEWnP-RbsQ"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 1.4ms | Allocations: 422)
+Completed 200 OK in 6ms (Views: 2.6ms | ActiveRecord: 0.2ms | Allocations: 1617)
+
+
+Started GET "/world" for ::1 at 2024-11-26 10:09:12 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "z7htjjc5LFs3TEWnP-RbsQ"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 10.3ms | Allocations: 5042)
+Completed 200 OK in 13ms (Views: 10.4ms | ActiveRecord: 0.5ms | Allocations: 6201)
+
+
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateSquares (20241126151825)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "square_id" varchar, "world_name" varchar, "world_id" integer NOT NULL, "x" integer, "y" integer, "weather" varchar, "treasure" boolean, "game" varchar, "monsters" varchar, CONSTRAINT "fk_rails_5232b5e1b3"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateWorlds (20241110000000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "world_id" varchar, "world_name" varchar, "last_played" datetime, "progress" integer)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241110000000"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUserWorlds (20241110100001)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_world_id" varchar, "user_role" varchar, "owner" boolean, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_8ba2f3f871"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241110100001"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsers (20241112001850)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241112001850"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddSessionTokenToUsers (20241112002705)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "session_token" varchar[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241112002705"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToUserWorldsId (20241114203452)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241114203452"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToUsersEmail (20241114203628)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241114203628"]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToWorldsId (20241115202751)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_worlds_on_world_id" ON "worlds" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241115202751"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSquares (20241126151825)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "square_id" varchar, "world_name" varchar, "world_id" integer NOT NULL, "x" integer, "y" integer, "weather" varchar, "treasure" boolean, "game" varchar, "monsters" varchar, CONSTRAINT "fk_rails_5232b5e1b3"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
