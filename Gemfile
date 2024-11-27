@@ -15,6 +15,8 @@ gem 'jquery-rails'
 
 gem 'ruby-openai'
 
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Bcrypt can help us hash and store passwords securely
 gem 'bcrypt', '~> 3.1.7'
 # Rubocop can help us maintain ruby styling and best practices

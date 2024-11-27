@@ -1,4 +1,4 @@
-class UserWorld < ActiveRecord::Base
+class Square < ActiveRecord::Base
 
     before_create :generate_unique_square_id
   

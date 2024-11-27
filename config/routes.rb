@@ -13,6 +13,6 @@ Rails.application.routes.draw do
   delete 'world',  to: 'worlds#destroy', as:'remove_world'  # Removes a world ID from user profile
   get    'new_world',  to: 'worlds#new', as:'character'     # --Needs to be Updated later-- Will open new game server
   get    'roles', to: 'worlds#user_roles', as:'role'
-  get 'landing', to: 'worlds#landing', as: 'landing'
+  get 'landing', to: 'squares#landing', as: 'landing'
   resources :worlds, only: [:index, :new, :create, :destroy]
 end

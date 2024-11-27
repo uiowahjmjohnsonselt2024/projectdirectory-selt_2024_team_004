@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="top-banner">
+    <h2 class="title">Pretty Pirates</h2>
+
+    <div class="dropdown-menu-container">
+      <button class="dropdown-button">Menu</button>
+      <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="#">Store</a>
+        <%= link_to 'Exit World', worlds_path, class: 'btn btn-primary dropdown_link' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <% @squares.each do |square| %>
+      <div class="grid-item">
+        <h3>Square <%= square.id %></h3>
+        <% if square.pixel_art.present? %>
+          <pre class="pixel-art">
+            <%= square.pixel_art %>
+          </pre>
+        <% else %>
+          <p class="no-pixel-art">No pixel art available</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  /* General Styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6; /* Light background color */
+    color: #333; /* Dark text for contrast */
+  }
+
+  .container {
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Top Banner */
+  .top-banner {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Blue gradient */
+    color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    margin: 0;
+    flex: 1;
+  }
+
+  .dropdown-menu-container {
+  position: relative;
+}
+
+.dropdown-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* Below the button */
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu-container:hover .dropdown-content {
+  display: block; /* Keep the dropdown visible when hovering over the container */
+}
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 10px;
+  }
+
+  .grid-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .grid-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .grid-item h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  /* Pixel Art */
+  .pixel-art {
+    font-family: "Courier New", monospace;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    white-space: pre-wrap; /* Preserve spacing in art */
+    color: #555;
+  }
+
+  .no-pixel-art {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 10px 0 0;
+  }
+</style>
