@@ -19083,3 +19083,596 @@ Processing by SquaresController#landing as HTML
 Completed 200 OK in 42ms (Views: 4.1ms | ActiveRecord: 3.9ms | Allocations: 28409)
 
 
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 11:31:22 -0500
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (6.0.6.1) lib/active_record/migration.rb:586:in `check_pending!'
+activerecord (6.0.6.1) lib/active_record/migration.rb:564:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddStateToSquares (20241127154019)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "squares" ADD "state" varchar[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 11:31:56 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SquaresController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.4ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.4ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.5ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (1.0ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 23], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 24], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.4ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.6ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 30], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 31], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 32], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.6ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 33], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.4ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 34], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.7ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 36], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  Rendering squares/landing.html.erb
+  [1m[36mSquare Load (0.6ms)[0m  [1m[34mSELECT "squares".* FROM "squares"[0m
+  ↳ app/views/squares/landing.html.erb:16
+  Rendered squares/landing.html.erb (Duration: 4.6ms | Allocations: 1893)
+Completed 200 OK in 138ms (Views: 12.1ms | ActiveRecord: 13.2ms | Allocations: 43893)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 11:34:01 -0500
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SquaresController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 23], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 24], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.4ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 30], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 31], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 32], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 33], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 34], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 36], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  Rendering squares/landing.html.erb
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares"[0m
+  ↳ app/views/squares/landing.html.erb:16
+  Rendered squares/landing.html.erb (Duration: 3.1ms | Allocations: 1893)
+Completed 200 OK in 76ms (Views: 6.1ms | ActiveRecord: 7.1ms | Allocations: 44902)
+
+
+Started GET "/world" for ::1 at 2024-11-27 11:34:03 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 1724.2ms | Allocations: 1602719)
+Completed 200 OK in 1770ms (Views: 1743.3ms | ActiveRecord: 3.3ms | Allocations: 1613969)
+
+
+Started DELETE "/worlds/1" for ::1 at 2024-11-27 11:34:06 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"Jr8mdA90PsoVDrE3oifB+YktUcoT+oab69bUuVxKQw6tIofDuWDdw/cYbY8S87KMF5212A0rx9o5UVarq/9DAg==", "id"=>"1"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.3ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:34:in `destroy'
+  [1m[36mWorld Load (0.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:36:in `destroy'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:38:in `destroy'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:38:in `destroy'
+  [1m[36mUserWorld Destroy (0.4ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:38:in `destroy'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:38:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."world_id" = ?[0m  [["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.7ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 3]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 4]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 5]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.2ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 6]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 7]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 8]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.2ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 9]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 10]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 11]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 12]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 13]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 14]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 15]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 16]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 17]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 18]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 19]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 20]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 21]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 22]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 23]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 24]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 25]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 26]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 27]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 28]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 29]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 30]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 31]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 32]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 33]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 34]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 35]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mSquare Destroy (0.1ms)[0m  [1m[31mDELETE FROM "squares" WHERE "squares"."id" = ?[0m  [["id", 36]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[36mWorld Destroy (0.3ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:39:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 89ms (ActiveRecord: 10.0ms | Allocations: 51348)
+
+
+Started GET "/world" for ::1 at 2024-11-27 11:34:06 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 5.9ms | Allocations: 4985)
+Completed 200 OK in 9ms (Views: 6.6ms | ActiveRecord: 0.3ms | Allocations: 6806)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-27 11:34:07 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 9.0ms | Allocations: 5692)
+Completed 200 OK in 14ms (Views: 10.5ms | ActiveRecord: 0.2ms | Allocations: 6957)
+
+
+Started POST "/world" for ::1 at 2024-11-27 11:34:09 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"baR13wv+dd8VJg/Pj6mBwCJzxVtVgs1tw2UVN6IKOgFF7rwmXvo7YHAsL0wMxFxvLkMOOG09HiL7+xyPGOJvMA==", "gender"=>"2", "preload"=>"1", "role"=>"2", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[36mWorld Create (1.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "4fa4fd9af8cce84e1c1f"], ["last_played", "2024-11-27 16:34:09.294178"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.6ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "d8eca18c76d8955d9dbb"], ["world_id", 2], ["x", 2], ["y", 1], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "81a943488e3f5f331797"], ["world_id", 2], ["x", 3], ["y", 1], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "3c68d2f88b698e487061"], ["world_id", 2], ["x", 4], ["y", 1], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.5ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "567696f7dffc2145e74a"], ["world_id", 2], ["x", 5], ["y", 1], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "9608cdca2217c06b7329"], ["world_id", 2], ["x", 6], ["y", 1], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "e7a0e612d8898be7afd5"], ["world_id", 2], ["x", 1], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "9eb44ffcbe78c2f44821"], ["world_id", 2], ["x", 2], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "3a49d8e5812eae87d9b4"], ["world_id", 2], ["x", 3], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.4ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "fb348ae9b03c6acebabb"], ["world_id", 2], ["x", 4], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "2452613e10161ff4a3d2"], ["world_id", 2], ["x", 5], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "cbc0a72d7c1e01466866"], ["world_id", 2], ["x", 6], ["y", 2], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "1f8c4632f950f1d7a69f"], ["world_id", 2], ["x", 1], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "71688c798efaddf75935"], ["world_id", 2], ["x", 2], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.5ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "76ef2380d569c0068020"], ["world_id", 2], ["x", 3], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "cc38a40b337f551c1fdc"], ["world_id", 2], ["x", 4], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "bd73b0133d44a162a926"], ["world_id", 2], ["x", 5], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "772e0da8e33c4de7bd37"], ["world_id", 2], ["x", 6], ["y", 3], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "d647e3929765563c6492"], ["world_id", 2], ["x", 1], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.3ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "c631a35b085b4c430417"], ["world_id", 2], ["x", 2], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "86ca3cf9c5e1a62dc427"], ["world_id", 2], ["x", 3], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "1bd14e8ed846587c6fd7"], ["world_id", 2], ["x", 4], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "1257c4494e2ae1c63694"], ["world_id", 2], ["x", 5], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "619ef42991a6c43af204"], ["world_id", 2], ["x", 6], ["y", 4], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "765f333691de0d0c83e7"], ["world_id", 2], ["x", 1], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "aa9e4c78d424fc502022"], ["world_id", 2], ["x", 2], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "b75ea15cade863305b9b"], ["world_id", 2], ["x", 3], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "d89975128d9a9f268caf"], ["world_id", 2], ["x", 4], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "45ad5dc58b5d2d25723f"], ["world_id", 2], ["x", 5], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "0f6f3ae3a43486c06604"], ["world_id", 2], ["x", 6], ["y", 5], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "752a53609cec5f71da89"], ["world_id", 2], ["x", 1], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "a736b7a7a5f6ba90a5ae"], ["world_id", 2], ["x", 2], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "64f66751f17db776088e"], ["world_id", 2], ["x", 3], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "7b6ee5974af463030c6e"], ["world_id", 2], ["x", 4], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "827de85b714e1cf044c0"], ["world_id", 2], ["x", 5], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "d8d08a1a7b51e3b394ae"], ["world_id", 2], ["x", 6], ["y", 6], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+OpenAI Error: the server responded with status 404
+  [1m[36mSquare Create (0.2ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id", "x", "y", "state", "pixel_art") VALUES (?, ?, ?, ?, ?, ?)[0m  [["square_id", "a1a531351f20e2fe9780"], ["world_id", 2], ["x", 1], ["y", 7], ["state", "inactive"], ["pixel_art", "ERROR: Art not generated"]]
+  ↳ app/models/world.rb:17:in `block in generate_squares'
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:23:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[36mWorld Update (0.4ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 2"], ["id", 2]]
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:24:in `create'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[36mUserWorld Create (0.7ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "4515de0251e6b7b01b2d"], ["user_role", "/assets/images/2_1_2.png"], ["owner", 1], ["user_id", 1], ["world_id", 2]]
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:25:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 12311ms (ActiveRecord: 14.5ms | Allocations: 294882)
+
+
+Started GET "/world" for ::1 at 2024-11-27 11:34:21 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "zrG4H8LmJwt4CYDWb7fWQw"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.7ms | Allocations: 3998)
+Completed 200 OK in 7ms (Views: 5.0ms | ActiveRecord: 0.3ms | Allocations: 5154)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 11:34:23 -0500
+Processing by SquaresController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.3ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 23], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 24], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 30], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 31], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 32], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 33], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 34], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 35], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  [1m[36mSquare Load (0.1ms)[0m  [1m[34mSELECT "squares".* FROM "squares" WHERE "squares"."id" = ? LIMIT ?[0m  [["id", 36], ["LIMIT", 1]]
+  ↳ app/controllers/squares_controller.rb:11:in `block in generate_squares_if_needed'
+  Rendering squares/landing.html.erb
+  [1m[36mSquare Load (0.2ms)[0m  [1m[34mSELECT "squares".* FROM "squares"[0m
+  ↳ app/views/squares/landing.html.erb:16
+  Rendered squares/landing.html.erb (Duration: 1.6ms | Allocations: 1287)
+Completed 200 OK in 93ms (Views: 1.9ms | ActiveRecord: 4.5ms | Allocations: 27272)
+
+
