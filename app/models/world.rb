@@ -10,4 +10,5 @@ class World < ActiveRecord::Base
   has_many :user_worlds
   has_many :characters, dependent: :destroy
   has_many :users, :through => :user_worlds
+  has_many :squares
 end
