@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'landing', to: 'worlds#landing', as: 'landing'
   resources :worlds, only: [:index, :new, :create, :destroy]
 
-  resources :characters, only: [] do
-    patch :update_position, on: :collection
+  resources :characters do
+    post 'update_coordinates', to: 'characters#update_coordinates', on: :member
   end
 end

@@ -58,7 +58,7 @@ class WorldsController < ApplicationController
     @user_world = UserWorld.find_by(id: params[:id])
     @world = @user_world.world
     @character = @world.characters.first
-    @character.x_coord ||= 25
-    @character.y_coord ||= 25
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
   end
 end

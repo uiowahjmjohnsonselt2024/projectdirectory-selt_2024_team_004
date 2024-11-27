@@ -21,7 +21,7 @@
       </div>
     <% end %>
     <div class="character"
-         style="position: absolute; top: <%= @character.y_coord * 2 %>px; left: <%= @character.x_coord * 2 %>px;">
+         style="position: absolute; top: <%= @character.y_coord %>px; left: <%= @character.x_coord %>px;">
       <%= image_tag asset_path(@character.image_code), width: '100', height: '100' %>
     </div>
   </div>
@@ -33,28 +33,46 @@
         let xCoord = <%= @character.x_coord %>; // Initial X coordinate
         let yCoord = <%= @character.y_coord %>; // Initial Y coordinate
 
-        const moveDistance = 10; // Set how much the character moves per keypress (in pixels)
+        // Function to save the updated coordinates to the server
+        function saveCoordinates() {
+            fetch('/characters_controller/update_coordinates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // Rails CSRF token
+                },
+                body: JSON.stringify({ x_coord: xCoord, y_coord: yCoord })
+            }).then(response => {
+                if (!response.ok) {
+                    console.error('Failed to save coordinates');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
 
         // Update the character's position based on the arrow key pressed
         function moveCharacter() {
             character.style.left = (xCoord * 2) + 'px';
             character.style.top = (yCoord * 2) + 'px';
+            saveCoordinates();
         }
 
         // Listen for keydown events
         document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowUp') {
-                yCoord -= 48; // Move up
+                yCoord -= (window.innerHeight*0.85)/12; // Move up
             } else if (e.key === 'ArrowDown') {
-                yCoord += 48; // Move down
+                yCoord += (window.innerHeight*0.85)/12; // Move down
             } else if (e.key === 'ArrowLeft') {
-                xCoord -= 107; // Move left
+                xCoord -= window.innerWidth/12; // Move left
             } else if (e.key === 'ArrowRight') {
-                xCoord += 107; // Move right
+                xCoord += window.innerWidth/12; // Move right
             }
 
-            //xCoord = Math.max(0, Math.min(5, xCoord)); // Limit x to the grid's width (0-5)
-            //yCoord = Math.max(0, Math.min(5, yCoord)); // Limit y to the grid's height (0-5)
+            xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
+            yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
+
 
             moveCharacter();
         });
