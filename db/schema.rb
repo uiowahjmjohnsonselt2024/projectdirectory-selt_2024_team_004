@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_15_202751) do
+ActiveRecord::Schema.define(version: 2024_11_27_165322) do
 
   create_table "user_worlds", force: :cascade do |t|
     t.string "user_world_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2024_11_15_202751) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "session_token"
+    t.string "default_currency", default: "USD"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["session_token"], name: "index_users_on_session_token"
   end
