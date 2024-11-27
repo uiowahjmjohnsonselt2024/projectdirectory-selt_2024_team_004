@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_25_220704) do
+ActiveRecord::Schema.define(version: 2024_11_27_005918) do
 
   create_table "characters", force: :cascade do |t|
     t.string "character_id"
     t.string "image_code"
     t.integer "shards"
-    t.integer "x_coord"
-    t.integer "y_coord"
+    t.integer "x_coord", default: 0
+    t.integer "y_coord", default: 0
     t.integer "world_id", null: false
     t.index ["character_id"], name: "index_characters_on_character_id", unique: true
     t.index ["world_id"], name: "index_characters_on_world_id"

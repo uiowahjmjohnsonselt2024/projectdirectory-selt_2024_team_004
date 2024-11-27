@@ -22,7 +22,7 @@ class WorldsController < ApplicationController
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-      Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 0, y_coord: 0)
+      Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 10, y_coord: 10)
       flash[:notice] = "World created successfully!"
       redirect_to worlds_path
     end
@@ -58,5 +58,7 @@ class WorldsController < ApplicationController
     @user_world = UserWorld.find_by(id: params[:id])
     @world = @user_world.world
     @character = @world.characters.first
+    @character.x_coord ||= 25
+    @character.y_coord ||= 25
   end
 end
