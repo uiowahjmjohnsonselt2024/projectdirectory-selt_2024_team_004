@@ -31085,3 +31085,1496 @@ Processing by WorldsController#landing as HTML
 Completed 200 OK in 158ms (Views: 155.5ms | ActiveRecord: 1.1ms | Allocations: 4741)
 
 
+Started POST "/login" for ::1 at 2024-11-27 08:51:31 -0600
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (6.0.6.1) lib/active_record/migration.rb:586:in `check_pending!'
+activerecord (6.0.6.1) lib/active_record/migration.rb:564:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started POST "/login" for ::1 at 2024-11-27 08:52:03 -0600
+  [1m[35m (5.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"VD+hlcRTIEv/ilCe9q3BxcBIGI2cT+d/MTEzIKcmcHgLNppy50ZVVw0nQseXJxzCvrJQU78fPSIYoMpqzZs0HA==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 276ms (ActiveRecord: 5.6ms | Allocations: 9827)
+
+
+Started GET "/world" for ::1 at 2024-11-27 08:52:04 -0600
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (4.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (1.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 4]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (2.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (1.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 159.3ms | Allocations: 15201)
+Completed 200 OK in 290ms (Views: 162.5ms | ActiveRecord: 19.7ms | Allocations: 21227)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 08:52:06 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 265368.3ms | Allocations: 2058760)
+Completed 200 OK in 265377ms (Views: 265370.9ms | ActiveRecord: 1.0ms | Allocations: 2060038)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 08:59:14 -0600
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (6.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 292769.7ms | Allocations: 2024531)
+Completed 200 OK in 293048ms (Views: 292826.2ms | ActiveRecord: 31.0ms | Allocations: 2036297)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 09:06:27 -0600
+  [1m[35m (20.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (11.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 344572.7ms | Allocations: 2024598)
+Completed 200 OK in 345111ms (Views: 344674.9ms | ActiveRecord: 66.4ms | Allocations: 2036083)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 09:12:26 -0600
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for SettingsController):
+  
+actionpack (6.0.6.1) lib/abstract_controller/base.rb:131:in `process'
+actionview (6.0.6.1) lib/action_view/rendering.rb:39:in `process'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.2.10) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.10) lib/rack/etag.rb:27:in `call'
+rack (2.2.10) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.10) lib/rack/head.rb:12:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.10) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.10) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/cookies.rb:654:in `call'
+activerecord (6.0.6.1) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 09:16:36 -0600
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (2.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+Started GET "/settings" for ::1 at 2024-11-27 09:16:39 -0600
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by SettingsController#show as HTML
+Completed 500 Internal Server Error in 64ms (ActiveRecord: 0.0ms | Allocations: 54833)
+
+
+  
+NoMethodError (undefined method `authenticate_user!' for #<SettingsController:0x00007fc2e1227850>
+Did you mean?  authenticate_with_http_digest):
+  
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:428:in `block in make_lambda'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:200:in `block (2 levels) in halting'
+actionpack (6.0.6.1) lib/abstract_controller/callbacks.rb:34:in `block (2 levels) in <module:Callbacks>'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:201:in `block in halting'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `block in invoke_before'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `each'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `invoke_before'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:110:in `block in run_callbacks'
+actiontext (6.0.6.1) lib/action_text/rendering.rb:19:in `with_renderer'
+actiontext (6.0.6.1) lib/action_text/engine.rb:55:in `block (4 levels) in <class:Engine>'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:121:in `instance_exec'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:139:in `run_callbacks'
+actionpack (6.0.6.1) lib/abstract_controller/callbacks.rb:41:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/instrumentation.rb:33:in `block in process_action'
+activesupport (6.0.6.1) lib/active_support/notifications.rb:180:in `block in instrument'
+activesupport (6.0.6.1) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (6.0.6.1) lib/active_support/notifications.rb:180:in `instrument'
+actionpack (6.0.6.1) lib/action_controller/metal/instrumentation.rb:32:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/params_wrapper.rb:245:in `process_action'
+activerecord (6.0.6.1) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (6.0.6.1) lib/abstract_controller/base.rb:136:in `process'
+actionview (6.0.6.1) lib/action_view/rendering.rb:39:in `process'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.2.10) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.10) lib/rack/etag.rb:27:in `call'
+rack (2.2.10) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.10) lib/rack/head.rb:12:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.10) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.10) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/cookies.rb:654:in `call'
+activerecord (6.0.6.1) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  Rendered worlds/landing.html.erb (Duration: 230322.3ms | Allocations: 2379305)
+Completed 200 OK in 230507ms (Views: 230345.4ms | ActiveRecord: 15.0ms | Allocations: 2390990)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 09:22:02 -0600
+  [1m[35m (48.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 296510.4ms | Allocations: 2024470)
+Completed 200 OK in 297261ms (Views: 296679.4ms | ActiveRecord: 34.5ms | Allocations: 2036445)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 09:27:09 -0600
+Processing by SettingsController#show as HTML
+Completed 500 Internal Server Error in 60ms (ActiveRecord: 0.0ms | Allocations: 54815)
+
+
+  
+NoMethodError (undefined method `authenticate_user!' for #<SettingsController:0x00007fa5a6a57ed8>
+Did you mean?  authenticate):
+  
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:428:in `block in make_lambda'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:200:in `block (2 levels) in halting'
+actionpack (6.0.6.1) lib/abstract_controller/callbacks.rb:34:in `block (2 levels) in <module:Callbacks>'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:201:in `block in halting'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `block in invoke_before'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `each'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:513:in `invoke_before'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:110:in `block in run_callbacks'
+actiontext (6.0.6.1) lib/action_text/rendering.rb:19:in `with_renderer'
+actiontext (6.0.6.1) lib/action_text/engine.rb:55:in `block (4 levels) in <class:Engine>'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:121:in `instance_exec'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:139:in `run_callbacks'
+actionpack (6.0.6.1) lib/abstract_controller/callbacks.rb:41:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/rescue.rb:22:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/instrumentation.rb:33:in `block in process_action'
+activesupport (6.0.6.1) lib/active_support/notifications.rb:180:in `block in instrument'
+activesupport (6.0.6.1) lib/active_support/notifications/instrumenter.rb:24:in `instrument'
+activesupport (6.0.6.1) lib/active_support/notifications.rb:180:in `instrument'
+actionpack (6.0.6.1) lib/action_controller/metal/instrumentation.rb:32:in `process_action'
+actionpack (6.0.6.1) lib/action_controller/metal/params_wrapper.rb:245:in `process_action'
+activerecord (6.0.6.1) lib/active_record/railties/controller_runtime.rb:27:in `process_action'
+actionpack (6.0.6.1) lib/abstract_controller/base.rb:136:in `process'
+actionview (6.0.6.1) lib/action_view/rendering.rb:39:in `process'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.0.6.1) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:49:in `block in serve'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.0.6.1) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.0.6.1) lib/action_dispatch/routing/route_set.rb:834:in `call'
+rack (2.2.10) lib/rack/tempfile_reaper.rb:15:in `call'
+rack (2.2.10) lib/rack/etag.rb:27:in `call'
+rack (2.2.10) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.10) lib/rack/head.rb:12:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/http/content_security_policy.rb:18:in `call'
+rack (2.2.10) lib/rack/session/abstract/id.rb:266:in `context'
+rack (2.2.10) lib/rack/session/abstract/id.rb:260:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/cookies.rb:654:in `call'
+activerecord (6.0.6.1) lib/active_record/migration.rb:567:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/settings" for ::1 at 2024-11-27 09:27:55 -0600
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+Completed 500 Internal Server Error in 30ms (ActiveRecord: 0.0ms | Allocations: 4179)
+
+
+  
+NoMethodError (undefined method `split' for nil:NilClass):
+  
+app/controllers/settings_controller.rb:33:in `current_user'
+app/controllers/settings_controller.rb:7:in `show'
+Started GET "/settings" for ::1 at 2024-11-27 09:28:12 -0600
+Processing by SettingsController#show as HTML
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 1085)
+
+
+  
+NoMethodError (undefined method `split' for nil:NilClass):
+  
+app/controllers/settings_controller.rb:33:in `current_user'
+app/controllers/settings_controller.rb:7:in `show'
+Started GET "/settings" for ::1 at 2024-11-27 09:31:33 -0600
+Processing by SettingsController#show as HTML
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 1085)
+
+
+  
+NoMethodError (undefined method `split' for nil:NilClass):
+  
+app/controllers/settings_controller.rb:33:in `current_user'
+app/controllers/settings_controller.rb:7:in `show'
+Started GET "/settings" for ::1 at 2024-11-27 09:32:16 -0600
+  [1m[35m (2.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:32:in `current_user'
+Completed 500 Internal Server Error in 84ms (ActiveRecord: 20.4ms | Allocations: 10535)
+
+
+  
+NoMethodError (undefined method `character' for nil:NilClass):
+  
+app/controllers/settings_controller.rb:8:in `show'
+  [1m[35m (22.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/settings" for ::1 at 2024-11-27 09:45:51 -0600
+  [1m[35m (2.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [GET] "/settings"):
+  
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/settings" for ::1 at 2024-11-27 09:49:29 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 38.5ms | Allocations: 3064)
+Completed 500 Internal Server Error in 609ms (ActiveRecord: 7.6ms | Allocations: 15573)
+
+
+  
+ActionView::Template::Error (undefined method `default_currency' for #<User:0x00005625cd257ee0>
+Did you mean?  default_scopes):
+    14: 
+    15: <h2>Default Currency</h2>
+    16: <%= form_with url: settings_path, method: :patch do %>
+    17:   <%= select_tag 'currency', options_for_select(['USD', 'EUR', 'YEN'], @user.default_currency) %>
+    18:   <%= submit_tag 'Save Settings' %>
+    19: <% end %>
+    20: 
+  
+app/views/settings/show.html.erb:17
+app/views/settings/show.html.erb:16
+Started GET "/settings" for ::1 at 2024-11-27 09:51:09 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 8.2ms | Allocations: 2699)
+Completed 500 Internal Server Error in 268ms (ActiveRecord: 0.7ms | Allocations: 4871)
+
+
+  
+ActionView::Template::Error (undefined method `default_currency' for #<User:0x00007f7fbce5d4c0>
+Did you mean?  default_scopes):
+    14: 
+    15: <h2>Default Currency</h2>
+    16: <%= form_with url: settings_path, method: :patch do %>
+    17:   <%= select_tag 'currency', options_for_select(['USD', 'EUR', 'YEN'], @user.default_currency) %>
+    18:   <%= submit_tag 'Save Settings' %>
+    19: <% end %>
+    20: 
+  
+app/views/settings/show.html.erb:17
+app/views/settings/show.html.erb:16
+Started GET "/settings" for ::1 at 2024-11-27 09:51:48 -0600
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 41.7ms | Allocations: 3502)
+Completed 500 Internal Server Error in 544ms (ActiveRecord: 9.2ms | Allocations: 17224)
+
+
+  
+ActionView::Template::Error (undefined method `default_currency' for #<User:0x00007fbb80ed9408>
+Did you mean?  default_scopes):
+    14: 
+    15: <h2>Default Currency</h2>
+    16: <%= form_with url: settings_path, method: :patch do %>
+    17:   <%= select_tag 'currency', options_for_select(['USD', 'EUR', 'YEN'], @user.default_currency) %>
+    18:   <%= submit_tag 'Save Settings' %>
+    19: <% end %>
+    20: 
+  
+app/views/settings/show.html.erb:17
+app/views/settings/show.html.erb:16
+Started GET "/settings" for ::1 at 2024-11-27 09:58:45 -0600
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 12.0ms | Allocations: 2699)
+Completed 500 Internal Server Error in 274ms (ActiveRecord: 1.4ms | Allocations: 4908)
+
+
+  
+ActionView::Template::Error (undefined method `default_currency' for #<User:0x00007fbb810b9db8>
+Did you mean?  default_scopes):
+    14: 
+    15: <h2>Default Currency</h2>
+    16: <%= form_with url: settings_path, method: :patch do %>
+    17:   <%= select_tag 'currency', options_for_select(['USD', 'EUR', 'YEN'], @user.default_currency) %>
+    18:   <%= submit_tag 'Save Settings' %>
+    19: <% end %>
+    20: 
+  
+app/views/settings/show.html.erb:17
+app/views/settings/show.html.erb:16
+Started GET "/settings" for ::1 at 2024-11-27 10:01:49 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 38.1ms | Allocations: 2699)
+Completed 500 Internal Server Error in 313ms (ActiveRecord: 0.8ms | Allocations: 4872)
+
+
+  
+ActionView::Template::Error (undefined method `default_currency' for #<User:0x00007fbb8120dea8>
+Did you mean?  default_scopes):
+    14: 
+    15: <h2>Default Currency</h2>
+    16: <%= form_with url: settings_path, method: :patch do %>
+    17:   <%= select_tag 'currency', options_for_select(['USD', 'EUR', 'YEN'], @user.default_currency) %>
+    18:   <%= submit_tag 'Save Settings' %>
+    19: <% end %>
+    20: 
+  
+app/views/settings/show.html.erb:17
+app/views/settings/show.html.erb:16
+Started GET "/settings" for ::1 at 2024-11-27 10:02:22 -0600
+  [1m[35m (4.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (4.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:62:in `current_user'
+Completed 500 Internal Server Error in 92ms (ActiveRecord: 9.6ms | Allocations: 10369)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'default_currency' for User.):
+  
+app/controllers/settings_controller.rb:9:in `show'
+Started GET "/settings" for ::1 at 2024-11-27 10:04:31 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:62:in `current_user'
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 1.3ms | Allocations: 1411)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'default_currency' for User.):
+  
+app/controllers/settings_controller.rb:9:in `show'
+Started GET "/settings" for ::1 at 2024-11-27 10:05:06 -0600
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 24.9ms | Allocations: 1203)
+Completed 200 OK in 452ms (Views: 62.8ms | ActiveRecord: 5.4ms | Allocations: 14732)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:05:13 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"Gv2XEZG6DVQef5Av9LY/vC6grjoF4R/3y0d0wNBuav+Tdkun7NcBphgouKfOudi0wt6XjtKjEXHqKR+UfDI0Jw==", "currency"=>"EUR", "commit"=>"Save Settings"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.9ms | Allocations: 1530)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'default_currency' for User.):
+  
+app/controllers/settings_controller.rb:25:in `update'
+Started DELETE "/logout" for ::1 at 2024-11-27 10:05:16 -0600
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"lKRDkrUPvObxZX2/tXghs1lakV8TVA0NxlZERDm+vbtlEMAgheeudIavnugtZCHDC2DPL7yuObAdLJrrJOvMhw=="}
+Redirected to http://localhost:3000/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 511)
+
+
+Started GET "/" for ::1 at 2024-11-27 10:05:16 -0600
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 142.1ms | Allocations: 4504)
+Completed 200 OK in 147ms (Views: 144.1ms | ActiveRecord: 0.0ms | Allocations: 5666)
+
+
+Started POST "/login" for ::1 at 2024-11-27 10:05:18 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"Jx8R7SmWZNNpTa3R54sp6mhTeYqGRC1p4XaxCKmTRHt4FioKCoMRz5vgv4iGAfTtFqkxVKUU9zTI50hCwy4AHw==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.9ms | Allocations: 3166)
+
+
+  
+NoMethodError (private method `authenticate' called for #<User:0x00007f8e84f74418>
+Did you mean?  authenticate_password):
+  
+app/controllers/sessions_controller.rb:7:in `create'
+Started POST "/login" for ::1 at 2024-11-27 10:05:25 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"Jx8R7SmWZNNpTa3R54sp6mhTeYqGRC1p4XaxCKmTRHt4FioKCoMRz5vgv4iGAfTtFqkxVKUU9zTI50hCwy4AHw==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 1.0ms | Allocations: 2995)
+
+
+  
+NoMethodError (private method `authenticate' called for #<User:0x00007f8e84e8e198>
+Did you mean?  authenticate_password):
+  
+app/controllers/sessions_controller.rb:7:in `create'
+Started POST "/login" for ::1 at 2024-11-27 10:07:14 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"Jx8R7SmWZNNpTa3R54sp6mhTeYqGRC1p4XaxCKmTRHt4FioKCoMRz5vgv4iGAfTtFqkxVKUU9zTI50hCwy4AHw==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 1.0ms | Allocations: 2978)
+
+
+  
+NoMethodError (private method `authenticate' called for #<User:0x00007f8e84dea098>
+Did you mean?  authenticate_password):
+  
+app/controllers/sessions_controller.rb:7:in `create'
+Started POST "/login" for ::1 at 2024-11-27 10:08:25 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"Jx8R7SmWZNNpTa3R54sp6mhTeYqGRC1p4XaxCKmTRHt4FioKCoMRz5vgv4iGAfTtFqkxVKUU9zTI50hCwy4AHw==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.9ms | Allocations: 2977)
+
+
+  
+NoMethodError (private method `authenticate' called for #<User:0x00007f8e847e0300>
+Did you mean?  authenticate_password):
+  
+app/controllers/sessions_controller.rb:7:in `create'
+Started GET "/settings" for ::1 at 2024-11-27 10:08:54 -0600
+  [1m[35m (10.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (6.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 11.4ms | Allocations: 2016)
+Completed 500 Internal Server Error in 442ms (ActiveRecord: 9.0ms | Allocations: 11193)
+
+
+  
+ActionView::Template::Error (undefined method `name' for nil:NilClass):
+    1: <h1>Settings</h1>
+    2: 
+    3: <h2>Account Information</h2>
+    4: <p>Name: <%= @user.name %></p>
+    5: <p>Email: <%= @user.email %></p>
+    6: 
+    7: <h2>Character</h2>
+  
+app/views/settings/show.html.erb:4
+Started GET "/" for ::1 at 2024-11-27 10:09:09 -0600
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 67.5ms | Allocations: 4514)
+Completed 200 OK in 74ms (Views: 69.7ms | ActiveRecord: 0.0ms | Allocations: 5714)
+
+
+Started POST "/login" for ::1 at 2024-11-27 10:09:11 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"xWhvGwj9jS14bMYYFaLFI069sKTHVU1XmTwuE0w1jyyaYVT8K+j4MYrB1EF0KBgkMEf4euQFlwqwrddZJojLSA==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 4.9ms | Allocations: 6038)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/models/user.rb:13:in `authenticate'
+app/controllers/sessions_controller.rb:7:in `create'
+Started POST "/login" for ::1 at 2024-11-27 10:10:07 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"xWhvGwj9jS14bMYYFaLFI069sKTHVU1XmTwuE0w1jyyaYVT8K+j4MYrB1EF0KBgkMEf4euQFlwqwrddZJojLSA==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 1.3ms | Allocations: 1288)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/models/user.rb:13:in `authenticate'
+app/controllers/sessions_controller.rb:7:in `create'
+Started POST "/login" for ::1 at 2024-11-27 10:10:38 -0600
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"xWhvGwj9jS14bMYYFaLFI069sKTHVU1XmTwuE0w1jyyaYVT8K+j4MYrB1EF0KBgkMEf4euQFlwqwrddZJojLSA==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 252ms (ActiveRecord: 6.2ms | Allocations: 9858)
+
+
+Started GET "/world" for ::1 at 2024-11-27 10:10:38 -0600
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (1.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 4]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (2.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (1.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 149.1ms | Allocations: 15228)
+Completed 200 OK in 281ms (Views: 146.0ms | ActiveRecord: 19.7ms | Allocations: 21173)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 10:10:40 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 318331.2ms | Allocations: 2024363)
+Completed 200 OK in 318338ms (Views: 318331.8ms | ActiveRecord: 0.8ms | Allocations: 2025641)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:16:33 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 4.5ms | Allocations: 1031)
+Completed 200 OK in 388ms (Views: 7.8ms | ActiveRecord: 0.9ms | Allocations: 4128)
+
+
+Started DELETE "/logout" for ::1 at 2024-11-27 10:16:35 -0600
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"MyFH1iEDllENB1nFIpjJ/VVNDFuCb40HbBYosgGs5dLClcRkEeuEw3rNupK6hMmNB3dSKy2Vubq3bPYdHPmU7g=="}
+Redirected to http://localhost:3000/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 465)
+
+
+Started GET "/" for ::1 at 2024-11-27 10:16:35 -0600
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered sessions/new.html.erb (Duration: 114.2ms | Allocations: 4477)
+Completed 200 OK in 121ms (Views: 116.0ms | ActiveRecord: 0.0ms | Allocations: 5614)
+
+
+Started POST "/login" for ::1 at 2024-11-27 10:16:36 -0600
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"5lc6ogieiG4Pz+AjJOrZEvLtb2cGGAZJGRGqnR9p/ay5XgFFK4v9cv1i8npFYAQVjBcnuSVI3BQwgFPXddS5yA==", "email"=>"silly@silly.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 178ms (ActiveRecord: 1.2ms | Allocations: 1024)
+
+
+Started GET "/world" for ::1 at 2024-11-27 10:16:36 -0600
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (88.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (6.5ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 4]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (5.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  [1m[36mWorld Load (3.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 33.6ms | Allocations: 3431)
+Completed 200 OK in 169ms (Views: 30.7ms | ActiveRecord: 103.1ms | Allocations: 4618)
+
+
+Started GET "/landing?commit=Play" for ::1 at 2024-11-27 10:16:38 -0600
+Processing by WorldsController#landing as HTML
+  Parameters: {"commit"=>"Play"}
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 99.9ms | Allocations: 3649)
+Completed 200 OK in 103ms (Views: 100.4ms | ActiveRecord: 1.0ms | Allocations: 4799)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:16:39 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 1.9ms | Allocations: 691)
+Completed 200 OK in 245ms (Views: 6.5ms | ActiveRecord: 0.8ms | Allocations: 2890)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:17:33 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 1.0ms | Allocations: 682)
+Completed 200 OK in 276ms (Views: 4.7ms | ActiveRecord: 0.9ms | Allocations: 2838)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:21:01 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 2.8ms | Allocations: 682)
+Completed 200 OK in 290ms (Views: 9.0ms | ActiveRecord: 1.0ms | Allocations: 2861)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:21:33 -0600
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 21.4ms | Allocations: 6476)
+Completed 200 OK in 529ms (Views: 70.2ms | ActiveRecord: 6.9ms | Allocations: 20256)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:21:46 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"gZjCTd++tp8LwYNTAe/fXaNR2OHTHPnB+b1DTVHXIOoIEx77otO6bQ2Wq9s74DhVTy/hVQRe90fY0ygZ/Yt+Mg==", "currency"=>"JPY", "commit"=>"Save Settings"}
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.9ms | Allocations: 1535)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'default_currency' for User.):
+  
+app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddDefaultCurrencyToUsers (20241127162407)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (3.2ms)[0m  [1m[35mALTER TABLE "users" ADD "default_currency" varchar[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241127162407"]]
+  [1m[35m (4.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/settings" for 127.0.0.1 at 2024-11-27 10:25:19 -0600
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 12.9ms | Allocations: 6480)
+Completed 200 OK in 498ms (Views: 42.6ms | ActiveRecord: 38.8ms | Allocations: 20869)
+
+
+Started PATCH "/settings" for 127.0.0.1 at 2024-11-27 10:25:24 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"LiylR1PuNZ7R2TuVZOpJlBrO1kdIfG9s/L7yrE8dMD6np3nxLoM5bNeOEx1e5a6c9rDv858+Yerd0Jn440Fu5g==", "currency"=>"SRD", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 85ms (ActiveRecord: 3.4ms | Allocations: 7453)
+
+
+Started GET "/settings" for 127.0.0.1 at 2024-11-27 10:25:24 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 3.5ms | Allocations: 5921)
+Completed 200 OK in 268ms (Views: 5.0ms | ActiveRecord: 1.1ms | Allocations: 8089)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:26:23 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"tY5U6RAeRheVD5APk20ffA46tOtzlVuT1h7xh6qabbw8BYhfbXNK5ZNYuIepYvh04kSNX6TXVRX3cJrTBsYzZA==", "currency"=>"SSP", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 8ms (ActiveRecord: 2.9ms | Allocations: 5457)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:26:23 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 1.5ms | Allocations: 5921)
+Completed 200 OK in 248ms (Views: 2.4ms | ActiveRecord: 1.3ms | Allocations: 8100)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:29:41 -0600
+  [1m[35m (10.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 57.5ms | Allocations: 6480)
+Completed 200 OK in 616ms (Views: 115.5ms | ActiveRecord: 21.3ms | Allocations: 20697)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:29:45 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"PFWDV4QY7NoSkeKCvWX0QlE6ndfw1ospOuWqhiXF4km13l/h+XXgKBTGygqHahNKvUSkYyeUha8bi8HSiZm8kQ==", "currency"=>"SOS", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 33ms (ActiveRecord: 2.2ms | Allocations: 7456)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:29:45 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 4.8ms | Allocations: 5921)
+Completed 200 OK in 235ms (Views: 7.2ms | ActiveRecord: 1.4ms | Allocations: 8099)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:30:02 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"LXUk0BNn1J/SP7hThdcJaxxGb0LafW22NVu2Tol3Dvik/vhmbgrYbdRokNu/2O5j8DhW9g0/YzAUNd0aJStQIA==", "currency"=>"SSP", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 8ms (ActiveRecord: 2.4ms | Allocations: 5463)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:30:02 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 2.3ms | Allocations: 5921)
+Completed 200 OK in 249ms (Views: 4.5ms | ActiveRecord: 1.3ms | Allocations: 8091)
+
+
+  [1m[35m (2.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  [1m[36mUser Load (1.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (3.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+Started GET "/settings" for ::1 at 2024-11-27 10:38:00 -0600
+  [1m[35m (7.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (3.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 31.5ms | Allocations: 6480)
+Completed 200 OK in 771ms (Views: 98.7ms | ActiveRecord: 17.1ms | Allocations: 20790)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:38:06 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"i1y1MHIs9SJP+Fbbs0nDQIBl2qeCoe3eFwbVTguU89MC12mGD0H50EmvflOJRiRIbBvjE1Xj41g2aL4ap8itCw==", "currency"=>"AED", "commit"=>"Save Settings"}
+  [1m[36mUser Load (4.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (4.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 136ms (ActiveRecord: 9.6ms | Allocations: 7434)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:38:06 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (5.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 12.1ms | Allocations: 5921)
+Completed 200 OK in 265ms (Views: 18.9ms | ActiveRecord: 5.1ms | Allocations: 8098)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:38:08 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 10.5ms | Allocations: 5921)
+Completed 200 OK in 272ms (Views: 14.8ms | ActiveRecord: 1.1ms | Allocations: 8115)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:38:18 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 8.9ms | Allocations: 5921)
+Completed 200 OK in 251ms (Views: 12.9ms | ActiveRecord: 1.1ms | Allocations: 8107)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:38:21 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"1PaJvYUHoueave84lMCWSn/3ZdecQ/26fwB4RryItmNdfVUL+GquFZzqx7Cuz3FCk4lcY0sB8zxebhMSENTouw==", "currency"=>"SOS", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 8ms (ActiveRecord: 2.4ms | Allocations: 5459)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:38:21 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 6.7ms | Allocations: 5921)
+Completed 200 OK in 272ms (Views: 11.3ms | ActiveRecord: 0.9ms | Allocations: 8102)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:38:24 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:56:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 10.8ms | Allocations: 5920)
+Completed 200 OK in 254ms (Views: 17.1ms | ActiveRecord: 1.1ms | Allocations: 8089)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:39:22 -0600
+  [1m[35m (9.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 32.2ms | Allocations: 6480)
+Completed 200 OK in 560ms (Views: 121.3ms | ActiveRecord: 10.5ms | Allocations: 20693)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:39:27 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"fBXALJz8349g7opmQJLRplW0M8Yi37Vc7qd5tGghtq/1nhya4ZHTfWa5ou56nTauucoKcvWdu9rPyRLgxH3odw==", "currency"=>"CVE", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:25:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 37ms (ActiveRecord: 2.5ms | Allocations: 7492)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:39:27 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 11.9ms | Allocations: 5921)
+Completed 200 OK in 254ms (Views: 16.8ms | ActiveRecord: 0.8ms | Allocations: 8089)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:39:51 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:57:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 1.4ms | Allocations: 5921)
+Completed 200 OK in 264ms (Views: 2.7ms | ActiveRecord: 1.1ms | Allocations: 8111)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:40:27 -0600
+  [1m[35m (8.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (8.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 16.0ms | Allocations: 6476)
+Completed 200 OK in 539ms (Views: 71.2ms | ActiveRecord: 32.6ms | Allocations: 20662)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:40:34 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 8.8ms | Allocations: 5920)
+Completed 200 OK in 280ms (Views: 13.0ms | ActiveRecord: 1.0ms | Allocations: 8124)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:40:36 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"JltQya2yMlei3YeDz7AJTZdD5fnocztjPwxj2O3b/9Sv0Ix/0N8+paSKrwv1v+5Fez3cTT8xNeUeYgiMQYehDA==", "currency"=>"SOS", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 55ms (ActiveRecord: 2.8ms | Allocations: 7443)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:40:37 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 8.7ms | Allocations: 5920)
+Completed 200 OK in 245ms (Views: 11.5ms | ActiveRecord: 1.3ms | Allocations: 8096)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:40:47 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 3.3ms | Allocations: 5920)
+Completed 200 OK in 229ms (Views: 5.3ms | ActiveRecord: 0.7ms | Allocations: 8118)
+
+
+  [1m[35m (6.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (15.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (6.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (2.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (1.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "silly@silly.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (1.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (3.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddDefaultToDefaultCurrency (20241127165322)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ausers" ("id" integer NOT NULL PRIMARY KEY, "email" varchar DEFAULT NULL, "name" varchar DEFAULT NULL, "password_digest" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar DEFAULT NULL, "default_currency" varchar DEFAULT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_ausers_on_email" ON "ausers" ("email")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_ausers_on_session_token" ON "ausers" ("session_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "ausers" ("id","email","name","password_digest","created_at","updated_at","session_token","default_currency")
+                     SELECT "id","email","name","password_digest","created_at","updated_at","session_token","default_currency" FROM "users"[0m
+  [1m[35m (3.5ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer NOT NULL PRIMARY KEY, "email" varchar DEFAULT NULL, "name" varchar DEFAULT NULL, "password_digest" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar DEFAULT NULL, "default_currency" varchar DEFAULT 'USD')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "users" ("id","email","name","password_digest","created_at","updated_at","session_token","default_currency")
+                     SELECT "id","email","name","password_digest","created_at","updated_at","session_token","default_currency" FROM "ausers"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "ausers"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241127165322"]]
+  [1m[35m (3.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (20.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (3.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (26.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (5.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (8.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (1.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (2.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "new_email.google.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+Started GET "/settings" for ::1 at 2024-11-27 10:57:31 -0600
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (7.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 9.5ms | Allocations: 6472)
+Completed 200 OK in 465ms (Views: 25.2ms | ActiveRecord: 36.8ms | Allocations: 20712)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:57:35 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"kh7fq5iEuxQtTm30GaaKidpUSR+973PmLUi20kDmm70blQMd5em35isZRXwjqW2BNipwq2qtfWAMJt2G7LrFZQ==", "currency"=>"AFN", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+Completed 500 Internal Server Error in 34ms (ActiveRecord: 2.2ms | Allocations: 8035)
+
+
+  
+NoMethodError (undefined method `save' for false:FalseClass):
+  
+app/controllers/settings_controller.rb:27:in `update'
+Started PATCH "/settings" for ::1 at 2024-11-27 10:57:50 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"kh7fq5iEuxQtTm30GaaKidpUSR+973PmLUi20kDmm70blQMd5em35isZRXwjqW2BNipwq2qtfWAMJt2G7LrFZQ==", "currency"=>"AFN", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 2.3ms | Allocations: 6048)
+
+
+  
+NoMethodError (undefined method `save' for false:FalseClass):
+  
+app/controllers/settings_controller.rb:27:in `update'
+Started GET "/settings" for ::1 at 2024-11-27 10:58:08 -0600
+  [1m[35m (4.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 8.7ms | Allocations: 6472)
+Completed 200 OK in 367ms (Views: 20.7ms | ActiveRecord: 7.6ms | Allocations: 20713)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:58:11 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"4FNCMhu40fNPSSOOJNq+T6wCodVOPsq8FAZD3cKihkNp2J6EZtXdAUkeCwYe1VlHQHyYYZl8xDo1aCiJbv7Ymw==", "currency"=>"AFN", "commit"=>"Save Settings"}
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 26ms (ActiveRecord: 1.8ms | Allocations: 7453)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:58:11 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 3.6ms | Allocations: 5916)
+Completed 200 OK in 253ms (Views: 6.0ms | ActiveRecord: 1.1ms | Allocations: 8091)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:58:15 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 11.0ms | Allocations: 5916)
+Completed 200 OK in 260ms (Views: 14.5ms | ActiveRecord: 0.9ms | Allocations: 8137)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 10:58:39 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"w8ohV2oZEeoaA2urXDQvgKqPa5VsZ6LEe/pkfXBG4lNKQf3hF3QdGBxUQyNmO8iIRvFSIbslrEJalA8p3Bq8iw==", "currency"=>"USD", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:27:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 8ms (ActiveRecord: 2.7ms | Allocations: 5461)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 10:58:39 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 1.2ms | Allocations: 5916)
+Completed 200 OK in 259ms (Views: 2.1ms | ActiveRecord: 1.0ms | Allocations: 8100)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 11:02:05 -0600
+  [1m[35m (12.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+Started GET "/settings" for ::1 at 2024-11-27 11:02:13 -0600
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 141687.2ms | Allocations: 7210144)
+Completed 500 Internal Server Error in 141930ms (ActiveRecord: 1.2ms | Allocations: 7215169)
+
+
+  Rendered settings/show.html.erb (Duration: 149098.2ms | Allocations: 7451033)
+Completed 500 Internal Server Error in 149533ms (ActiveRecord: 6.8ms | Allocations: 7466318)
+
+
+  
+ActionView::Template::Error (Asset was not declared to be precompiled in production.
+Add `Rails.application.config.assets.precompile += %w( settings.css )` to `config/initializers/assets.rb` and restart your server):
+    1: <h1>Settings</h1>
+    2: <%= stylesheet_link_tag 'settings', media: 'all', 'data-turbo-track': 'reload', defer: true %>
+    3: 
+    4: <h2>Account Information</h2>
+    5: <p>Name: <%= @user.name %></p>
+  
+app/views/settings/show.html.erb:2
+  
+ActionView::Template::Error (Asset was not declared to be precompiled in production.
+Add `Rails.application.config.assets.precompile += %w( settings.css )` to `config/initializers/assets.rb` and restart your server):
+    1: <h1>Settings</h1>
+    2: <%= stylesheet_link_tag 'settings', media: 'all', 'data-turbo-track': 'reload', defer: true %>
+    3: 
+    4: <h2>Account Information</h2>
+    5: <p>Name: <%= @user.name %></p>
+  
+app/views/settings/show.html.erb:2
+Started GET "/settings" for ::1 at 2024-11-27 11:08:02 -0600
+  [1m[35m (8.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (8.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:58:in `current_user'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 692688.5ms | Allocations: 3835108)
+Completed 500 Internal Server Error in 693384ms (ActiveRecord: 29.2ms | Allocations: 3849401)
+
+
+  
+ActionView::Template::Error (Asset was not declared to be precompiled in production.
+Add `Rails.application.config.assets.precompile += %w( settings.css )` to `config/initializers/assets.rb` and restart your server):
+    1: <h1>Settings</h1>
+    2: <%= stylesheet_link_tag 'settings', media: 'all', 'data-turbo-track': 'reload', defer: true %>
+    3: 
+    4: <h2>Account Information</h2>
+    5: <p>Name: <%= @user.name %></p>
+  
+app/views/settings/show.html.erb:2
+Started GET "/settings" for ::1 at 2024-11-27 11:28:57 -0600
+  [1m[35m (9.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:53:in `current_user'
+  [1m[36mUserWorld Load (1.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ? AND "user_worlds"."world_id" IS NULL LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:23:in `prepare_character'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 313650.0ms | Allocations: 2032608)
+Completed 200 OK in 314022ms (Views: 313665.2ms | ActiveRecord: 8.3ms | Allocations: 2048993)
+
+
+Started PATCH "/settings" for ::1 at 2024-11-27 11:34:54 -0600
+Processing by SettingsController#update as HTML
+  Parameters: {"authenticity_token"=>"vQaiyT7i9od415KugdUbXQXp2Lh7nN2G+2FIi04Qw3k0jX5/Q4/6dX6Auia72vxV6ZfhDKze0wDaDyPf4kydoQ==", "currency"=>"AFN", "commit"=>"Save Settings"}
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:53:in `current_user'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/settings_controller.rb:12:in `update'
+  [1m[36mUser Exists? (1.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "silly@silly.com"], ["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:12:in `update'
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/settings_controller.rb:12:in `update'
+Redirected to http://localhost:3000/settings
+Completed 302 Found in 30ms (ActiveRecord: 2.3ms | Allocations: 7438)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 11:34:54 -0600
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (2.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:53:in `current_user'
+  [1m[36mUserWorld Load (2.4ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ? AND "user_worlds"."world_id" IS NULL LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:23:in `prepare_character'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 35.7ms | Allocations: 6833)
+Completed 200 OK in 293ms (Views: 37.0ms | ActiveRecord: 4.7ms | Allocations: 9733)
+
+
+Started GET "/settings" for ::1 at 2024-11-27 11:36:32 -0600
+  [1m[35m (12.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SettingsController#show as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Gffbx3Lu--PuRuA2BdzS5A"], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:53:in `current_user'
+  [1m[36mUserWorld Load (0.8ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ? AND "user_worlds"."world_id" IS NULL LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/settings_controller.rb:23:in `prepare_character'
+  Rendering settings/show.html.erb
+  Rendered settings/show.html.erb (Duration: 9.0ms | Allocations: 6486)
+Completed 200 OK in 452ms (Views: 38.3ms | ActiveRecord: 9.7ms | Allocations: 22971)
+
+
