@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2024_11_27_155845) do
     t.string "game"
     t.string "monsters"
     t.string "state"
+    t.string "terrain"
+    t.string "code"
     t.text "pixel_art"
     t.index ["square_id"], name: "index_squares_on_square_id", unique: true
     t.index ["world_id"], name: "index_squares_on_world_id"

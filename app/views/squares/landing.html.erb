@@ -13,20 +13,25 @@
   </div>
 
   <div class="grid">
-    <% @squares.each do |square| %>
-      <div class="grid-item">
-        <h3>Square <%= square.id %></h3>
-        <% if square.pixel_art.present? %>
-          <pre class="pixel-art">
-            <%= square.pixel_art %>
-          </pre>
-        <% else %>
-          <p class="no-pixel-art">No pixel art available</p>
-        <% end %>
-      </div>
+  // Execute each square's drawing code
+<% @squares.first(36).each do |square| %>
+  <% if square.code.present? %>
+    <%= square.code.html_safe %>
+    drawSquare<%= square.x - 1 %>_<%= square.y - 1 %>('square_<%= square.id %>');
+  <% else %>
+    <p>No code available for this square.</p>
+  <% end %>
+<% end %>
+
+
+<script>
+  <% @squares.first(36).each do |square| %>
+    <% if square.code.present? %>
+      <%= square.code.html_safe %>
+      drawSquare<%= square.x - 1 %>_<%= square.y - 1 %>('square_<%= square.id %>');
     <% end %>
-  </div>
-</div>
+  <% end %>
+</script>
 
 <style>
   /* General Styles */
@@ -161,4 +166,22 @@
     color: #999;
     margin: 10px 0 0;
   }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    padding: 20px;
+  }
+
+  .grid-item {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .map-square {
+    max-width: 100% ;
+}
 </style>
