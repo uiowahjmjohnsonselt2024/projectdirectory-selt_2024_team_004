@@ -27,4 +27,5 @@
   <% end %>
 </section>
 
+<%= button_to 'Back to Game', landing_path(user_id: @user.id, world_id: params[:world_id]), method: :get, class: 'landing-button' %>
 <%= button_to 'Logout', logout_path, method: :delete, class: 'logout-button' %>

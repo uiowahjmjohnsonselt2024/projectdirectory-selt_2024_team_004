@@ -1,11 +1,22 @@
 class WorldsController < ApplicationController
   before_action :set_current_user
+  def landing
+    store
+    @user_world = UserWorld.find_by(id: params[:id])
+    @world = @user_world.world
+    @character = @world.characters.first
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
+  end
+  
   def new
     # Renders the character form
     @world_id = params[:world_id]
   end
 
   def index
+    #@worlds parameter will be a list of all the world keys the current user has
+    puts params
     puts @current_user.name
     if @current_user
       @user_worlds = @current_user.user_worlds
@@ -17,7 +28,6 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
-
     @world = World.new(last_played: DateTime.now, progress: 0)
     if @world.save
       @world.update(world_name: "World #{@world.id}")
@@ -46,7 +56,7 @@ class WorldsController < ApplicationController
     @gender = params[:gender]
     @preload = params[:preload]
     @role = params[:role]
-    
+
     if @gender && @preload && @role
       @image_path = "#{@gender}_#{@preload}_#{@role}.png"
     else
@@ -54,12 +64,10 @@ class WorldsController < ApplicationController
     end
   end
 
-  def landing
-    @user_world = UserWorld.find_by(id: params[:id])
-    @world = @user_world.world
-    @character = @world.characters.first
-    @character.x_coord ||= 0
-    @character.y_coord ||= 27
+  def store
+    @user = current_user
+    @currency = @user.default_currency || 'USD'
+    @prices = StoreService.fetch_prices(@user)
   end
 
   def api_call
@@ -70,4 +78,7 @@ class WorldsController < ApplicationController
     )
   end
 
+  def current_user
+    @current_user ||= User.find_by id: params[:user_id]
+  end
 end

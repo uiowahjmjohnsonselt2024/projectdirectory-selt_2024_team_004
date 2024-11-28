@@ -111,6 +111,10 @@ GEM
     date (3.4.0)
     diff-lcs (1.5.1)
     docile (1.4.1)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.13.0)
     event_stream_parser (1.0.0)
     execjs (2.10.0)
@@ -360,6 +364,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   cucumber-rails (~> 1.8.0)
   database_cleaner
+  dotenv-rails
   ffi (= 1.16.3)
   jbuilder (~> 2.7)
   jquery-rails
