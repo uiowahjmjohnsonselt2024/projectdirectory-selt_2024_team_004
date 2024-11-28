@@ -92,12 +92,18 @@ class WorldsController < ApplicationController
     
     require 'openai'
     client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-    terrain_types = ["forest", "mountain", "lake", "village", "plain", "desert"]
-
+    
+    # Create a 6x6 terrain map (not 3x3)
+    terrain_map = generate_terrain_map(6, 6)
+    
+    # Debug output
+    puts "Generating #{terrain_map.length} rows x #{terrain_map[0].length} columns"
+    
     6.times do |y|
       6.times do |x|
         begin
-          terrain = terrain_types.sample
+          terrain = terrain_map[y][x]
+          puts "Generating square at (#{x}, #{y}) with terrain: #{terrain}"
           generate_single_square(world, x, y, terrain, client)
           puts "Created square at position (#{x}, #{y}) for world #{world.id}"
           sleep(0.1)
@@ -109,15 +115,59 @@ class WorldsController < ApplicationController
             x: x,
             y: y,
             state: "inactive",
-            terrain: terrain,
-            code: generate_fallback_code(x, y, terrain)
+            terrain: terrain || "plain",
+            code: generate_fallback_code(x, y, terrain || "plain")
           )
         end
       end
     end
+  end
+  
 
-    actual_count = world.squares.where(world_id: world.id).count
-    puts "Final square count for world #{world.id}: #{actual_count}"
+  def generate_terrain_map(width, height)
+    terrain_types = ["forest", "mountain", "lake", "plain"]
+    map = Array.new(6) { Array.new(6) }  # Force 6x6 grid
+    
+    # Start with plains as base terrain
+    map.each_index do |y|
+      map[y].each_index do |x|
+        map[y][x] = "plain"
+      end
+    end
+
+    # Generate mountain range (4 squares)
+    mountain_start_x = rand(width - 1)
+    mountain_start_y = rand(height - 1)
+    [[0,0], [0,1], [1,0], [1,1]].each do |dx, dy|
+      if (mountain_start_x + dx) < width && (mountain_start_y + dy) < height
+        map[mountain_start_y + dy][mountain_start_x + dx] = "mountain"
+      end
+    end
+
+    # Generate forest (2-3 squares)
+    forest_squares = []
+    forest_start_x = rand(width)
+    forest_start_y = rand(height)
+    [[0,0], [0,1], [1,0]].each do |dx, dy|
+      if (forest_start_x + dx) < width && (forest_start_y + dy) < height
+        next if map[forest_start_y + dy][forest_start_x + dx] == "mountain"
+        map[forest_start_y + dy][forest_start_x + dx] = "forest"
+      end
+    end
+
+    # Generate lake (2 squares)
+    lake_squares = []
+    lake_start_x = rand(width)
+    lake_start_y = rand(height)
+    [[0,0], [1,0]].each do |dx, dy|
+      if (lake_start_x + dx) < width && (lake_start_y + dy) < height
+        next if map[lake_start_y + dy][lake_start_x + dx] == "mountain" ||
+                map[lake_start_y + dy][lake_start_x + dx] == "forest"
+        map[lake_start_y + dy][lake_start_x + dx] = "lake"
+      end
+    end
+
+    map
   end
   
 
@@ -156,17 +206,25 @@ class WorldsController < ApplicationController
           messages: [
             { 
               role: "system", 
-              content: "You are a JavaScript expert creating interconnected map tiles. Each tile should smoothly connect with its neighbors, avoiding abrupt transitions or floating elements like suns. The terrain should flow naturally across tile boundaries."
+              content: "You are a JavaScript expert creating cohesive terrain tiles. Each terrain type should blend naturally with its neighbors and be part of a larger feature. Mountains are tall and rocky, forests are dense with trees, lakes are deep blue water, and plains are grassy fields."
             },
             { 
               role: "user", 
-              content: "Generate JavaScript code to draw a #{terrain} tile (105x105 canvas) that connects with its neighbors. Only output the code. Do not put in any explanations or comments. Do not create a new canvas or append elements:
+              content: "Generate JavaScript code to draw a #{terrain} tile (105x105 canvas) that connects with its neighbors:
               North: #{adjacent_terrains[:north] || 'unknown'}
               South: #{adjacent_terrains[:south] || 'unknown'}
               East: #{adjacent_terrains[:east] || 'unknown'}
               West: #{adjacent_terrains[:west] || 'unknown'}
               
-              Use only the 'ctx' variable. Ensure terrain features align with edges and avoid standalone elements like suns or clouds. Use consistent colors and patterns."
+              Use only the 'ctx' variable. The terrain should be part of a larger #{terrain} feature and blend naturally with adjacent tiles.
+              For mountains: Use grays and browns, show rocky peaks and slopes
+              For forests: Use various greens, show dense tree coverage
+              For lakes: Use blues, show water ripples or waves
+              For plains: Use yellows and light greens, show grass patterns
+              
+              Ensure features align at edges and maintain consistent style across tiles.
+              
+              Do not create a new canvas or append elements, canvas is already created. Make sure to add all parantheses ) after argument list, do not put in any explanations or comments. Only output the code."
             }
           ],
           temperature: 0.7
