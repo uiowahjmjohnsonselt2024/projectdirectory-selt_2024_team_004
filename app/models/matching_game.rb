@@ -30,4 +30,21 @@ class MatchingGame
   def game_over?
     @matches_idx.length == @images.length
   end
+
+  # Helper function for RSpec tests
+  def get_matches
+    puts "#{@cards_idx}"
+    matched_pairs = []
+
+    @cards_idx.each_with_index do |card_idx1, index1|
+      @cards_idx[(index1 + 1)..-1].each_with_index do |card_idx2, index2|
+        if card_idx1 == card_idx2
+          matched_pairs << [index1, index1 + index2 + 1]
+        end
+      end
+    end
+
+    puts "#{matched_pairs}"
+    matched_pairs
+  end
 end
