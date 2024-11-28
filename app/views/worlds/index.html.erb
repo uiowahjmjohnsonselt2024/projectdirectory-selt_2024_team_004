@@ -12,7 +12,7 @@
           <tr>
             <td><%= world[:world_name] %></td>
             <td>
-              <%= form_with url: landing_path, method: :get, local: true do |form| %>
+              <%= form_with url: landing_path(user_id: user_world.user_id, world_id: user_world.world_id, user_world_id: user_world.id), method: :get, local: true do |form| %>
                 <%= form.submit 'Play', class: 'btn btn-primary' %>
               <% end %>
             </td>

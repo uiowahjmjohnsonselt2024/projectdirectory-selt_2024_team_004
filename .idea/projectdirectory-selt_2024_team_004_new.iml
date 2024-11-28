@@ -49,6 +49,8 @@
     <orderEntry type="library" scope="PROVIDED" name="date (v3.4.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.5.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="docile (v1.4.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="dotenv (v2.8.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="dotenv-rails (v2.8.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.13.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.10.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.16.3, Remote: ruby-2.6.10-p210) [gem]" level="application" />
@@ -145,8 +147,8 @@
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.6.18, Remote: ruby-2.6.10-p210) [gem]" level="application" />
   </component>
-  <component name="RakeTasksCache-v2" failedReloadsCounter="2">
-    <option name="failedReloadsCounter" value="2" />
+  <component name="RakeTasksCache-v2" failedReloadsCounter="3">
+    <option name="failedReloadsCounter" value="3" />
     <option name="myRootTask">
       <RakeTaskImpl id="rake">
         <subtasks>

@@ -13,4 +13,12 @@ class OpenExchangeService
     Rails.logger.error("Error fetching currencies: #{e.message}")
     {}
   end
+
+  def self.fetch_exchange_rates
+    url = URI("#{BASE_URL}/latest.json?app_id=#{APP_ID}")
+    response = Net::HTTP.get(url)
+    JSON.parse(response)
+  rescue StandardError => e
+    Rails.logger.error("Error fetching exchange rates: #{e.message}")
+  end
 end

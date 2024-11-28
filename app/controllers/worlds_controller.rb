@@ -1,5 +1,9 @@
 class WorldsController < ApplicationController
   before_action :set_current_user
+  def landing
+    store
+  end
+
   def new
     # Renders the character form
     @world_id = params[:world_id]
@@ -8,22 +12,22 @@ class WorldsController < ApplicationController
   def index
     #@worlds parameter will be a list of all the world keys the current user has
     puts params
-    puts @current_user.name
-    if @current_user
-      @user_worlds = @current_user.user_worlds
+    puts current_user.name
+    if current_user
+      @user_worlds = current_user.user_worlds
     else
-      flash[:alert] = "Please log in to view your worlds."
+      flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
     end
   end
 
   def create
-    puts "Form submitted successfully!"
+    puts 'Form submitted successfully!'
     @world = World.new(last_played: DateTime.now, progress: 0)
     if @world.save
       @world.update(world_name: "World #{@world.id}")
-      UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-      flash[:notice] = "World created successfully!"
+      UserWorld.create!(user: current_user, world: @world, user_role: user_roles, owner: true)
+      flash[:notice] = 'World created successfully!'
       redirect_to worlds_path
     end
   end
@@ -49,12 +53,12 @@ class WorldsController < ApplicationController
     @gender = params[:gender]
     @preload = params[:preload]
     @role = params[:role]
-    
+
     if @gender && @preload && @role
       @image_key = "#{@gender}_#{@preload}_#{@role}"
       @image_path = "/assets/images/#{@image_key}.png"
     else
-      @image_path = "/assets/images/1_1_1.png"
+      @image_path = '/assets/images/1_1_1.png'
     end
   end
 
@@ -64,6 +68,16 @@ class WorldsController < ApplicationController
 
     @new_world = @world.
 
-    redirect_to some_other_path, notice: "Your adventure begins!"
+    redirect_to some_other_path, notice: 'Your adventure begins!'
+  end
+
+  def store
+    @user = current_user
+    @currency = @user.default_currency || 'USD'
+    @prices = StoreService.fetch_prices(@user)
+  end
+
+  def current_user
+    @current_user ||= User.find_by id: params[:user_id]
   end
 end
