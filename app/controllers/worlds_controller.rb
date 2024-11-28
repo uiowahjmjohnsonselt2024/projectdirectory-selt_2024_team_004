@@ -80,7 +80,8 @@ class WorldsController < ApplicationController
     end
     puts 'world id'
     puts @world.id
-    render 'squares/landing', locals: { world_id: @world.id }
+    render 'squares/landing'
+    #, locals: { world_id: @world.id }
   end
   
 
@@ -124,8 +125,8 @@ class WorldsController < ApplicationController
     <<~JAVASCRIPT
       function drawSquare_#{x}_#{y}(containerId) {
         const canvas = document.createElement('canvas');
-        canvas.width = 32;
-        canvas.height = 32;
+        canvas.width = 128;
+        canvas.height = 128;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#{
           case terrain
@@ -137,14 +138,13 @@ class WorldsController < ApplicationController
           else "#F4A460" # desert
           end
         }';
-        ctx.fillRect(0, 0, 32, 32);
+        ctx.fillRect(0, 0, 128, 128);
         document.getElementById(containerId).appendChild(canvas);
       }
     JAVASCRIPT
   end
 
   def generate_single_square(world, x, y, terrain, client)
-    # Check if square exists for THIS world
     return if world.squares.exists?(x: x, y: y)
 
     begin
@@ -152,8 +152,8 @@ class WorldsController < ApplicationController
         parameters: {
           model: "gpt-3.5-turbo",
           messages: [
-            { role: "system", content: "You are a JavaScript expert. Generate code to draw a #{terrain} terrain on a 32x32 canvas. The canvas and context are already created. Use only the provided 'ctx' context." },
-            { role: "user", content: "Write JavaScript code to draw a #{terrain} on the canvas. Use only the 'ctx' variable to draw. Do not create new canvas or append elements. Do not declare ctx again." }
+            { role: "system", content: "You are a JavaScript expert. Generate code to draw a #{terrain} terrain on a 128x128 canvas. The canvas and context are already created. Use only the provided 'ctx' context." },
+            { role: "user", content: "Write JavaScript code to draw a #{terrain} on the canvas. Use only the 'ctx' variable to draw. Canvas size is 128x128. Do not create new canvas or append elements. Do not declare ctx again. Only output the code. Do not put in any explanations or comments." }
           ],
           temperature: 0.7
         }
@@ -167,8 +167,8 @@ class WorldsController < ApplicationController
       formatted_code = <<~JAVASCRIPT
         function #{function_name}(containerId) {
           const canvas = document.createElement('canvas');
-          canvas.width = 32;
-          canvas.height = 32;
+          canvas.width = 128;
+          canvas.height = 128;
           const ctx = canvas.getContext('2d');
           
           #{sanitized_code}

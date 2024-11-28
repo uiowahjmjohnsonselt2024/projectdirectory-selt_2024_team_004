@@ -14,7 +14,6 @@
 
   <!-- Debug info -->
   <% if @squares.present? %>
-    <small>Debug: Found <%= @squares.count %> squares</small>
   <% end %>
 
   <div class="grid">
@@ -135,12 +134,10 @@
     margin: 20px auto;
     width: fit-content;
     padding: 0;
-    border: 1px solid red; /* Temporary debug border */
   }
 
   .grid-item {
     background: none;
-    border: 1px solid blue; /* Temporary debug border */
     padding: 0;
     text-align: center;
     width: 128px;
@@ -183,5 +180,18 @@
     display: block;
     width: 32px;
     height: 32px;
+  }
+
+  .square-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 384px; /* 128 * 3 */
+    height: 384px; /* 128 * 3 */
+  }
+
+  .square-container canvas {
+    display: block; /* Removes any default spacing */
+    margin: 0;
+    padding: 0;
   }
 </style>
