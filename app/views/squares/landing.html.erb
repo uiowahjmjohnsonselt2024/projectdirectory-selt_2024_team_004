@@ -12,27 +12,32 @@
     </div>
   </div>
 
+  <!-- Debug info -->
+  <% if @squares.present? %>
+    <small>Debug: Found <%= @squares.count %> squares</small>
+  <% end %>
+
   <div class="grid">
-    <% @squares.each do |square| %>
-      <div class="grid-item" id="square_<%= square.square_id %>">
-        <% if square.code.present? %>
-          <script>
-            if (!window.squareInitialized_<%= square.square_id %>) {
-              document.addEventListener('DOMContentLoaded', () => {
-                <%= square.code.html_safe %>
-                drawSquare<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-              });
-              window.squareInitialized_<%= square.square_id %> = true;
-            }
-          </script>
-          <!--<small>
-            Terrain: <%= square.terrain %><br>
-            Position: <%= square.x %>,<%= square.y %>
-          </small> -->
-        <% else %>
-          <p>No code available for square <%= square.square_id %> (<%= square.x %>, <%= square.y %>)</p>
-        <% end %>
-      </div>
+    <% if @squares.present? %>
+      <% @squares.each do |square| %>
+        <div class="grid-item" id="square_<%= square.square_id %>">
+          <% if square.code.present? %>
+            <script>
+              if (!window.squareInitialized_<%= square.square_id %>) {
+                document.addEventListener('DOMContentLoaded', () => {
+                  <%= square.code.html_safe %>
+                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
+                });
+                window.squareInitialized_<%= square.square_id %> = true;
+              }
+            </script>
+          <% else %>
+            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No squares found for this world!</p>
     <% end %>
   </div>
 </div>
@@ -125,20 +130,24 @@
   /* Grid */
   .grid {
     display: grid;
-    grid-template-columns: repeat(6, 32px);
+    grid-template-columns: repeat(3, 128px);
     gap: 0;
     margin: 20px auto;
     width: fit-content;
     padding: 0;
+    border: 1px solid red; /* Temporary debug border */
   }
 
   .grid-item {
     background: none;
-    border: none;
+    border: 1px solid blue; /* Temporary debug border */
     padding: 0;
     text-align: center;
-    box-shadow: none;
-    transition: none;
+    width: 128px;
+    height: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .grid-item:hover {

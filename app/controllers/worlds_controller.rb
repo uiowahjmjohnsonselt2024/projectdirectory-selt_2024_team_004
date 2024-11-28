@@ -69,38 +69,42 @@ class WorldsController < ApplicationController
     @world = World.find(params[:id])
     @squares = @world.squares.order(:y, :x)
   
-    if @squares.count != 36
-      flash[:alert] = "Regenerating squares to ensure exactly 36 squares"
+    puts "World ID: #{@world.id}"
+    puts "Square count: #{@squares.count}"
+  
+    if @squares.count != 9
+      flash[:alert] = "Regenerating squares for this world"
+      @squares.destroy_all
       generate_squares_for_world(@world)
       @squares = @world.squares.reload.order(:y, :x)
     end
-  
-    render 'squares/landing'
+    puts 'world id'
+    puts @world.id
+    render 'squares/landing', locals: { world_id: @world.id }
   end
   
 
   private
 
   def generate_squares_for_world(world)
-    world.squares.destroy_all # Clear existing squares
+    world.squares.where(world_id: world.id).destroy_all
     
     require 'openai'
     client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
     terrain_types = ["forest", "mountain", "lake", "village", "plain", "desert"]
 
-    # Use 0-based indexing consistently
-    6.times do |y|
-      6.times do |x|
+    3.times do |y|
+      3.times do |x|
         begin
-          # Select terrain type before the begin/rescue block so it's available in both contexts
           terrain = terrain_types.sample
           generate_single_square(world, x, y, terrain, client)
-          puts "Created square at position (#{x}, #{y})"
+          puts "Created square at position (#{x}, #{y}) for world #{world.id}"
           sleep(0.1)
         rescue => e
           puts "Error creating square at (#{x}, #{y}): #{e.message}"
           world.squares.create!(
             square_id: SecureRandom.hex(10),
+            world_id: world.id,
             x: x,
             y: y,
             state: "inactive",
@@ -111,14 +115,14 @@ class WorldsController < ApplicationController
       end
     end
 
-    actual_count = world.squares.count
-    puts "Final square count: #{actual_count}"
+    actual_count = world.squares.where(world_id: world.id).count
+    puts "Final square count for world #{world.id}: #{actual_count}"
   end
   
 
   def generate_fallback_code(x, y, terrain)
     <<~JAVASCRIPT
-      function drawSquare#{x}_#{y}(containerId) {
+      function drawSquare_#{x}_#{y}(containerId) {
         const canvas = document.createElement('canvas');
         canvas.width = 32;
         canvas.height = 32;
@@ -140,8 +144,9 @@ class WorldsController < ApplicationController
   end
 
   def generate_single_square(world, x, y, terrain, client)
+    # Check if square exists for THIS world
     return if world.squares.exists?(x: x, y: y)
-  
+
     begin
       response = client.chat(
         parameters: {
@@ -156,7 +161,7 @@ class WorldsController < ApplicationController
       
       raw_code = response.dig('choices', 0, 'message', 'content')
       sanitized_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '').gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
-  
+
       function_name = "drawSquare_#{x}_#{y}"
       
       formatted_code = <<~JAVASCRIPT
@@ -172,11 +177,10 @@ class WorldsController < ApplicationController
         }
       JAVASCRIPT
 
-      puts 'formatted code'
-      ptus formatted_code
-  
+      # Create square with explicit world association
       world.squares.create!(
         square_id: SecureRandom.hex(10),
+        world_id: world.id,
         x: x,
         y: y,
         state: "inactive",
@@ -188,6 +192,7 @@ class WorldsController < ApplicationController
       unless world.squares.exists?(x: x, y: y)
         world.squares.create!(
           square_id: SecureRandom.hex(10),
+          world_id: world.id,
           x: x,
           y: y,
           state: "inactive",
