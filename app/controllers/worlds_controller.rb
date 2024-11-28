@@ -19,14 +19,14 @@ class WorldsController < ApplicationController
   def create
     puts "Form submitted successfully!"
     @world = World.new(last_played: DateTime.now, progress: 0)
-
+  
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-
-      # Generate squares with OpenAI API
+  
+      # Use only one method to generate squares
       generate_squares_for_world(@world)
-
+  
       flash[:notice] = "World created successfully!"
       redirect_to worlds_path
     else
@@ -34,6 +34,7 @@ class WorldsController < ApplicationController
       render :new
     end
   end
+  
 
   def destroy
     puts params.inspect
@@ -65,80 +66,135 @@ class WorldsController < ApplicationController
   end
 
   def start_game
-    puts 'params'
-    puts params
-
-    @new_world = @world
-
-    redirect_to some_other_path, notice: "Your adventure begins!"
+    @world = World.find(params[:id])
+    @squares = @world.squares.order(:y, :x)
+  
+    if @squares.count != 36
+      flash[:alert] = "Regenerating squares to ensure exactly 36 squares"
+      generate_squares_for_world(@world)
+      @squares = @world.squares.reload.order(:y, :x)
+    end
+  
+    render 'squares/landing'
   end
+  
 
   private
 
   def generate_squares_for_world(world)
-    puts 'generate_squares_for_world exists'
-    return if world.squares.exists? # Prevent duplicate square generation
-  
-    puts "Starting square generation..."  # Debug line
-  
+    world.squares.destroy_all # Clear existing squares
+    
     require 'openai'
     client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-  
     terrain_types = ["forest", "mountain", "lake", "village", "plain", "desert"]
-  
+
+    # Use 0-based indexing consistently
     6.times do |y|
       6.times do |x|
-        terrain = terrain_types.sample
-        puts "Generating square #{x},#{y} with terrain: #{terrain}"  # Debug line
-  
-        prompt = <<~PROMPT
-          Create JavaScript code that:
-          1. Creates a 32x32 canvas element
-          2. Draws a #{terrain} in pixel art style
-          3. Uses specific colors (e.g., greens for forests, blues for lakes)
-          4. Returns only the JavaScript code that creates and draws on the canvas. DO NOT RETURN AN EXPLANATION, ONLY THE CODE.
-          
-          Example format:
-          function drawSquare#{x}_#{y}(containerId) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 32;
-            canvas.height = 32;
-            const ctx = canvas.getContext('2d');
-            // Drawing code here
-            document.getElementById(containerId).appendChild(canvas);
-          }
-        PROMPT
-  
-        puts "Sending request to OpenAI..."  # Debug line
-        
-        begin  # Add error handling
-          response = client.chat(
-            parameters: {
-              model: "gpt-4",
-              messages: [{ role: "user", content: prompt }],
-              temperature: 0.7
-            }
-          )
-          
-          puts "Got response from OpenAI"  # Debug line
-          code = response.dig("choices", 0, "message", "content")
-          puts "Generated code:"  # Debug line
-          puts code  # This will show the actual code
-          
+        begin
+          # Select terrain type before the begin/rescue block so it's available in both contexts
+          terrain = terrain_types.sample
+          generate_single_square(world, x, y, terrain, client)
+          puts "Created square at position (#{x}, #{y})"
+          sleep(0.1)
+        rescue => e
+          puts "Error creating square at (#{x}, #{y}): #{e.message}"
           world.squares.create!(
-            x: x + 1,
-            y: y + 1,
+            square_id: SecureRandom.hex(10),
+            x: x,
+            y: y,
             state: "inactive",
             terrain: terrain,
-            code: code.strip
+            code: generate_fallback_code(x, y, terrain)
           )
-          puts "Created square in database"  # Debug line
-          
-        rescue => e
-          puts "Error occurred: #{e.message}"  # Debug line for errors
-          puts e.backtrace  # Show the full error trace
         end
       end
     end
+
+    actual_count = world.squares.count
+    puts "Final square count: #{actual_count}"
   end
+  
+
+  def generate_fallback_code(x, y, terrain)
+    <<~JAVASCRIPT
+      function drawSquare#{x}_#{y}(containerId) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#{
+          case terrain
+          when "lake" then "#4444FF"
+          when "forest" then "#44FF44"
+          when "mountain" then "#8B4513"
+          when "village" then "#808080"
+          when "plain" then "#FFFF44"
+          else "#F4A460" # desert
+          end
+        }';
+        ctx.fillRect(0, 0, 32, 32);
+        document.getElementById(containerId).appendChild(canvas);
+      }
+    JAVASCRIPT
+  end
+
+  def generate_single_square(world, x, y, terrain, client)
+    return if world.squares.exists?(x: x, y: y)
+  
+    begin
+      response = client.chat(
+        parameters: {
+          model: "gpt-3.5-turbo",
+          messages: [
+            { role: "system", content: "You are a JavaScript expert. Generate code to draw a #{terrain} terrain on a 32x32 canvas. The canvas and context are already created. Use only the provided 'ctx' context." },
+            { role: "user", content: "Write JavaScript code to draw a #{terrain} on the canvas. Use only the 'ctx' variable to draw. Do not create new canvas or append elements. Do not declare ctx again." }
+          ],
+          temperature: 0.7
+        }
+      )
+      
+      raw_code = response.dig('choices', 0, 'message', 'content')
+      sanitized_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '').gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
+  
+      function_name = "drawSquare_#{x}_#{y}"
+      
+      formatted_code = <<~JAVASCRIPT
+        function #{function_name}(containerId) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 32;
+          canvas.height = 32;
+          const ctx = canvas.getContext('2d');
+          
+          #{sanitized_code}
+          
+          document.getElementById(containerId).appendChild(canvas);
+        }
+      JAVASCRIPT
+
+      puts 'formatted code'
+      ptus formatted_code
+  
+      world.squares.create!(
+        square_id: SecureRandom.hex(10),
+        x: x,
+        y: y,
+        state: "inactive",
+        terrain: terrain,
+        code: formatted_code
+      )
+    rescue => e
+      puts "Error generating square: #{e.message}"
+      unless world.squares.exists?(x: x, y: y)
+        world.squares.create!(
+          square_id: SecureRandom.hex(10),
+          x: x,
+          y: y,
+          state: "inactive",
+          terrain: terrain,
+          code: generate_fallback_code(x, y, terrain)
+        )
+      end
+    end
+  end  
 end

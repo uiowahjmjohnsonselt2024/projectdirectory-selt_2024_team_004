@@ -13,25 +13,29 @@
   </div>
 
   <div class="grid">
-  // Execute each square's drawing code
-<% @squares.first(36).each do |square| %>
-  <% if square.code.present? %>
-    <%= square.code.html_safe %>
-    drawSquare<%= square.x - 1 %>_<%= square.y - 1 %>('square_<%= square.id %>');
-  <% else %>
-    <p>No code available for this square.</p>
-  <% end %>
-<% end %>
-
-
-<script>
-  <% @squares.first(36).each do |square| %>
-    <% if square.code.present? %>
-      <%= square.code.html_safe %>
-      drawSquare<%= square.x - 1 %>_<%= square.y - 1 %>('square_<%= square.id %>');
+    <% @squares.each do |square| %>
+      <div class="grid-item" id="square_<%= square.square_id %>">
+        <% if square.code.present? %>
+          <script>
+            if (!window.squareInitialized_<%= square.square_id %>) {
+              document.addEventListener('DOMContentLoaded', () => {
+                <%= square.code.html_safe %>
+                drawSquare<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
+              });
+              window.squareInitialized_<%= square.square_id %> = true;
+            }
+          </script>
+          <!--<small>
+            Terrain: <%= square.terrain %><br>
+            Position: <%= square.x %>,<%= square.y %>
+          </small> -->
+        <% else %>
+          <p>No code available for square <%= square.square_id %> (<%= square.x %>, <%= square.y %>)</p>
+        <% end %>
+      </div>
     <% end %>
-  <% end %>
-</script>
+  </div>
+</div>
 
 <style>
   /* General Styles */
@@ -121,26 +125,25 @@
   /* Grid */
   .grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(6, 32px);
+    gap: 0;
     margin: 20px auto;
-    max-width: 1200px;
-    padding: 10px;
+    width: fit-content;
+    padding: 0;
   }
 
   .grid-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+    background: none;
+    border: none;
+    padding: 0;
     text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: none;
+    transition: none;
   }
 
   .grid-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: none;
+    box-shadow: none;
   }
 
   .grid-item h3 {
@@ -166,22 +169,10 @@
     color: #999;
     margin: 10px 0 0;
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 20px;
-  }
-
-  .grid-item {
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
-  }
 
   .map-square {
-    max-width: 100% ;
-}
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
 </style>
