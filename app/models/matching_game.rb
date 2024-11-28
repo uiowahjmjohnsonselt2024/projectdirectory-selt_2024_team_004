@@ -1,4 +1,5 @@
 class MatchingGame
+  attr_reader :cards_idx, :flipped_cards, :matches_idx
   def initialize
     @images = ['image1', 'image2', 'image3', 'image4', 'image5']  # placeholder for now
     @cards_idx = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4].shuffle  # index of the image that will show when card flips
@@ -8,7 +9,7 @@ class MatchingGame
 
   def flip_card(idx)
     # First check if the card is already flipped or matched
-    return nil if @flipped_cards.include?(idx) || @matches.include?(idx)
+    return nil if @flipped_cards.include?(idx) || @matches_idx.include?(idx)
 
     # If not, add the index to flipped_cards
     @flipped_cards << idx

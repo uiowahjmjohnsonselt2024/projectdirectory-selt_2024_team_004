@@ -16,4 +16,11 @@ RSpec.describe MatchingGame, type: :model do
       expect(@test_game.matches_idx).to eq([])
     end
   end
+
+  describe 'flipping a card' do
+    it 'should contain one flipped card on the first flip' do
+      @test_game.flip_card(0)
+      expect(@test_game.flipped_cards.length).to eq(1)
+    end
+  end
 end
