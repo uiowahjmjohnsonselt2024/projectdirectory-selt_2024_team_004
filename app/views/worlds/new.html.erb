@@ -38,10 +38,22 @@
     </div>
 
     <div class="submit-btn-container">
-      <%= form.submit "Time to Set Sail!", class: "btn btn-primary submit-btn" %>
+      <%= form.submit "Time to Set Sail!", class: "btn btn-primary submit-btn", id: "submit-btn" %>
+      <div class="loading-text" style="display: none;">
+        Creating world<span class="dots"></span>
+      </div>
     </div>
   <% end %>
 </div>
+
+<style>
+.loading-text {
+  color: #666;
+  font-size: 1.2em;
+  margin: 20px 0;
+  text-align: center;
+}
+</style>
 
 <script> 
 document.addEventListener("DOMContentLoaded", function () {
@@ -96,6 +108,23 @@ document.addEventListener("DOMContentLoaded", function () {
       //Update the character image
       updateImage();
     });
+  });
+
+  const form = document.querySelector('.character-selection-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const loadingText = document.querySelector('.loading-text');
+  const dots = document.querySelector('.dots');
+  let dotCount = 0;
+
+  form.addEventListener('submit', function(e) {
+    submitBtn.style.display = 'none';
+    loadingText.style.display = 'block';
+    
+    // Start the dots animation
+    const dotsInterval = setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      dots.textContent = '.'.repeat(dotCount);
+    }, 500);
   });
 });
 </script>

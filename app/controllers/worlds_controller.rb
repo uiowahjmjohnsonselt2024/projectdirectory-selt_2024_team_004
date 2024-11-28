@@ -24,7 +24,7 @@ class WorldsController < ApplicationController
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
   
-      # Use only one method to generate squares
+      # Generate squares with progress tracking
       generate_squares_for_world(@world)
   
       flash[:notice] = "World created successfully!"
@@ -72,7 +72,7 @@ class WorldsController < ApplicationController
     puts "World ID: #{@world.id}"
     puts "Square count: #{@squares.count}"
   
-    if @squares.count != 9
+    if @squares.count != 36
       flash[:alert] = "Regenerating squares for this world"
       @squares.destroy_all
       generate_squares_for_world(@world)
@@ -94,8 +94,8 @@ class WorldsController < ApplicationController
     client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
     terrain_types = ["forest", "mountain", "lake", "village", "plain", "desert"]
 
-    3.times do |y|
-      3.times do |x|
+    6.times do |y|
+      6.times do |x|
         begin
           terrain = terrain_types.sample
           generate_single_square(world, x, y, terrain, client)
@@ -125,8 +125,8 @@ class WorldsController < ApplicationController
     <<~JAVASCRIPT
       function drawSquare_#{x}_#{y}(containerId) {
         const canvas = document.createElement('canvas');
-        canvas.width = 128;
-        canvas.height = 128;
+        canvas.width = 105;
+        canvas.height = 105;
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#{
           case terrain
@@ -138,7 +138,7 @@ class WorldsController < ApplicationController
           else "#F4A460" # desert
           end
         }';
-        ctx.fillRect(0, 0, 128, 128);
+        ctx.fillRect(0, 0, 105, 105);
         document.getElementById(containerId).appendChild(canvas);
       }
     JAVASCRIPT
@@ -147,13 +147,27 @@ class WorldsController < ApplicationController
   def generate_single_square(world, x, y, terrain, client)
     return if world.squares.exists?(x: x, y: y)
 
+    adjacent_terrains = get_adjacent_terrains(world, x, y)
+    
     begin
       response = client.chat(
         parameters: {
           model: "gpt-3.5-turbo",
           messages: [
-            { role: "system", content: "You are a JavaScript expert. Generate code to draw a #{terrain} terrain on a 128x128 canvas. The canvas and context are already created. Use only the provided 'ctx' context." },
-            { role: "user", content: "Write JavaScript code to draw a #{terrain} on the canvas. Use only the 'ctx' variable to draw. Canvas size is 128x128. Do not create new canvas or append elements. Do not declare ctx again. Only output the code. Do not put in any explanations or comments." }
+            { 
+              role: "system", 
+              content: "You are a JavaScript expert creating interconnected map tiles. Each tile should smoothly connect with its neighbors, avoiding abrupt transitions or floating elements like suns. The terrain should flow naturally across tile boundaries."
+            },
+            { 
+              role: "user", 
+              content: "Generate JavaScript code to draw a #{terrain} tile (105x105 canvas) that connects with its neighbors. Only output the code. Do not put in any explanations or comments. Do not create a new canvas or append elements:
+              North: #{adjacent_terrains[:north] || 'unknown'}
+              South: #{adjacent_terrains[:south] || 'unknown'}
+              East: #{adjacent_terrains[:east] || 'unknown'}
+              West: #{adjacent_terrains[:west] || 'unknown'}
+              
+              Use only the 'ctx' variable. Ensure terrain features align with edges and avoid standalone elements like suns or clouds. Use consistent colors and patterns."
+            }
           ],
           temperature: 0.7
         }
@@ -167,8 +181,8 @@ class WorldsController < ApplicationController
       formatted_code = <<~JAVASCRIPT
         function #{function_name}(containerId) {
           const canvas = document.createElement('canvas');
-          canvas.width = 128;
-          canvas.height = 128;
+          canvas.width = 105;
+          canvas.height = 105;
           const ctx = canvas.getContext('2d');
           
           #{sanitized_code}
@@ -202,4 +216,13 @@ class WorldsController < ApplicationController
       end
     end
   end  
+
+  def get_adjacent_terrains(world, x, y)
+    {
+      north: world.squares.find_by(x: x, y: y - 1)&.terrain,
+      south: world.squares.find_by(x: x, y: y + 1)&.terrain,
+      east: world.squares.find_by(x: x + 1, y: y)&.terrain,
+      west: world.squares.find_by(x: x - 1, y: y)&.terrain
+    }
+  end
 end
