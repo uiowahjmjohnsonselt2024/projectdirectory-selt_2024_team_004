@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe MatchingGame, type: :model do
-  # Tests for validations of instance variables
+  # Create a new game before each test
   before do
     @test_game = MatchingGame.new
   end
+
+  # Tests for verifying correct instantiation of instance variables
   describe 'initialization' do
     it 'should have an array of card indicies of length 10' do
       expect(@test_game.cards_idx.length).to eq(10)
@@ -17,6 +19,7 @@ RSpec.describe MatchingGame, type: :model do
     end
   end
 
+  # Tests for verifying desired behavior when flipping cards under different scenarios
   describe 'flipping a card' do
     it 'should contain one flipped card on the first flip' do
       @test_game.flip_card(0)
@@ -78,6 +81,13 @@ RSpec.describe MatchingGame, type: :model do
       @test_game.flip_card(all_matches[1][0])
       attempt = @test_game.flip_card(all_matches[1][1])
       expect(attempt).to be_nil
+    end
+  end
+
+  describe 'calling game_over?' do
+    it 'should return false if user has done nothing yet' do
+      game_state = @test_game.game_over?
+      expect(game_state).to eq(false)
     end
   end
 end
