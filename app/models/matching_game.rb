@@ -9,7 +9,7 @@ class MatchingGame
 
   def flip_card(idx)
     # First check if the card is already flipped or matched
-    return nil if @flipped_cards.include?(idx) || @matches_idx.include?(idx)
+    return nil if @flipped_cards.include?(idx) || @matches_idx.flatten.include?(idx)
 
     # If not, add the index to flipped_cards
     @flipped_cards << idx
@@ -19,7 +19,7 @@ class MatchingGame
       # Check if the cards are a match
       if @cards_idx[@flipped_cards[0]] == @cards_idx[@flipped_cards[1]]
         # Add that index to the array of matches the user has made
-        @matches_idx << idx
+        @matches_idx << [@flipped_cards[0], @flipped_cards[1]]
 
         # Reset flipped_cards
         @flipped_cards = []
@@ -34,7 +34,7 @@ class MatchingGame
   end
 
   def game_over?
-    @matches_idx.length == @images.length
+    @matches_idx.length == @cards_idx.length / 2
   end
 
   # Helper function for RSpec tests
