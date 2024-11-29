@@ -17,7 +17,7 @@ class MatchingGame
     # If user has flipped 2 cards, check if they match, otherwise do nothing
     if @flipped_cards.length == 2
       # Check if the cards are a match
-      if @flipped_cards[0] == @flipped_cards[1]
+      if @cards_idx[@flipped_cards[0]] == @cards_idx[@flipped_cards[1]]
         # Add that index to the array of matches the user has made
         @matches_idx << idx
       else
