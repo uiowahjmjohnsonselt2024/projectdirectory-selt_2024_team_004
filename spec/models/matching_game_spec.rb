@@ -89,5 +89,13 @@ RSpec.describe MatchingGame, type: :model do
       game_state = @test_game.game_over?
       expect(game_state).to eq(false)
     end
+    it 'should return false if user has flipped a few cards but has not matched everything yet' do
+      @test_game.flip_card(0)
+      @test_game.flip_card(1)
+      @test_game.flip_card(2)
+      @test_game.flip_card(3)
+      game_state = @test_game.game_over?
+      expect(game_state).to eq(false)
+    end
   end
 end
