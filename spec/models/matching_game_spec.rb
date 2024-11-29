@@ -97,5 +97,16 @@ RSpec.describe MatchingGame, type: :model do
       game_state = @test_game.game_over?
       expect(game_state).to eq(false)
     end
+    it 'should return false if user has made several, but not all matches' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[4][0])
+      @test_game.flip_card(all_matches[4][1])
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[0][1])
+      @test_game.flip_card(all_matches[2][0])
+      @test_game.flip_card(all_matches[2][1])
+      game_state = @test_game.game_over?
+      expect(game_state).to eq(false)
+    end
   end
 end
