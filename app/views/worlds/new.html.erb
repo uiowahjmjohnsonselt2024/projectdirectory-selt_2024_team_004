@@ -4,6 +4,10 @@
   <%= stylesheet_link_tag 'roles', media: 'all', 'data-turbo-track': 'reload' %>
   
   <%= form_with url: create_world_path, local: true, method: :post, class: "character-selection-form" do |form| %>
+    <div class="world-name-container">
+      <%= form.text_field :name, class: "world-name-input", id: 'world_name', name: 'world_name', required: true, placeholder: "Enter your world's name..." %>
+    </div>
+
     <div class="btn-group-container">
       <div class="btn-group gender-group" role="group">
         <%= button_tag "Male", type: "button", class: "btn btn-option gender-btn btn-active", id: "male", data: { group: "gender", value: 1 } %>
@@ -52,6 +56,25 @@
   font-size: 1.2em;
   margin: 20px 0;
   text-align: center;
+}
+
+.world-name-container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.world-name-input {
+  padding: 10px;
+  font-size: 1.1em;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.world-name-input:focus {
+  border-color: #007bff;
 }
 </style>
 

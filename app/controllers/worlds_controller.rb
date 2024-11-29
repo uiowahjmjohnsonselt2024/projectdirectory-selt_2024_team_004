@@ -18,16 +18,19 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
-    @world = World.new(last_played: DateTime.now, progress: 0)
+    @world = World.new(
+      last_played: DateTime.now, 
+      progress: 0,
+      world_name: params[:world_name]
+    )
   
     if @world.save
-      @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
   
       # Generate squares with progress tracking
       generate_squares_for_world(@world)
   
-      flash[:notice] = "World created successfully!"
+      flash[:notice] = "World '#{@world.world_name}' created successfully!"
       redirect_to worlds_path
     else
       flash[:alert] = "Failed to create world. Please try again."
