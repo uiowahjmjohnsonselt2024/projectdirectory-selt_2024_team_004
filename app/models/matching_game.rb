@@ -1,7 +1,6 @@
 class MatchingGame
   attr_reader :cards_idx, :flipped_cards, :matches_idx
   def initialize
-    @images = ['image1', 'image2', 'image3', 'image4', 'image5']  # placeholder for now
     @cards_idx = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4].shuffle  # index of the image that will show when card flips
     @flipped_cards = []   # stores the indicies of the cards the user has flipped, can only flip 2
     @matches_idx = []     # stores what images have been successfully matched by the user
