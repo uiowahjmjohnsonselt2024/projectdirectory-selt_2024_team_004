@@ -32,6 +32,24 @@
   <p>ARG!!! Yer game is over!</p>
 </div>
 
+<!-- Arrange the cards in 2 rows of 5 -->
+<div class="cards-container">
+  <div class="card-row">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+  </div>
+  <div class="card-row">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+  </div>
+</div>
+
 <script>
   // Add some JavaScript to be able to handle events, such as clicking start button
   // First, initialize the timer to 1 minute (or 60 seconds)
@@ -194,6 +212,27 @@
         font-size: 2rem;
         color: #ff0000;
         margin-top: 20px;
+    }
+
+    .cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card-row {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .card {
+        width: 100px;
+        height: 150px;
+        background-color: #007bff;
+        border-radius: 10px;
     }
 
     .description {
