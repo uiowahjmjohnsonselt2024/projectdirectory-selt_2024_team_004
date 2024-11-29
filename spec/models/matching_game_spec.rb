@@ -46,5 +46,14 @@ RSpec.describe MatchingGame, type: :model do
       @test_game.flip_card(all_matches[2][1])
       expect(@test_game.flipped_cards.length).to eq(0)
     end
+    it 'should contain some matches in matches_idx and an empty flipped_cards after making some matches and flipping an even number of cards' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[1][0])
+      @test_game.flip_card(all_matches[1][1])
+      @test_game.flip_card(all_matches[4][0])
+      @test_game.flip_card(all_matches[4][1])
+      expect(@test_game.matches_idx.length).to eq(2)
+      expect(@test_game.flipped_cards.length).to eq(0)
+    end
   end
 end
