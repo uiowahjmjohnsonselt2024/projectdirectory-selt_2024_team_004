@@ -72,5 +72,12 @@ RSpec.describe MatchingGame, type: :model do
       attempt = @test_game.flip_card(0)
       expect(attempt).to be_nil
     end
+    it 'should return nil if the user tries to flip a card that is already matched' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[1][1])
+      @test_game.flip_card(all_matches[1][0])
+      attempt = @test_game.flip_card(all_matches[1][1])
+      expect(attempt).to be_nil
+    end
   end
 end
