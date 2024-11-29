@@ -1,0 +1,223 @@
+<div class="container">
+  <div class="top-banner">
+    <h2 class="title">Pretty Pirates</h2>
+
+    <div class="dropdown-menu-container">
+      <button class="dropdown-button">Menu</button>
+      <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="#">Store</a>
+        <%= link_to 'Exit World', worlds_path, class: 'btn btn-primary dropdown_link' %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug info -->
+  <% if @squares.present? %>
+  <% end %>
+
+  <div class="grid">
+    <% if @squares.present? %>
+      <% 
+        # Define active squares (starting from top-left corner)
+        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
+      %>
+      <% @squares.each do |square| %>
+        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
+             id="square_<%= square.square_id %>">
+          <% if square.code.present? %>
+            <script>
+              if (!window.squareInitialized_<%= square.square_id %>) {
+                document.addEventListener('DOMContentLoaded', () => {
+                  <%= square.code.html_safe %>
+                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
+                  <% unless active_squares.include?([square.x, square.y]) %>
+                    // Add grey overlay to inactive squares
+                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                    if (canvas) {
+                      const ctx = canvas.getContext('2d');
+                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
+                      ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+                  <% end %>
+                });
+                window.squareInitialized_<%= square.square_id %> = true;
+              }
+            </script>
+          <% else %>
+            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No squares found for this world!</p>
+    <% end %>
+  </div>
+</div>
+
+<style>
+  /* General Styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6; /* Light background color */
+    color: #333; /* Dark text for contrast */
+  }
+
+  .container {
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Top Banner */
+  .top-banner {
+    background: linear-gradient(135deg, #007bff, #0056b3); /* Blue gradient */
+    color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+
+  .title {
+    font-size: 2.5rem;
+    margin: 0;
+    flex: 1;
+  }
+
+  .dropdown-menu-container {
+  position: relative;
+}
+
+.dropdown-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* Below the button */
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #007bff;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu-container:hover .dropdown-content {
+  display: block; /* Keep the dropdown visible when hovering over the container */
+}
+
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 105px);
+    gap: 0;
+    margin: 20px auto;
+    width: fit-content;
+    padding: 0;
+  }
+
+  .grid-item {
+    background: none;
+    padding: 0;
+    text-align: center;
+    width: 105px;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .grid-item:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .grid-item h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  /* Pixel Art */
+  .pixel-art {
+    font-family: "Courier New", monospace;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    white-space: pre-wrap; /* Preserve spacing in art */
+    color: #555;
+  }
+
+  .no-pixel-art {
+    font-size: 0.9rem;
+    color: #999;
+    margin: 10px 0 0;
+  }
+
+  .map-square {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+
+  .square-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 6300px; /* 128 * 6*/
+    height: 630px; /* 128 * 6 */
+  }
+
+  .square-container canvas {
+    display: block; /* Removes any default spacing */
+    margin: 0;
+    padding: 0;
+  }
+
+  .inactive-square {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .inactive-square:hover {
+    transform: none;
+    cursor: default;
+  }
+</style>
+
+<%== @js_functions %>
