@@ -1,11 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Matching Game</title>
-</head>
-<body>
-<h1>Welcome to the Matching Game!</h1>
-</body>
-</html>
+<div class="container">
+  <!-- Put a banner at the top of the page with a title and dropdown menu allowing user to quit if they want -->
+  <div class="top-banner">
+    <h2 class="title">Matching Mateys!</h2>
+
+    <!-- Dropdown Menu -->
+    <!-- User clicking quit will redirect them back to their landing page -->
+    <div class="dropdown-menu-container">
+      <button class="dropdown-button">Menu</button>
+      <div class="dropdown-content">
+        <%= link_to 'Quit Minigame', landing_path, class: 'btn btn-primary dropdown_link' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+
+    .container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100vw;
+    }
+
+    .top-banner {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        width: 100%;
+        height: 11%;
+        padding: 1rem 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+    }
+
+    .title {
+        font-size: 3rem;
+        color: #000000;
+    }
+
+    .dropdown-menu-container {
+        position: absolute;
+        top: 4%;
+        right: 2%;
+    }
+
+    .dropdown-button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #ffffff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        border-radius: 5px;
+    }
+
+    .dropdown-content a {
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #000000;
+        font-size: 0.9rem;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f0f0f0;
+    }
+
+    .dropdown-menu-container:hover .dropdown-content {
+        display: block;
+    }
+
+    .description {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #333333;
+    }
+</style>
