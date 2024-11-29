@@ -3,14 +3,17 @@ class SettingsController < ApplicationController
 
   def show
     @user = @current_user
-    puts @user
     @currencies = OpenExchangeService.fetch_currencies
+    session[:return_path] = params[:return_path] if params[:return_path]
+    puts @user
     puts @currencies
-    #@character = pull from db?
   end
 
   def update
-    if current_user.update(default_currency: params[:currency])
+    previous_session_token = @current_user.session_token # Save the current session token
+
+    if @current_user.update(default_currency: params[:currency])
+      @current_user.update_column(:session_token, previous_session_token)
       @prices = StoreService.fetch_prices(current_user)
       flash[:notice] = 'Settings saved successfully!'
     else

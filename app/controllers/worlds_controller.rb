@@ -1,6 +1,9 @@
 class WorldsController < ApplicationController
   before_action :set_current_user
   def landing
+    puts params
+    session[:world_id] = World.find_by(id: session[:world_id])
+    puts session
     store
   end
 
@@ -24,12 +27,13 @@ class WorldsController < ApplicationController
   def create
     puts 'Form submitted successfully!'
     @world = World.new(last_played: DateTime.now, progress: 0)
-    if @world.save
-      @world.update(world_name: "World #{@world.id}")
-      UserWorld.create!(user: current_user, world: @world, user_role: user_roles, owner: true)
-      flash[:notice] = 'World created successfully!'
-      redirect_to worlds_path
-    end
+    return unless @world.save
+
+    @world.update(world_name: "World #{@world.id}")
+    UserWorld.create!(user: current_user, world: @world, user_role: user_roles, owner: true)
+    flash[:notice] = 'World created successfully!'
+    redirect_to worlds_path
+    
   end
 
   def destroy
