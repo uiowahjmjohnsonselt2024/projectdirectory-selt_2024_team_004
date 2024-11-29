@@ -55,5 +55,17 @@ RSpec.describe MatchingGame, type: :model do
       expect(@test_game.matches_idx.length).to eq(2)
       expect(@test_game.flipped_cards.length).to eq(0)
     end
+    it 'should contain some matches in matches_idx and one card in flipped_cards after making some matches and flipping an odd number of cards' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[2][1])
+      @test_game.flip_card(all_matches[2][0])
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[0][1])
+      @test_game.flip_card(all_matches[3][0])
+      @test_game.flip_card(all_matches[3][1])
+      @test_game.flip_card(all_matches[4][1])
+      expect(@test_game.matches_idx.length).to eq(3)
+      expect(@test_game.flipped_cards.length).to eq(1)
+    end
   end
 end
