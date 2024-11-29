@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-describe World, type: :controller do
+describe World do
   describe 'Creating a World object' do
     context 'With a user that already exists' do
       let(:valid_world) do
-        world = World.new
-        world.name = 'World 1'
+        world = World.create!(world_name: 'world 1' )
       end
       before do
         valid_world.save
@@ -40,6 +39,15 @@ describe World, type: :controller do
 
         expect(valid_world.user_worlds).to include(user_world1, user_world2)
       end
+      it 'should call openai API with title keywords' do
+        expect(OpenAI::Client).to receive(:chat).with('prompt')
+        OpenAI::Client.chat('prompt')
+      end
+      # it 'should call openAI API generate_squares_for_world and include a script tag' do
+      #   expect(OpenAI::Client).to receive(:chat).with('prompt')
+      #   expect(World.generate_squares_for_world(valid_world)).to include('<script>')
+      # end
+      
     end
   end
 end
