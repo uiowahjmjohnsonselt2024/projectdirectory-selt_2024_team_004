@@ -7,6 +7,12 @@
       <div class="dropdown-content">
         <a href="#">Settings</a>
         <a href="#">Store</a>
+        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
+          <%= form.hidden_field :id, value: @character.id %>
+          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
+          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
+          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
+        <% end %>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
@@ -30,32 +36,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const character = document.querySelector('.character'); // Select the character element
+        const xCoordField = document.querySelector('#x-coord');
+        const yCoordField = document.querySelector('#y-coord');
+        const saveWorldButton = document.querySelector('#save-world-button');
+
         let xCoord = <%= @character.x_coord %>; // Initial X coordinate
         let yCoord = <%= @character.y_coord %>; // Initial Y coordinate
-
-        // Function to save the updated coordinates to the server
-        function saveCoordinates() {
-            fetch('/characters_controller/update_coordinates', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // Rails CSRF token
-                },
-                body: JSON.stringify({ x_coord: xCoord, y_coord: yCoord })
-            }).then(response => {
-                if (!response.ok) {
-                    console.error('Failed to save coordinates');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-            });
-        }
 
         // Update the character's position based on the arrow key pressed
         function moveCharacter() {
             character.style.left = (xCoord * 2) + 'px';
             character.style.top = (yCoord * 2) + 'px';
-            saveCoordinates();
         }
 
         // Listen for keydown events
@@ -75,6 +66,11 @@
 
 
             moveCharacter();
+        });
+
+        saveWorldButton.addEventListener('click', function (e) {
+            xCoordField.value = xCoord; // Set the x coordinate
+            yCoordField.value = yCoord; // Set the y coordinate
         });
 
         // Initial position of the character
@@ -159,10 +155,6 @@
         font-size: 0.9rem;
     }
 
-    .dropdown-content a:hover {
-        background-color: #f0f0f0;
-    }
-
     .dropdown-menu-container:hover .dropdown-content {
         display: block;
      }
@@ -187,4 +179,31 @@
         border: 1px solid #ccc;
         border-radius: 5px;
     }
+    .dropdown-content a:hover,
+    #save-world-button:hover {
+        background-color: #f0f0f0;
+    }
+    .dropdown-content form,
+    .dropdown-content .btn {
+        margin: 0; /* Remove default margins */
+        padding: 0; /* Optional: ensure consistent spacing */
+    }
+    .dropdown-content form {
+        display: block; /* Ensure it behaves like a dropdown link */
+        width: 100%; /* Ensure it spans the dropdown width */
+    }
+    .dropdown-content .btn {
+        width: 100%; /* Stretch button to fit dropdown */
+        box-sizing: border-box; /* Include padding in width */
+        background: none;
+        border: none;
+        display: block;
+        padding: 10px 10px;
+        text-decoration: none;
+        color: #000000;
+        font-size: 0.9rem;
+        cursor: pointer;
+        text-align: center;
+    }
+
 </style>

@@ -23,6 +23,23 @@ ActiveRecord::Schema.define(version: 2024_11_27_005918) do
     t.index ["world_id"], name: "index_characters_on_world_id"
   end
 
+  create_table "squares", force: :cascade do |t|
+    t.string "square_id"
+    t.string "world_name"
+    t.integer "world_id", null: false
+    t.integer "x"
+    t.integer "y"
+    t.string "weather"
+    t.boolean "treasure"
+    t.string "game"
+    t.string "monsters"
+    t.string "state"
+    t.string "terrain"
+    t.string "code"
+    t.index ["square_id"], name: "index_squares_on_square_id", unique: true
+    t.index ["world_id"], name: "index_squares_on_world_id"
+  end
+
   create_table "user_worlds", force: :cascade do |t|
     t.string "user_world_id"
     t.string "user_role"
@@ -54,6 +71,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_005918) do
   end
 
   add_foreign_key "characters", "worlds"
+  add_foreign_key "squares", "worlds"
   add_foreign_key "user_worlds", "users"
   add_foreign_key "user_worlds", "worlds"
 end
