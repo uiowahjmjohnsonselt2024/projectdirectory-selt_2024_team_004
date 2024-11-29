@@ -19,21 +19,20 @@ class WorldsController < ApplicationController
     if current_user
       @user_worlds = current_user.user_worlds
     else
-      flash[:alert] = 'Please log in to view your worlds.'
+      flash[:alert] = "Please log in to view your worlds."
       redirect_to login_path
     end
   end
 
   def create
-    puts 'Form submitted successfully!'
+    puts "Form submitted successfully!"
     @world = World.new(last_played: DateTime.now, progress: 0)
-    return unless @world.save
-
-    @world.update(world_name: "World #{@world.id}")
-    UserWorld.create!(user: current_user, world: @world, user_role: user_roles, owner: true)
-    flash[:notice] = 'World created successfully!'
-    redirect_to worlds_path
-    
+    if @world.save
+      @world.update(world_name: "World #{@world.id}")
+      UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
+      flash[:notice] = "World created successfully!"
+      redirect_to worlds_path
+    end
   end
 
   def destroy
@@ -57,12 +56,12 @@ class WorldsController < ApplicationController
     @gender = params[:gender]
     @preload = params[:preload]
     @role = params[:role]
-
+    
     if @gender && @preload && @role
       @image_key = "#{@gender}_#{@preload}_#{@role}"
       @image_path = "/assets/images/#{@image_key}.png"
     else
-      @image_path = '/assets/images/1_1_1.png'
+      @image_path = "/assets/images/1_1_1.png"
     end
   end
 
@@ -72,7 +71,15 @@ class WorldsController < ApplicationController
 
     @new_world = @world.
 
-    redirect_to some_other_path, notice: 'Your adventure begins!'
+    redirect_to some_other_path, notice: "Your adventure begins!"
+  end
+
+  def api_call
+    client = OpenAI::Client.new(
+      # change key
+      access_token: "sk-proj-8eh6vdKNh6jedL0d1Wg8EMTjfdFnit-1mZdI_ydVA-uhaIMPLD3YCq5XLseNB13sfjBgNF3WcNT3BlbkFJLob1PGSBsnDW_HVzVI9UoAI8dT3nL61p1ujEbJfrTfKgw_u60T8B_k4Cr0-jCJ021",
+      log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
+    )
   end
 
   def store

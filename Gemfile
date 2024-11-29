@@ -13,6 +13,8 @@ gem 'sass-rails', '~> 5'
 gem 'uglifier', '>= 2.7.1'
 gem 'jquery-rails'
 
+gem 'ruby-openai'
+
 # Bcrypt can help us hash and store passwords securely
 gem 'bcrypt', '~> 3.1.7'
 # Rubocop can help us maintain ruby styling and best practices
