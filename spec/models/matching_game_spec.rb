@@ -108,5 +108,19 @@ RSpec.describe MatchingGame, type: :model do
       game_state = @test_game.game_over?
       expect(game_state).to eq(false)
     end
+    it 'should return false if the user has made 4/5 matches and flipped only 1 of the last 2 cards left' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[3][1])
+      @test_game.flip_card(all_matches[3][0])
+      @test_game.flip_card(all_matches[4][0])
+      @test_game.flip_card(all_matches[4][1])
+      @test_game.flip_card(all_matches[1][1])
+      @test_game.flip_card(all_matches[1][0])
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[0][1])
+      @test_game.flip_card(all_matches[2][1])
+      game_state = @test_game.game_over?
+      expect(game_state).to eq(false)
+    end
   end
 end
