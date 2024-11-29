@@ -9,8 +9,9 @@ class MatchingGameController < ApplicationController
     session[:mini_game] = @mini_game
   end
   def load_images
-    # TMP PLACEHOLDER
-    @images = ["image1", "image2", "image3", "image4", "image5"]
+    # Load images 1-5 from the app/assets/images directory
+    # Images are named card_image1.png, card_image2.png, etc.
+    @images = (1..5).map {|i| "card_image#{i}.png"}
   end
 
   def flip
