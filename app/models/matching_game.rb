@@ -36,10 +36,12 @@ class MatchingGame
 
   # Helper function for RSpec tests
   def get_matches
-    puts "#{@cards_idx}"
     matched_pairs = []
 
+    # Go through each card index
     @cards_idx.each_with_index do |card_idx1, index1|
+      # Take a slice of the array from index1 + 1 so as to not include the index the first each block is on
+      # This prevents duplicate matches from showing up in matched_pairs
       @cards_idx[(index1 + 1)..-1].each_with_index do |card_idx2, index2|
         if card_idx1 == card_idx2
           matched_pairs << [index1, index1 + index2 + 1]
@@ -47,7 +49,7 @@ class MatchingGame
       end
     end
 
-    puts "#{matched_pairs}"
+    # Return the indicies of the matching cards
     matched_pairs
   end
 end
