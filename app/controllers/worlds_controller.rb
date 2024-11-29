@@ -7,8 +7,9 @@ class WorldsController < ApplicationController
     @character = @world.characters.first
     @character.x_coord ||= 0
     @character.y_coord ||= 27
+    session[:world_id] = World.find_by(id: session[:world_id])
   end
-  
+
   def new
     # Renders the character form
     @world_id = params[:world_id]
@@ -16,24 +17,22 @@ class WorldsController < ApplicationController
 
   def index
     #@worlds parameter will be a list of all the world keys the current user has
-    puts params
-    puts @current_user.name
     if @current_user
       @user_worlds = @current_user.user_worlds
     else
-      flash[:alert] = "Please log in to view your worlds."
+      flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
     end
   end
 
   def create
-    puts "Form submitted successfully!"
+    puts 'Form submitted successfully!'
     @world = World.new(last_played: DateTime.now, progress: 0)
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
       Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 10, y_coord: 10)
-      flash[:notice] = "World created successfully!"
+      flash[:notice] = 'World created successfully!'
       redirect_to worlds_path
     end
   end
