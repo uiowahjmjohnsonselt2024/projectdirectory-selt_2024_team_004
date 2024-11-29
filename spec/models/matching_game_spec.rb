@@ -22,5 +22,11 @@ RSpec.describe MatchingGame, type: :model do
       @test_game.flip_card(0)
       expect(@test_game.flipped_cards.length).to eq(1)
     end
+    it 'should contain add the match to match_idx on flipping two matching cards' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[0][1])
+      expect(@test_game.matches_idx.length).to eq(1)
+    end
   end
 end
