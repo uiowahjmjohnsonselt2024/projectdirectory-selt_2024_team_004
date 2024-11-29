@@ -40,5 +40,11 @@ RSpec.describe MatchingGame, type: :model do
       @test_game.flip_card(all_matches[2][1])
       expect(@test_game.matches_idx.length).to eq(0)
     end
+    it 'should have an empty flipped_cards array when two non-matches are flipped' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[2][1])
+      expect(@test_game.flipped_cards.length).to eq(0)
+    end
   end
 end
