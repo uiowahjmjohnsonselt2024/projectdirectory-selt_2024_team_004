@@ -18,12 +18,18 @@
 <div class="timer-and-start">
   <!-- Timer Display -->
   <div class="timer">
-    <span id="timer">1:00</span>
+    <span id="timer">01:00</span>
   </div>
   <!-- Start Button -->
   <div class="start-button">
     <button class="btn start-btn" id="start-btn">Start Game</button>
   </div>
+</div>
+
+
+<!-- Game over message, hidden until timer runs out (only if player has not won) -->
+<div id="game-over-message" style="display: none;">
+  <p>ARG!!! Yer game is over!</p>
 </div>
 
 <script>
@@ -36,13 +42,19 @@
   const timerDisplay = document.getElementById('timer')
   const startButton = document.getElementById('start-btn')
 
+  // Connect game over message to its element in the view
+  const gameOverMessage = document.getElementById('game-over-message')
+
   // Implement function to start timer when user clicks the start game button
   function startTimer() {
       countdownTimer = setInterval(function() {
           // First check if the timer has been going and has reached zero, if yes the game is over
           if (timeLeft <= 0) {
               clearInterval(countdownTimer);
-              alert('ARG!!! Yer game is over!');
+
+              // Hide the timer and start button and show the game over message
+              document.querySelector('.timer-and-start').style.display = 'none';
+              gameOverMessage.style.display = 'block';
           }
           else {
               timeLeft--;
@@ -176,6 +188,12 @@
     .start-btn:disabled {
         background-color: #cccccc;
         cursor: not-allowed;
+    }
+
+    #game-over-message {
+        font-size: 2rem;
+        color: #ff0000;
+        margin-top: 20px;
     }
 
     .description {
