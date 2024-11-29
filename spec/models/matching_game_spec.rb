@@ -22,11 +22,23 @@ RSpec.describe MatchingGame, type: :model do
       @test_game.flip_card(0)
       expect(@test_game.flipped_cards.length).to eq(1)
     end
-    it 'should contain add the match to match_idx on flipping two matching cards' do
+    it 'should contain add the match to matches_idx on flipping two matching cards' do
       all_matches = @test_game.get_matches
       @test_game.flip_card(all_matches[0][0])
       @test_game.flip_card(all_matches[0][1])
       expect(@test_game.matches_idx.length).to eq(1)
+    end
+    it 'should reset flipped_cards to empty on flipping two matching cards' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[0][1])
+      expect(@test_game.flipped_cards.length).to eq(0)
+    end
+    it 'should have an empty matches_idx and flipped_cards array when two non-matches are flipped' do
+      all_matches = @test_game.get_matches
+      @test_game.flip_card(all_matches[0][0])
+      @test_game.flip_card(all_matches[2][1])
+      expect(@test_game.matches_idx.length).to eq(0)
     end
   end
 end
