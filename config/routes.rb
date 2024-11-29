@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   get    'roles', to: 'worlds#user_roles', as:'role'
   get 'landing', to: 'worlds#landing', as: 'landing'
   resources :worlds, only: [:index, :new, :create, :destroy]
+
+  # TMP ROUTE so I can go straight to minigame to test behavior
+  get 'matching_game', to: 'matching_game#index', as:'matching_game'
 end
