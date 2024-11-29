@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get    'roles', to: 'worlds#user_roles', as:'role'
   get 'landing', to: 'worlds#landing', as: 'landing'
   resources :worlds, only: [:index, :new, :create, :destroy]
+
+  post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
 end
