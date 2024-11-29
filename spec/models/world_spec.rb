@@ -42,12 +42,7 @@ describe World do
       it 'should call openai API with title keywords' do
         expect(OpenAI::Client).to receive(:chat).with('prompt')
         OpenAI::Client.chat('prompt')
-      end
-      # it 'should call openAI API generate_squares_for_world and include a script tag' do
-      #   expect(OpenAI::Client).to receive(:chat).with('prompt')
-      #   expect(World.generate_squares_for_world(valid_world)).to include('<script>')
-      # end
-      
+      end      
     end
   end
 end

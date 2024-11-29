@@ -10,4 +10,5 @@ class World < ActiveRecord::Base
   def generate_unique_world_id
     self.world_id = SecureRandom.hex(10) # Generates a 20-character hex string
   end
+
 end

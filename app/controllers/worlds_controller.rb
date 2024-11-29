@@ -231,6 +231,10 @@ class WorldsController < ApplicationController
     # Now fill the 6x6 grid using these 9 squares
     js_functions = []
     
+    # Randomly choose coordinates for treasure
+    treasure_x = rand(6)
+    treasure_y = rand(6)
+    
     6.times do |y|
       6.times do |x|
         selected_square = base_squares.sample
@@ -258,11 +262,14 @@ class WorldsController < ApplicationController
           y: y,
           state: "inactive",
           terrain: selected_square[:terrain],
-          code: function_code
+          code: function_code,
+          treasure: (x == treasure_x && y == treasure_y)  # Set treasure for the randomly chosen square
         )
       end
     end
-    
+    treasure = world.squares.find_by(treasure: true)
+    puts "Treasure is at x: #{treasure.x}" if treasure
+    puts "Treasure is at y: #{treasure.y}" if treasure
     # Add a script tag to define all functions at once
     script_tag = <<~HTML
       <script>
