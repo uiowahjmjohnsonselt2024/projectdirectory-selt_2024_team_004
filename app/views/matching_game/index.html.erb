@@ -14,6 +14,18 @@
   </div>
 </div>
 
+<!-- Put the timer on the screen and the start button so the user can click start and see time remaining to complete the game -->
+<div class="timer-and-start">
+  <!-- Timer Display -->
+  <div class="timer">
+    <span id="timer">00:00</span>
+  </div>
+  <!-- Start Button -->
+  <div class="start-button">
+    <button class="btn start-btn">Start Game</button>
+  </div>
+</div>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -96,6 +108,34 @@
 
     .dropdown-menu-container:hover .dropdown-content {
         display: block;
+    }
+
+    .timer-and-start {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px; /* Adds space between the timer and start button */
+        margin-top: 20px;
+    }
+
+    .timer {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .start-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .start-btn:hover {
+        background-color: #0056b3;
     }
 
     .description {
