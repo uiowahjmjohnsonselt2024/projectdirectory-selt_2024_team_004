@@ -1,12 +1,10 @@
 class MatchingGameController < ApplicationController
+  before_action :load_images, only: [:index, :flip]
   def index
-    # Load the images by calling the helper function
-    load_images
-
     # Create a new minigame instance each time user is directed to the view
     # Use session to store minigame data during each game
     @mini_game = MatchingGame.new
-    session[:mini_game] = @mini_game
+    session[:mini_game_state] = @mini_game.state
   end
   def load_images
     # Load images 1-5 from the app/assets/images directory
@@ -16,7 +14,7 @@ class MatchingGameController < ApplicationController
 
   def flip
     # Get the current state of the minigame
-    @mini_game = session[:mini_game]
+    @mini_game = MatchingGame.new(session[:mini_game_state])
 
     # Check for the case that minigame was not properly instantiated
     return render json: {error: "Failed to generate and set new mini game."}, status: :unprocessable_entity if @mini_game.nil?
@@ -25,13 +23,16 @@ class MatchingGameController < ApplicationController
     # Get the index of the flipped card from the parameters and convert to an integer
     card_idx = params[:index].to_i
 
+    # Flip the card and get the resulting state of the game
+    result = @mini_game.flip_card(card_idx)
+
+    # Update game session
+    session[:mini_game_state] = @mini_game.state
+
     # Check if the user has matched all cards and the game is over
     game_status = @mini_game.game_over?
 
-    # Update game session
-    session[:mini_game] = @mini_game
-
     # Respond with a JSON object
-    render json: {card: {index: card_idx, image: @images[card_idx]}, game_status: game_status}
+    render json: {card: {index: card_idx, image: @images[card_idx]}, result: result, game_status: game_status}
   end
 end

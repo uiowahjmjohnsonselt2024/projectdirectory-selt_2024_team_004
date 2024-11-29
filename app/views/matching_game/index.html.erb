@@ -22,7 +22,7 @@
   </div>
   <!-- Start Button -->
   <div class="start-button">
-    <button class="btn start-btn" id="start-btn">Start Game</button>
+    <button class="btn start-btn" id="start-btn">Set Sail!</button>
   </div>
 </div>
 
@@ -35,18 +35,38 @@
 <!-- Arrange the cards in 2 rows of 5 -->
 <div class="cards-container">
   <div class="card-row">
-    <div class="card disabled" data-card="0"></div>
-    <div class="card disabled" data-card="1"></div>
-    <div class="card disabled" data-card="2"></div>
-    <div class="card disabled" data-card="3"></div>
-    <div class="card disabled" data-card="4"></div>
+    <div class="card disabled" data-card="0">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="1">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="2">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="3">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="4">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
   </div>
   <div class="card-row">
-    <div class="card disabled" data-card="5"></div>
-    <div class="card disabled" data-card="6"></div>
-    <div class="card disabled" data-card="7"></div>
-    <div class="card disabled" data-card="8"></div>
-    <div class="card disabled" data-card="9"></div>
+    <div class="card disabled" data-card="5">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="6">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="7">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="8">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
+    <div class="card disabled" data-card="9">
+      <img class="card-image" src="" alt="Card Image" style="display: none;" />
+    </div>
   </div>
 </div>
 
@@ -102,16 +122,47 @@
       const cards = document.querySelectorAll('.card');
       cards.forEach(card => {
           card.classList.remove('disabled');
-          card.addEventListener('click', flipCard); // Function to handle card flipping
+          card.addEventListener('click', flipCard);
       });
 
       // Start countdown
       startTimer();
   });
 
-  function flipCard() {
-      console.log('Card clicked!');
-      // add card flipping logic later
+  function flipCard(event) {
+      // Get the clicked card and its index
+      const cardElement = event.currentTarget;
+      const cardIdx = cardElement.dataset.card;
+
+      // Prevent flipping if the card is already flipped
+      if (cardElement.classList.contains('flipped')) return;
+
+      // Send request to backend to flip the card
+      fetch('/flip', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ index: cardIdx }),
+      })
+        .then(response => response.json())
+        .then(data => {
+            // Update card with its image
+            const imgElement = cardElement.querySelector('.card-image');
+            imgElement.src = `/assets/${data.card.image}`;
+            imgElement.style.display = 'block';
+
+            // Flip the card
+            cardElement.classList.add('flipped');
+
+            // Check if the game is over
+            if (data.game_status) {
+                alert('You won the game!');
+            }
+        })
+        .catch(error => {
+            console.error('Error flipping card:', error);
+        });
   }
 </script>
 
@@ -257,11 +308,30 @@
         height: 150px;
         background-color: #007bff;
         border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        transform: rotateY(0);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .card img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        object-fit: cover;
     }
 
     .card.disabled {
-        pointer-events: none;  /* Disables clicks on the card */
-        opacity: 0.5;          /* Makes the card look disabled */
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .card.flipped {
+        transform: rotateY(180deg);
+        background-color: transparent;
     }
 
     .description-container {
