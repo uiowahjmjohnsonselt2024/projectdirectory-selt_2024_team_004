@@ -31,6 +31,6 @@ class MatchingGameController < ApplicationController
     session[:mini_game] = @mini_game
 
     # Respond with a JSON object
-    render json: {card: card}
+    render json: {card: {index: card_idx, image: @images[card_idx]}, game_status: game_status}
   end
 end
