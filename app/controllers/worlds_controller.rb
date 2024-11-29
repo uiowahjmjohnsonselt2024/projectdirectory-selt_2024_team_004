@@ -491,7 +491,6 @@ class WorldsController < ApplicationController
       end
     end
 
-
   def get_adjacent_terrains(world, x, y)
     {
       north: world.squares.find_by(x: x, y: y - 1)&.terrain,
@@ -499,5 +498,12 @@ class WorldsController < ApplicationController
       east: world.squares.find_by(x: x + 1, y: y)&.terrain,
       west: world.squares.find_by(x: x - 1, y: y)&.terrain
     }
+  end
+  
+  def api_call
+    client = OpenAI::Client.new(
+      access_token: "access_token_goes_here",
+      log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
+    )
   end
 end
