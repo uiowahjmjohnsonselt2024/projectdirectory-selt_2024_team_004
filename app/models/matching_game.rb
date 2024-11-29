@@ -20,6 +20,9 @@ class MatchingGame
       if @cards_idx[@flipped_cards[0]] == @cards_idx[@flipped_cards[1]]
         # Add that index to the array of matches the user has made
         @matches_idx << idx
+
+        # Reset flipped_cards
+        @flipped_cards = []
       else
         # Cards should be flipped back over, resetting flipped_cards to an empty array
         @flipped_cards = []
