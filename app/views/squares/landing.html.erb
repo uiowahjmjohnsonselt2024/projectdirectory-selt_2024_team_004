@@ -18,14 +18,28 @@
 
   <div class="grid">
     <% if @squares.present? %>
+      <% 
+        # Define active squares (starting from top-left corner)
+        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
+      %>
       <% @squares.each do |square| %>
-        <div class="grid-item" id="square_<%= square.square_id %>">
+        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
+             id="square_<%= square.square_id %>">
           <% if square.code.present? %>
             <script>
               if (!window.squareInitialized_<%= square.square_id %>) {
                 document.addEventListener('DOMContentLoaded', () => {
                   <%= square.code.html_safe %>
                   drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
+                  <% unless active_squares.include?([square.x, square.y]) %>
+                    // Add grey overlay to inactive squares
+                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                    if (canvas) {
+                      const ctx = canvas.getContext('2d');
+                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
+                      ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+                  <% end %>
                 });
                 window.squareInitialized_<%= square.square_id %> = true;
               }
@@ -193,5 +207,15 @@
     display: block; /* Removes any default spacing */
     margin: 0;
     padding: 0;
+  }
+
+  .inactive-square {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  .inactive-square:hover {
+    transform: none;
+    cursor: default;
   }
 </style>

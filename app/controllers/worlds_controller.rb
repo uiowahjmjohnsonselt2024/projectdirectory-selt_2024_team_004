@@ -125,45 +125,77 @@ class WorldsController < ApplicationController
   
 
   def generate_terrain_map(width, height)
-    terrain_types = ["forest", "mountain", "lake", "plain"]
-    map = Array.new(6) { Array.new(6) }  # Force 6x6 grid
+    terrain_types = ["desert", "lake"]
+    map = Array.new(6) { Array.new(6, "lake") }  # Start with lake as base terrain
+    total_squares = width * height
+    max_desert_squares = (total_squares * 0.25).floor  # Maximum 25% desert tiles
+    desert_count = 0
     
-    # Start with plains as base terrain
-    map.each_index do |y|
-      map[y].each_index do |x|
-        map[y][x] = "plain"
+    # Helper function to count adjacent desert tiles
+    def count_adjacent_desert(map, x, y)
+      count = 0
+      # Check all 8 adjacent squares
+      [[-1,-1], [-1,0], [-1,1], [0,-1], [0,1], [1,-1], [1,0], [1,1]].each do |dx, dy|
+        check_x = x + dx
+        check_y = y + dy
+        if check_x.between?(0, 5) && check_y.between?(0, 5)
+          count += 1 if map[check_y][check_x] == "desert"
+        end
       end
+      count
     end
 
-    # Generate mountain range (4 squares)
-    mountain_start_x = rand(width - 1)
-    mountain_start_y = rand(height - 1)
-    [[0,0], [0,1], [1,0], [1,1]].each do |dx, dy|
-      if (mountain_start_x + dx) < width && (mountain_start_y + dy) < height
-        map[mountain_start_y + dy][mountain_start_x + dx] = "mountain"
+    # Helper function to check if adding desert would create too many adjacent deserts
+    def would_create_too_many_adjacent?(map, x, y)
+      # First check the proposed position
+      return true if count_adjacent_desert(map, x, y) >= 3
+      
+      # Then check all adjacent positions to ensure we won't create too many
+      [[-1,-1], [-1,0], [-1,1], [0,-1], [0,1], [1,-1], [1,0], [1,1]].each do |dx, dy|
+        check_x = x + dx
+        check_y = y + dy
+        if check_x.between?(0, 5) && check_y.between?(0, 5)
+          # Temporarily add the desert and check
+          map[y][x] = "desert"
+          too_many = count_adjacent_desert(map, check_x, check_y) > 3
+          map[y][x] = "lake"  # Reset
+          return true if too_many
+        end
       end
+      false
     end
 
-    # Generate forest (2-3 squares)
-    forest_squares = []
-    forest_start_x = rand(width)
-    forest_start_y = rand(height)
-    [[0,0], [0,1], [1,0]].each do |dx, dy|
-      if (forest_start_x + dx) < width && (forest_start_y + dy) < height
-        next if map[forest_start_y + dy][forest_start_x + dx] == "mountain"
-        map[forest_start_y + dy][forest_start_x + dx] = "forest"
+    # Helper function to check if a position is valid for an island
+    def is_valid_island_position?(map, x, y, width, height)
+      return false if x < 0 || x >= width || y < 0 || y >= height
+      return false if map[y][x] != "lake"
+      return false if would_create_too_many_adjacent?(map, x, y)
+      
+      # Check immediate neighbors for spacing
+      [[-1,0], [1,0], [0,-1], [0,1]].each do |dx, dy|
+        check_x = x + dx
+        check_y = y + dy
+        if check_x.between?(0, width-1) && check_y.between?(0, height-1)
+          return false if map[check_y][check_x] != "lake"
+        end
       end
+      true
     end
 
-    # Generate lake (2 squares)
-    lake_squares = []
-    lake_start_x = rand(width)
-    lake_start_y = rand(height)
-    [[0,0], [1,0]].each do |dx, dy|
-      if (lake_start_x + dx) < width && (lake_start_y + dy) < height
-        next if map[lake_start_y + dy][lake_start_x + dx] == "mountain" ||
-                map[lake_start_y + dy][lake_start_x + dx] == "forest"
-        map[lake_start_y + dy][lake_start_x + dx] = "lake"
+    # Create 4-5 desert islands (well-spaced, max 3 adjacent)
+    5.times do
+      break if desert_count >= max_desert_squares
+      
+      attempts = 0
+      while attempts < 30
+        x = rand(width)
+        y = rand(height)
+        if is_valid_island_position?(map, x, y, width, height)
+          map[y][x] = "desert"
+          desert_count += 1
+          break
+        end
+        attempts += 1
       end
     end
 
@@ -206,62 +238,73 @@ class WorldsController < ApplicationController
           messages: [
             { 
               role: "system", 
-              content: "You are a JavaScript expert creating cohesive terrain tiles. Each terrain type should blend naturally with its neighbors and be part of a larger feature. Mountains are tall and rocky, forests are dense with trees, lakes are deep blue water, and plains are grassy fields."
+              content: "You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
+
+              OCEAN BACKGROUND:
+              - Fill ENTIRE canvas with EXACTLY #1E90FF
+              - Every single water tile must be identical
+              - NO variation in the blue color
+              - NO patterns or lines
+              - Just solid blue color
+              
+              DESERT ISLANDS (when present):
+              - Color: Muted sandy tan (#D2B48C)
+              - Single small organic shape with curved edges
+              - Must take up only 20-40% of tile maximum
+              - NO straight lines or edges anywhere
+              - Edges must be smooth bezier curves
+              - Natural, irregular island shapes
+              - Must be surrounded by water
+              
+              CRITICAL RULES:
+              1. EVERY water tile must be pure #1E90FF only
+              2. Desert must take up LESS than 40% of any tile
+              3. NO straight lines in island shapes
+              4. Islands must have only curved boundaries
+              5. Perfect alignment between adjacent tiles
+              6. Water must be completely solid color
+              7. NO variation in background color
+              8. Islands must be small and well-spaced"
             },
             { 
               role: "user", 
-              content: "Generate JavaScript code to draw a #{terrain} tile (105x105 canvas) that connects with its neighbors:
+              content: "Generate JavaScript code for a #{terrain} tile (105x105 canvas) that connects with:
               North: #{adjacent_terrains[:north] || 'unknown'}
               South: #{adjacent_terrains[:south] || 'unknown'}
               East: #{adjacent_terrains[:east] || 'unknown'}
               West: #{adjacent_terrains[:west] || 'unknown'}
-              
-              Use only the 'ctx' variable. The terrain should be part of a larger #{terrain} feature and blend naturally with adjacent tiles.
-              For mountains: Use grays and browns, show rocky peaks and slopes
-              For forests: Use various greens, show dense tree coverage
-              For lakes: Use blues, show water ripples or waves
-              For plains: Use yellows and light greens, show grass patterns
-              
-              Ensure features align at edges and maintain consistent style across tiles.
-              
-              Do not create a new canvas or append elements, canvas is already created. Make sure to add all parantheses ) after argument list, do not put in any explanations or comments. Only output the code."
-            }
-          ],
-          temperature: 0.7
-        }
-      )
-      
-      raw_code = response.dig('choices', 0, 'message', 'content')
-      sanitized_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '').gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
+            
+                
+                Use only the 'ctx' variable. The terrain should be part of a larger #{terrain} feature and blend naturally with adjacent tiles.
+                
+                Ensure features align at edges and maintain consistent style across tiles.
+                
+                Do not create a new canvas or append elements, canvas is already created. Make sure to add all parantheses ) after argument list, do not put in any explanations or comments. Only output the code."
+              }
+            ],
+            temperature: 0.7
+          }
+        )
+        
+        raw_code = response.dig('choices', 0, 'message', 'content')
+        sanitized_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '').gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
 
-      function_name = "drawSquare_#{x}_#{y}"
-      
-      formatted_code = <<~JAVASCRIPT
-        function #{function_name}(containerId) {
-          const canvas = document.createElement('canvas');
-          canvas.width = 105;
-          canvas.height = 105;
-          const ctx = canvas.getContext('2d');
-          
-          #{sanitized_code}
-          
-          document.getElementById(containerId).appendChild(canvas);
-        }
-      JAVASCRIPT
+        function_name = "drawSquare_#{x}_#{y}"
+        
+        formatted_code = <<~JAVASCRIPT
+          function #{function_name}(containerId) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 105;
+            canvas.height = 105;
+            const ctx = canvas.getContext('2d');
+            
+            #{sanitized_code}
+            
+            document.getElementById(containerId).appendChild(canvas);
+          }
+        JAVASCRIPT
 
-      # Create square with explicit world association
-      world.squares.create!(
-        square_id: SecureRandom.hex(10),
-        world_id: world.id,
-        x: x,
-        y: y,
-        state: "inactive",
-        terrain: terrain,
-        code: formatted_code
-      )
-    rescue => e
-      puts "Error generating square: #{e.message}"
-      unless world.squares.exists?(x: x, y: y)
+        # Create square with explicit world association
         world.squares.create!(
           square_id: SecureRandom.hex(10),
           world_id: world.id,
@@ -269,11 +312,24 @@ class WorldsController < ApplicationController
           y: y,
           state: "inactive",
           terrain: terrain,
-          code: generate_fallback_code(x, y, terrain)
+          code: formatted_code
         )
+      rescue => e
+        puts "Error generating square: #{e.message}"
+        unless world.squares.exists?(x: x, y: y)
+          world.squares.create!(
+            square_id: SecureRandom.hex(10),
+            world_id: world.id,
+            x: x,
+            y: y,
+            state: "inactive",
+            terrain: terrain,
+            code: generate_fallback_code(x, y, terrain)
+          )
+        end
       end
     end
-  end  
+
 
   def get_adjacent_terrains(world, x, y)
     {
