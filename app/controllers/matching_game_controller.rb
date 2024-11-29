@@ -21,8 +21,8 @@ class MatchingGameController < ApplicationController
     return render json: {error: "Failed to generate and set new mini game."}, status: :unprocessable_entity if @mini_game.nil?
 
     # Otherwise, call model's flip_card method to handle flipping of a card
+    # Get the index of the flipped card from the parameters and convert to an integer
     card_idx = params[:index].to_i
-    @mini_game.flip(card_idx)
 
     # Check if the user has matched all cards and the game is over
     game_status = @mini_game.game_over?
@@ -30,7 +30,7 @@ class MatchingGameController < ApplicationController
     # Update game session
     session[:mini_game] = @mini_game
 
-    # Responds with a JSON object
+    # Respond with a JSON object
     render json: {card: card}
   end
 end
