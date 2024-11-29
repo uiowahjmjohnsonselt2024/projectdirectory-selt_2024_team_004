@@ -28,6 +28,9 @@ class MatchingGame
         @flipped_cards = []
       end
     end
+
+    # Return the index of the flipped card so the controller can use it
+    idx
   end
 
   def game_over?
