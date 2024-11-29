@@ -50,6 +50,16 @@
   </div>
 </div>
 
+<!-- Description of how to play the game at the bottom of the page -->
+<div class="description-container">
+  <p class="description">
+    Ahoy matey! To set sail on this mini adventure, click cards to flip 'em over and uncover
+    some of yer pirates favorite treasures! Ye can only flip two at a time, so choose wisely
+    to make swashbucklin' matches! Continue yer quest 'til ye find all matching pairs, or ye
+    run outta time! Click start to sail forth, and good fortune to ye matey!
+  </p>
+</div>
+
 <script>
   // Add some JavaScript to be able to handle events, such as clicking start button
   // First, initialize the timer to 1 minute (or 60 seconds)
@@ -235,9 +245,19 @@
         border-radius: 10px;
     }
 
-    .description {
-        margin-top: 20px;
+    .description-container {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
         font-size: 1.2rem;
         color: #333333;
+    }
+
+    .description {
+        margin: 0;
     }
 </style>
