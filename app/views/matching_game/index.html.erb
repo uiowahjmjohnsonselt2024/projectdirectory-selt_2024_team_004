@@ -18,13 +18,48 @@
 <div class="timer-and-start">
   <!-- Timer Display -->
   <div class="timer">
-    <span id="timer">00:00</span>
+    <span id="timer">1:00</span>
   </div>
   <!-- Start Button -->
   <div class="start-button">
-    <button class="btn start-btn">Start Game</button>
+    <button class="btn start-btn" id="start-btn">Start Game</button>
   </div>
 </div>
+
+<script>
+  // Add some JavaScript to be able to handle events, such as clicking start button
+  // First, initialize the timer to 1 minute (or 60 seconds)
+  let timeLeft = 60;
+  let countdownTimer;
+
+  // Connect this timer to the timer in the view and the start button
+  const timerDisplay = document.getElementById('timer')
+  const startButton = document.getElementById('start-btn')
+
+  // Implement function to start timer when user clicks the start game button
+  function startTimer() {
+      countdownTimer = setInterval(function() {
+          // First check if the timer has been going and has reached zero, if yes the game is over
+          if (timeLeft <= 0) {
+              clearInterval(countdownTimer);
+              alert('ARG!!! Yer game is over!');
+          }
+          else {
+              timeLeft--;
+              const minutes = Math.floor(timeLeft / 60);
+              const seconds = timeLeft % 60;
+              timerDisplay.textContent = `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+          }
+      }, 1000);
+  }
+
+  // Add event listener to start button
+  startButton.addEventListener('click', function() {
+      // Disable start button so user cannot click again
+      startButton.disabled = true;
+      startTimer();
+  });
+</script>
 
 <style>
     body {
@@ -50,21 +85,21 @@
     .top-banner {
         background: linear-gradient(135deg, #007bff, #0056b3);
         width: 100%;
-        height: 15%; /* Increase the height to make room for the title */
+        height: 15%;
         padding: 1rem 0;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         display: flex;
         justify-content: center;
-        align-items: center; /* Vertically center the content */
+        align-items: center;
         position: relative;
     }
 
     .title {
         font-size: 3rem;
         color: #ffffff;
-        margin: 0; /* Remove any margin that could cause unwanted spacing */
+        margin: 0;
     }
 
     .dropdown-menu-container {
@@ -114,7 +149,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px; /* Adds space between the timer and start button */
+        gap: 20px;
         margin-top: 20px;
     }
 
@@ -136,6 +171,11 @@
 
     .start-btn:hover {
         background-color: #0056b3;
+    }
+
+    .start-btn:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
     }
 
     .description {
