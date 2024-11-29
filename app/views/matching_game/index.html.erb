@@ -35,18 +35,18 @@
 <!-- Arrange the cards in 2 rows of 5 -->
 <div class="cards-container">
   <div class="card-row">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <div class="card disabled" data-card="0"></div>
+    <div class="card disabled" data-card="1"></div>
+    <div class="card disabled" data-card="2"></div>
+    <div class="card disabled" data-card="3"></div>
+    <div class="card disabled" data-card="4"></div>
   </div>
   <div class="card-row">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <div class="card disabled" data-card="5"></div>
+    <div class="card disabled" data-card="6"></div>
+    <div class="card disabled" data-card="7"></div>
+    <div class="card disabled" data-card="8"></div>
+    <div class="card disabled" data-card="9"></div>
   </div>
 </div>
 
@@ -97,8 +97,22 @@
   startButton.addEventListener('click', function() {
       // Disable start button so user cannot click again
       startButton.disabled = true;
+
+      // Enable the cards so user can now flip them
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+          card.classList.remove('disabled');
+          card.addEventListener('click', flipCard); // Function to handle card flipping
+      });
+
+      // Start countdown
       startTimer();
   });
+
+  function flipCard() {
+      console.log('Card clicked!');
+      // add card flipping logic later
+  }
 </script>
 
 <style>
@@ -243,6 +257,11 @@
         height: 150px;
         background-color: #007bff;
         border-radius: 10px;
+    }
+
+    .card.disabled {
+        pointer-events: none;  /* Disables clicks on the card */
+        opacity: 0.5;          /* Makes the card look disabled */
     }
 
     .description-container {
