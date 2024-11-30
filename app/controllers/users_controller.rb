@@ -19,10 +19,11 @@ class UsersController < ApplicationController
 
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "Sign up successful!"
+      flash[:notice] = "Successfully created account!"
       redirect_to login_path
     else
-      render 'new'
+      flash.now[:alert] = "Error: #{@user.errors.full_messages.join(', ')}"
+      render :new
     end
   end
 

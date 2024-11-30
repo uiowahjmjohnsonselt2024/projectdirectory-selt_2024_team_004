@@ -374,6 +374,24 @@ FOREIGN KEY ("world_id")
   [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
   [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+<<<<<<< HEAD
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (37.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mDROP TABLE IF EXISTS "user_worlds"[0m
+  [1m[35m (7.1ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_world_id" varchar, "user_role" varchar, "owner" boolean, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (11.6ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (7.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[35m (8.6ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (8.8ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar)[0m
+  [1m[35m (10.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (13.6ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mDROP TABLE IF EXISTS "worlds"[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "world_id" varchar, "world_name" varchar, "last_played" datetime, "progress" integer)[0m
+  [1m[35m (12.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_worlds_on_world_id" ON "worlds" ("world_id")[0m
+=======
   [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
   [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
@@ -449,12 +467,47 @@ FOREIGN KEY ("user_id")
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
   [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "auser_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+<<<<<<< HEAD
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_world_id" ON "auser_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_auser_worlds_on_user_world_id" ON "auser_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_user_id" ON "auser_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "auser_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "user_worlds"[0m
+  [1m[35m (9.9ms)[0m  [1m[35mDROP TABLE "user_worlds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "auser_worlds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "auser_worlds"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (5.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "auser_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_world_id" ON "auser_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_auser_worlds_on_user_world_id" ON "auser_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_user_id" ON "auser_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "auser_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "user_worlds"[0m
+  [1m[35m (8.3ms)[0m  [1m[35mDROP TABLE "user_worlds"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+=======
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_world_id" ON "auser_worlds" ("world_id")[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_auser_worlds_on_user_world_id" ON "auser_worlds" ("user_world_id")[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_user_id" ON "auser_worlds" ("user_id")[0m
@@ -462,6 +515,7 @@ FOREIGN KEY ("user_id")
                      SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "user_worlds"[0m
   [1m[35m (0.5ms)[0m  [1m[35mDROP TABLE "user_worlds"[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4
 FOREIGN KEY ("user_id")
   REFERENCES "users" ("id")
 , CONSTRAINT "fk_rails_8ba2f3f871"
@@ -470,22 +524,66 @@ FOREIGN KEY ("world_id")
 )[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
   [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+<<<<<<< HEAD
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+=======
   [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4
   [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
                      SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "auser_worlds"[0m
   [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "auser_worlds"[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
   [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+<<<<<<< HEAD
+  [1m[35m (4.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (11.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (8.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241115202751)[0m
+  [1m[35m (9.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+=======
   [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
   [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241127155845)[0m
   [1m[35m (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4
 (20241110000000),
 (20241110100001),
 (20241112001850),
 (20241112002705),
 (20241114203452),
+<<<<<<< HEAD
+(20241114203628);
+
+[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (5.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2024-11-26 13:50:29.861009"], ["updated_at", "2024-11-26 13:50:29.861009"]]
+  [1m[35m (6.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.7ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (1.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "49d08550430c852f1c8bb3b239e32461b14cd7b8"], ["created_at", "2024-11-26 13:50:29.882270"], ["updated_at", "2024-11-26 13:50:29.882270"]]
+  [1m[35m (4.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (11.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+=======
 (20241114203628),
 (20241115202751),
 (20241126151825),
@@ -510,12 +608,166 @@ FOREIGN KEY ("world_id")
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+<<<<<<< HEAD
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "not a valid email"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "b1311c437f57a24bf2c0"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "f10a87037ccc6f05b241"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (2.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$dZfXz.MdrqmWiMpnieMTieamcY8f4UIGquXgDSMItEoRglipXkgNq"], ["created_at", "2024-11-26 15:39:11.279239"], ["updated_at", "2024-11-26 15:39:11.279239"], ["session_token", "6T5PUbmn8yUBEP6j_x-Wug"]]
+  [1m[36mUserWorld Create (2.2ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "ace724a1d6047e90ab4e"], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "96f3a65e78897e8cee3b"], ["user_id", 1], ["world_id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mWorld Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (9.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (5.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (13.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$1B8bEZ4LDGv5rHcDDcd9jezHjfRJ.wQA6Yv5ienQ/onNEjkDccFP."], ["created_at", "2024-11-26 15:39:11.361668"], ["updated_at", "2024-11-26 15:39:11.361668"], ["session_token", "Qrf35eBztvjckWQjhPjfqA"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (12.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (4.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (6.8ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$MsF5PSb1fci..hFjWkrHieQJRiWcDQ0EHnSAcu18WxdzL8nYxanHy"], ["created_at", "2024-11-26 15:39:11.407237"], ["updated_at", "2024-11-26 15:39:11.407237"], ["session_token", "tYoGnFTIaNfP1syR_CPojQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (7.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (3.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "not a valid email"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.7ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (2.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "c0cc46f22b77a1e7a848"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "b55d8d417eee94d3446e"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (1.0ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$XOO1iIgpUT4baPLUjBU7MehPWGzFPb78dsWh94uISrmIpZPD/mQti"], ["created_at", "2024-11-26 15:39:55.242841"], ["updated_at", "2024-11-26 15:39:55.242841"], ["session_token", "lnttDxs23a7Tk1b7avVisw"]]
+  [1m[36mUserWorld Create (1.3ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "99f799fceb33b0209cd2"], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "6a0fdf80c9b2fe2e9a4d"], ["user_id", 1], ["world_id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mWorld Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (26.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (5.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (18.9ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$1xUmsCzC8AuTHlWwSCv7Wuc8U3YkLa5zJvvJQz7GPsGBLNQysoFK6"], ["created_at", "2024-11-26 15:39:55.321771"], ["updated_at", "2024-11-26 15:39:55.321771"], ["session_token", "jYTVXGLiYA_7ZtXLWn86HQ"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (7.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (3.5ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (6.7ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$8XLcmq9sXKtlklDzUDzfbug4bt6jJnfjfWi0Uqrq8hdrGtXnHdTFC"], ["created_at", "2024-11-26 15:39:55.362795"], ["updated_at", "2024-11-26 15:39:55.362795"], ["session_token", "UZD7rK7DXkovN4_zNxi5_A"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (6.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+=======
   [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
@@ -4152,3 +4404,4 @@ Processing by WorldsController#index as HTML
   Rendered worlds/index.html.erb (Duration: 1.0ms | Allocations: 709)
 Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.1ms | Allocations: 1348)
   [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+>>>>>>> deb30805e54e4a5e9160c080ee404ebef04193d4

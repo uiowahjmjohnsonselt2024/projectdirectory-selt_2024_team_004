@@ -95,3 +95,37 @@ body {
     color: #333;
   }
   
+  .alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+  }
+  
+  .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+  
+  .alert-danger {
+    color: white;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .alert-success {
+    color: white;
+    background-color: #28a745;
+    border-color: #28a745;
+    font-weight: bold;
+  }

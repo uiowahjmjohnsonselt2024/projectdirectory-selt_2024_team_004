@@ -47,6 +47,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'cucumber-rails', '~> 1.8.0', require: false
   gem 'rspec-rails', '~> 4.0.0'
+  gem 'dotenv-rails'
 
   gem 'pry'
   gem 'pry-byebug', '~> 3.9.0'
@@ -72,6 +73,8 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+
+  gem 'simplecov', require: false
 end
 
 group :production do

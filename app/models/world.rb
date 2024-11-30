@@ -4,6 +4,7 @@ class World < ActiveRecord::Base
   has_many :user_worlds
   has_many :users, through: :user_worlds
   has_many :squares, dependent: :destroy
+  has_many :characters, dependent: :destroy
 
   def storm
     # Get all squares in the world

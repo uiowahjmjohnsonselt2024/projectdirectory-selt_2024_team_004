@@ -1,0 +1,5 @@
+<% flash.each do |name, msg| %>
+    <div class="alert <%= name == 'notice' ? 'alert-success' : 'alert-danger' %>" role="alert">
+      <%= msg %>
+    </div>
+  <% end %>

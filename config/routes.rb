@@ -13,7 +13,17 @@ Rails.application.routes.draw do
   delete 'world',  to: 'worlds#destroy', as:'remove_world'  # Removes a world ID from user profile
   get    'new_world',  to: 'worlds#new', as:'character'     # --Needs to be Updated later-- Will open new game server
   get    'roles', to: 'worlds#user_roles', as:'role'
-  get 'landing', to: 'squares#landing', as: 'landing'
+  get    'landing', to: 'squares#landing', as: 'landing'
+
+  get    'settings', to: 'settings#show', as: 'settings'
+  patch  'settings', to: 'settings#update'
+
   get 'world/:id/start', to: 'worlds#start_game', as: 'start_game'
   resources :worlds, only: [:index, :new, :create, :destroy]
+
+  # TMP ROUTE so I can go straight to minigame to test behavior
+  get 'matching_game', to: 'matching_game#index', as:'matching_game'
+  post '/flip', to: 'matching_game#flip', as:'flip'
+
+  post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
 end

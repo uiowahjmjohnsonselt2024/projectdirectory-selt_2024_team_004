@@ -1,17 +1,25 @@
 class WorldsController < ApplicationController
   before_action :set_current_user
 
+  def landing
+    store
+    @user_world ||= UserWorld.find_by(user_id: @user.id)
+    @world ||= @user_world.world
+    @character ||= @world.characters.first
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
+  end
+
   def new
     @world_id = params[:world_id]
   end
 
   def index
-    puts params
-    puts @current_user.name
+    #@worlds parameter will be a list of all the world keys the current user has
     if @current_user
       @user_worlds = @current_user.user_worlds
     else
-      flash[:alert] = "Please log in to view your worlds."
+      flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
     end
   end
@@ -40,7 +48,6 @@ class WorldsController < ApplicationController
   
 
   def destroy
-    puts params.inspect
     @user_world = UserWorld.find_by(id: params[:id])
     @world = World.find_by(id: @user_world.world_id)
 
@@ -59,18 +66,43 @@ class WorldsController < ApplicationController
     @gender = params[:gender]
     @preload = params[:preload]
     @role = params[:role]
-    
+
     if @gender && @preload && @role
-      @image_key = "#{@gender}_#{@preload}_#{@role}"
-      @image_path = "/assets/images/#{@image_key}.png"
+      @image_path = "#{@gender}_#{@preload}_#{@role}.png"
     else
-      @image_path = "/assets/images/1_1_1.png"
+      @image_path = "1_1_1.png"
     end
   end
 
   def start_game
     @world = World.find(params[:id])
     @squares = @world.squares.order(:y, :x)
+  
+    store
+    @user_world ||= UserWorld.find_by(user_id: @user.id)
+    @world ||= @user_world.world
+    @character ||= @world.characters.first
+    
+    # Create a character if none exists
+    if @character.nil?
+      @character = Character.create!(
+        world: @world,
+        x_coord: 0,
+        y_coord: 27,
+        image_code: "default_character.png"  # Set your default image path
+      )
+    end
+
+    # Set initial coordinates if they're nil
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
+    @character.save if @character.changed?
+
+    # Add these lines to initialize store-related variables
+    @prices = {
+      sea_shard: 0.99  # Set your default price here
+    }
+    @currency = 'USD'  # Set default currency
   
     puts "World ID: #{@world.id}"
     puts "Square count: #{@squares.count}"
@@ -499,11 +531,20 @@ class WorldsController < ApplicationController
       west: world.squares.find_by(x: x - 1, y: y)&.terrain
     }
   end
+
+  def store
+    @user = current_user
+    @currency = @user.default_currency || 'USD'
+    @prices = StoreService.fetch_prices(@user)
+  end
   
   def api_call
     client = OpenAI::Client.new(
       access_token: "access_token_goes_here",
       log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
     )
+  end
+  def current_user
+    @current_user ||= User.find_by id: params[:user_id]
   end
 end
