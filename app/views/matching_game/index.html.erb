@@ -76,6 +76,8 @@
   // Pass the shuffled cards to the JavaScript
   const shuffledCards = <%= raw @shuffled_cards.to_json %>;
 
+  let flippedCards = []; // Track flipped cards
+
   // Implement function to start timer when user clicks the start game button
   function startTimer() {
       countdownTimer = setInterval(function() {
@@ -138,6 +140,7 @@
 
             // Get the card value using the shuffledCards array
             const cardValue = shuffledCards[parseInt(cardIdx, 10)];
+            console.log("Card value: " + cardValue);
 
             // Set the src if it's not set yet (this is just a safeguard)
             if (!imgElement.src || imgElement.src.includes('card_image')) {
@@ -146,6 +149,36 @@
 
             // Show the image by changing the display style
             imgElement.style.display = 'block';
+
+            // Add the card to flippedCards array
+            flippedCards.push({ cardElement, cardIdx, cardValue, result: data.result });
+
+            // Check if 2 cards are currently flipped, and if they are check for a match
+            if (flippedCards.length === 2) {
+                const [card1, card2] = flippedCards;
+                console.log("Card 1: " + JSON.stringify(card1.result) + " and Card 2: " + JSON.stringify(card2.result));
+
+                if (card1.cardValue === card2.cardValue) {
+                    // This means a match has been made, so leave cards flipped over and disable them
+                    card1.cardElement.classList.add('disabled');
+                    card2.cardElement.classList.add('disabled');
+                }
+                else {
+                    // This means they don't match, so flip them back over after a slight delay
+                    setTimeout(() => {
+                        // Flip cards back over
+                        card1.cardElement.classList.remove('flipped');
+                        card2.cardElement.classList.remove('flipped');
+
+                        // Hide the images when the cards are flipped back
+                        card1.cardElement.querySelector('.card-image').style.display = 'none';
+                        card2.cardElement.querySelector('.card-image').style.display = 'none';
+                    }, 1000);
+                }
+
+                // Reset flipped cards
+                flippedCards = [];
+            }
 
             // Check if the game is over
             if (data.game_status) {

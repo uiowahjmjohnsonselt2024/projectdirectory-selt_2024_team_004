@@ -24,12 +24,19 @@ class MatchingGame
     # First check if the card is already flipped or matched
     return {status: 'invalid', reason: 'already flipped or matched'} if @flipped_cards.include?(idx) || @matches_idx.flatten.include?(idx)
 
+    puts "Flipping card " + idx.to_s
+    puts "Before concatenation: " + @flipped_cards.inspect
+
     # If not, add the index to flipped_cards
-    @flipped_cards << idx
+    @flipped_cards.push(idx)
+    puts @flipped_cards.inspect
 
     # If user has flipped 2 cards, check if they match, otherwise do nothing
     if @flipped_cards.length == 2
       # Check if the cards are a match
+
+      puts "In length = 2"
+
       if @cards_idx[@flipped_cards[0]] == @cards_idx[@flipped_cards[1]]
         # Add that index to the array of matches the user has made
         @matches_idx << [@flipped_cards[0], @flipped_cards[1]]
@@ -40,7 +47,7 @@ class MatchingGame
 
       # Reset flipped cards
       @flipped_cards = []
-      {status: 'flipped', matched: matched}
+      return {status: 'flipped', matched: matched}
     end
 
     {status: 'flipped', matched: nil}

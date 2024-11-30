@@ -17,6 +17,7 @@ class MatchingGameController < ApplicationController
   def flip
     # Get the current state of the minigame
     @mini_game = MatchingGame.new(session[:mini_game_state])
+    puts @mini_game.inspect
 
     # Check for the case that minigame was not properly instantiated
     return render json: {error: "Failed to generate and set new mini game."}, status: :unprocessable_entity if @mini_game.nil?
