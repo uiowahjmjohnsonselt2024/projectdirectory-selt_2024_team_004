@@ -70,6 +70,12 @@ RSpec.describe World, type: :model do
 
         expect(valid_world.user_worlds).to include(user_world1, user_world2)
       end
+      it 'should be able to have many characters' do
+        character1 = Character.create!(world: valid_world, :image_code => '1_1_1.png', :shards => 10, :x_coord => 10, :y_coord => 10)
+        character2 = Character.create!(world: valid_world, :image_code => '1_1_2.png', :shards => 20, :x_coord => 20, :y_coord => 20)
+
+        expect(valid_world.characters).to include(character1, character2)
+      end
     end
   end
 end
