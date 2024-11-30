@@ -32,6 +32,11 @@
   <p>ARG!!! Yer game is over!</p>
 </div>
 
+<!-- You won message, hidden unless player matches all cards within time limit -->
+<div id="game-won-message" style="display: none;">
+  <p>SHIVER ME TIMBERS! Ye claimed victory!</p>
+</div>
+
 <!-- Arrange the cards in 2 rows of 5 -->
 <div class="cards-container">
   <div class="card-row">
@@ -70,8 +75,9 @@
   const timerDisplay = document.getElementById('timer')
   const startButton = document.getElementById('start-btn')
 
-  // Connect game over message to its element in the view
+  // Connect game over and gam won message to its elements in the view
   const gameOverMessage = document.getElementById('game-over-message')
+  const gameWonMessage = document.getElementById('game-won-message')
 
   // Pass the shuffled cards to the JavaScript
   const shuffledCards = <%= raw @shuffled_cards.to_json %>;
@@ -113,6 +119,18 @@
       // Start countdown
       startTimer();
   });
+
+  function checkGameWon() {
+      const allCards = document.querySelectorAll('.card');
+      // Check if every card has been both flipped and matched
+      const allCardsFlippedAndDisabled = [...allCards].every(card => card.classList.contains('flipped') && card.classList.contains('disabled'));
+
+      if (allCardsFlippedAndDisabled) {
+          // Hide the timer and start button and show the game over message
+          document.querySelector('.timer-and-start').style.display = 'none';
+          gameWonMessage.style.display = 'block';
+      }
+  }
 
   function flipCard(event) {
       // Get the clicked card and its index
@@ -181,9 +199,7 @@
             }
 
             // Check if the game is over
-            if (data.game_status) {
-                alert('You won the game!');
-            }
+            checkGameWon();
         })
         .catch(error => {
             console.error('Error flipping card:', error);
@@ -311,6 +327,12 @@
     #game-over-message {
         font-size: 2rem;
         color: #ff0000;
+        margin-top: 20px;
+    }
+
+    #game-won-message {
+        font-size: 2rem;
+        color: #28a745;
         margin-top: 20px;
     }
 
