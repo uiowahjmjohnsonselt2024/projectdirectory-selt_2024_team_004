@@ -10,6 +10,9 @@ class CreateSquares < ActiveRecord::Migration[6.0]
       t.boolean 'treasure'
       t.string 'game'
       t.string 'monsters'
+      t.string 'state'
+      t.string 'terrain'
+      t.string 'code'
     end
   end
 end

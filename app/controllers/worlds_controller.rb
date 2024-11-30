@@ -6,8 +6,6 @@ class WorldsController < ApplicationController
   end
 
   def index
-    #@worlds parameter will be a list of all the world keys the current user has
-    puts params
     puts @current_user.name
     if @current_user
       @user_worlds = @current_user.user_worlds
@@ -19,20 +17,19 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
+
     @world = World.new(last_played: DateTime.now, progress: 0)
     if @world.save
       @world.update(world_name: "World #{@world.id}")
       UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
+      Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 10, y_coord: 10)
       flash[:notice] = "World created successfully!"
       redirect_to worlds_path
     end
   end
 
   def destroy
-    puts params.inspect
-    puts "UserWorld: #{@user_world.inspect}"
     @user_world = UserWorld.find_by(id: params[:id])
-    puts @user_world
     @world = World.find_by(id: @user_world.world_id)
     if @user_world.owner
       UserWorld.where(world_id: @world.id).destroy_all
@@ -51,20 +48,18 @@ class WorldsController < ApplicationController
     @role = params[:role]
     
     if @gender && @preload && @role
-      @image_key = "#{@gender}_#{@preload}_#{@role}"
-      @image_path = "/assets/images/#{@image_key}.png"
+      @image_path = "#{@gender}_#{@preload}_#{@role}.png"
     else
-      @image_path = "/assets/images/1_1_1.png"
+      @image_path = "1_1_1.png"
     end
   end
 
-  def start_game
-    puts 'params'
-    puts params
-
-    @new_world = @world.
-
-    redirect_to some_other_path, notice: "Your adventure begins!"
+  def landing
+    @user_world = UserWorld.find_by(id: params[:id])
+    @world = @user_world.world
+    @character = @world.characters.first
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
   end
 
   def api_call

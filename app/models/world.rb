@@ -7,7 +7,8 @@ class World < ActiveRecord::Base
       self.world_id = SecureRandom.hex(10) # Generates a 20-character hex string
   end
 
-    has_many :user_worlds
-    has_many :users, :through => :user_worlds
-    has_many :squares
+  has_many :user_worlds
+  has_many :characters, dependent: :destroy
+  has_many :users, :through => :user_worlds
+  has_many :squares
 end
