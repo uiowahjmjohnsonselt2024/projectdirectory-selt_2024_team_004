@@ -78,6 +78,32 @@ class WorldsController < ApplicationController
     @world = World.find(params[:id])
     @squares = @world.squares.order(:y, :x)
   
+    store
+    @user_world ||= UserWorld.find_by(user_id: @user.id)
+    @world ||= @user_world.world
+    @character ||= @world.characters.first
+    
+    # Create a character if none exists
+    if @character.nil?
+      @character = Character.create!(
+        world: @world,
+        x_coord: 0,
+        y_coord: 27,
+        image_code: "default_character.png"  # Set your default image path
+      )
+    end
+
+    # Set initial coordinates if they're nil
+    @character.x_coord ||= 0
+    @character.y_coord ||= 27
+    @character.save if @character.changed?
+
+    # Add these lines to initialize store-related variables
+    @prices = {
+      sea_shard: 0.99  # Set your default price here
+    }
+    @currency = 'USD'  # Set default currency
+  
     puts "World ID: #{@world.id}"
     puts "Square count: #{@squares.count}"
   
@@ -504,6 +530,8 @@ class WorldsController < ApplicationController
       east: world.squares.find_by(x: x + 1, y: y)&.terrain,
       west: world.squares.find_by(x: x - 1, y: y)&.terrain
     }
+  end
+
   def store
     @user = current_user
     @currency = @user.default_currency || 'USD'

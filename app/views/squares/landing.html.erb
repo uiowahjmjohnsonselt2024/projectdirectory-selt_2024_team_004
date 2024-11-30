@@ -2,12 +2,21 @@
   <div class="top-banner">
     <h2 class="title">Pretty Pirates</h2>
 
+    <%= stylesheet_link_tag 'landing', media: 'all', 'data-turbo-track': 'reload', defer: true %>
+    <%= javascript_include_tag 'landing', 'data-turbo-track': 'reload', defer: true %>
+
     <div class="dropdown-menu-container">
       <button class="dropdown-button">Menu</button>
       <div class="dropdown-content">
-        <a href="#">Settings</a>
-        <a href="#">Store</a>
-        <%= link_to 'Exit World', worlds_path, class: 'btn btn-primary dropdown_link' %>
+        <%= link_to 'Settings', settings_path(return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
+        <a href="#" id="store-link">Store</a>
+        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
+          <%= form.hidden_field :id, value: @character&.id %>
+          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
+          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
+          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
+        <% end %>
+        <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
   </div>
@@ -24,7 +33,9 @@
       %>
       <% @squares.each do |square| %>
         <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
-             id="square_<%= square.square_id %>">
+             id="square_<%= square.square_id %>"
+             data-x="<%= square.x %>"
+             data-y="<%= square.y %>">
           <% if square.code.present? %>
             <script>
               if (!window.squareInitialized_<%= square.square_id %>) {
@@ -49,33 +60,137 @@
           <% end %>
         </div>
       <% end %>
+      <div class="character"
+           style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
+        <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
+      </div>
     <% else %>
       <p>No squares found for this world!</p>
     <% end %>
   </div>
+
+  <!-- Store Modal -->
+  <div id="store-modal" class="modal">
+    <div class="modal-content">
+      <div class="store-banner">
+        <h2 class="store-title">Store</h2>
+      </div>
+      <span class="close-button">&times;</span>
+      <div class="store-grid">
+        <div class="store-grid-item">
+          <button class="item-button" data-name="Sea Shard (1)" data-price="<%= @prices[:sea_shard] %> <%= @currency %>">
+            <div class="item-content">
+              <%= image_tag "shards/DALLE/shard.png", alt: "Sea Shard", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+              <p class="item-price">Sea Shard (1): <br><%= @prices[:sea_shard] %> <%= @currency %></p>
+            </div>
+          </button>
+        </div>
+        <!-- Add other store items similarly -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase Modal -->
+  <div id="purchase-modal" class="modal">
+    <div class="modal-content">
+      <div class="store-banner">
+        <h2 class="store-title">Purchase Item</h2>
+      </div>
+      <span class="close-button">&times;</span>
+      <div class="purchase-form">
+        <h3 id="item-name"></h3>
+        <p id="item-price"></p>
+        <form id="purchase-form">
+          <label for="card-number">Card Number:</label>
+          <input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
+
+          <label for="expiration-date">Expiration Date:</label>
+          <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY" required>
+
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
+
+          <button type="submit" class="btn">Purchase</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const character = document.querySelector('.character');
+    const xCoordField = document.querySelector('#x-coord');
+    const yCoordField = document.querySelector('#y-coord');
+    const saveWorldButton = document.querySelector('#save-world-button');
+
+    let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
+    let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
+
+    function moveCharacter() {
+      character.style.left = (xCoord * 2) + 'px';
+      character.style.top = (yCoord * 2) + 'px';
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowUp') {
+        yCoord -= (window.innerHeight*0.85)/12;
+      } else if (e.key === 'ArrowDown') {
+        yCoord += (window.innerHeight*0.85)/12;
+      } else if (e.key === 'ArrowLeft') {
+        xCoord -= window.innerWidth/12;
+      } else if (e.key === 'ArrowRight') {
+        xCoord += window.innerWidth/12;
+      }
+
+      xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
+      yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
+
+      moveCharacter();
+    });
+
+    saveWorldButton.addEventListener('click', function (e) {
+      xCoordField.value = xCoord;
+      yCoordField.value = yCoord;
+    });
+
+    moveCharacter();
+  });
+</script>
+
 <style>
-  /* General Styles */
+  /* Combined styles from both versions */
   body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f3f4f6; /* Light background color */
-    color: #333; /* Dark text for contrast */
+    background-color: #f3f4f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
   }
 
   .container {
     text-align: center;
     padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
   }
 
-  /* Top Banner */
   .top-banner {
-    background: linear-gradient(135deg, #007bff, #0056b3); /* Blue gradient */
+    background: linear-gradient(135deg, #007bff, #0056b3);
     color: #fff;
     padding: 20px;
+    width: 100%;
+    height: 11%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
@@ -221,286 +336,3 @@
 </style>
 
 <%== @js_functions %>
-
-
-
-# <div class="container">
-#   <div class="top-banner">
-#     <h2 class="title">Pretty Pirates</h2>
-
-#     <%= stylesheet_link_tag 'landing', media: 'all', 'data-turbo-track': 'reload', defer: true %>
-#     <%= javascript_include_tag 'landing', 'data-turbo-track': 'reload', defer: true %>
-
-#     <div class="dropdown-menu-container">
-#       <button class="dropdown-button">Menu</button>
-#       <div class="dropdown-content">
-#         <%= link_to 'Settings', settings_path(return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
-#         <a href="#" id="store-link">Store</a>
-#         <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-#           <%= form.hidden_field :id, value: @character.id %>
-#           <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-#           <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-#           <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
-#         <% end %>
-#         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
-#       </div>
-#     </div>
-#   </div>
-
-#   <div class="grid">
-#     <% (1..36).each do |i| %>
-#       <div class="grid-item"
-#            data-x="<%= (i % 6) %>"
-#            data-y="<%= (i / 6).floor %>">
-#         Tile <%= i %>
-#       </div>
-#     <% end %>
-#     <div class="character"
-#          style="position: absolute; top: <%= @character.y_coord %>px; left: <%= @character.x_coord %>px;">
-#       <%= image_tag asset_path(@character.image_code), width: '100', height: '100' %>
-#     </div>
-#   </div>
-
-#   <div id="purchase-modal" class="modal">
-#     <div class="modal-content">
-#       <div class="store-banner">
-#         <h2 class="store-title">Purchase Item</h2>
-#       </div>
-#       <span class="close-button">&times;</span>
-#       <div class="purchase-form">
-#         <h3 id="item-name"></h3>
-#         <p id="item-price"></p>
-#         <form id="purchase-form">
-#           <label for="card-number">Card Number:</label>
-#           <input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX" required>
-
-#           <label for="expiration-date">Expiration Date:</label>
-#           <input type="text" id="expiration-date" name="expiration-date" placeholder="MM/YY" required>
-
-#           <label for="cvv">CVV:</label>
-#           <input type="text" id="cvv" name="cvv" placeholder="XXX" required>
-
-#           <button type="submit" class="btn">Purchase</button>
-#         </form>
-#       </div>
-#     </div>
-#   </div>
-
-#   <div id="store-modal" class="modal">
-#     <div class="modal-content">
-#       <div class="store-banner">
-#         <h2 class="store-title">Store</h2>
-#       </div>
-#       <span class="close-button">&times;</span>
-#       <div class="store-grid">
-#         <div class="store-grid-item">
-#           <button class="item-button" data-name="Sea Shard (1)" data-price="<%= @prices[:sea_shard] %> <%= @currency %>">
-#             <div class="item-content">
-#               <%= image_tag "shards/DALLE/shard.png", alt: "Sea Shard", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-#               <p class="item-price">Sea Shard (1): <br><%= @prices[:sea_shard] %> <%= @currency %></p>
-#             </div>
-#           </button>
-#         </div>
-#         <div class="store-grid-item">
-#           <button class="item-button" data-name="Pile o' Shards (10)" data-price="<%= @prices[:pile_shards] %> <%= @currency %>">
-#             <div class="item-content">
-#               <%= image_tag "shards/pile.png", alt: "Pile o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-#               <p class="item-price">Pile o' Shards (10): <br><%= @prices[:pile_shards] %> <%= @currency %></p>
-#             </div>
-#           </button>
-#         </div>
-#         <div class="store-grid-item">
-#           <button class="item-button" data-name="Hat o' Shards! (50)" data-price="<%= @prices[:hat_shards] %> <%= @currency %>">
-#             <div class="item-content">
-#               <%= image_tag "shards/hat.png", alt: "Hat o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-#               <p class="item-price">Hat o' Shards! (50): <br><%= @prices[:hat_shards] %> <%= @currency %></p>
-#             </div>
-#           </button>
-#         </div>
-#         <div class="store-grid-item">
-#           <button class="item-button" data-name="Chest o' Shards! (100)" data-price="<%= @prices[:chest_shards] %> <%= @currency %>">
-#             <div class="item-content">
-#               <%= image_tag "shards/treasure_chest.png", alt: "Chest o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-#               <p class="item-price">Chest o' Shards! (100): <br><%= @prices[:chest_shards] %> <%= @currency %></p>
-#             </div>
-#           </button>
-#         </div>
-#       </div>
-#     </div>
-#   </div>
-# </div>
-
-# <script>
-#     document.addEventListener('DOMContentLoaded', function () {
-#         const character = document.querySelector('.character'); // Select the character element
-#         const xCoordField = document.querySelector('#x-coord');
-#         const yCoordField = document.querySelector('#y-coord');
-#         const saveWorldButton = document.querySelector('#save-world-button');
-
-#         let xCoord = <%= @character.x_coord %>; // Initial X coordinate
-#         let yCoord = <%= @character.y_coord %>; // Initial Y coordinate
-
-#         // Update the character's position based on the arrow key pressed
-#         function moveCharacter() {
-#             character.style.left = (xCoord * 2) + 'px';
-#             character.style.top = (yCoord * 2) + 'px';
-#         }
-
-#         // Listen for keydown events
-#         document.addEventListener('keydown', function (e) {
-#             if (e.key === 'ArrowUp') {
-#                 yCoord -= (window.innerHeight*0.85)/12; // Move up
-#             } else if (e.key === 'ArrowDown') {
-#                 yCoord += (window.innerHeight*0.85)/12; // Move down
-#             } else if (e.key === 'ArrowLeft') {
-#                 xCoord -= window.innerWidth/12; // Move left
-#             } else if (e.key === 'ArrowRight') {
-#                 xCoord += window.innerWidth/12; // Move right
-#             }
-
-#             xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
-#             yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
-
-
-#             moveCharacter();
-#         });
-
-#         saveWorldButton.addEventListener('click', function (e) {
-#             xCoordField.value = xCoord; // Set the x coordinate
-#             yCoordField.value = yCoord; // Set the y coordinate
-#         });
-
-#         // Initial position of the character
-#         moveCharacter();
-#     });
-# </script>
-# <style>
-#     body {
-#         font-family: Arial, sans-serif;
-#         margin: 0;
-#         padding: 0;
-#         display: flex;
-#         flex-direction: column;
-#         align-items: center; /* Center horizontally */
-#         justify-content: center; /* Center vertically */
-#         height: 100vh;
-#     }
-#     .character {
-#         transition: top 0.3s ease, left 0.3s ease;
-#     }
-#     .container {
-#         text-align: center;
-#         display: flex;
-#         flex-direction: column;
-#         align-items: center;
-#         justify-content: center;
-#         height: 100vh;
-#         width: 100vw;
-#     }
-
-#     .top-banner {
-#         background: linear-gradient(135deg, #007bff, #0056b3);
-#         width: 100%;
-#         height: 11%;
-#         padding: 1rem 0;
-#         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-#         border-bottom-left-radius: 10px;
-#         border-bottom-right-radius: 10px;
-#         transition: background 0.3s ease-in-out;
-#         flex-direction: row;
-#         justify-content: center;
-#         text-align: center;
-#     }
-
-#     .title {
-#         font-size: 3rem;
-#         color: #ffffff;
-#     }
-
-#     .dropdown-menu-container {
-#         position: absolute;
-#         top: 4%;
-#         right: 2%;
-#     }
-
-#     .dropdown-button {
-#         background-color: #007bff;
-#         color: #ffffff;
-#         padding: 20px 25px;
-#         border: none;
-#         border-radius: 5px;
-#         cursor: pointer;
-#         font-size: 1.5rem;
-#     }
-
-#     .dropdown-content {
-#         display: none;
-#         position: relative;
-#         right: 0;
-#         background-color: #ffffff;
-#         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-#         z-index: 1000; /* Ensures this is above other content */
-#         border-radius: 5px;
-#         overflow: hidden;
-#     }
-
-#     .dropdown-content a {
-#         display: block;
-#         padding: 10px 15px;
-#         text-decoration: none;
-#         color: #000000;
-#         font-size: 0.9rem;
-#     }
-
-#     .dropdown-menu-container:hover .dropdown-content {
-#         display: block;
-#     }
-
-#     .grid {
-#         display: grid;
-#         grid-template-columns: repeat(6, 1fr); /* 3 columns */
-#         gap: 5px; /* Space between grid items */
-#         justify-items: center; /* Center grid items horizontally */
-#         align-items: center; /* Center grid items vertically */
-#         height: 89%;
-#         width: 100%;
-#     }
-
-#     .grid-item {
-#         width: 14vw;
-#         aspect-ratio: 5 / 2;
-#         background-color: #f0f0f0;
-#         display: flex;
-#         align-items: center;
-#         justify-content: center;
-#         border: 1px solid #ccc;
-#         border-radius: 5px;
-#     }
-#     .dropdown-content a:hover,
-#     #save-world-button:hover {
-#         background-color: #f0f0f0;
-#     }
-#     .dropdown-content form,
-#     .dropdown-content .btn {
-#         margin: 0; /* Remove default margins */
-#         padding: 0; /* Optional: ensure consistent spacing */
-#     }
-#     .dropdown-content form {
-#         display: block; /* Ensure it behaves like a dropdown link */
-#         width: 100%; /* Ensure it spans the dropdown width */
-#     }
-#     .dropdown-content .btn {
-#         width: 100%; /* Stretch button to fit dropdown */
-#         box-sizing: border-box; /* Include padding in width */
-#         background: none;
-#         border: none;
-#         display: block;
-#         padding: 10px 10px;
-#         text-decoration: none;
-#         color: #000000;
-#         font-size: 0.9rem;
-#         cursor: pointer;
-#         text-align: center;
-#     }
-
-# </style>

@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_165322) do
     t.string "state"
     t.string "terrain"
     t.string "code"
+    t.text "pixel_art"
     t.index ["square_id"], name: "index_squares_on_square_id", unique: true
     t.index ["world_id"], name: "index_squares_on_world_id"
   end
@@ -72,7 +73,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_165322) do
   end
 
   add_foreign_key "characters", "worlds"
-  add_foreign_key "squares", "worlds"
+  add_foreign_key "squares", "worlds", on_delete: :cascade
   add_foreign_key "user_worlds", "users"
   add_foreign_key "user_worlds", "worlds"
 end
