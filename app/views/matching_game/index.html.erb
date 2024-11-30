@@ -139,14 +139,11 @@
             // Get the image element inside the card
             const imgElement = cardElement.querySelector('.card-image');
 
-            console.log('Flipped image:', imgElement.src);
-
             // Get the card value using the shuffledCards array
             const cardValue = shuffledCards[parseInt(cardIdx, 10)];
 
             // Set the src if it's not set yet (this is just a safeguard)
             if (!imgElement.src || imgElement.src.includes('card_image')) {
-                console.log("In safeguard")
                 imgElement.src = `/assets/card_image${cardValue + 1}.png`;
             }
 
@@ -335,7 +332,8 @@
 
     .card.flipped {
         transform: rotateY(180deg);
-        background-color: transparent;
+        background-color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     .description-container {
