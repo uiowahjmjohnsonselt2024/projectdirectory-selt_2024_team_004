@@ -16,6 +16,7 @@
           <%= form.hidden_field :y, value: '', id: 'y-coord' %>
           <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
         <% end %>
+        <%= link_to 'Minigame', matching_game_path, class: 'btn btn-primary dropdown_link' %>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>

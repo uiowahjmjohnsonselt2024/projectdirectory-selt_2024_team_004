@@ -26,7 +26,6 @@
   </div>
 </div>
 
-
 <!-- Game over message, hidden until timer runs out (only if player has not won) -->
 <div id="game-over-message" style="display: none;">
   <p>ARG!!! Yer game is over!</p>
@@ -34,7 +33,8 @@
 
 <!-- You won message, hidden unless player matches all cards within time limit -->
 <div id="game-won-message" style="display: none;">
-  <p>SHIVER ME TIMBERS! Ye claimed victory!</p>
+  <p class="victory-message">SHIVER ME TIMBERS! Ye claimed victory!</p>
+  <p class="redirect-message">Redirecting ye back to the landing page...</p>
 </div>
 
 <!-- Arrange the cards in 2 rows of 5 -->
@@ -94,6 +94,18 @@
               // Hide the timer and start button and show the game over message
               document.querySelector('.timer-and-start').style.display = 'none';
               gameOverMessage.style.display = 'block';
+
+              // Disable all cards so user can't click anu
+              const allCards = document.querySelectorAll('.card');
+              allCards.forEach(card => {
+                  card.classList.add('disabled'); // Add a class to visually and functionally disable the cards
+                  card.style.pointerEvents = 'none'; // Prevent further clicks on the cards
+              });
+
+              // Wait 5 seconds, then redirect to landing page
+              setTimeout(() => {
+                  window.location.href = '<%= landing_path %>';
+              }, 5000);
           }
           else {
               timeLeft--;
@@ -129,6 +141,11 @@
           // Hide the timer and start button and show the game over message
           document.querySelector('.timer-and-start').style.display = 'none';
           gameWonMessage.style.display = 'block';
+
+          // Wait 5 seconds, then redirect to landing page
+          setTimeout(() => {
+              window.location.href = '<%= landing_path %>';
+          }, 5000);
       }
   }
 
@@ -331,9 +348,19 @@
     }
 
     #game-won-message {
+        margin-top: 20px;
+    }
+
+    .victory-message {
         font-size: 2rem;
         color: #28a745;
-        margin-top: 20px;
+        margin: 0;
+    }
+
+    .redirect-message {
+        font-size: 1.2rem;
+        color: #6c757d;
+        margin-top: 10px;
     }
 
     .cards-container {
