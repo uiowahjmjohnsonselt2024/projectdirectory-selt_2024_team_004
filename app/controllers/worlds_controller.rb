@@ -2,12 +2,11 @@ class WorldsController < ApplicationController
   before_action :set_current_user
   def landing
     store
-    @user_world = UserWorld.find_by(id: params[:id])
-    @world = @user_world.world
-    @character = @world.characters.first
+    @user_world ||= UserWorld.find_by(user_id: @user.id)
+    @world ||= @user_world.world
+    @character ||= @world.characters.first
     @character.x_coord ||= 0
     @character.y_coord ||= 27
-    session[:world_id] = World.find_by(id: session[:world_id])
   end
 
   def new
@@ -28,13 +27,13 @@ class WorldsController < ApplicationController
   def create
     puts 'Form submitted successfully!'
     @world = World.new(last_played: DateTime.now, progress: 0)
-    if @world.save
-      @world.update(world_name: "World #{@world.id}")
-      UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
-      Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 10, y_coord: 10)
-      flash[:notice] = 'World created successfully!'
-      redirect_to worlds_path
-    end
+    return unless @world.save
+
+    @world.update(world_name: "World #{@world.id}")
+    UserWorld.create!(user: @current_user, world: @world, user_role: user_roles, owner: true)
+    Character.create!(world: @world, image_code: @image_path, shards: 10, x_coord: 10, y_coord: 10)
+    flash[:notice] = 'World created successfully!'
+    redirect_to worlds_path
   end
 
   def destroy

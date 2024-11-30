@@ -5,8 +5,6 @@ class SettingsController < ApplicationController
     @user = @current_user
     @currencies = OpenExchangeService.fetch_currencies
     session[:return_path] = params[:return_path] if params[:return_path]
-    puts @user
-    puts @currencies
   end
 
   def update
