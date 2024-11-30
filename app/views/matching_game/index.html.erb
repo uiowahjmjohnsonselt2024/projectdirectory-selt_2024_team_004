@@ -76,6 +76,9 @@
   // Connect game over message to its element in the view
   const gameOverMessage = document.getElementById('game-over-message')
 
+  // Pass the shuffled cards to the JavaScript
+  const shuffledCards = <%= raw @shuffled_cards.to_json %>;
+
   // Implement function to start timer when user clicks the start game button
   function startTimer() {
       countdownTimer = setInterval(function() {
@@ -138,10 +141,13 @@
 
             console.log('Flipped image:', imgElement.src);
 
+            // Get the card value using the shuffledCards array
+            const cardValue = shuffledCards[parseInt(cardIdx, 10)];
+
             // Set the src if it's not set yet (this is just a safeguard)
             if (!imgElement.src || imgElement.src.includes('card_image')) {
                 console.log("In safeguard")
-                imgElement.src = `/assets/card_image${parseInt(cardIdx, 10) + 1}.png`;
+                imgElement.src = `/assets/card_image${cardValue + 1}.png`;
             }
 
             // Show the image by changing the display style
