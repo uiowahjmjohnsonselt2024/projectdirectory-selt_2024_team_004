@@ -1,0 +1,310 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columns for 36 squares */
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .grid-item {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .pixel-art {
+    display: inline-block;
+    font-family: monospace;
+  }
+  
+  .pixel-row {
+    display: flex;
+  }
+  
+  .pixel {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+    margin: 1px;
+    font-size: 8px;
+  }
+  
+  .pixel.water {
+    background-color: #1e90ff; /* Blue */
+    color: #1e90ff;
+  }
+  
+  .pixel.land {
+    background-color: #228b22; /* Green */
+    color: #228b22;
+  }
+  
+  .pixel.sand {
+    background-color: #f4a460; /* Yellow */
+    color: #f4a460;
+  }
+  
+  .pixel.default {
+    background-color: #d3d3d3; /* Light grey */
+    color: #d3d3d3;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.top-banner {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    width: 100%;
+    height: 11%;
+    padding: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transition: background 0.3s ease-in-out;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+}
+
+.title {
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+.dropdown-menu-container {
+    position: absolute;
+    top: 4%;
+    right: 2%;
+}
+
+.dropdown-button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 20px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensures this is above other content */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000000;
+    font-size: 0.9rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu-container:hover .dropdown-content {
+    display: block;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+    justify-items: center;
+    align-items: center;
+    height: 89%;
+    width: 100%;
+}
+
+.grid-item {
+    width: 14vw;
+    aspect-ratio: 5 / 2;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 0;
+    border-radius: 10px;
+    width: 30vw;
+    aspect-ratio: 1 / 1;
+    max-width: 80vh;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+    color: #ff0000;
+    position: absolute;
+    top: 2%;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.store-banner {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    width: 100%;
+    padding: 0.75rem 0;
+    text-align: center;
+    justify-content: flex-start;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.store-title {
+    font-size: 2rem;
+    color: #ffffff; /* White text to match banner style */
+    margin: 0;
+}
+
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2px;
+    padding: 2px 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    align-items: center;
+    justify-items: center;
+}
+
+.store-grid-item {
+    display: flex;
+    flex-direction: column; /* Stack image and price vertically */
+    align-items: center; /* Center align both elements */
+    justify-content: flex-start; /* Start stacking from the top */
+    width: 80%; /* Width of the grid item */
+    aspect-ratio: 1 / 1; /* Keep the grid item square */
+    background-color: #f0f0f0;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px; /* Add padding for spacing */
+}
+
+.item-button {
+    display: flex;
+    flex-direction: column; /* Stack image and text vertically */
+    align-items: center; /* Center-align the content */
+    justify-content: flex-start;
+    width: 100%; /* Make the button span the entire grid item */
+    height: 100%; /* Make the button span the entire grid item */
+    border: none; /* Remove the default button border */
+    background: none; /* Remove the default button background */
+    padding: 20px; /* Remove default padding */
+    cursor: pointer; /* Indicate that it’s clickable */
+}
+
+.item-content {
+    display: flex;
+    flex-direction: column; /* Stack image and text */
+    align-items: center; /* Center-align image and text */
+    justify-content: center;
+    width: 100%; /* Ensure full width */
+    height: 100%; /* Ensure full height */
+}
+
+.item-price {
+    margin-top: 8px; /* Space between the image and price */
+    font-size: 1rem;
+    color: #0056b3;
+    font-weight: bold;
+    text-align: center;
+}
+
+.purchase-form {
+    text-align: left;
+    width: 50%;
+    margin: auto;
+    z-index: 2000;
+}
+
+.purchase-form label {
+    display: block;
+    margin: 10px 0 5px;
+    z-index: 2000;
+}
+
+.purchase-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.purchase-form .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.purchase-form .btn:hover {
+    background-color: #0056b3;
+}

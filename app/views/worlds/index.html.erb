@@ -1,0 +1,42 @@
+<div class="dashboard-container">
+<%= stylesheet_link_tag 'worlds', media: 'all', 'data-turbo-track': 'reload' %>
+
+  <h1>Welcome Back, <%= @current_user.name %>!</h1>
+  <h2>Pick an Adventure to Continue</h2>
+
+  <% if @user_worlds.present? %>
+    <table class="table">
+      <tbody>
+        <% @user_worlds.each do |user_world| %>
+          <% world = World.find_by(id: user_world.world_id) %>
+          <tr>
+            <td><%= world[:world_name] %></td>
+            <td>
+              <%= form_with url: start_game_path(world.id), method: :get, local: true do |form| %>
+                <%= form.submit 'Play', class: 'btn btn-primary' %>
+              <% end %>
+            </td>
+            <td>
+              <%= button_to 'Delete', world_path(id: user_world.id), method: :delete, data: { confirm: 'Are you sure you want to delete this world?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="welcome-message">Create a world to start!</p>
+  <% end %>
+
+  <% if @user_worlds.length < 3 %>
+    <h2>Start a New Adventure</h2>
+    <div class="new-adventure-btn-container">
+      <%= form_with url: character_path, method: :get, local: true do |form| %>
+        <%= form.submit '+', class: 'btn btn-primary new-world-btn' %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= form_with url: logout_path, method: :delete, local: true do |form| %>
+    <%= form.submit 'Logout', class: 'btn btn-primary logout-btn' %>
+  <% end %>
+</div>

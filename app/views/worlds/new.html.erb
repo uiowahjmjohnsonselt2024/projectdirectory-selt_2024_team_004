@@ -1,0 +1,153 @@
+<div class="character-selection-container">
+  <h1 class="character-selection-title">Select Your Swashbuckler</h1>
+
+  <%= stylesheet_link_tag 'roles', media: 'all', 'data-turbo-track': 'reload' %>
+  
+  <%= form_with url: create_world_path, local: true, method: :post, class: "character-selection-form" do |form| %>
+    <div class="world-name-container">
+      <%= form.text_field :name, class: "world-name-input", id: 'world_name', name: 'world_name', required: true, placeholder: "Enter your world's name..." %>
+    </div>
+
+    <div class="btn-group-container">
+      <div class="btn-group gender-group" role="group">
+        <%= button_tag "Male", type: "button", class: "btn btn-option gender-btn btn-active", id: "male", data: { group: "gender", value: 1 } %>
+        <%= button_tag "Female", type: "button", class: "btn btn-option gender-btn", id: "female", data: { group: "gender", value: 2 } %>
+      </div>
+
+      <div class="btn-group role-group" role="group">
+        <%= button_tag "Captain", type: "button", class: "btn btn-option role-btn btn-active", id: "captain", data: { group: "role", value: 1 } %>
+        <%= button_tag "Doctor", type: "button", class: "btn btn-option role-btn", id: "doctor", data: { group: "role", value: 2 } %>
+        <%= button_tag "Navigator", type: "button", class: "btn btn-option role-btn", id: "navigator", data: { group: "role", value: 3 } %>
+      </div>
+
+      <div class="btn-group preload-group" role="group">
+        <%= button_tag "Outfit 1", type: "button", class: "btn btn-option preload-btn btn-active", id: "preload1", data: { group: "preload", value: 1 } %>
+        <%= button_tag "Outfit 2", type: "button", class: "btn btn-option preload-btn", id: "preload2", data: { group: "preload", value: 2 } %>
+        <%= button_tag "Outfit 3", type: "button", class: "btn btn-option preload-btn", id: "preload3", data: { group: "preload", value: 3 } %>
+      </div>
+
+    </div>
+
+    <div class="description-container">
+    <!-- <p class="description-text">Description</p> -->
+    </div>
+    
+    <!-- Hidden fields to store the selections -->
+    <%= form.hidden_field :gender, id: "gender_selection" %>
+    <%= form.hidden_field :preload, id: "preload_selection" %>
+    <%= form.hidden_field :role, id: "role_selection" %>
+
+    <div class="image-container">
+      <%= image_tag asset_path('1_1_1.png')%>
+    </div>
+
+    <div class="submit-btn-container">
+      <%= form.submit "Time to Set Sail!", class: "btn btn-primary submit-btn", id: "submit-btn" %>
+      <div class="loading-text" style="display: none;">
+        Creating world<span class="dots"></span>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.loading-text {
+  color: #666;
+  font-size: 1.2em;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.world-name-container {
+  margin: 20px auto;
+  text-align: center;
+}
+
+.world-name-input {
+  padding: 10px;
+  font-size: 1.1em;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.world-name-input:focus {
+  border-color: #007bff;
+}
+</style>
+
+<script> 
+document.addEventListener("DOMContentLoaded", function () {
+  const buttons = document.querySelectorAll(".btn-option");
+  const defaultSelections = {
+      gender: "1",  // Male
+      preload: "1", // Red
+      role: "1"     // Captain
+  };
+
+  // Set the default hidden field values
+  document.getElementById("gender_selection").value = defaultSelections.gender;
+  document.getElementById("preload_selection").value = defaultSelections.preload;
+  document.getElementById("role_selection").value = defaultSelections.role;
+
+  function updateImage() {
+    const genderValue = document.getElementById("gender_selection").value;
+    const preloadValue = document.getElementById("preload_selection").value;
+    const roleValue = document.getElementById("role_selection").value;
+
+    // Construct the image path using the selected values
+    const imagePath = `${genderValue}_${preloadValue}_${roleValue}.png`;
+
+    // Update the image source to user selection
+    const imageContainer = document.querySelector(".image-container img");
+    imageContainer.src = "/assets/" + imagePath;
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevents navigation
+
+      const group = this.getAttribute("data-group");
+      const value = this.getAttribute("data-value");
+
+      // Set the hidden field based on the group
+      if (group === "gender") {
+        document.getElementById("gender_selection").value = value;
+      } else if (group === "preload") {
+        document.getElementById("preload_selection").value = value;
+      } else if (group === "role") {
+        document.getElementById("role_selection").value = value;
+      }
+      // Remove active class from all buttons in the same group
+      document
+        .querySelectorAll(`.btn-option[data-group="${group}"]`)
+        .forEach((btn) => btn.classList.remove("btn-active"));
+
+      // Add active class to the clicked button
+      this.classList.add("btn-active");
+
+      //Update the character image
+      updateImage();
+    });
+  });
+
+  const form = document.querySelector('.character-selection-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const loadingText = document.querySelector('.loading-text');
+  const dots = document.querySelector('.dots');
+  let dotCount = 0;
+
+  form.addEventListener('submit', function(e) {
+    submitBtn.style.display = 'none';
+    loadingText.style.display = 'block';
+    
+    // Start the dots animation
+    const dotsInterval = setInterval(() => {
+      dotCount = (dotCount + 1) % 4;
+      dots.textContent = '.'.repeat(dotCount);
+    }, 500);
+  });
+});
+</script>

@@ -1,0 +1,23 @@
+%html
+  %head
+    %title Pretty Pirates
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    %h1.title Pretty Pirates
+    #main
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        #warning.message= flash[:warning]
+
+      - if @current_user
+        %p.welcome You are logged in as #{@current_user.email}
+        = link_to 'Log Out', logout_path, method: :delete
+        %p.profile= link_to 'View Profile', user_path(@current_user)
+      - else
+        %p.login= link_to 'Login to Pretty Pirates', login_path
+
+    = yield
