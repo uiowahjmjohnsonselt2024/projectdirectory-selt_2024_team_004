@@ -1,6 +1,9 @@
 <div class="login-container">
   <h1>Log In to Sea Raiders</h1>
 
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbo-track': 'reload' %>
+
+  <%= render 'shared/flash' %>
 
 <%= stylesheet_link_tag 'login', media: 'all', 'data-turbo-track': 'reload' %>
   <%= form_with url: login_path, local: true do |form| %>

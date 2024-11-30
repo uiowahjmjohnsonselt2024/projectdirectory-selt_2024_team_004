@@ -15173,3 +15173,700 @@ Processing by WorldsController#landing as HTML
   [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
   ↳ app/controllers/worlds_controller.rb:5:in `landing'
   Rendering worlds/landing.html.erb
+Started GET "/" for ::1 at 2024-11-30 00:10:39 -0500
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+        rails db:migrate RAILS_ENV=development
+
+):
+  
+activerecord (6.0.6.1) lib/active_record/migration.rb:586:in `check_pending!'
+activerecord (6.0.6.1) lib/active_record/migration.rb:564:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.0.6.1) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:32:in `call'
+web-console (4.2.1) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.2.1) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.2.1) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.6.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.6.1) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.6.1) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.4.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.10) lib/rack/method_override.rb:24:in `call'
+rack (2.2.10) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.10) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.6.1) lib/action_dispatch/middleware/host_authorization.rb:103:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.7.7) lib/rack/proxy.rb:87:in `call'
+railties (6.0.6.1) lib/rails/engine.rb:527:in `call'
+puma (3.12.6) lib/puma/configuration.rb:227:in `call'
+puma (3.12.6) lib/puma/server.rb:706:in `handle_request'
+puma (3.12.6) lib/puma/server.rb:476:in `process_client'
+puma (3.12.6) lib/puma/server.rb:334:in `block in run'
+puma (3.12.6) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20241110001850)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (2.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateWorlds (20241110000000)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "world_id" varchar, "world_name" varchar, "last_played" datetime, "progress" integer)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241110000000"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUsers (20241110001850)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241110001850"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateUserWorlds (20241110100001)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_world_id" varchar, "user_role" varchar, "owner" boolean, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_8ba2f3f871"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241110100001"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddSessionTokenToUsers (20241112002705)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "users" ADD "session_token" varchar[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241112002705"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToUserWorldsId (20241114203452)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241114203452"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToUsersEmail (20241114203628)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241114203628"]]
+  [1m[35m (1.4ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToWorldsId (20241115202751)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_worlds_on_world_id" ON "worlds" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241115202751"]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCharacters (20241125182713)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "characters"[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "characters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "character_id" varchar, "image_code" varchar, "x_coord" integer DEFAULT 0, "y_coord" integer DEFAULT 27, "shards" integer, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_a47d574cca"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_characters_on_world_id" ON "characters" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241125182713"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToCharactersId (20241125220704)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_characters_on_character_id" ON "characters" ("character_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241125220704"]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateSquares (20241126151825)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "squares" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "square_id" varchar, "world_name" varchar, "world_id" integer NOT NULL, "x" integer, "y" integer, "weather" varchar, "treasure" boolean, "game" varchar, "monsters" varchar, "state" varchar, "terrain" varchar, "code" varchar, CONSTRAINT "fk_rails_091f828c58"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_squares_on_world_id" ON "squares" ("world_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241126151825"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddIndexToSquaresId (20241126152306)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_squares_on_square_id" ON "squares" ("square_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241126152306"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDefaultsToCoordinates (20241127005918)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acharacters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 0, "y_coord" integer DEFAULT 27, "shards" integer DEFAULT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_acharacters_on_character_id" ON "acharacters" ("character_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_acharacters_on_world_id" ON "acharacters" ("world_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acharacters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "characters"[0m
+  [1m[35m (1.7ms)[0m  [1m[35mDROP TABLE "characters"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "characters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 27, "shards" integer DEFAULT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_a47d574cca"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_characters_on_world_id" ON "characters" ("world_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_characters_on_character_id" ON "characters" ("character_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "acharacters"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "acharacters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acharacters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 27, "shards" integer DEFAULT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_acharacters_on_character_id" ON "acharacters" ("character_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "tindex_acharacters_on_world_id" ON "acharacters" ("world_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "acharacters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "characters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "characters"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "characters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 10, "shards" integer DEFAULT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_a47d574cca"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_characters_on_world_id" ON "characters" ("world_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_characters_on_character_id" ON "characters" ("character_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "acharacters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "acharacters"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241127005918"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDefaultCurrencyToUsers (20241127162407)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "users" ADD "default_currency" varchar[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241127162407"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddDefaultToDefaultCurrency (20241127165322)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "ausers" ("id" integer NOT NULL PRIMARY KEY, "email" varchar DEFAULT NULL, "name" varchar DEFAULT NULL, "password_digest" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar DEFAULT NULL, "default_currency" varchar DEFAULT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_ausers_on_email" ON "ausers" ("email")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "tindex_ausers_on_session_token" ON "ausers" ("session_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "ausers" ("id","email","name","password_digest","created_at","updated_at","session_token","default_currency")
+                     SELECT "id","email","name","password_digest","created_at","updated_at","session_token","default_currency" FROM "users"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mDROP TABLE "users"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer NOT NULL PRIMARY KEY, "email" varchar DEFAULT NULL, "name" varchar DEFAULT NULL, "password_digest" varchar DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar DEFAULT NULL, "default_currency" varchar DEFAULT 'USD')[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "users" ("id","email","name","password_digest","created_at","updated_at","session_token","default_currency")
+                     SELECT "id","email","name","password_digest","created_at","updated_at","session_token","default_currency" FROM "ausers"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "ausers"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20241127165322"]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-11-30 05:11:08.271343"], ["updated_at", "2024-11-30 05:11:08.271343"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2024-11-30 00:11:11 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.6ms | Allocations: 177)
+  Rendered sessions/new.html.erb (Duration: 12.0ms | Allocations: 4975)
+Completed 200 OK in 26ms (Views: 14.1ms | ActiveRecord: 0.0ms | Allocations: 7932)
+
+
+Started POST "/login" for ::1 at 2024-11-30 00:11:40 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"4ppW4fZ9NqAZx4KUTKEwgtPcMjOpYimHZm+Qh7H4/aTl1/UNCA8MUm6tkdJtaoVNxHF28RfT+2kp2MCQgVrF2Q==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered sessions/new.html.erb (Duration: 1.4ms | Allocations: 2417)
+Completed 200 OK in 12ms (Views: 1.8ms | ActiveRecord: 0.5ms | Allocations: 6925)
+
+
+Started GET "/signup" for ::1 at 2024-11-30 00:11:46 -0500
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered users/new.html.erb (Duration: 2.1ms | Allocations: 1661)
+Completed 200 OK in 11ms (Views: 3.5ms | ActiveRecord: 0.3ms | Allocations: 8162)
+
+
+Started POST "/signup" for ::1 at 2024-11-30 00:11:54 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"rwhqnZvTx7Zact5lvK4MAigHLIIdrFXhHiBpdY72I6dECK0p2ZCHqOJfQjedPDHTQ2OjE3Xt4zUQll0n+v8rOg==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"rwhqnZvTx7Zact5lvK4MAigHLIIdrFXhHiBpdY72I6dECK0p2ZCHqOJfQjedPDHTQ2OjE3Xt4zUQll0n+v8rOg==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456niko", "password_confirmation"=>"6456nikoo"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered users/new.html.erb (Duration: 1.5ms | Allocations: 1261)
+Completed 200 OK in 233ms (Views: 2.3ms | ActiveRecord: 0.3ms | Allocations: 6091)
+
+
+Started POST "/signup" for ::1 at 2024-11-30 00:11:59 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"qYbi1iemx5KynP+vdn7UvsQu1did4IOeGnFHDB8wESNChiViZeWHjAqxY/1X7Olvr0paSfWhNUoUx3NeazkZvg==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"qYbi1iemx5KynP+vdn7UvsQu1did4IOeGnFHDB8wESNChiViZeWHjAqxY/1X7Olvr0paSfWhNUoUx3NeazkZvg==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456niko", "password_confirmation"=>"6456niko"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "samanthapothitakis@gmail.com"], ["name", "sam"], ["password_digest", "$2a$12$KzWsPVvxq0M1klQt0IcMHOtAatszX/Q/vEdsv4naTkMDu.J77UdTG"], ["created_at", "2024-11-30 05:12:00.094549"], ["updated_at", "2024-11-30 05:12:00.094549"], ["session_token", "a1L6Ira6jLQXmyl4MVPztA"]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+Redirected to http://localhost:3000/login
+Completed 302 Found in 241ms (ActiveRecord: 1.4ms | Allocations: 16505)
+
+
+Started GET "/login" for ::1 at 2024-11-30 00:12:00 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 22)
+  Rendered sessions/new.html.erb (Duration: 1.8ms | Allocations: 2467)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.0ms | Allocations: 3002)
+
+
+Started POST "/login" for ::1 at 2024-11-30 00:12:03 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"RBfLXE4kNGZhusOM1sxTTogB/JuizpbfdL/eOagC81tDWmiwsFYOlBbQ0Mr3B+aBn6y4WRx/RDE7CI4umKDLJg==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world?user_id=1
+Completed 302 Found in 227ms (ActiveRecord: 0.2ms | Allocations: 8164)
+
+
+Started GET "/world?user_id=1" for ::1 at 2024-11-30 00:12:04 -0500
+Processing by WorldsController#index as HTML
+  Parameters: {"user_id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 10.0ms | Allocations: 2889)
+Completed 200 OK in 28ms (Views: 11.3ms | ActiveRecord: 0.8ms | Allocations: 7412)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-30 00:12:05 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 413.4ms | Allocations: 277308)
+Completed 200 OK in 418ms (Views: 414.3ms | ActiveRecord: 0.2ms | Allocations: 278560)
+
+
+Started POST "/world" for ::1 at 2024-11-30 00:12:08 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"GFzc3SPE70jAt9kcbwtKrA4TGJwx3fGLEQb6sa100z5CtNpSJREAsWkxz9HpwxW/cYeVzoz18GU73zZS83yFsw==", "gender"=>"2", "preload"=>"1", "role"=>"2", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[36mWorld Create (1.7ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "29f38cf939a48444c0c7"], ["last_played", "2024-11-30 05:12:08.408064"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[36mWorld Update (0.5ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 1"], ["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[36mUserWorld Create (1.9ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "e9fc34a7cc020d0c9304"], ["user_role", "2_1_2.png"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+  [1m[36mCharacter Create (0.6ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "2528ac64995372caa2ff"], ["image_code", "2_1_2.png"], ["shards", 10], ["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 73ms (ActiveRecord: 10.7ms | Allocations: 27441)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:12:08 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 4.7ms | Allocations: 3135)
+Completed 200 OK in 7ms (Views: 5.2ms | ActiveRecord: 0.4ms | Allocations: 4259)
+
+
+Started GET "/landing?id=1&commit=Play" for ::1 at 2024-11-30 00:12:09 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"1", "commit"=>"Play"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.3ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:5:in `landing'
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:6:in `landing'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:7:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 9.9ms | Allocations: 7334)
+Completed 200 OK in 955ms (Views: 10.8ms | ActiveRecord: 0.8ms | Allocations: 30538)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:12:34 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 7.3ms | Allocations: 3040)
+Completed 200 OK in 11ms (Views: 8.1ms | ActiveRecord: 0.7ms | Allocations: 4204)
+
+
+Started DELETE "/worlds/1" for ::1 at 2024-11-30 00:12:36 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"PXk0zjzBiMnzTzxPiy6KeatL9bZMPSYHqtCHFvVBoEr4tQAXz9N0zCxDKwC6aOEOGIl3axGPtolI6kC3yuSaHA==", "id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.3ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:40:in `destroy'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:41:in `destroy'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[36mUserWorld Destroy (0.9ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (1.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mCharacter Load (0.2ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 1]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mCharacter Destroy (0.5ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mWorld Destroy (0.5ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 22ms (ActiveRecord: 5.6ms | Allocations: 9096)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:12:36 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 2.7ms | Allocations: 1326)
+Completed 200 OK in 5ms (Views: 3.3ms | ActiveRecord: 0.2ms | Allocations: 2465)
+
+
+Started DELETE "/logout" for ::1 at 2024-11-30 00:12:37 -0500
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"gPynWX3Q8WjN7Qg/FLxQYkXM/DKUMG+RdSctm5WUQGb6fh/0Lj2jZ2cEITgv4RvVf7UF0ov7jMpjsnWVE+i6OQ==", "commit"=>"Logout"}
+Redirected to http://localhost:3000/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 411)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:12:37 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 23)
+  Rendered sessions/new.html.erb (Duration: 1.6ms | Allocations: 2468)
+Completed 200 OK in 3ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 2983)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:12:41 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered sessions/new.html.erb (Duration: 1.6ms | Allocations: 2454)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 2955)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:12:41 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered sessions/new.html.erb (Duration: 2.5ms | Allocations: 2454)
+Completed 200 OK in 4ms (Views: 3.3ms | ActiveRecord: 0.0ms | Allocations: 2943)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:13:45 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.7ms | Allocations: 161)
+  Rendered sessions/new.html.erb (Duration: 3.6ms | Allocations: 3156)
+Completed 200 OK in 8ms (Views: 7.1ms | ActiveRecord: 0.0ms | Allocations: 4840)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:13:46 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered sessions/new.html.erb (Duration: 10.3ms | Allocations: 2561)
+Completed 200 OK in 12ms (Views: 11.3ms | ActiveRecord: 0.0ms | Allocations: 3055)
+
+
+Started POST "/login" for ::1 at 2024-11-30 00:13:50 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"B5ze0LRpgrPeqtac+7UJUB41LptoQiUnhYYB32G3jxIA0X08Shu4QanAxdrafryfCZhqWdbz98nKMVHIURW3bw==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.0ms | Allocations: 12)
+  Rendered sessions/new.html.erb (Duration: 1.6ms | Allocations: 2521)
+Completed 200 OK in 223ms (Views: 2.2ms | ActiveRecord: 0.3ms | Allocations: 3699)
+
+
+Started GET "/signup" for ::1 at 2024-11-30 00:13:54 -0500
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 18)
+  Rendered users/new.html.erb (Duration: 3.2ms | Allocations: 1457)
+Completed 200 OK in 8ms (Views: 5.8ms | ActiveRecord: 0.0ms | Allocations: 2550)
+
+
+Started POST "/signup" for ::1 at 2024-11-30 00:14:00 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"FsEbP2W34Ev0UKk3o1S0xg66WHdQTC8BfhQO5uhUDEv9wdyLJ/SgVUx9NWWCxokXZd7X5jgNmdVwojq0nF0E1g==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"FsEbP2W34Ev0UKk3o1S0xg66WHdQTC8BfhQO5uhUDEv9wdyLJ/SgVUx9NWWCxokXZd7X5jgNmdVwojq0nF0E1g==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456niko", "password_confirmation"=>"6456niko"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.0ms | Allocations: 18)
+  Rendered users/new.html.erb (Duration: 1.2ms | Allocations: 1103)
+Completed 200 OK in 232ms (Views: 1.7ms | ActiveRecord: 1.0ms | Allocations: 17499)
+
+
+Started POST "/signup" for ::1 at 2024-11-30 00:15:06 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"erM+sKkUwTyOEyKAnk9igR7pybu8qHvNKiVCosSaVnyRs/kE61eBIjY+vtK/3V9QdY1GKtTpzRkkk3bwsJNe4Q==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakiss@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"erM+sKkUwTyOEyKAnk9igR7pybu8qHvNKiVCosSaVnyRs/kE61eBIjY+vtK/3V9QdY1GKtTpzRkkk3bwsJNe4Q==", "user"=>{"name"=>"Samantha", "email"=>"samanthapothitakiss@gmail.com", "password"=>"6456niko", "password_confirmation"=>"6456niko"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakiss@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "samanthapothitakiss@gmail.com"], ["name", "Samantha"], ["password_digest", "$2a$12$5kep1qoGth7G9uKlFs2jNOiUpOQuHayn9oJkyyHzEmc1hpUnnAaue"], ["created_at", "2024-11-30 05:15:06.306437"], ["updated_at", "2024-11-30 05:15:06.306437"], ["session_token", "kNQGy8AhWa_ZGK6HtzRPuQ"]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+Redirected to http://localhost:3000/login
+Completed 302 Found in 230ms (ActiveRecord: 1.5ms | Allocations: 4212)
+
+
+Started GET "/login" for ::1 at 2024-11-30 00:15:06 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 22)
+  Rendered sessions/new.html.erb (Duration: 3.1ms | Allocations: 2574)
+Completed 200 OK in 5ms (Views: 4.0ms | ActiveRecord: 0.0ms | Allocations: 3089)
+
+
+Started POST "/login" for ::1 at 2024-11-30 00:15:09 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"xD2IT5OkI9vZn+QjfuLDQTnE0xrVkfRjG9+sxkaJErnDcCujbdYZKa7192VfKXaOLmmX2GsgJo1UaPzRdisqxA==", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "commit"=>"Log In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:6:in `create'
+Redirected to http://localhost:3000/world?user_id=1
+Completed 302 Found in 212ms (ActiveRecord: 0.1ms | Allocations: 1380)
+
+
+Started GET "/world?user_id=1" for ::1 at 2024-11-30 00:15:09 -0500
+Processing by WorldsController#index as HTML
+  Parameters: {"user_id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 4.0ms | Allocations: 1833)
+Completed 200 OK in 8ms (Views: 6.0ms | ActiveRecord: 0.2ms | Allocations: 3542)
+
+
+Started GET "/new_world?commit=%2B" for ::1 at 2024-11-30 00:15:10 -0500
+Processing by WorldsController#new as HTML
+  Parameters: {"commit"=>"+"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.2ms | Allocations: 3812)
+Completed 200 OK in 9ms (Views: 5.9ms | ActiveRecord: 0.3ms | Allocations: 5040)
+
+
+Started POST "/world" for ::1 at 2024-11-30 00:15:13 -0500
+Processing by WorldsController#create as HTML
+  Parameters: {"authenticity_token"=>"S9CbYGdca+ku6Yz885lM4mR7cqNNVo4n8TyGd26ceNwROJ3vYYmEEIdvmjF1URPxG+//8fB+j8nb5UqUMJQuUQ==", "gender"=>"2", "preload"=>"2", "role"=>"2", "commit"=>"Time to Set Sail!"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[36mWorld Create (1.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "94ee55b3a2552084a5da"], ["last_played", "2024-11-30 05:15:13.412974"], ["progress", 0]]
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:30:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[36mWorld Update (0.8ms)[0m  [1m[33mUPDATE "worlds" SET "world_name" = ? WHERE "worlds"."id" = ?[0m  [["world_name", "World 2"], ["id", 2]]
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:32:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[36mUserWorld Create (0.9ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "8ea6a45d567acf19f752"], ["user_role", "2_2_2.png"], ["owner", 1], ["user_id", 1], ["world_id", 2]]
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:33:in `create'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+  [1m[36mCharacter Create (0.7ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "8445d30aa28a9880cd02"], ["image_code", "2_2_2.png"], ["shards", 10], ["world_id", 2]]
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:34:in `create'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 36ms (ActiveRecord: 8.9ms | Allocations: 10364)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:15:13 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 7.1ms | Allocations: 2974)
+Completed 200 OK in 10ms (Views: 7.5ms | ActiveRecord: 0.6ms | Allocations: 4094)
+
+
+Started GET "/landing?id=2&commit=Play" for ::1 at 2024-11-30 00:15:14 -0500
+Processing by WorldsController#landing as HTML
+  Parameters: {"id"=>"2", "commit"=>"Play"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:5:in `landing'
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:6:in `landing'
+  [1m[36mCharacter Load (0.1ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ? ORDER BY "characters"."id" ASC LIMIT ?[0m  [["world_id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:7:in `landing'
+  Rendering worlds/landing.html.erb
+  Rendered worlds/landing.html.erb (Duration: 12.0ms | Allocations: 7301)
+Completed 200 OK in 840ms (Views: 12.6ms | ActiveRecord: 0.7ms | Allocations: 29286)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:15:17 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.3ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/views/worlds/index.html.erb:11
+  Rendered worlds/index.html.erb (Duration: 6.8ms | Allocations: 2975)
+Completed 200 OK in 9ms (Views: 6.8ms | ActiveRecord: 0.6ms | Allocations: 4086)
+
+
+Started DELETE "/worlds/2" for ::1 at 2024-11-30 00:15:18 -0500
+Processing by WorldsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"a5V8jick0ctQxIqW9+HKGMk2PDBsDORi8J/msqjOAgCBpp8wahUc2uYmyixNB3R//07mrGPe1braAhO9lBKtZw==", "id"=>"2"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:40:in `destroy'
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/worlds_controller.rb:41:in `destroy'
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 2]]
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[36mUserWorld Destroy (1.1ms)[0m  [1m[31mDELETE FROM "user_worlds" WHERE "user_worlds"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:43:in `destroy'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mCharacter Load (0.3ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 2]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mCharacter Destroy (0.7ms)[0m  [1m[31mDELETE FROM "characters" WHERE "characters"."id" = ?[0m  [["id", 1]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[36mWorld Destroy (0.7ms)[0m  [1m[31mDELETE FROM "worlds" WHERE "worlds"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/worlds_controller.rb:44:in `destroy'
+Redirected to http://localhost:3000/world
+Completed 302 Found in 25ms (ActiveRecord: 5.6ms | Allocations: 8674)
+
+
+Started GET "/world" for ::1 at 2024-11-30 00:15:18 -0500
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "a1L6Ira6jLQXmyl4MVPztA"], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10:in `set_current_user'
+  Rendering worlds/index.html.erb
+  [1m[36mUserWorld Load (0.2ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/views/worlds/index.html.erb:7
+  Rendered worlds/index.html.erb (Duration: 3.5ms | Allocations: 1326)
+Completed 200 OK in 6ms (Views: 4.2ms | ActiveRecord: 0.3ms | Allocations: 2467)
+
+
+Started DELETE "/logout" for ::1 at 2024-11-30 00:15:20 -0500
+Processing by SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"egpOgJ2dcZKKAQ+Is5L3QU1WkOEFts1vdIEdYIcyTDwAiPYtznAjnSDoJo+Iz7z2dy9pARp9LjRiFEVuAU62Yw==", "commit"=>"Logout"}
+Redirected to http://localhost:3000/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 396)
+
+
+Started GET "/" for ::1 at 2024-11-30 00:15:20 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 23)
+  Rendered sessions/new.html.erb (Duration: 2.3ms | Allocations: 2574)
+Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.0ms | Allocations: 3083)
+
+
