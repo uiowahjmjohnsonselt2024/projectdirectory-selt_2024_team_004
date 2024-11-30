@@ -1,4 +1,57 @@
-body {
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); /* 6 columns for 36 squares */
+    gap: 10px;
+    padding: 20px;
+  }
+  
+  .grid-item {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .pixel-art {
+    display: inline-block;
+    font-family: monospace;
+  }
+  
+  .pixel-row {
+    display: flex;
+  }
+  
+  .pixel {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+    margin: 1px;
+    font-size: 8px;
+  }
+  
+  .pixel.water {
+    background-color: #1e90ff; /* Blue */
+    color: #1e90ff;
+  }
+  
+  .pixel.land {
+    background-color: #228b22; /* Green */
+    color: #228b22;
+  }
+  
+  .pixel.sand {
+    background-color: #f4a460; /* Yellow */
+    color: #f4a460;
+  }
+  
+  .pixel.default {
+    background-color: #d3d3d3; /* Light grey */
+    color: #d3d3d3;
+  }
+  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;

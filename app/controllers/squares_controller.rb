@@ -1,22 +1,14 @@
 class SquaresController < ApplicationController
-    class SquaresController < ApplicationController
-        def index
-          @squares = Square.all
-        end
-      
-        def update
-          @square = Square.find(params[:id])
-          if @square.update(square_params)
-            render json: @square, status: :ok
-          else
-            render json: { error: @square.errors.full_messages }, status: :unprocessable_entity
-          end
-        end
-      
-        private
-      
-        def square_params
-          params.require(:square).permit(:x, :y, :weather, :treasure, :game, :monsters)
-        end
-      end      
+  def landing
+    @world_id = params[:world_id]
+    
+    unless @world_id
+      flash[:alert] = "No world selected"
+      redirect_to worlds_path and return
+    end
+    
+    @squares = Square.where(world_id: @world_id).order(:y, :x)
+  end
+
+  private
 end
