@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_005918) do
 
   add_foreign_key "characters", "worlds"
   add_foreign_key "squares", "worlds"
+  add_foreign_key "squares", "worlds"
   add_foreign_key "user_worlds", "users"
   add_foreign_key "user_worlds", "worlds"
 end
