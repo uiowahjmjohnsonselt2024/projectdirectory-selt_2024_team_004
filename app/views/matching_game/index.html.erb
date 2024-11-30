@@ -29,6 +29,7 @@
 <!-- Game over message, hidden until timer runs out (only if player has not won) -->
 <div id="game-over-message" style="display: none;">
   <p>ARG!!! Yer game is over!</p>
+  <p class="redirect-message">Now, BACK TO YER LANDING PAGE, SCALLYWAG!!</p>
 </div>
 
 <!-- You won message, hidden unless player matches all cards within time limit -->
@@ -345,6 +346,12 @@
         font-size: 2rem;
         color: #ff0000;
         margin-top: 20px;
+    }
+
+    #game-over-message .redirect-message {
+        font-size: 1.2rem;
+        color: #ff6347;
+        margin-top: 10px;
     }
 
     #game-won-message {
