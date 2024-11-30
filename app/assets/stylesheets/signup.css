@@ -100,6 +100,7 @@ body {
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
+    width: 100%;
     text-align: center;
   }
   
@@ -113,4 +114,18 @@ body {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
+  }
+  
+  .alert-danger {
+    color: white;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .alert-success {
+    color: white;
+    background-color: #28a745;
+    border-color: #28a745;
+    font-weight: bold;
   }

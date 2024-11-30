@@ -15870,3 +15870,28 @@ Processing by SessionsController#new as HTML
 Completed 200 OK in 3ms (Views: 2.8ms | ActiveRecord: 0.0ms | Allocations: 3083)
 
 
+Started GET "/signup" for ::1 at 2024-11-30 00:18:11 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.3ms | Allocations: 161)
+  Rendered users/new.html.erb (Duration: 2.8ms | Allocations: 1804)
+Completed 200 OK in 18ms (Views: 6.4ms | ActiveRecord: 0.6ms | Allocations: 10961)
+
+
+Started POST "/signup" for ::1 at 2024-11-30 00:18:17 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"authenticity_token"=>"TTlqYwZeheWnzNLfoZQWtqNzMe9a1NgPFJWdNuY6KlWmOa3XRB3F+x/hTo2ABitnyBe+fjKVbtsaI6lkkjMiyA==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+Parameters received: <ActionController::Parameters {"authenticity_token"=>"TTlqYwZeheWnzNLfoZQWtqNzMe9a1NgPFJWdNuY6KlWmOa3XRB3F+x/hTo2ABitnyBe+fjKVbtsaI6lkkjMiyA==", "user"=>{"name"=>"sam", "email"=>"samanthapothitakis@gmail.com", "password"=>"6456niko", "password_confirmation"=>"6456nikoo"}, "commit"=>"Sign Up", "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "samanthapothitakis@gmail.com"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/users_controller.rb:21:in `create'
+  Rendering users/new.html.erb
+  Rendered shared/_flash.html.erb (Duration: 0.1ms | Allocations: 12)
+  Rendered users/new.html.erb (Duration: 1.4ms | Allocations: 1102)
+Completed 200 OK in 227ms (Views: 2.0ms | ActiveRecord: 0.3ms | Allocations: 18687)
+
+
