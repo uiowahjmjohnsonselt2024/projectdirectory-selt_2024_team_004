@@ -5,6 +5,8 @@ class MatchingGameController < ApplicationController
     # Use session to store minigame data during each game
     @mini_game = MatchingGame.new
     session[:mini_game_state] = @mini_game.state
+    @shuffled_cards = @mini_game.cards_idx
+    puts @shuffled_cards
   end
   def load_images
     # Load images 1-5 from the app/assets/images directory
@@ -32,7 +34,17 @@ class MatchingGameController < ApplicationController
     # Check if the user has matched all cards and the game is over
     game_status = @mini_game.game_over?
 
-    # Respond with a JSON object
-    render json: {card: {index: card_idx, image: @images[card_idx]}, result: result, game_status: game_status}
+    # Build the response JSON with necessary information
+    response = {
+      card: {
+        index: card_idx,
+        image: @images[card_idx]
+      },
+      result: result,
+      game_status: game_status
+    }
+
+    # Return the JSON response
+    render json: response
   end
 end

@@ -35,38 +35,18 @@
 <!-- Arrange the cards in 2 rows of 5 -->
 <div class="cards-container">
   <div class="card-row">
-    <div class="card disabled" data-card="0">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="1">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="2">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="3">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="4">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
+    <% @shuffled_cards.each_with_index do |card_index, index| %>
+      <div class="card disabled" data-card="<%= index %>">
+        <img class="card-image" src="<%= asset_path('card_image' + (card_index + 1).to_s + '.png') %>" alt="Card Image" />
+      </div>
+    <% end %>
   </div>
   <div class="card-row">
-    <div class="card disabled" data-card="5">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="6">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="7">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="8">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
-    <div class="card disabled" data-card="9">
-      <img class="card-image" src="" alt="Card Image" style="display: none;" />
-    </div>
+    <% @shuffled_cards.each_with_index do |card_index, index| %>
+      <div class="card disabled" data-card="<%= index %>">
+        <img class="card-image" src="<%= asset_path('card_image' + (card_index + 1).to_s + '.png') %>" alt="Card Image" />
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -80,9 +60,12 @@
   </p>
 </div>
 
+<!-- Print the contents of @shuffled_cards as a string -->
+<%= @shuffled_cards.inspect %>
+
 <script>
   // Add some JavaScript to be able to handle events, such as clicking start button
-  // First, initialize the timer to 1 minute (or 60 seconds)
+  // Initialize the timer to 1 minute (or 60 seconds)
   let timeLeft = 60;
   let countdownTimer;
 
@@ -147,13 +130,22 @@
       })
         .then(response => response.json())
         .then(data => {
-            // Update card with its image
-            const imgElement = cardElement.querySelector('.card-image');
-            imgElement.src = `/assets/${data.card.image}`;
-            imgElement.style.display = 'block';
-
-            // Flip the card
+            // Flip the card by adding the 'flipped' class
             cardElement.classList.add('flipped');
+
+            // Get the image element inside the card
+            const imgElement = cardElement.querySelector('.card-image');
+
+            console.log('Flipped image:', imgElement.src);
+
+            // Set the src if it's not set yet (this is just a safeguard)
+            if (!imgElement.src || imgElement.src.includes('card_image')) {
+                console.log("In safeguard")
+                imgElement.src = `/assets/card_image${parseInt(cardIdx, 10) + 1}.png`;
+            }
+
+            // Show the image by changing the display style
+            imgElement.style.display = 'block';
 
             // Check if the game is over
             if (data.game_status) {
@@ -322,6 +314,11 @@
         height: 100%;
         border-radius: 10px;
         object-fit: cover;
+        display: none;  /* Ensure the image is hidden by default */
+    }
+
+    .card.flipped img {
+        display: block; /* Show the image when the card is flipped */
     }
 
     .card.disabled {
