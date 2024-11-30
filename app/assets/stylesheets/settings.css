@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #0056b3;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+.currency-dropdown {
+    width: 100%;
+    max-width: 250px;
+    padding: 0.5rem;
+    margin: 1rem auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.save-button, .logout-button {
+    display: block;
+    width: 100%;
+    max-width: 250px;
+    margin: 1rem auto;
+    padding: 0.6rem;
+    text-align: center;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.save-button {
+    background: #007bff;
+}
+
+.save-button:hover {
+    background: #0056b3;
+}
+
+.logout-button {
+    background: #d9534f;
+}
+
+.logout-button:hover {
+    background: #c9302c;
+}

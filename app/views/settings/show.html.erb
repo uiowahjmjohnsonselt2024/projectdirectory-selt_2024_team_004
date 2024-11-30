@@ -1,0 +1,31 @@
+<h1>Settings</h1>
+
+<section>
+  <h2>Account Information</h2>
+  <p><strong>Name:</strong> <%= @user.name %></p>
+  <p><strong>Email:</strong> <%= @user.email %></p>
+</section>
+
+<section>
+  <h2>Character</h2>
+  <% if @character %>
+    <p><strong>Role:</strong> <%= @character.role %></p>
+  <% else %>
+    <p>No character available.</p>
+  <% end %>
+</section>
+
+<section>
+  <h2>Default Currency</h2>
+  <% if @currencies.present? %>
+    <%= form_with url: settings_path, method: :patch, local: true do %>
+      <%= select_tag 'currency', options_for_select(@currencies.map { |code, name| ["#{name} (#{code})", code] }, @user.default_currency), class: 'currency-dropdown' %>
+      <%= submit_tag 'Save Settings', class: 'save-button' %>
+    <% end %>
+  <% else %>
+    <p>Currency options could not be loaded. Please try again later.</p>
+  <% end %>
+</section>
+
+<%= button_to 'Back to Game', session[:return_path] || landing_path, method: :get, class: 'landing-button' %>
+<%= button_to 'Logout', logout_path, method: :delete, class: 'logout-button' %>
