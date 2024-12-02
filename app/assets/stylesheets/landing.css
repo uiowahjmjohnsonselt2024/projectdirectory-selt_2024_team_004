@@ -3,26 +3,26 @@
     grid-template-columns: repeat(6, 1fr); /* 6 columns for 36 squares */
     gap: 10px;
     padding: 20px;
-  }
-  
-  .grid-item {
+}
+
+.grid-item {
     text-align: center;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background: #f9f9f9;
-  }
-  
-  .pixel-art {
+}
+
+.pixel-art {
     display: inline-block;
     font-family: monospace;
-  }
-  
-  .pixel-row {
+}
+
+.pixel-row {
     display: flex;
-  }
-  
-  .pixel {
+}
+
+.pixel {
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -30,28 +30,28 @@
     line-height: 10px;
     margin: 1px;
     font-size: 8px;
-  }
-  
-  .pixel.water {
+}
+
+.pixel.water {
     background-color: #1e90ff; /* Blue */
     color: #1e90ff;
-  }
-  
-  .pixel.land {
+}
+
+.pixel.land {
     background-color: #228b22; /* Green */
     color: #228b22;
-  }
-  
-  .pixel.sand {
+}
+
+.pixel.sand {
     background-color: #f4a460; /* Yellow */
     color: #f4a460;
-  }
-  
-  .pixel.default {
+}
+
+.pixel.default {
     background-color: #d3d3d3; /* Light grey */
     color: #d3d3d3;
-  }
-  body {
+}
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -132,6 +132,25 @@
 
 .dropdown-menu-container:hover .dropdown-content {
     display: block;
+}
+
+.dropdown-link button,
+.dropdown-link input[type="submit"] {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #000000;
+    font-size: 0.9rem;
+    background-color: transparent;
+    text-align: center;
+    cursor: pointer;
+    border: none; /* Removes default border */
+    border-radius: 0; /* Matches link styling */
+}
+
+.dropdown-link button:hover,
+.dropdown-link input[type="submit"]:hover {
+    background-color: #f0f0f0;
 }
 
 .grid {
@@ -307,4 +326,31 @@
 
 .purchase-form .btn:hover {
     background-color: #0056b3;
+}
+
+.dropdown-content a:hover,
+#save-world-button:hover {
+    background-color: #f0f0f0;
+}
+.dropdown-content form,
+.dropdown-content .btn {
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Optional: ensure consistent spacing */
+}
+.dropdown-content form {
+    display: block; /* Ensure it behaves like a dropdown link */
+    width: 100%; /* Ensure it spans the dropdown width */
+}
+.dropdown-content .btn {
+    width: 100%; /* Stretch button to fit dropdown */
+    box-sizing: border-box; /* Include padding in width */
+    background: none;
+    border: none;
+    display: block;
+    padding: 10px 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
 }
