@@ -81,6 +81,7 @@ class WorldsController < ApplicationController
     @squares = @world.squares.order(:y, :x)
 
     store
+    @user = current_user
     @user_world ||= UserWorld.find_by(user_id: @user.id)
     @world ||= @user_world.world
     @character ||= @world.characters.first
