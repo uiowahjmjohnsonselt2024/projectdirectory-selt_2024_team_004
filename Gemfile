@@ -75,6 +75,7 @@ group :test do
   gem 'webdrivers'
 
   gem 'simplecov', require: false
+  gem 'rails-controller-testing'
 end
 
 group :production do
