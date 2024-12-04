@@ -6,13 +6,14 @@ class StoreService
     # Base USD prices
     usd_prices = {
       sea_shard: 0.75,
-      pile_shards: 7.00,
-      hat_shards: 30.00,
-      chest_shards: 50.00
+      pile_of_shards: 7.00,
+      hat_of_shards: 30.00,
+      chest_of_shards: 50.00
     }
 
     # Convert prices to the user's selected currency
-    usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2) }
+    new_prices = usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2).to_s }
+    new_prices.transform_values! { |value| '%.2f' % value.to_f }
   end
 
   def self.fetch_exchange_rates

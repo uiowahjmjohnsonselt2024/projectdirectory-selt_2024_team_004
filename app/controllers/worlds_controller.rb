@@ -2,7 +2,6 @@ class WorldsController < ApplicationController
   before_action :set_current_user
 
   def landing
-    store
     @user_world ||= UserWorld.find_by(user_id: @user.id)
     @world ||= @user_world.world
     @character ||= @world.characters.first
@@ -85,12 +84,6 @@ class WorldsController < ApplicationController
     @user_world ||= UserWorld.find_by(user_id: @user.id)
     @world ||= @user_world.world
     @character ||= @world.characters.first
-
-    # Add these lines to initialize store-related variables
-    @prices = {
-      sea_shard: 0.99  # Set your default price here
-    }
-    @currency = 'USD'  # Set default currency
 
     puts "World ID: #{@world.id}"
     puts "Square count: #{@squares.count}"
@@ -520,18 +513,22 @@ class WorldsController < ApplicationController
     }
   end
 
-  def store
-    @user = current_user
-    @currency = @user.default_currency || 'USD'
-    @prices = StoreService.fetch_prices(@user)
-  end
-
   def api_call
     client = OpenAI::Client.new(
       access_token: "access_token_goes_here",
       log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
     )
   end
+
+  def store
+    @user = current_user
+    @currency = @user.default_currency || 'USD'
+    @prices = StoreService.fetch_prices(@user)
+    puts "User: #{@user}"
+    puts "Currency: #{@currency}"
+    puts "Prices: #{@prices}"
+  end
+
   def current_user
     @current_user ||= User.find_by id: params[:user_id]
   end

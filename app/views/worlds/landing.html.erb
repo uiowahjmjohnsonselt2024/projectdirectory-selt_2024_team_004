@@ -59,38 +59,17 @@
       </div>
       <span class="close-button">&times;</span>
       <div class="store-grid">
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Sea Shard (1)" data-price="<%= @prices[:sea_shard] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/DALLE/shard.png", alt: "Sea Shard", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Sea Shard (1): <br><%= @prices[:sea_shard] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Pile o' Shards (10)" data-price="<%= @prices[:pile_shards] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/pile.png", alt: "Pile o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Pile o' Shards (10): <br><%= @prices[:pile_shards] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Hat o' Shards! (50)" data-price="<%= @prices[:hat_shards] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/hat.png", alt: "Hat o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Hat o' Shards! (50): <br><%= @prices[:hat_shards] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Chest o' Shards! (100)" data-price="<%= @prices[:chest_shards] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/treasure_chest.png", alt: "Chest o' Shards", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Chest o' Shards! (100): <br><%= @prices[:chest_shards] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
+        <% @prices.each do |key, price| %>
+          <% puts "Rendering item: #{key}, price: #{price}, currency: #{@currency}" %>
+          <div class="store-grid-item">
+            <button class="item-button" data-name="#{key.to_s.humanize" data-price="<%= price %> <%= @currency %>">
+              <div class="item-content">
+                <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+                <p class="item-price"><% key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
+              </div>
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

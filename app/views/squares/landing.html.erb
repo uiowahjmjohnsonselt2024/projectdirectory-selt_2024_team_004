@@ -77,15 +77,17 @@
       </div>
       <span class="close-button">&times;</span>
       <div class="store-grid">
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Sea Shard (1)" data-price="<%= @prices[:sea_shard] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/DALLE/shard.png", alt: "Sea Shard", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Sea Shard (1): <br><%= @prices[:sea_shard] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
-        <!-- Add other store items similarly -->
+        <% @prices.each do |key, price| %>
+          <% puts "Rendering item: #{key}, price: #{price}, currency: #{@currency}" %>
+          <div class="store-grid-item">
+            <button class="item-button" data-name="#{key.to_s.humanize" data-price="<%= price %> <%= @currency %>">
+              <div class="item-content">
+                <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+                <p class="item-price"><%= key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
+              </div>
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
