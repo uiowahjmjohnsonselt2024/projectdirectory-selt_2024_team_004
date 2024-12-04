@@ -134,17 +134,17 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowUp') {
-        yCoord -= (window.innerHeight*0.85)/12;
+        yCoord -= 52.5;
       } else if (e.key === 'ArrowDown') {
-        yCoord += (window.innerHeight*0.85)/12;
+        yCoord += 52.5;
       } else if (e.key === 'ArrowLeft') {
-        xCoord -= window.innerWidth/12;
+        xCoord -= 52.5;
       } else if (e.key === 'ArrowRight') {
-        xCoord += window.innerWidth/12;
+        xCoord += 52.5;
       }
 
-      xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
-      yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
+      xCoord = Math.max(175, Math.min(535 - character.offsetWidth, xCoord));
+      yCoord = Math.max(30, Math.min(392 - character.offsetHeight, yCoord));
 
       moveCharacter();
     });
