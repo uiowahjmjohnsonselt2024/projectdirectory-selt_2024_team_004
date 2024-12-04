@@ -22,18 +22,9 @@
     </div>
   </div>
 
-  <div class="grid">
-    <% (1..36).each do |i| %>
-      <div class="grid-item"
-           data-x="<%= (i % 6) %>"
-           data-y="<%= (i / 6).floor %>">
-        Tile <%= i %>
-      </div>
-    <% end %>
-    <div class="character"
-         style="position: absolute; top: <%= @character.y_coord %>px; left: <%= @character.x_coord %>px;">
-      <%= image_tag asset_path(@character.image_code), width: '100', height: '100' %>
-    </div>
+  <div class="character"
+       style="position: absolute; top: <%= @character.y_coord %>px; left: <%= @character.x_coord %>px;">
+    <%= image_tag asset_path(@character.image_code), height: '100' %>
   </div>
 
   <div id="purchase-modal" class="modal">

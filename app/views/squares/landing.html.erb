@@ -120,44 +120,48 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const character = document.querySelector('.character');
-    const xCoordField = document.querySelector('#x-coord');
-    const yCoordField = document.querySelector('#y-coord');
-    const saveWorldButton = document.querySelector('#save-world-button');
+    document.addEventListener('DOMContentLoaded', function () {
+        const character = document.querySelector('.character');
+        const xCoordField = document.querySelector('#x-coord');
+        const yCoordField = document.querySelector('#y-coord');
+        const saveWorldButton = document.querySelector('#save-world-button');
 
-    let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
-    let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
+        let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
+        let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
 
-    function moveCharacter() {
-      character.style.left = (xCoord * 2) + 'px';
-      character.style.top = (yCoord * 2) + 'px';
-    }
+        const playableWidth = (window.innerWidth * 0.39 - character.offsetWidth) - (window.innerHeight * 0.29);
+        const playableHeight = (window.innerHeight * 0.58 - character.offsetHeight) - (window.innerHeight * 0.03);
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowUp') {
-        yCoord -= (window.innerHeight*0.85)/12;
-      } else if (e.key === 'ArrowDown') {
-        yCoord += (window.innerHeight*0.85)/12;
-      } else if (e.key === 'ArrowLeft') {
-        xCoord -= window.innerWidth/12;
-      } else if (e.key === 'ArrowRight') {
-        xCoord += window.innerWidth/12;
-      }
+        const xStep = playableWidth / 5;
+        const yStep = playableHeight / 5;
 
-      xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
-      yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
 
-      moveCharacter();
+        function moveCharacter() {
+            character.style.left = (xCoord * 2) + 'px';
+            character.style.top = (yCoord * 2) + 'px';
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowUp') {
+                yCoord = Math.max(window.innerHeight * 0.03, yCoord - yStep);
+            } else if (e.key === 'ArrowDown') {
+                yCoord = Math.min(window.innerHeight * 0.58 - character.offsetHeight, yCoord + yStep);
+            } else if (e.key === 'ArrowLeft') {
+                xCoord = Math.max(window.innerHeight * 0.29, xCoord - xStep);
+            } else if (e.key === 'ArrowRight') {
+                xCoord = Math.min(window.innerWidth * 0.39 - character.offsetWidth, xCoord + xStep);
+            }
+
+            moveCharacter();
+        });
+
+        saveWorldButton.addEventListener('click', function (e) {
+            xCoordField.value = xCoord;
+            yCoordField.value = yCoord;
+        });
+
+        moveCharacter();
     });
-
-    saveWorldButton.addEventListener('click', function (e) {
-      xCoordField.value = xCoord;
-      yCoordField.value = yCoord;
-    });
-
-    moveCharacter();
-  });
 </script>
 
 <style>
