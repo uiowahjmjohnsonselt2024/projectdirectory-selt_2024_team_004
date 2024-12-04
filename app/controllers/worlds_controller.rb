@@ -104,9 +104,6 @@ class WorldsController < ApplicationController
   private
 
   def generate_squares_for_world(world)
-    require 'openai'
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-
     # Generate 9 unique squares first
     base_squares = []
 
@@ -114,132 +111,20 @@ class WorldsController < ApplicationController
     water_count = 9 - rand(3..4)
     desert_count = 9 - water_count
 
-    # Helper function to format the JavaScript code
-    def format_js_code(raw_code)
-      cleaned_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '')
-      cleaned_code = cleaned_code.gsub(/const canvas = document\.createElement\('canvas'\);/, '')
-      cleaned_code = cleaned_code.gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
-
-      # Just return the drawing commands
-      cleaned_code
-    end
-
     # Generate water squares
     water_count.times do |i|
-      terrain_type = "lake"
-      response = client.chat(
-        parameters: {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
-
-              OCEAN BACKGROUND:
-              - Fill ENTIRE canvas with EXACTLY #1E90FF
-              - Every single water tile must be identical
-              - NO variation in the blue color
-              - NO patterns or lines
-              - Just solid blue color
-              
-              DESERT ISLANDS (when present):
-              - Color: Muted sandy tan (#D2B48C)
-              - Single small organic shape with curved edges
-              - Must take up only 20-40% of tile maximum
-              - NO straight lines or edges anywhere
-              - Edges must be smooth bezier curves
-              - Natural, irregular island shapes
-              - Must be surrounded by water
-              
-              CRITICAL RULES:
-              1. EVERY water tile must be pure #1E90FF only
-              2. Desert must take up LESS than 40% of any tile
-              3. NO straight lines in island shapes
-              4. Islands must have only curved boundaries
-              5. Perfect alignment between adjacent tiles
-              6. Water must be completely solid color
-              7. NO variation in background color
-              8. Islands must be small and well-spaced
-
-              IMPORTANT: Only provide the drawing code. Do not create canvas or context variables."
-            },
-            {
-              role: "user",
-              content: "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas).
-                Use only the 'ctx' variable to draw a solid #1E90FF background.
-                Do not create canvas or context variables.
-                Do not create a function wrapper."
-            }
-          ],
-          temperature: 0.7
-        }
-      )
-
-      raw_code = response.dig('choices', 0, 'message', 'content')
-      drawing_commands = format_js_code(raw_code)
-
+      drawing_commands = OpenaiService.generate_terrain_code("lake")
       base_squares << {
-        terrain: terrain_type,
+        terrain: "lake",
         code: drawing_commands
       }
     end
 
     # Generate desert squares
     desert_count.times do |i|
-      terrain_type = "desert"
-      response = client.chat(
-        parameters: {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
-
-              OCEAN BACKGROUND:
-              - Fill ENTIRE canvas with EXACTLY #1E90FF
-              - Every single water tile must be identical
-              - NO variation in the blue color
-              - NO patterns or lines
-              - Just solid blue color
-              
-              DESERT ISLANDS (when present):
-              - Color: Muted sandy tan (#D2B48C)
-              - Single small organic shape with curved edges
-              - Must take up only 20-40% of tile maximum
-              - NO straight lines or edges anywhere
-              - Edges must be smooth bezier curves
-              - Natural, irregular island shapes
-              - Must be surrounded by water
-              
-              CRITICAL RULES:
-              1. EVERY water tile must be pure #1E90FF only
-              2. Desert must take up LESS than 40% of any tile
-              3. NO straight lines in island shapes
-              4. Islands must have only curved boundaries
-              5. Perfect alignment between adjacent tiles
-              6. Water must be completely solid color
-              7. NO variation in background color
-              8. Islands must be small and well-spaced
-
-              IMPORTANT: Only provide the drawing code. Do not create canvas or context variables."
-            },
-            {
-              role: "user",
-              content: "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas).
-                Use only the 'ctx' variable to draw a solid #1E90FF background with a desert island.
-                Do not create canvas or context variables.
-                Do not create a function wrapper."
-            }
-          ],
-          temperature: 0.7
-        }
-      )
-
-      raw_code = response.dig('choices', 0, 'message', 'content')
-      drawing_commands = format_js_code(raw_code)
-
+      drawing_commands = OpenaiService.generate_terrain_code("desert")
       base_squares << {
-        terrain: terrain_type,
+        terrain: "desert",
         code: drawing_commands
       }
     end
