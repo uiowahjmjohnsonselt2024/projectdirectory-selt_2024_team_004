@@ -67,6 +67,47 @@
           null
         ]
       },
+      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/settings_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          2,
+          null,
+          2,
+          1,
+          1,
+          1,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          5,
+          5,
+          null,
+          null
+        ]
+      },
       "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/squares_controller.rb": {
         "lines": [
           1,
@@ -656,7 +697,7 @@
         "lines": [
           1,
           1,
-          22,
+          26,
           1,
           1,
           1,
@@ -669,7 +710,7 @@
           1,
           null,
           1,
-          21,
+          25,
           null,
           1,
           1,
@@ -786,49 +827,6 @@
           null,
           null
         ]
-      },
-      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/settings_controller.rb": {
-        "lines": [
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
       },
       "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/matching_game_controller.rb": {
         "lines": [
@@ -1004,6 +1002,6 @@
         }
       }
     },
-    "timestamp": 1733374908
+    "timestamp": 1733375809
   }
 }
