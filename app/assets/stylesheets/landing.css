@@ -1,69 +1,7 @@
-.grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr); /* 6 columns for 36 squares */
-    gap: 10px;
-    padding: 20px;
-}
-
-.grid-item {
-    text-align: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f9f9f9;
-}
-
-.pixel-art {
-    display: inline-block;
-    font-family: monospace;
-}
-
-.pixel-row {
-    display: flex;
-}
-
-.pixel {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    text-align: center;
-    line-height: 10px;
-    margin: 1px;
-    font-size: 8px;
-}
-
-.pixel.water {
-    background-color: #1e90ff; /* Blue */
-    color: #1e90ff;
-}
-
-.pixel.land {
-    background-color: #228b22; /* Green */
-    color: #228b22;
-}
-
-.pixel.sand {
-    background-color: #f4a460; /* Yellow */
-    color: #f4a460;
-}
-
-.pixel.default {
-    background-color: #d3d3d3; /* Light grey */
-    color: #d3d3d3;
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
 .container {
     text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,42 +12,76 @@ body {
 
 .top-banner {
     background: linear-gradient(135deg, #007bff, #0056b3);
-    width: 100%;
+    color: #fff;
+    width: 98%;
     height: 11%;
-    padding: 1rem 0;
+    padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     transition: background 0.3s ease-in-out;
+    display: flex;
     flex-direction: row;
     justify-content: center;
     text-align: center;
+    align-items: center;
+    position: relative;
 }
 
 .title {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    margin: 0;
+    flex: 1;
     color: #ffffff;
 }
 
 .dropdown-menu-container {
-    position: absolute;
+    position: relative;
     top: 4%;
     right: 2%;
 }
 
+.dropdown-menu-container:hover .dropdown-content {
+    display: block;
+}
+
+/* The button that says "Menu" */
 .dropdown-button {
     background-color: #007bff;
     color: #ffffff;
-    padding: 20px 25px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: #0056b3;
+}
+
+/* The "buttons" (links) in the actual dropdown (Settings, Store, Save World, and Exit World) */
+.dropdown-content .btn {
+    width: 100%; /* Stretch button to fit dropdown */
+    box-sizing: border-box; /* Include padding in width */
+    background: none;
+    border: none;
+    display: block;
+    margin: 0;
+    padding: 10px 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-align: center;
 }
 
 .dropdown-content {
     display: none;
-    position: relative;
+    position: absolute;
+    top: 100%; /* Below the button */
     right: 0;
     background-color: #ffffff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -122,16 +94,21 @@ body {
     display: block;
     padding: 10px 15px;
     text-decoration: none;
-    color: #000000;
+    color: #007bff;
     font-size: 0.9rem;
+    transition: background-color 0.2s ease;
 }
 
-.dropdown-content a:hover {
+.dropdown-content a:hover,
+#save-world-button:hover {
     background-color: #f0f0f0;
 }
 
-.dropdown-menu-container:hover .dropdown-content {
+.dropdown-content form {
     display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .dropdown-link button,
@@ -155,23 +132,62 @@ body {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(6, 105px);
+    gap: 1px;
     justify-items: center;
     align-items: center;
     height: 89%;
-    width: 100%;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 0;
 }
 
 .grid-item {
-    width: 14vw;
-    aspect-ratio: 5 / 2;
-    background-color: #f0f0f0;
+    background: none;
+    padding: 0;
+    text-align: center;
+    width: 105px;
+    height: 105px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ccc;
+}
+
+.grid-item:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.grid-item h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.grid-teleport-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.teleport-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+#teleport-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#teleport-button:hover {
+    background-color: #0056b3;
 }
 
 .modal {
@@ -202,22 +218,6 @@ body {
     position: relative;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.close-button {
-    color: #ff0000;
-    position: absolute;
-    top: 2%;
-    right: 15px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close-button:hover,
-.close-button:focus {
-    color: #ffffff;
-    text-decoration: none;
 }
 
 .store-banner {
@@ -285,12 +285,28 @@ body {
     height: 100%; /* Ensure full height */
 }
 
-.item-price {
+.item-price, .discount {
     margin-top: 8px; /* Space between the image and price */
     font-size: 1rem;
     color: #0056b3;
     font-weight: bold;
     text-align: center;
+}
+
+.close-button {
+    color: #ff0000;
+    position: absolute;
+    top: 2%;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .purchase-form {
@@ -328,29 +344,97 @@ body {
     background-color: #0056b3;
 }
 
-.dropdown-content a:hover,
-#save-world-button:hover {
-    background-color: #f0f0f0;
+.pixel-art {
+    display: inline-block;
+    font-family: "Courier New", monospace;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    overflow: auto;
+    white-space: pre-wrap;
+    color: #555;
 }
-.dropdown-content form,
-.dropdown-content .btn {
-    margin: 0; /* Remove default margins */
-    padding: 0; /* Optional: ensure consistent spacing */
-}
-.dropdown-content form {
-    display: block; /* Ensure it behaves like a dropdown link */
-    width: 100%; /* Ensure it spans the dropdown width */
-}
-.dropdown-content .btn {
-    width: 100%; /* Stretch button to fit dropdown */
-    box-sizing: border-box; /* Include padding in width */
-    background: none;
-    border: none;
-    display: block;
-    padding: 10px 10px;
-    text-decoration: none;
-    color: #007bff;
+
+.no-pixel-art {
     font-size: 0.9rem;
-    cursor: pointer;
-    text-align: center;
+    color: #999;
+    margin: 10px 0 0;
 }
+
+.pixel-row {
+    display: flex;
+}
+
+.pixel {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    text-align: center;
+    line-height: 10px;
+    margin: 1px;
+    font-size: 8px;
+}
+
+.pixel.water {
+    background-color: #1e90ff; /* Blue */
+    color: #1e90ff;
+}
+
+.pixel.land {
+    background-color: #228b22; /* Green */
+    color: #228b22;
+}
+
+.pixel.sand {
+    background-color: #f4a460; /* Yellow */
+    color: #f4a460;
+}
+
+.pixel.default {
+    background-color: #d3d3d3; /* Light grey */
+    color: #d3d3d3;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.map-square {
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+
+.square-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 6300px;
+    height: 630px;
+}
+
+.square-container canvas {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.inactive-square {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.inactive-square:hover {
+    transform: none;
+    cursor: default;
+}
+

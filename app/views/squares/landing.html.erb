@@ -67,6 +67,10 @@
     <% else %>
       <p>No squares found for this world!</p>
     <% end %>
+
+    <div class="teleport-container">
+      <button id="teleport-button" class="btn">Teleport</button>
+    </div>
   </div>
 
   <!-- Store Modal -->
@@ -84,6 +88,11 @@
               <div class="item-content">
                 <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
                 <p class="item-price"><%= key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
+                <% if key.to_s == 'hat_of_shards_50' %>
+                  <p class="discount">20% off!</p>
+                <% elsif key.to_s == 'chest_of_shards_100' %>
+                  <p class="discount">33% off!</p>
+                <% end %>
               </div>
             </button>
           </div>
@@ -163,182 +172,5 @@
         moveCharacter();
     });
 </script>
-
-<style>
-  /* Combined styles from both versions */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f3f4f6;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .container {
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  .top-banner {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: #fff;
-    padding: 20px;
-    width: 100%;
-    height: 11%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .title {
-    font-size: 2.5rem;
-    margin: 0;
-    flex: 1;
-  }
-
-  .dropdown-menu-container {
-  position: relative;
-}
-
-.dropdown-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.dropdown-button:hover {
-  background-color: #0056b3;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%; /* Below the button */
-  right: 0;
-  background-color: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #007bff;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-content a:hover {
-  background-color: #f0f0f0;
-}
-
-.dropdown-menu-container:hover .dropdown-content {
-  display: block; /* Keep the dropdown visible when hovering over the container */
-}
-
-  /* Grid */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(6, 105px);
-    gap: 0;
-    margin: 20px auto;
-    width: fit-content;
-    padding: 0;
-  }
-
-  .grid-item {
-    background: none;
-    padding: 0;
-    text-align: center;
-    width: 105px;
-    height: 105px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .grid-item:hover {
-    transform: none;
-    box-shadow: none;
-  }
-
-  .grid-item h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-  /* Pixel Art */
-  .pixel-art {
-    font-family: "Courier New", monospace;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    overflow: auto;
-    white-space: pre-wrap; /* Preserve spacing in art */
-    color: #555;
-  }
-
-  .no-pixel-art {
-    font-size: 0.9rem;
-    color: #999;
-    margin: 10px 0 0;
-  }
-
-  .map-square {
-    display: block;
-    width: 32px;
-    height: 32px;
-  }
-
-  .square-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 6300px; /* 128 * 6*/
-    height: 630px; /* 128 * 6 */
-  }
-
-  .square-container canvas {
-    display: block; /* Removes any default spacing */
-    margin: 0;
-    padding: 0;
-  }
-
-  .inactive-square {
-    opacity: 0.7;
-    pointer-events: none;
-  }
-
-  .inactive-square:hover {
-    transform: none;
-    cursor: default;
-  }
-</style>
 
 <%== @js_functions %>
