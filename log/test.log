@@ -6135,3 +6135,1110 @@ Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 115)
   [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
   [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>"1"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.3ms | Allocations: 4774)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.4ms | Allocations: 4193)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>""}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.3ms | Allocations: 4193)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.3ms | Allocations: 4193)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.3ms | Allocations: 4772)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>""}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms | Allocations: 1873)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$8cLDzFmBlhEdaRASRGKn3eme0VZR4GyFacWBu6x3bwBeUJnKTT8NG"], ["created_at", "2024-12-05 00:23:02.821424"], ["updated_at", "2024-12-05 00:23:02.821424"], ["session_token", "MAO9vjnS8JwT-uc8PXeMgg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "ce8af58ad19238a49842"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>"1"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "MAO9vjnS8JwT-uc8PXeMgg"], ["LIMIT", 1]]
+  Rendering worlds/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/new.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 7ms (Views: 1.9ms | ActiveRecord: 0.0ms | Allocations: 4877)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$A7FkwcIOVWh.I6mVHPY6CeWtfTLq3TVlxsoiQGmB/z/uznZj77Yly"], ["created_at", "2024-12-05 00:23:02.849465"], ["updated_at", "2024-12-05 00:23:02.849465"], ["session_token", "Myrnd-RI4taToG-zzfUw-w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Myrnd-RI4taToG-zzfUw-w"], ["LIMIT", 1]]
+  Rendering worlds/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/index.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 4589)
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "7437285614f378e5cb6f"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.5ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "44ec2ef67866a00701dd"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$AH9/fsEeuh3HlYv63peHVeMkztzXz.I0p8.N9DL0ckrKd6aJEXJfO"], ["created_at", "2024-12-05 00:23:02.864663"], ["updated_at", "2024-12-05 00:23:02.864663"], ["session_token", "dkSyyXN7WxxV8Zb6mSobSg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 376)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$NyR7OtxQoMkntuBV4d3FpuOJn6QPuULvly2CJPA7GooZ8lR3sDE/C"], ["created_at", "2024-12-05 00:23:02.899804"], ["updated_at", "2024-12-05 00:23:02.899804"], ["session_token", "Vs5Oj8OtS2DNH0l3t19gVA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "worlds"[0m
+Processing by WorldsController#create as HTML
+  Parameters: {"gender"=>"male", "preload"=>"test", "role"=>"admin", "world_name"=>"New World"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Vs5Oj8OtS2DNH0l3t19gVA"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "c14ece6fd835b8164f16"], ["world_name", "New World"], ["last_played", "2024-12-05 00:23:02.904939"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "50042ff8a150f6bed0e6"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (1.7ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "x_coord", "y_coord", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["character_id", "3642c4d38aee1bc9a7a5"], ["image_code", "male_test_admin.png"], ["x_coord", 175], ["y_coord", 30], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$wQ0SkfNXL1TPchJsMbzzFumvr2AdSJyWuCAbkct.dxG.tOJRMQWdm"], ["created_at", "2024-12-05 00:23:39.826495"], ["updated_at", "2024-12-05 00:23:39.826495"], ["session_token", "Ver_ucun0pjZm41XZKiHcw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "3548e5baaf29c76c6e55"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Ver_ucun0pjZm41XZKiHcw"], ["LIMIT", 1]]
+  Rendering worlds/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/new.html.erb (Duration: 0.2ms | Allocations: 299)
+Completed 200 OK in 7ms (Views: 2.0ms | ActiveRecord: 0.1ms | Allocations: 4877)
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$Td/b9Dtnhyj80uHeO7CvEO74aSB42CSrinqWsUgKpq16upslasDpq"], ["created_at", "2024-12-05 00:23:39.854319"], ["updated_at", "2024-12-05 00:23:39.854319"], ["session_token", "Omdm0Qz1Z4aOWISNVabWvQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "Omdm0Qz1Z4aOWISNVabWvQ"], ["LIMIT", 1]]
+  Rendering worlds/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/index.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 5ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 4589)
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "c7a6586bcbc7f4740996"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.6ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "a63603479dbb3616a16d"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$pD/ogZEZlsDce7pXw25fjOd6RyGFjHuWTHiDMGbW9lOiU55nbQz/q"], ["created_at", "2024-12-05 00:23:39.870462"], ["updated_at", "2024-12-05 00:23:39.870462"], ["session_token", "KPk_2C_WPwSgPiWVWtzD5Q"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 376)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$l0J72taJ89bAaP4VXAVJNuoHM6N5sQQwAN1ndHi1DU5TTcpPlDeya"], ["created_at", "2024-12-05 00:23:39.904549"], ["updated_at", "2024-12-05 00:23:39.904549"], ["session_token", "dcORM1EBKoSQ8wLBgAgtjw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "worlds"[0m
+Processing by WorldsController#create as HTML
+  Parameters: {"gender"=>"male", "preload"=>"test", "role"=>"admin", "world_name"=>"New World"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "dcORM1EBKoSQ8wLBgAgtjw"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "1ce34ae51d36a139f275"], ["world_name", "New World"], ["last_played", "2024-12-05 00:23:39.909582"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "551092c2d5e49266a905"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (1.8ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "x_coord", "y_coord", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["character_id", "260183cf4b2347bb2534"], ["image_code", "male_test_admin.png"], ["x_coord", 175], ["y_coord", 30], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$NGamj7UfLKU1ZaH7DqYl8utecaeA0aKOqC76wK6InjEBLBmp2qqWe"], ["created_at", "2024-12-05 00:24:38.902651"], ["updated_at", "2024-12-05 00:24:38.902651"], ["session_token", "iyCJ7ksIUr8W4sHX4H4HWA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "88906fb61cffa9eee16a"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>"1"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "iyCJ7ksIUr8W4sHX4H4HWA"], ["LIMIT", 1]]
+  Rendering worlds/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/new.html.erb (Duration: 0.2ms | Allocations: 299)
+Completed 200 OK in 7ms (Views: 2.0ms | ActiveRecord: 0.1ms | Allocations: 4877)
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$TEn8caKLav68jxmYA.kz7efBDsXJMq/GJQnm70RXBktmDMScRjhoG"], ["created_at", "2024-12-05 00:25:29.983981"], ["updated_at", "2024-12-05 00:25:29.983981"], ["session_token", "9VjbL7achXIKJPhejngNiQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "9VjbL7achXIKJPhejngNiQ"], ["LIMIT", 1]]
+  Rendering worlds/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/index.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 11ms (Views: 2.2ms | ActiveRecord: 0.0ms | Allocations: 8790)
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "005c9fd57d431306fd4d"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.5ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "1fcf67ef0b3231eeb79d"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$gWjKEdYntvZvputqTOkqDOEtrGGKIiMUtXxoidcvXMgb.WXUcXFDq"], ["created_at", "2024-12-05 00:25:30.023196"], ["updated_at", "2024-12-05 00:25:30.023196"], ["session_token", "noBoVDHJyCdx0O4CP-P3_w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 376)
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$raQi6AMTAufvytWUwgKH1..tsp3txAT6s.E2vCl5DgFzfhHH/Nr4y"], ["created_at", "2024-12-05 00:29:43.145381"], ["updated_at", "2024-12-05 00:29:43.145381"], ["session_token", "hs4SepsjkM6qPi9U2Oau2w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "hs4SepsjkM6qPi9U2Oau2w"], ["LIMIT", 1]]
+  Rendering worlds/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/index.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 12ms (Views: 2.3ms | ActiveRecord: 0.1ms | Allocations: 8790)
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "a4426a388f4693ce5d09"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.6ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "78b48ea31a26295027c5"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Load (0.1ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$nx6hIN0v3I.RUnvXWssj0.JGmrAYHOnx2Y9QcVPE03UFYkrIfupcC"], ["created_at", "2024-12-05 00:29:43.186532"], ["updated_at", "2024-12-05 00:29:43.186532"], ["session_token", "AAO4FGDQQe2JclcYrVN3xg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 376)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$pyq95JluPRQrOygb3EZNVut94P0T9sXMrAHHdDSmGj010mkUNLZk6"], ["created_at", "2024-12-05 00:30:50.590881"], ["updated_at", "2024-12-05 00:30:50.590881"], ["session_token", "hhidBIY7aEW9nLDe0W8eDg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.1ms | Allocations: 1842)
+  [1m[35m (5.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$b2azwhcQ2nO3SwTc.ZJr4.JHP0NtuZMNq4PDW8PIMfBqKjXiuP162"], ["created_at", "2024-12-05 00:30:54.794535"], ["updated_at", "2024-12-05 00:30:54.794535"], ["session_token", "u3pzPTvjh1WLHGB8FjX3dQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.1ms | Allocations: 1842)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$QTzEqzszw3hOEjUMoV99i.LFZoTovI4bwEQZ9yovvEIAf7RimNyvu"], ["created_at", "2024-12-05 00:31:33.426976"], ["updated_at", "2024-12-05 00:31:33.426976"], ["session_token", "I4eT9ECeXa-IHhPdxnv-Sw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "worlds"[0m
+Processing by WorldsController#create as HTML
+  Parameters: {"gender"=>"male", "preload"=>"test", "role"=>"admin", "world_name"=>"New World"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "I4eT9ECeXa-IHhPdxnv-Sw"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "f08209580c935e0ffb6c"], ["world_name", "New World"], ["last_played", "2024-12-05 00:31:33.438450"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.5ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "b074ef46a181d367fcaa"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (0.2ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "x_coord", "y_coord", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["character_id", "6ba0ac62365216d80acf"], ["image_code", "male_test_admin.png"], ["x_coord", 175], ["y_coord", 30], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$xvcmFBcRMgEfSSiAiffjSewkd1D1zjBGgAtROQPgAIPUW/56hDXwK"], ["created_at", "2024-12-05 00:32:40.415514"], ["updated_at", "2024-12-05 00:32:40.415514"], ["session_token", "DoMmv5O4HPYY8JaCbHfvdQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "worlds"[0m
+Processing by WorldsController#create as HTML
+  Parameters: {"gender"=>"male", "preload"=>"test", "role"=>"admin", "world_name"=>"New World"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "DoMmv5O4HPYY8JaCbHfvdQ"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "5538e211dc3493ac81a3"], ["world_name", "New World"], ["last_played", "2024-12-05 00:32:40.431679"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.7ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "e8069a1e634c4490068d"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (1.8ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "x_coord", "y_coord", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["character_id", "5109715469110e655d95"], ["image_code", "male_test_admin.png"], ["x_coord", 175], ["y_coord", 30], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$AvZa87HvMAeNWWx2NKg0mucH.I7oX.q7zMP8oEyiEf.yamdnEKhIm"], ["created_at", "2024-12-05 04:37:13.774583"], ["updated_at", "2024-12-05 04:37:13.774583"], ["session_token", "l9bZAMiB9la6IBzmEXRYcw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$I36NGUbcdrZr9DDioGqqSOPEmO.PRMptDQpafMThIhip33nPIJXH6"], ["created_at", "2024-12-05 04:37:13.814966"], ["updated_at", "2024-12-05 04:37:13.814966"], ["session_token", "jvNtuF4BWPdF8hUSe8m97g"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$D2VnOMRAhnVflGNjEN.ZCOOBU25aN425N0DnbGz2TdeYeU4QvUBku"], ["created_at", "2024-12-05 04:37:13.827262"], ["updated_at", "2024-12-05 04:37:13.827262"], ["session_token", "J_JtVIux_VuiLD8EqTcebg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"9999", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "J_JtVIux_VuiLD8EqTcebg"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 9999], ["LIMIT", 1]]
+Completed 404 Not Found in 6ms (ActiveRecord: 0.2ms | Allocations: 2736)
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$2PcVixS4jRqF2l.94JZf7.WbU9EzgLG06hFOIaIAEqn5GdnF/ITRq"], ["created_at", "2024-12-05 04:37:47.142452"], ["updated_at", "2024-12-05 04:37:47.142452"], ["session_token", "FsQYpRHBz5N_aMtK7T-51g"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$JGOh/IF4KqpiLnotf//iVeqpK8OKrt8yRWMZFkYmqw/pdC3612ngy"], ["created_at", "2024-12-05 04:38:19.402556"], ["updated_at", "2024-12-05 04:38:19.402556"], ["session_token", "lEgXJoNwXl4cAbEXsRxPkQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "34b0983666467b0253a8"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "89aab613ac7559f31065"], ["image_code", "img_001"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "lEgXJoNwXl4cAbEXsRxPkQ"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.2ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 30], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 6ms (ActiveRecord: 0.4ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$eK4aqivejh1cNQEZMqL3XulQxG/BmdNb6u8hjd5SY/cHajLDSerf2"], ["created_at", "2024-12-05 04:38:29.161359"], ["updated_at", "2024-12-05 04:38:29.161359"], ["session_token", "_gFOFjNiqFnJ8CLPr0dYVw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "bae7fd3103bbc5d7865b"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "09757317a1fdb508dd41"], ["image_code", "img_001"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"40"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "_gFOFjNiqFnJ8CLPr0dYVw"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.0ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 40], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 6ms (ActiveRecord: 0.2ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$5bh2DcClrG8yAHAVEv/8jur2Li7NCWL/vp1N3vouFT3GUcfOipzfe"], ["created_at", "2024-12-05 04:38:38.778017"], ["updated_at", "2024-12-05 04:38:38.778017"], ["session_token", "mSVDRdo40uK9vHN9VG2MVQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "f06034c54e61e2d046ac"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "b39d3e444b295a88d2d8"], ["image_code", "img_001"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "mSVDRdo40uK9vHN9VG2MVQ"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.0ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 30], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 6ms (ActiveRecord: 0.2ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$KSw/nZo9ioo7sPJR1N4AperfFyVKrlPsQ7niyKLArY/azn6/jQPRS"], ["created_at", "2024-12-05 04:39:36.356386"], ["updated_at", "2024-12-05 04:39:36.356386"], ["session_token", "ybePog3UfwSlyJr_sJA8bw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "1aacd1c5c4f78bb7520f"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (2.0ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "8e988f70145ef877ce47"], ["image_code", "img_001"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "ybePog3UfwSlyJr_sJA8bw"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.0ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 30], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 6ms (ActiveRecord: 0.2ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$117wsRRkRCtLMFTdxrVpGO3OkFyXRKXYRA8FfXAy8QkxdyuSta7J2"], ["created_at", "2024-12-05 04:39:36.392211"], ["updated_at", "2024-12-05 04:39:36.392211"], ["session_token", "IsSLcPFMDzrRnOqe1w3oYg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "20bc8f6706e8562d7f60"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$tIWzB3ChmfrNwnVJXcLgs.guZeMmJAJubJELPHhhDDtOhZZ119VK2"], ["created_at", "2024-12-05 04:39:36.419701"], ["updated_at", "2024-12-05 04:39:36.419701"], ["session_token", "JvZTzuqN5154TEkbholgCw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"9999", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "JvZTzuqN5154TEkbholgCw"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 9999], ["LIMIT", 1]]
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms | Allocations: 350)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$QgBKQJsk4Tf9Svi6nJiUv.BXPh71ED94WAMsdRhNuSSjZRs5QYkbK"], ["created_at", "2024-12-05 04:40:41.683272"], ["updated_at", "2024-12-05 04:40:41.683272"], ["session_token", "ZtYKZ4NR-SBKNp7mNJAbmQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "63d572c0b10475fece94"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "2cf9df37dfdcfa88cd9f"], ["image_code", "1_1_1.png"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "ZtYKZ4NR-SBKNp7mNJAbmQ"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.1ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 30], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 7ms (ActiveRecord: 0.2ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$RUgaNtgta42XYvNTXIWwD.tPtYQVtw7f8pnNAnehnEGqDIKjBPWK."], ["created_at", "2024-12-05 04:40:41.724817"], ["updated_at", "2024-12-05 04:40:41.724817"], ["session_token", "TVIM1K1NF4z6kJLx3ZeZmw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "11473a62eb2d99420c42"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$ALYravR0MK6bcMpDVfuGne2wvslD7xjnekr8.bRxTqcjEnDHvqIN6"], ["created_at", "2024-12-05 04:40:41.755681"], ["updated_at", "2024-12-05 04:40:41.755681"], ["session_token", "OWWzRqD2R0JfYF_6wZCt2g"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"9999", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "OWWzRqD2R0JfYF_6wZCt2g"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 9999], ["LIMIT", 1]]
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms | Allocations: 350)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$Qk.o2K.RRFAaQ597t/Jd9uJoWNQPI2l9gfjPaCn89ANpKbRpxDCUa"], ["created_at", "2024-12-05 04:50:33.794857"], ["updated_at", "2024-12-05 04:50:33.794857"], ["session_token", "yRDYdrKLXeZHFPYMr4voww"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "8c43297bfd3d68b78222"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "4f71a1dbea32d712d86a"], ["image_code", "1_1_1.png"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"", "y"=>""}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "yRDYdrKLXeZHFPYMr4voww"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 5ms (ActiveRecord: 0.1ms | Allocations: 3800)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$HXyQVJAw.k8TnPVpNJu1UexVUxuI3K/LIoWE4h.hJ0n02kbz9I07e"], ["created_at", "2024-12-05 04:50:44.754571"], ["updated_at", "2024-12-05 04:50:44.754571"], ["session_token", "XuuPLn1AlW0JmCKgHaBA6w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "f4b3acefdcc5ec5f8c3e"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (1.9ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "b02f8c5bba75e3ddbac3"], ["image_code", "1_1_1.png"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "XuuPLn1AlW0JmCKgHaBA6w"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Update (0.0ms)[0m  [1m[33mUPDATE "characters" SET "x_coord" = ?, "y_coord" = ? WHERE "characters"."id" = ?[0m  [["x_coord", 20], ["y_coord", 30], ["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 6ms (ActiveRecord: 0.2ms | Allocations: 4128)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$9a9zCcBf6tokWHSo/5HSy..QEz/9su3j.KZYas/nxCoTMOI10ARZC"], ["created_at", "2024-12-05 04:50:44.793454"], ["updated_at", "2024-12-05 04:50:44.793454"], ["session_token", "D6xroaz1E7b_oFDTYq-gNg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "8e4aa35d9d155330d28b"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Create (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "6c9bb764f1e18e612d1f"], ["image_code", "1_1_1.png"], ["shards", 5], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"1", "x"=>"", "y"=>""}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "D6xroaz1E7b_oFDTYq-gNg"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+No template found for CharactersController#save_coordinates, rendering head :no_content
+Completed 204 No Content in 0ms (ActiveRecord: 0.0ms | Allocations: 662)
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$75i0ocW855voncZTq5QlOesLFho1EEtwF5vJsjfqOEE8cIRNSrYY2"], ["created_at", "2024-12-05 04:50:44.803885"], ["updated_at", "2024-12-05 04:50:44.803885"], ["session_token", "yexGG2AN0b2rxWkEe0nSNA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by CharactersController#save_coordinates as HTML
+  Parameters: {"id"=>"9999", "x"=>"20", "y"=>"30"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "yexGG2AN0b2rxWkEe0nSNA"], ["LIMIT", 1]]
+  [1m[36mCharacter Load (0.0ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."id" = ? LIMIT ?[0m  [["id", 9999], ["LIMIT", 1]]
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms | Allocations: 365)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered sessions/new.html.erb (Duration: 0.3ms | Allocations: 300)
+Completed 200 OK in 4ms (Views: 2.4ms | ActiveRecord: 0.0ms | Allocations: 3126)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "test@example.com"], ["name", "Test User"], ["password_digest", "$2a$04$IeE5c32IICfJjbxg94Rqw.RLXkCmKQHEH/Ey5Qhtc1JpF23HgouXq"], ["created_at", "2024-12-05 04:50:44.812633"], ["updated_at", "2024-12-05 04:50:44.812633"], ["session_token", "3TGoMl-mEoBa5zdFSvwJ9w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"test@example.com", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+Redirected to http://test.host/world?user_id=1
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 482)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "test@example.com"], ["name", "Test User"], ["password_digest", "$2a$04$fZeL17uGZ3IYMsSjn5eEJuIrj2wHGe9rULUZrt1IXFHrP5KnXAEwC"], ["created_at", "2024-12-05 04:50:44.817515"], ["updated_at", "2024-12-05 04:50:44.817515"], ["session_token", "Al1xxuG6brgMyRShe82L9w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"test@example.com", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  Rendering sessions/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered sessions/new.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 516)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by SessionsController#create as HTML
+  Parameters: {"email"=>"wrong@example.com", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = ? LIMIT ?[0m  [["email", "wrong@example.com"], ["LIMIT", 1]]
+  Rendering sessions/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered sessions/new.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.1ms | Allocations: 473)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "test@example.com"], ["name", "Test User"], ["password_digest", "$2a$04$JJNSUOrfKpQlBGjEk.OxN./1Tt4ipplBdJdlg.qe7Wg25AKcqBK1q"], ["created_at", "2024-12-05 04:50:44.826436"], ["updated_at", "2024-12-05 04:50:44.826436"], ["session_token", "XOkFx4DjKhQ1qrlFBPsgqw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by SessionsController#destroy as HTML
+Redirected to http://test.host/
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 115)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb (Duration: 0.1ms | Allocations: 68)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 1067)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by UsersController#new as HTML
+  Rendering users/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 0ms (Views: 0.4ms | ActiveRecord: 0.0ms | Allocations: 435)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"email"=>"test@example.com", "name"=>"Test User", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Parameters received: <ActionController::Parameters {"user"=>{"email"=>"test@example.com", "name"=>"Test User", "password"=>"password", "password_confirmation"=>"password"}, "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "test@example.com"], ["name", "Test User"], ["password_digest", "$2a$04$BIlxJ6z05gxeKIRDsx2jfOoSaGRRSdbXic400b0DL0zK1W8SvhMFe"], ["created_at", "2024-12-05 04:50:44.841705"], ["updated_at", "2024-12-05 04:50:44.841705"], ["session_token", "lB3DOQ_pfBGSOo6Kd6fHhw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/login
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms | Allocations: 1039)
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"email"=>"test@example.com", "name"=>"Test User", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Parameters received: <ActionController::Parameters {"user"=>{"email"=>"test@example.com", "name"=>"Test User", "password"=>"password", "password_confirmation"=>"password"}, "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "test@example.com"], ["name", "Test User"], ["password_digest", "$2a$04$1W657QWc2qWMAkRKJKOKRua7snDGW6mOVGXOHwtuPHh8cefbJNHzi"], ["created_at", "2024-12-05 04:50:44.847373"], ["updated_at", "2024-12-05 04:50:44.847373"], ["session_token", "nWH6oBy65hkoDkAosWZEWQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/login
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms | Allocations: 1036)
+  [1m[35m (0.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"email"=>"invalid_email", "name"=>" ", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Parameters received: <ActionController::Parameters {"user"=>{"email"=>"invalid_email", "name"=>" ", "password"=>"short", "password_confirmation"=>"mismatch"}, "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "invalid_email"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  Rendering users/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 10ms (Views: 0.7ms | ActiveRecord: 0.1ms | Allocations: 4502)
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"email"=>"invalid_email", "name"=>"", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+Parameters received: <ActionController::Parameters {"user"=>{"email"=>"invalid_email", "name"=>"", "password"=>"short", "password_confirmation"=>"mismatch"}, "controller"=>"users", "action"=>"create"} permitted: false>
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "invalid_email"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  Rendering users/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered users/new.html.erb (Duration: 0.1ms | Allocations: 67)
+Completed 200 OK in 6ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 2865)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$4ml50eMDj1Aa1qcEo.V9DuOG01nuLpZUhWZN2sVjQK3kdCG5se7/y"], ["created_at", "2024-12-05 04:50:44.874222"], ["updated_at", "2024-12-05 04:50:44.874222"], ["session_token", "HzUmlMqiPu5AZFgtw94h7w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "500a2950910e1239907b"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#new as HTML
+  Parameters: {"world_id"=>"1"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "HzUmlMqiPu5AZFgtw94h7w"], ["LIMIT", 1]]
+  Rendering worlds/new.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/new.html.erb (Duration: 0.1ms | Allocations: 68)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 1163)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$wr73yTdeAbJ1gg5yY0ut0.Xg4xeYq.slDMChXi.snOG2APjUWCFSO"], ["created_at", "2024-12-05 04:50:44.882104"], ["updated_at", "2024-12-05 04:50:44.882104"], ["session_token", "hXMz9t_F76Vxf1o_YTXDfQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" = ? LIMIT ?[0m  [["session_token", "hXMz9t_F76Vxf1o_YTXDfQ"], ["LIMIT", 1]]
+  Rendering worlds/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered worlds/index.html.erb (Duration: 0.1ms | Allocations: 68)
+Completed 200 OK in 6ms (Views: 0.8ms | ActiveRecord: 0.0ms | Allocations: 3160)
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "b064d6d2ba6a4ec75f53"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (1.9ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_role", "owner", "user_id", "world_id") VALUES (?, ?, ?, ?, ?)[0m  [["user_world_id", "b9234bc1751ff4cccf5a"], ["user_role", "admin"], ["owner", 1], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Load (0.0ms)[0m  [1m[34mSELECT "user_worlds".* FROM "user_worlds" WHERE "user_worlds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$3SiDRuM9O1wSNBD1ZfGZeO8hmqJz1xQgTv2I8/8LruansPtzt/9I6"], ["created_at", "2024-12-05 04:50:44.906579"], ["updated_at", "2024-12-05 04:50:44.906579"], ["session_token", "KZnRKIRuz2jIJ4jI7VN-Qg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Processing by WorldsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."session_token" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+Redirected to http://test.host/login
+Filter chain halted as :set_current_user rendered or redirected
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 339)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "test@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.4ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "8a94a7fa158c0ddc8e4a"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mCharacter Create (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "world_id") VALUES (?, ?)[0m  [["character_id", "52ae9bd4ca62ae81acb9"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "3f7ffecae2d635d31b85"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mCharacter Create (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "world_id") VALUES (?, ?)[0m  [["character_id", "78f76ac53c8ed72d7ca2"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "world_id") VALUES (?, ?)[0m  [["character_id", "7960be3739d30b2b1c39"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "74ddd9ac077b96405b5e"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mCharacter Create (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "world_id") VALUES (?, ?)[0m  [["character_id", "4fb7f92f58794b11c5ac"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.4ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "af8a9f2b9769b5360dcb"], ["world_name", "world 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "7720fc974813952fc530"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "feda452bc6b092fa97f1"], ["world_name", "world 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "65d01fd2199dee3518d2"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "f05fbdab1f5bfc41d038"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "8f60d6240c6f1ff51590"], ["world_name", "world 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "4bc0781fab243344942c"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.0ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "a9679413ce6033d99194"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mSquare Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "squares" WHERE "squares"."world_id" = ? AND "squares"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mSquare Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "squares" WHERE "squares"."world_id" = ? AND "squares"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "7ce7f077b51e2d9bc25b"], ["world_name", "world 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "662744801da4d66db17c"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "bae611a05ec7af84ac28"], ["world_name", "world 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.1ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "5b3a333287e21d68b4eb"], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name") VALUES (?, ?)[0m  [["world_id", "d18ec9e5dbce6b98bb83"], ["world_name", "world 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mSquare Create (0.0ms)[0m  [1m[32mINSERT INTO "squares" ("square_id", "world_id") VALUES (?, ?)[0m  [["square_id", "8ac3160eb33c17a41837"], ["world_id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "not a valid email"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "c16255844a3e9f6947bc"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id") VALUES (?)[0m  [["world_id", "5b0a457c27bdc2f77e63"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$UTrijrILsk.X4xtF3UkU3u6hqijnvhFtmUwGVF63LCn84SND/7Z4G"], ["created_at", "2024-12-05 04:50:47.427738"], ["updated_at", "2024-12-05 04:50:47.427738"], ["session_token", "ZvGnx-UBK5qOgTUmySPDYw"]]
+  [1m[36mUserWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "0e96797ac3a89877410b"], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "53f0926d8f17abdd620c"], ["user_id", 1], ["world_id", 2]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mWorld Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "worlds" INNER JOIN "user_worlds" ON "worlds"."id" = "user_worlds"."world_id" WHERE "user_worlds"."user_id" = ? AND "worlds"."id" = ? LIMIT ?[0m  [["user_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$iva7/QMIRXMlz7aLR6sZFOLoxSGiVIJM8CbIcPpl6n/P4rx/m0CG6"], ["created_at", "2024-12-05 04:50:47.439975"], ["updated_at", "2024-12-05 04:50:47.439975"], ["session_token", "4ysQP0_ekyu0HUFSkG9SAw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "John.Doe@example.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "john.doe@example.com"], ["name", "John Doe"], ["password_digest", "$2a$04$at.ssYLYu8Dc/1SalbbYVuF9G2RRWQLymhA1L.Iq0pod6SU6G9oaK"], ["created_at", "2024-12-05 04:50:47.442345"], ["updated_at", "2024-12-05 04:50:47.442345"], ["session_token", "hQg_fFNto13B6pRICS7hUQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "cdd67a613a3cc4d1bac0"], ["last_played", "2024-12-05 04:50:47.445279"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "bfa3ad871c9df576ba76"], ["last_played", "2024-12-05 04:50:47.446278"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "last_played", "progress") VALUES (?, ?, ?)[0m  [["world_id", "bc0bd5eeb07bb2e5c532"], ["last_played", "2024-12-05 04:50:47.446748"], ["progress", 0]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$r60QmOeCw0rtthxJUo3N3udX6cADrE5Y6xe4ZquRMlZmcz5oYn7eu"], ["created_at", "2024-12-05 04:50:47.448963"], ["updated_at", "2024-12-05 04:50:47.448963"], ["session_token", "wU8Rn1N9OQqcYSQ3LrGqNg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "janedoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "janedoe@gmail.com"], ["name", "Jane Doe"], ["password_digest", "$2a$04$bAjw8u0YtAR1eXF7PgtUYOqJkOCxzTj61RdO3KbaCAmkZ/1FBIg86"], ["created_at", "2024-12-05 04:50:47.451077"], ["updated_at", "2024-12-05 04:50:47.451077"], ["session_token", "7kCRcPh2ffznuh9hzb9Cow"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "f68d9f91d2d54d92c5bf"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mUserWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "33ecd3de397d0ade7ddc"], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "660d35ed03ee63579b4d"], ["user_id", 2], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "user_worlds" ON "users"."id" = "user_worlds"."user_id" WHERE "user_worlds"."world_id" = ?[0m  [["world_id", 1]]
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "jdoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "jdoe@gmail.com"], ["name", "John Doe"], ["password_digest", "$2a$04$ECUwYOdlkIJav2Ni7IagIO6FFyDmqZ2lhNTh3ZjkShF50tEISxlTm"], ["created_at", "2024-12-05 04:50:47.455767"], ["updated_at", "2024-12-05 04:50:47.455767"], ["session_token", "bFTftNiCN2yV9yMBr3WS0w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "janedoe@gmail.com"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("email", "name", "password_digest", "created_at", "updated_at", "session_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["email", "janedoe@gmail.com"], ["name", "Jane Doe"], ["password_digest", "$2a$04$SU1kdboorF06rBbhW/bH4OR/MpZ0oIfARlT0gleOFsX5zbSlc4Lse"], ["created_at", "2024-12-05 04:50:47.457629"], ["updated_at", "2024-12-05 04:50:47.457629"], ["session_token", "5pCR2iUzPA8gplBWLHBWSw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "c444849d38ce8eb4989f"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mUserWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "fed6826b8e0e69557741"], ["user_id", 1], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("user_world_id", "user_id", "world_id") VALUES (?, ?, ?)[0m  [["user_world_id", "6a445edd0060e8ab2dd1"], ["user_id", 2], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mUserWorld Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "user_worlds" WHERE "user_worlds"."world_id" = ? AND "user_worlds"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUserWorld Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "user_worlds" WHERE "user_worlds"."world_id" = ? AND "user_worlds"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("world_id", "world_name", "last_played", "progress") VALUES (?, ?, ?, ?)[0m  [["world_id", "ecc82d3500e40cf1a458"], ["world_name", "World 1"], ["last_played", "2024-11-29 10:00:00"], ["progress", 0]]
+  [1m[36mCharacter Create (0.0ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "shards", "world_id") VALUES (?, ?, ?, ?)[0m  [["character_id", "18911485e274bc7a6ae5"], ["image_code", "1_1_1.png"], ["shards", 10], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mCharacter Create (0.0ms)[0m  [1m[32mINSERT INTO "characters" ("character_id", "image_code", "x_coord", "y_coord", "shards", "world_id") VALUES (?, ?, ?, ?, ?, ?)[0m  [["character_id", "8554bcf3f29549b2314a"], ["image_code", "1_1_2.png"], ["x_coord", 20], ["y_coord", 20], ["shards", 20], ["world_id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mCharacter Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "characters" WHERE "characters"."world_id" = ? AND "characters"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 1], ["LIMIT", 1]]
+  [1m[36mCharacter Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "characters" WHERE "characters"."world_id" = ? AND "characters"."id" = ? LIMIT ?[0m  [["world_id", 1], ["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m

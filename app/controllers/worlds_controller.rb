@@ -1,20 +1,11 @@
 class WorldsController < ApplicationController
   before_action :set_current_user
 
-  def landing
-    @user_world ||= UserWorld.find_by(user_id: @user.id)
-    @world ||= @user_world.world
-    @character ||= @world.characters.first
-    @character.x_coord ||= 0
-    @character.y_coord ||= 27
-  end
-
   def new
     @world_id = params[:world_id]
   end
 
   def index
-    #@worlds parameter will be a list of all the world keys the current user has
     if @current_user
       @user_worlds = @current_user.user_worlds
     else
@@ -61,18 +52,6 @@ class WorldsController < ApplicationController
       flash[:notice] = "World '#{@world.world_id}' removed."
     end
     redirect_to worlds_path
-  end
-
-  def user_roles
-    @gender = params[:gender]
-    @preload = params[:preload]
-    @role = params[:role]
-
-    if @gender && @preload && @role
-      @image_path = "#{@gender}_#{@preload}_#{@role}.png"
-    else
-      @image_path = "1_1_1.png"
-    end
   end
 
   def start_game
