@@ -67,6 +67,38 @@
           null
         ]
       },
+      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/squares_controller.rb": {
+        "lines": [
+          1,
+          1,
+          3,
+          3,
+          null,
+          3,
+          1,
+          1,
+          null,
+          null,
+          2,
+          null,
+          null,
+          1,
+          null,
+          1,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3,
+          null,
+          null,
+          1,
+          3,
+          null,
+          null
+        ]
+      },
       "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/users_controller.rb": {
         "lines": [
           1,
@@ -606,15 +638,15 @@
           1,
           null,
           1,
-          8,
+          14,
           null,
           null,
           1,
           null,
           1,
-          8,
+          14,
           null,
-          0,
+          3,
           null,
           null,
           null
@@ -624,7 +656,7 @@
         "lines": [
           1,
           1,
-          19,
+          22,
           1,
           1,
           1,
@@ -637,7 +669,7 @@
           1,
           null,
           1,
-          18,
+          21,
           null,
           1,
           1,
@@ -672,7 +704,7 @@
           1,
           null,
           1,
-          21,
+          24,
           null,
           null
         ]
@@ -700,6 +732,38 @@
           0,
           0,
           null,
+          0,
+          null,
+          null
+        ]
+      },
+      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/services/store_service.rb": {
+        "lines": [
+          1,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
           0,
           null,
           null
@@ -758,40 +822,6 @@
           0,
           null,
           0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
-      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/controllers/squares_controller.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
           0,
           0,
           0,
@@ -972,42 +1002,8 @@
         ],
         "branches": {
         }
-      },
-      "/Users/kennaelainevan/RubymineProjects/projectdirectory-selt_2024_team_004/app/services/store_service.rb": {
-        "lines": [
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
       }
     },
-    "timestamp": 1733374247
+    "timestamp": 1733374908
   }
 }
