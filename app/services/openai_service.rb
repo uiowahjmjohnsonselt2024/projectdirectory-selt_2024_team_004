@@ -32,60 +32,76 @@ class OpenaiService
   
     private
   
-    def self.terrain_image_prompt(terrain_type, adjacent)
-      # Base descriptions for each terrain type
-      base_descriptions = {
-        "water" => {
-          base: "deep blue ocean water section",
-          edge: "water must perfectly continue into"
-        },
-        "desert" => {
-          base: "sandy desert terrain section",
-          edge: "desert must perfectly continue into"
-        },
-        "forest" => {
-          base: "dense forest terrain section",
-          edge: "forest must perfectly continue into"
-        },
-        "plains" => {
-          base: "grassy plains terrain section",
-          edge: "grassland must perfectly continue into"
-        }
-      }
-
-      # Build precise edge matching instructions
-      transitions = []
-      adjacent.each do |direction, adj_terrain|
-        next unless adj_terrain
-        
-        edge_desc = case direction
-        when :north
-          "The top edge MUST perfectly continue the #{adj_terrain} pattern from above, as if cut from the same map"
-        when :south
-          "The bottom edge MUST perfectly continue the #{adj_terrain} pattern from below, as if cut from the same map"
-        when :east
-          "The right edge MUST perfectly continue the #{adj_terrain} pattern from the right, as if cut from the same map"
-        when :west
-          "The left edge MUST perfectly continue the #{adj_terrain} pattern from the left, as if cut from the same map"
-        end
-        transitions << edge_desc
-      end
-
-      transition_context = transitions.join('. ') + '.'
-
-      base_prompt = "Create a section of a larger map showing #{base_descriptions[terrain_type][:base]}. " +
-                   "#{transition_context} " +
-                   "This is just ONE PIECE of a larger 6x6 map grid - imagine cutting a large map into squares. " +
-                   "Style: Fantasy map with clear, bold terrain features. " +
-                   "Colors: deep blue for water, sandy beige for desert, " +
-                   "dark green for forest, light green for plains. " +
-                   "NO grid overlay. NO borders. NO individual map elements. " +
-                   "This should look like a clean cut section of a larger continuous map. " +
-                   "The terrain must flow naturally across tile boundaries as if it was one large map that was cut into pieces. " +
-                   "Think of this as one square piece of a larger puzzle - " +
-                   "when assembled with other pieces, it should create one seamless, continuous map."
+    def self.format_js_code(raw_code)
+      # Generate a unique function name
+      function_name = "drawSquare_#{Time.now.to_i}_#{SecureRandom.hex(4)}"
       
-      Rails.logger.info "Generated prompt: #{base_prompt}"
+      # Remove markdown code blocks
+      formatted_code = raw_code
+        .gsub(/```(javascript|js)?\n?/, '')
+        .gsub(/```/, '')
+
+      # Wrap the code in a function that takes a square ID
+      <<~JAVASCRIPT
+        window['#{function_name}'] = function(squareId) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 105;
+          canvas.height = 105;
+          const ctx = canvas.getContext('2d');
+          
+          #{formatted_code}
+          
+          const square = document.getElementById(squareId);
+          if (square) {
+            // Remove any existing canvas
+            const existingCanvas = square.querySelector('canvas');
+            if (existingCanvas) {
+              existingCanvas.remove();
+            }
+            square.appendChild(canvas);
+          }
+        };
+      JAVASCRIPT
+    end
+  
+    def self.terrain_system_prompt
+      <<~PROMPT
+        You are a JavaScript canvas expert creating terrain tiles. Each tile must seamlessly connect with adjacent tiles.
+  
+        TERRAIN TYPES AND COLORS:
+        - Water: Deep blue (#1E90FF) with subtle wave patterns
+        - Desert: Sandy tan (#D2B48C) with small dune patterns
+        - Forest: Dark green (#228B22) with scattered tree patterns
+        - Plains: Light green (#90EE90) with grass patterns
+  
+        RULES FOR ALL TERRAINS:
+        1. Use exactly 105x105 canvas size
+        2. Features must align perfectly at edges
+        3. Use consistent colors within each terrain type
+        4. Create natural, organic patterns
+        5. No straight lines or geometric shapes
+        6. Ensure seamless connections with adjacent tiles
+        7. Use subtle patterns that don't overwhelm
+        8. Keep consistent scale across all tiles
+  
+        IMPORTANT: Only provide the drawing code. Do not create canvas or context variables.
+      PROMPT
+    end
+  
+    def self.terrain_user_prompt(terrain_type, context)
+      base_prompt = "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas)."
+      
+      if context[:adjacent_terrains]
+        base_prompt += "\nConnect with:"
+        context[:adjacent_terrains].each do |direction, terrain|
+          base_prompt += "\n#{direction.capitalize}: #{terrain || 'unknown'}"
+        end
+      end
+  
+      base_prompt += "\nUse only the 'ctx' variable to draw."
+      base_prompt += "\nDo not create canvas or context variables."
+      base_prompt += "\nDo not create a function wrapper."
+      
       base_prompt
     end
   end

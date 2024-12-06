@@ -29,19 +29,47 @@
   <% if @squares.present? %>
   <% end %>
 
-  <div class="grid-container">
-    <div class="grid">
-      <% (0..5).each do |y| %>
-        <% (0..5).each do |x| %>
-          <div class="grid-item" data-x="<%= x %>" data-y="<%= y %>">
-            <% square = @squares.find { |s| s.x == x && s.y == y } %>
-            <% if square&.terrain_image&.attached? %>
-              <%= image_tag square.terrain_image, class: "terrain-tile" %>
-            <% else %>
-              <div class="empty-tile"></div>
-            <% end %>
-          </div>
-        <% end %>
+  <div class="grid">
+    <% if @squares.present? %>
+      <% 
+        # Define active squares (starting from top-left corner)
+        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
+      %>
+      <% @squares.each do |square| %>
+        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
+             id="square_<%= square.square_id %>"
+             data-x="<%= square.x %>"
+             data-y="<%= square.y %>">
+          <% if square.code.present? %>
+            <script>
+              if (!window.squareInitialized_<%= square.square_id %>) {
+                document.addEventListener('DOMContentLoaded', () => {
+                  <%= square.code.html_safe %>
+                  // Extract function name from the code (it's now in the format "window['functionName'] = function...")
+                  const functionName = <%= square.code.match(/window\['([^']+)'\]/)[1].to_json.html_safe %>;
+                  
+                  if (typeof window[functionName] === 'function') {
+                    window[functionName]('square_<%= square.square_id %>');
+                    
+                    <% unless active_squares.include?([square.x, square.y]) %>
+                      // Add grey overlay to inactive squares
+                      const square = document.getElementById('square_<%= square.square_id %>');
+                      const canvas = square.querySelector('canvas');
+                      if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      }
+                    <% end %>
+                  }
+                });
+                window.squareInitialized_<%= square.square_id %> = true;
+              }
+            </script>
+          <% else %>
+            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
+          <% end %>
+        </div>
       <% end %>
     </div>
   </div>

@@ -77,15 +77,31 @@ class WorldsController < ApplicationController
 
   def start_game
     @world = World.find(params[:id])
+    
+    store
     @user = current_user
-    @user_world = UserWorld.find_by(user_id: @user.id)
-    @character = @world.characters.first
+    @user_world ||= UserWorld.find_by(user_id: @user.id)
+    @world ||= @user_world.world
+    @character ||= @world.characters.first
+
+    # Create empty squares for the entire 6x6 grid with no code
+    (0..5).each do |y|
+      (0..5).each do |x|
+        @world.squares.find_or_create_by!(
+          x: x,
+          y: y,
+          square_id: SecureRandom.hex(10),
+          world_id: @world.id,
+          state: "inactive",
+          terrain: ["forest", "desert", "water", "plains"].sample  # Assign random terrain but no code
+        )
+      end
+    end
+
+    # Generate content only for the initial three squares
+    generate_initial_squares(@world, 0, 0)
     @squares = @world.squares.order(:y, :x)
-    
-    # Add store-related variables
-    @currency = @user.default_currency || 'USD'
-    @prices = StoreService.fetch_prices(@user)
-    
+
     render 'squares/landing'
   end
 
@@ -117,44 +133,10 @@ class WorldsController < ApplicationController
     render json: { square: square }
   end
 
-  def generate_initial_squares
-    @world = World.find(params[:id])
-    
-    positions = [[0,0], [1,0], [0,1]]
-    
-    positions.each do |x, y|
-      next if @world.squares.exists?(x: x, y: y)
-      
-      square = @world.squares.create!(
-        x: x,
-        y: y,
-        square_id: SecureRandom.hex(10),
-        world_id: @world.id,
-        state: "active",
-        terrain: ["forest", "desert", "water", "plains"].sample
-      )
-      
-      terrain = square.terrain
-      adjacent_terrains = get_adjacent_terrains(@world, x, y)
-      
-      image_url = OpenaiService.generate_terrain_image(terrain, adjacent_terrains: adjacent_terrains)
-      
-      if image_url
-        downloaded_image = URI.open(image_url)
-        square.terrain_image.attach(
-          io: downloaded_image,
-          filename: "#{terrain}_#{x}_#{y}.png",
-          content_type: 'image/png'
-        )
-      end
-    end
-    
-    redirect_to start_game_world_path(@world), notice: 'Initial tiles generated successfully!'
-  end
-
   private
 
   def generate_initial_squares(world, x_coord, y_coord)
+    # Only generate these three positions initially
     positions = [
       [x_coord, y_coord],     # Current position (0,0)
       [x_coord + 1, y_coord], # Right (1,0)
@@ -162,36 +144,17 @@ class WorldsController < ApplicationController
     ]
 
     positions.each do |x, y|
-      # Find or create the square if it doesn't exist
-      square = world.squares.find_or_create_by!(
-        x: x,
-        y: y,
-        terrain: ["forest", "desert", "water", "plains"].sample
-      )
+      square = world.squares.find_by(x: x, y: y)
+      next unless square
       
-      # Generate and attach image if not already attached
-      unless square.terrain_image.attached?
-        Rails.logger.info "Generating image for square (#{x}, #{y})" # Debug logging
-        
-        terrain = square.terrain
-        adjacent_terrains = get_adjacent_terrains(world, x, y)
-        
-        image_url = OpenaiService.generate_terrain_image(terrain, adjacent_terrains: adjacent_terrains)
-        
-        if image_url
-          begin
-            downloaded_image = URI.open(image_url)
-            square.terrain_image.attach(
-              io: downloaded_image,
-              filename: "#{terrain}_#{x}_#{y}.png",
-              content_type: 'image/png'
-            )
-            square.update!(state: "active")
-          rescue => e
-            Rails.logger.error "Failed to attach image for square (#{x}, #{y}): #{e.message}"
-          end
-        end
-      end
+      terrain = square.terrain # Use the already assigned terrain
+      adjacent_terrains = get_adjacent_terrains(world, x, y)
+      drawing_commands = OpenaiService.generate_terrain_code(terrain, adjacent_terrains: adjacent_terrains)
+      
+      square.update!(
+        state: "active",
+        code: drawing_commands
+      )
     end
   end
 
