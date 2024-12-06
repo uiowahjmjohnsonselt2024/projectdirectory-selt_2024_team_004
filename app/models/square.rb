@@ -16,4 +16,7 @@ class Square < ActiveRecord::Base
         world.squares.where.not(id: id).update_all(treasure: false)
       end
     end
+
+    # Add this to store the image URL
+    has_one_attached :terrain_image
 end

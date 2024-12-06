@@ -25,55 +25,21 @@
   <% if @squares.present? %>
   <% end %>
 
-  <div class="grid">
-    <% if @squares.present? %>
-      <% 
-        # Define active squares (starting from top-left corner)
-        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
-      %>
-      <% @squares.each do |square| %>
-        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
-             id="square_<%= square.square_id %>"
-             data-x="<%= square.x %>"
-             data-y="<%= square.y %>">
-          <% if square.code.present? %>
-            <script>
-              if (!window.squareInitialized_<%= square.square_id %>) {
-                document.addEventListener('DOMContentLoaded', () => {
-                  <%= square.code.html_safe %>
-                  // Extract function name from the code (it's now in the format "window['functionName'] = function...")
-                  const functionName = <%= square.code.match(/window\['([^']+)'\]/)[1].to_json.html_safe %>;
-                  
-                  if (typeof window[functionName] === 'function') {
-                    window[functionName]('square_<%= square.square_id %>');
-                    
-                    <% unless active_squares.include?([square.x, square.y]) %>
-                      // Add grey overlay to inactive squares
-                      const square = document.getElementById('square_<%= square.square_id %>');
-                      const canvas = square.querySelector('canvas');
-                      if (canvas) {
-                        const ctx = canvas.getContext('2d');
-                        ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                      }
-                    <% end %>
-                  }
-                });
-                window.squareInitialized_<%= square.square_id %> = true;
-              }
-            </script>
-          <% else %>
-            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
-          <% end %>
-        </div>
+  <div class="grid-container">
+    <div class="grid">
+      <% (0..5).each do |y| %>
+        <% (0..5).each do |x| %>
+          <div class="grid-item" data-x="<%= x %>" data-y="<%= y %>">
+            <% square = @squares.find { |s| s.x == x && s.y == y } %>
+            <% if square&.terrain_image&.attached? %>
+              <%= image_tag square.terrain_image, class: "terrain-tile" %>
+            <% else %>
+              <div class="empty-tile"></div>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
-      <div class="character"
-           style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
-        <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
-      </div>
-    <% else %>
-      <p>No squares found for this world!</p>
-    <% end %>
+    </div>
   </div>
 
   <!-- Store Modal -->
@@ -272,79 +238,46 @@
   .grid {
     display: grid;
     grid-template-columns: repeat(6, 105px);
-    gap: 0;
+    gap: 5px; /* Add some gap between squares */
     margin: 20px auto;
-    width: fit-content;
-    padding: 0;
   }
 
   .grid-item {
-    background: none;
-    padding: 0;
-    text-align: center;
+    position: relative;
     width: 105px;
     height: 105px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc; /* Add border to create grid appearance */
+    background-color: #f8f8f8; /* Light background for empty squares */
   }
 
-  .grid-item:hover {
-    transform: none;
+  .terrain-tile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border: none;
+    outline: none;
+    border-radius: 0; /* Remove any border radius */
+  }
+
+  .empty-tile {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Remove any potential image decorations */
+  img {
+    border: none;
+    outline: none;
     box-shadow: none;
   }
 
-  .grid-item h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-  /* Pixel Art */
-  .pixel-art {
-    font-family: "Courier New", monospace;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    overflow: auto;
-    white-space: pre-wrap; /* Preserve spacing in art */
-    color: #555;
-  }
-
-  .no-pixel-art {
-    font-size: 0.9rem;
-    color: #999;
-    margin: 10px 0 0;
-  }
-
-  .map-square {
-    display: block;
-    width: 32px;
-    height: 32px;
-  }
-
-  .square-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 6300px; /* 128 * 6*/
-    height: 630px; /* 128 * 6 */
-  }
-
-  .square-container canvas {
-    display: block; /* Removes any default spacing */
-    margin: 0;
-    padding: 0;
-  }
-
-  .inactive-square {
-    opacity: 0.7;
-    pointer-events: none;
-  }
-
-  .inactive-square:hover {
-    transform: none;
-    cursor: default;
+  /* Ensure the character is positioned correctly */
+  .character {
+    position: absolute;
+    z-index: 10;
   }
 </style>
 
