@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   post '/flip', to: 'matching_game#flip', as:'flip'
 
   post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
+
+  post 'worlds/:world_id/generate_square', to: 'worlds#generate_square'
 end

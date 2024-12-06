@@ -41,16 +41,23 @@
               if (!window.squareInitialized_<%= square.square_id %>) {
                 document.addEventListener('DOMContentLoaded', () => {
                   <%= square.code.html_safe %>
-                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-                  <% unless active_squares.include?([square.x, square.y]) %>
-                    // Add grey overlay to inactive squares
-                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
-                    if (canvas) {
-                      const ctx = canvas.getContext('2d');
-                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                      ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                  <% end %>
+                  // Extract function name from the code (it's now in the format "window['functionName'] = function...")
+                  const functionName = <%= square.code.match(/window\['([^']+)'\]/)[1].to_json.html_safe %>;
+                  
+                  if (typeof window[functionName] === 'function') {
+                    window[functionName]('square_<%= square.square_id %>');
+                    
+                    <% unless active_squares.include?([square.x, square.y]) %>
+                      // Add grey overlay to inactive squares
+                      const square = document.getElementById('square_<%= square.square_id %>');
+                      const canvas = square.querySelector('canvas');
+                      if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      }
+                    <% end %>
+                  }
                 });
                 window.squareInitialized_<%= square.square_id %> = true;
               }

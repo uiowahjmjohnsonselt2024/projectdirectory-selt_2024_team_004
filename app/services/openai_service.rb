@@ -34,42 +34,56 @@ class OpenaiService
     private
   
     def self.format_js_code(raw_code)
-      raw_code
+      # Generate a unique function name
+      function_name = "drawSquare_#{Time.now.to_i}_#{SecureRandom.hex(4)}"
+      
+      # Remove markdown code blocks
+      formatted_code = raw_code
         .gsub(/```(javascript|js)?\n?/, '')
         .gsub(/```/, '')
-        .gsub(/const canvas = document\.createElement\('canvas'\);/, '')
-        .gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
+
+      # Wrap the code in a function that takes a square ID
+      <<~JAVASCRIPT
+        window['#{function_name}'] = function(squareId) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 105;
+          canvas.height = 105;
+          const ctx = canvas.getContext('2d');
+          
+          #{formatted_code}
+          
+          const square = document.getElementById(squareId);
+          if (square) {
+            // Remove any existing canvas
+            const existingCanvas = square.querySelector('canvas');
+            if (existingCanvas) {
+              existingCanvas.remove();
+            }
+            square.appendChild(canvas);
+          }
+        };
+      JAVASCRIPT
     end
   
     def self.terrain_system_prompt
       <<~PROMPT
-        You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
+        You are a JavaScript canvas expert creating terrain tiles. Each tile must seamlessly connect with adjacent tiles.
   
-        OCEAN BACKGROUND:
-        - Fill ENTIRE canvas with EXACTLY #1E90FF
-        - Every single water tile must be identical
-        - NO variation in the blue color
-        - NO patterns or lines
-        - Just solid blue color
-        
-        DESERT ISLANDS (when present):
-        - Color: Muted sandy tan (#D2B48C)
-        - Single small organic shape with curved edges
-        - Must take up only 20-40% of tile maximum
-        - NO straight lines or edges anywhere
-        - Edges must be smooth bezier curves
-        - Natural, irregular island shapes
-        - Must be surrounded by water
-        
-        CRITICAL RULES:
-        1. EVERY water tile must be pure #1E90FF only
-        2. Desert must take up LESS than 40% of any tile
-        3. NO straight lines in island shapes
-        4. Islands must have only curved boundaries
-        5. Perfect alignment between adjacent tiles
-        6. Water must be completely solid color
-        7. NO variation in background color
-        8. Islands must be small and well-spaced
+        TERRAIN TYPES AND COLORS:
+        - Water: Deep blue (#1E90FF) with subtle wave patterns
+        - Desert: Sandy tan (#D2B48C) with small dune patterns
+        - Forest: Dark green (#228B22) with scattered tree patterns
+        - Plains: Light green (#90EE90) with grass patterns
+  
+        RULES FOR ALL TERRAINS:
+        1. Use exactly 105x105 canvas size
+        2. Features must align perfectly at edges
+        3. Use consistent colors within each terrain type
+        4. Create natural, organic patterns
+        5. No straight lines or geometric shapes
+        6. Ensure seamless connections with adjacent tiles
+        7. Use subtle patterns that don't overwhelm
+        8. Keep consistent scale across all tiles
   
         IMPORTANT: Only provide the drawing code. Do not create canvas or context variables.
       PROMPT
