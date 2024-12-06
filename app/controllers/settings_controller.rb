@@ -12,7 +12,7 @@ class SettingsController < ApplicationController
 
     if @current_user.update(default_currency: params[:currency])
       @current_user.update_column(:session_token, previous_session_token)
-      @prices = StoreService.fetch_prices(current_user)
+      @prices = StoreService.fetch_prices(@current_user.default_currency)
       flash[:notice] = 'Settings saved successfully!'
     else
       Rails.logger.error "Update failed: #{current_user.errors.full_messages}"

@@ -1,4 +1,8 @@
 <div class="container">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <div class="top-banner">
     <h2 class="title">Pretty Pirates</h2>
 
@@ -25,51 +29,54 @@
   <% if @squares.present? %>
   <% end %>
 
-  <div class="grid">
-    <% if @squares.present? %>
-      <% 
-        # Define active squares (starting from top-left corner)
-        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
-      %>
-      <% @squares.each do |square| %>
-        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
-             id="square_<%= square.square_id %>"
-             data-x="<%= square.x %>"
-             data-y="<%= square.y %>">
-          <% if square.code.present? %>
-            <script>
-              if (!window.squareInitialized_<%= square.square_id %>) {
-                document.addEventListener('DOMContentLoaded', () => {
-                  <%= square.code.html_safe %>
-                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-                  <% unless active_squares.include?([square.x, square.y]) %>
-                    // Add grey overlay to inactive squares
-                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
-                    if (canvas) {
-                      const ctx = canvas.getContext('2d');
-                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                      ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                  <% end %>
-                });
-                window.squareInitialized_<%= square.square_id %> = true;
-              }
-            </script>
-          <% else %>
-            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
-          <% end %>
+  <div class="grid-teleport-container">
+    <div class="grid">
+      <% if @squares.present? %>
+        <%
+          # Define active squares (starting from top-left corner)
+          active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
+        %>
+        <% @squares.each do |square| %>
+          <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>"
+               id="square_<%= square.square_id %>"
+               data-x="<%= square.x %>"
+               data-y="<%= square.y %>">
+            <% if square.code.present? %>
+              <script>
+                if (!window.squareInitialized_<%= square.square_id %>) {
+                  document.addEventListener('DOMContentLoaded', () => {
+                    <%= square.code.html_safe %>
+                    drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
+                    <% unless active_squares.include?([square.x, square.y]) %>
+                      // Add grey overlay to inactive squares
+                      const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                      if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      }
+                    <% end %>
+                  });
+                  window.squareInitialized_<%= square.square_id %> = true;
+                }
+              </script>
+            <% else %>
+              <p>No code for (<%= square.x %>, <%= square.y %>)</p>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="character"
+             style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
+          <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
         </div>
+      <% else %>
+        <p>No squares found for this world!</p>
       <% end %>
-      <div class="character"
-           style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
-        <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
-      </div>
-    <% else %>
-      <p>No squares found for this world!</p>
-    <% end %>
+    </div>
 
-    <div class="teleport-container">
-      <button id="teleport-button" class="btn">Teleport</button>
+    <div class="teleport-container" data-character-id="<%= @character.id %>">
+      <button id="teleport-button" class="btn">Teleport<br>(1 shard per square)</button>
+      <p class="shards-count">Shards: <%= @character.shards || 100 %></p>
     </div>
   </div>
 
@@ -82,9 +89,8 @@
       <span class="close-button">&times;</span>
       <div class="store-grid">
         <% @prices.each do |key, price| %>
-          <% puts "Rendering item: #{key}, price: #{price}, currency: #{@currency}" %>
           <div class="store-grid-item">
-            <button class="item-button" data-name="#{key.to_s.humanize" data-price="<%= price %> <%= @currency %>">
+            <button class="item-button" data-name="<%= key.to_s.humanize %>" data-price="<%= price %> <%= @currency %>">
               <div class="item-content">
                 <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
                 <p class="item-price"><%= key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
