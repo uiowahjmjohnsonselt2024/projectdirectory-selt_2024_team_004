@@ -140,43 +140,60 @@
         const xCoordField = document.querySelector('#x-coord');
         const yCoordField = document.querySelector('#y-coord');
         const saveWorldButton = document.querySelector('#save-world-button');
+        const gridItems = document.querySelectorAll('.grid-item');
+
+        // Dimensions of the grid and tiles
+        const gridSize = 6; // 6x6 grid
+        const tileSize = 100; // Each tile is 100px x 100px (adjust as needed)
+
+        // Calculate the grid's offset to center it on the screen
+        const gridWidth = gridSize * tileSize + 2*tileSize;
+        const gridHeight = gridSize * tileSize;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        const gridOffsetX = (screenWidth - gridWidth) / 2;
+        const gridOffsetY = (screenHeight - gridHeight) / 2;
 
         let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
         let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
 
-        const playableWidth = (window.innerWidth * 0.39 - character.offsetWidth) - (window.innerHeight * 0.29);
-        const playableHeight = (window.innerHeight * 0.58 - character.offsetHeight) - (window.innerHeight * 0.03);
-
-        const xStep = playableWidth / 5;
-        const yStep = playableHeight / 5;
-
-
-        function moveCharacter() {
-            character.style.left = (xCoord * 2) + 'px';
-            character.style.top = (yCoord * 2) + 'px';
+        function moveCharacter(x, y) {
+            character.style.left = `${gridOffsetX + x}px`;
+            character.style.top = `${gridOffsetY + y}px`;
         }
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowUp') {
-                yCoord = Math.max(window.innerHeight * 0.03, yCoord - yStep);
-            } else if (e.key === 'ArrowDown') {
-                yCoord = Math.min(window.innerHeight * 0.58 - character.offsetHeight, yCoord + yStep);
-            } else if (e.key === 'ArrowLeft') {
-                xCoord = Math.max(window.innerHeight * 0.29, xCoord - xStep);
-            } else if (e.key === 'ArrowRight') {
-                xCoord = Math.min(window.innerWidth * 0.39 - character.offsetWidth, xCoord + xStep);
-            }
+        gridItems.forEach((item) => {
+            item.addEventListener('click', function () {
+                const x = parseInt(this.getAttribute('data-x')) * tileSize;
+                const y = parseInt(this.getAttribute('data-y')) * tileSize;
 
-            moveCharacter();
+                xCoord = x;
+                yCoord = y;
+
+                moveCharacter(x, y);
+
+                // Update hidden fields for form submission
+                xCoordField.value = xCoord;
+                yCoordField.value = yCoord;
+            });
         });
 
-        saveWorldButton.addEventListener('click', function (e) {
+        gridItems.forEach((item) => {
+            item.addEventListener('click', function () {
+                gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
+                this.classList.add('selected-tile');
+            });
+        });
+
+        saveWorldButton.addEventListener('click', function () {
             xCoordField.value = xCoord;
             yCoordField.value = yCoord;
         });
 
-        moveCharacter();
+        moveCharacter(xCoord, yCoord); // Initial positioning
     });
+
 </script>
 
 <%== @js_functions %>
