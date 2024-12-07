@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   get 'world/:id/start', to: 'worlds#start_game', as: 'start_game'
   resources :worlds, only: [:index, :new, :create, :destroy]
+  resources :characters do
+    post :update_shards, on: :member
+  end
+
 
   # TMP ROUTE so I can go straight to minigame to test behavior
   get 'matching_game', to: 'matching_game#index', as:'matching_game'

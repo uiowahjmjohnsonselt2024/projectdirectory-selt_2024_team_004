@@ -1,5 +1,5 @@
 class WorldsController < ApplicationController
-  before_action :set_current_user
+  before_action :current_user
 
   def new
     @world_id = params[:world_id]
@@ -25,7 +25,7 @@ class WorldsController < ApplicationController
     if @world.save
       @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
       UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-      Character.create!(world: @world, x_coord: 175, y_coord: 30, image_code: @image_path) # Set your default image path
+      Character.create!(world: @world, shards: 10, x_coord: 175, y_coord: 30, image_code: @image_path) # Set your default image path
 
       # Generate squares with progress tracking
       generate_squares_for_world(@world)
@@ -387,13 +387,11 @@ class WorldsController < ApplicationController
   def store
     @user = current_user
     @currency = @user.default_currency || 'USD'
-    @prices = StoreService.fetch_prices(@user)
-    puts "User: #{@user}"
-    puts "Currency: #{@currency}"
-    puts "Prices: #{@prices}"
+    puts "USER: #{@user}\nCURRENCY: #{@currency}"
+    @prices = StoreService.fetch_prices(@currency)
   end
 
   def current_user
-    @current_user ||= User.find_by id: params[:user_id]
+    @current_user ||= User.find_by id: session[:user_id]
   end
 end

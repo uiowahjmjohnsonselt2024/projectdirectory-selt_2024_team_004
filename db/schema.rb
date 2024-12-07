@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_165322) do
     t.string "image_code"
     t.integer "x_coord", default: 10
     t.integer "y_coord", default: 10
-    t.integer "shards"
+    t.integer "shards", default: 10
     t.integer "world_id", null: false
     t.index ["character_id"], name: "index_characters_on_character_id", unique: true
     t.index ["world_id"], name: "index_characters_on_world_id"

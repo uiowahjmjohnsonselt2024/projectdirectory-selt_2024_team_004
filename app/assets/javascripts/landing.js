@@ -5,40 +5,90 @@ document.addEventListener('DOMContentLoaded', async () => {
     const purchaseForm = document.getElementById('purchase-form');
     const itemNameElement = document.getElementById('item-name');
     const itemPriceElement = document.getElementById('item-price');
-    const storeLink = document.getElementById('store-link'); // The store link in the dropdown
-    const storemodal = document.getElementById('store-modal'); // The modal element
-    const closeButton = storemodal.querySelector('.close-button'); // The close button in the modal
+    const storeLink = document.getElementById('store-link');
+    const storeModal = document.getElementById('store-modal');
+    const closeButton = storeModal.querySelector('.close-button');
+    const shardsCountElement = document.querySelector('.shards-count');
+    const teleportContainer = document.querySelector('.teleport-container');
+    const characterId = teleportContainer.getAttribute('data-character-id');
+    let currentItemPriceUSD = 0;
+    const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    if (!csrfToken) {
+        console.error("CSRF token not found in the page's meta tags.");
+        alert("An unexpected error occurred. Please refresh the page and try again.");
+        return;
+    }
 
     storeItems.forEach((item) => {
-        item.addEventListener('click', async () => {
+        item.addEventListener('click', () => {
             const itemName = item.getAttribute('data-name');
-            currentItemPriceUSD = parseFloat(item.getAttribute('data-price')); // Store the price in USD
+            currentItemPriceUSD = parseFloat(item.getAttribute('data-price'));
             itemNameElement.textContent = itemName;
-
-            storemodal.style.display = 'none';
+            itemPriceElement.dataset.price = currentItemPriceUSD;
+            itemPriceElement.textContent = `$${currentItemPriceUSD.toFixed(2)}`;
+            storeModal.style.display = 'none';
             purchaseModal.style.display = 'flex';
         });
     });
 
-    purchaseForm.addEventListener('submit', (event) => {
+    purchaseForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        alert('Thank you for your purchase!');
+
+        const shardPackage = itemNameElement.textContent;
+        const shardsToBuy = parseInt(shardPackage.match(/\d+$/)[0], 10);
+        const price = parseFloat(itemPriceElement.dataset.price); // Price from the clicked item
+        const cardNumber = purchaseForm.querySelector('#card-number').value.trim();
+        const expirationDate = purchaseForm.querySelector('#expiration-date').value.trim();
+        const cvv = purchaseForm.querySelector('#cvv').value.trim();
+
+        if (!cardNumber || !expirationDate || !cvv) {
+            alert('Please fill in all the required fields.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`/characters/${characterId}/update_shards`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({
+                    shard_package: shardPackage,
+                    shards: shardsToBuy,
+                    price: price,
+                    card_number: cardNumber,
+                    expiration_date: expirationDate,
+                    cvv: cvv,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                shardsCountElement.textContent = `Shards: ${data.new_shards}`;
+                alert(`Purchase successful! Transaction ID: ${data.transaction_id}`);
+            } else {
+                alert(data.error || 'An error occurred while processing your purchase.');
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+            alert(`Network error: ${error.message}. Please check your connection and try again.`);
+        }
+
         purchaseModal.style.display = 'none';
     });
 
-    // Open modal when the store link is clicked
     storeLink.addEventListener('click', (event) => {
-        event.preventDefault(); // Prevent default link behavior
-        storemodal.style.display = 'flex'; // Show the modal
+        event.preventDefault();
+        storeModal.style.display = 'flex';
     });
 
-    // Close purchase modal
     purchaseCloseButton.addEventListener('click', () => {
         purchaseModal.style.display = 'none';
     });
 
-    // Close modal when the close button is clicked
     closeButton.addEventListener('click', () => {
-        storemodal.style.display = 'none';
+        storeModal.style.display = 'none';
     });
 });
