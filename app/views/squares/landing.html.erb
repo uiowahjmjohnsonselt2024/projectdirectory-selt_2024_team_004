@@ -140,43 +140,75 @@
         const xCoordField = document.querySelector('#x-coord');
         const yCoordField = document.querySelector('#y-coord');
         const saveWorldButton = document.querySelector('#save-world-button');
+        const gridItems = document.querySelectorAll('.grid-item');
 
-        let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
-        let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
+        // Grid configuration
+        const gridSize = 6; // 6x6 grid
+        const tileSize = 105; // Each tile is 100px x 100px
 
-        const playableWidth = (window.innerWidth * 0.39 - character.offsetWidth) - (window.innerHeight * 0.29);
-        const playableHeight = (window.innerHeight * 0.58 - character.offsetHeight) - (window.innerHeight * 0.03);
+        // Function to calculate grid offsets
+        function calculateGridOffsets() {
+            const gridWidth = gridSize * tileSize;
+            const gridHeight = gridSize * tileSize;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
 
-        const xStep = playableWidth / 5;
-        const yStep = playableHeight / 5;
-
-
-        function moveCharacter() {
-            character.style.left = (xCoord * 2) + 'px';
-            character.style.top = (yCoord * 2) + 'px';
+            return {
+                x: (screenWidth - gridWidth) / 2,
+                y: (screenHeight - gridHeight) / 2
+            };
         }
 
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowUp') {
-                yCoord = Math.max(window.innerHeight * 0.03, yCoord - yStep);
-            } else if (e.key === 'ArrowDown') {
-                yCoord = Math.min(window.innerHeight * 0.58 - character.offsetHeight, yCoord + yStep);
-            } else if (e.key === 'ArrowLeft') {
-                xCoord = Math.max(window.innerHeight * 0.29, xCoord - xStep);
-            } else if (e.key === 'ArrowRight') {
-                xCoord = Math.min(window.innerWidth * 0.39 - character.offsetWidth, xCoord + xStep);
-            }
+        // Function to move character to the correct tile
+        function moveCharacterToTile(x, y) {
+            const gridOffsets = calculateGridOffsets();
 
-            moveCharacter();
+            // Adjust the position to account for the misalignment
+            const characterX = gridOffsets.x + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+            const characterY = gridOffsets.y + y * tileSize + tileSize / 2 - 50;
+
+            character.style.left = `${characterX}px`;
+            character.style.top = `${characterY}px`;
+
+            // Update hidden fields for form submission
+            xCoordField.value = x;
+            yCoordField.value = y;
+        }
+
+        // Center the character initially
+        let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+        let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+        moveCharacterToTile(xCoord, yCoord);
+
+        // Add click event listeners to grid items
+        gridItems.forEach((item) => {
+            item.addEventListener('click', function () {
+                const tileX = parseInt(this.getAttribute('data-x'), 10);
+                const tileY = parseInt(this.getAttribute('data-y'), 10);
+
+                xCoord = tileX;
+                yCoord = tileY;
+
+                moveCharacterToTile(tileX, tileY);
+
+                // Visual feedback for selected tile
+                gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
+                this.classList.add('selected-tile');
+            });
         });
 
-        saveWorldButton.addEventListener('click', function (e) {
+        // Save button updates hidden fields
+        saveWorldButton.addEventListener('click', function () {
             xCoordField.value = xCoord;
             yCoordField.value = yCoord;
         });
 
-        moveCharacter();
+        // Recalculate offsets and reposition character on window resize
+        window.addEventListener('resize', () => {
+            moveCharacterToTile(xCoord, yCoord);
+        });
     });
+
 </script>
 
 <%== @js_functions %>

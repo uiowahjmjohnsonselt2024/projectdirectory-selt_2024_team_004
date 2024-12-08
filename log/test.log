@@ -8936,3 +8936,407 @@ Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 339)
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
   [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "characters"[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "characters" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "character_id" varchar, "image_code" varchar, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 10, "shards" integer DEFAULT 10, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_characters_on_character_id" ON "characters" ("character_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_characters_on_world_id" ON "characters" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "squares"[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "squares" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "square_id" varchar, "world_name" varchar, "world_id" integer NOT NULL, "x" integer, "y" integer, "weather" varchar, "treasure" boolean, "game" varchar, "monsters" varchar, "state" varchar, "terrain" varchar, "code" varchar, "pixel_art" text)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_squares_on_square_id" ON "squares" ("square_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_squares_on_world_id" ON "squares" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "user_worlds"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_world_id" varchar, "user_role" varchar, "owner" boolean, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar, "name" varchar, "password_digest" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "session_token" varchar, "default_currency" varchar DEFAULT 'USD')[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_users_on_session_token" ON "users" ("session_token")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "worlds"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "worlds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "world_id" varchar, "world_name" varchar, "last_played" datetime, "progress" integer)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_worlds_on_world_id" ON "worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "acharacters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 10, "shards" integer DEFAULT 10, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_acharacters_on_world_id" ON "acharacters" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_acharacters_on_character_id" ON "acharacters" ("character_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "acharacters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "characters"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "characters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "characters" ("id" integer NOT NULL PRIMARY KEY, "character_id" varchar DEFAULT NULL, "image_code" varchar DEFAULT NULL, "x_coord" integer DEFAULT 10, "y_coord" integer DEFAULT 10, "shards" integer DEFAULT 10, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_a47d574cca"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_characters_on_character_id" ON "characters" ("character_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_characters_on_world_id" ON "characters" ("world_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[32mINSERT INTO "characters" ("id","character_id","image_code","x_coord","y_coord","shards","world_id")
+                     SELECT "id","character_id","image_code","x_coord","y_coord","shards","world_id" FROM "acharacters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "acharacters"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "asquares" ("id" integer NOT NULL PRIMARY KEY, "square_id" varchar DEFAULT NULL, "world_name" varchar DEFAULT NULL, "world_id" integer NOT NULL, "x" integer DEFAULT NULL, "y" integer DEFAULT NULL, "weather" varchar DEFAULT NULL, "treasure" boolean DEFAULT NULL, "game" varchar DEFAULT NULL, "monsters" varchar DEFAULT NULL, "state" varchar DEFAULT NULL, "terrain" varchar DEFAULT NULL, "code" varchar DEFAULT NULL, "pixel_art" text DEFAULT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_asquares_on_world_id" ON "asquares" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_asquares_on_square_id" ON "asquares" ("square_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "asquares" ("id","square_id","world_name","world_id","x","y","weather","treasure","game","monsters","state","terrain","code","pixel_art")
+                     SELECT "id","square_id","world_name","world_id","x","y","weather","treasure","game","monsters","state","terrain","code","pixel_art" FROM "squares"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "squares"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "squares" ("id" integer NOT NULL PRIMARY KEY, "square_id" varchar DEFAULT NULL, "world_name" varchar DEFAULT NULL, "world_id" integer NOT NULL, "x" integer DEFAULT NULL, "y" integer DEFAULT NULL, "weather" varchar DEFAULT NULL, "treasure" boolean DEFAULT NULL, "game" varchar DEFAULT NULL, "monsters" varchar DEFAULT NULL, "state" varchar DEFAULT NULL, "terrain" varchar DEFAULT NULL, "code" varchar DEFAULT NULL, "pixel_art" text DEFAULT NULL, CONSTRAINT "fk_rails_091f828c58"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+ ON DELETE CASCADE)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_squares_on_square_id" ON "squares" ("square_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_squares_on_world_id" ON "squares" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "squares" ("id","square_id","world_name","world_id","x","y","weather","treasure","game","monsters","state","terrain","code","pixel_art")
+                     SELECT "id","square_id","world_name","world_id","x","y","weather","treasure","game","monsters","state","terrain","code","pixel_art" FROM "asquares"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "asquares"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "auser_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_world_id" ON "auser_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_auser_worlds_on_user_world_id" ON "auser_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_user_id" ON "auser_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "auser_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "user_worlds"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "user_worlds"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "auser_worlds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "auser_worlds"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "auser_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_world_id" ON "auser_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_auser_worlds_on_user_world_id" ON "auser_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_auser_worlds_on_user_id" ON "auser_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "auser_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "user_worlds"[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "user_worlds"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TABLE "user_worlds" ("id" integer NOT NULL PRIMARY KEY, "user_world_id" varchar DEFAULT NULL, "user_role" varchar DEFAULT NULL, "owner" boolean DEFAULT NULL, "user_id" integer NOT NULL, "world_id" integer NOT NULL, CONSTRAINT "fk_rails_f4c0d1dcec"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_8ba2f3f871"
+FOREIGN KEY ("world_id")
+  REFERENCES "worlds" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_user_id" ON "user_worlds" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_user_worlds_on_user_world_id" ON "user_worlds" ("user_world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_user_worlds_on_world_id" ON "user_worlds" ("world_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "user_worlds" ("id","user_world_id","user_role","owner","user_id","world_id")
+                     SELECT "id","user_world_id","user_role","owner","user_id","world_id" FROM "auser_worlds"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "auser_worlds"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20241127165322)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20241110000000),
+(20241110001850),
+(20241110100001),
+(20241112002705),
+(20241114203452),
+(20241114203628),
+(20241115202751),
+(20241125182713),
+(20241125220704),
+(20241126151825),
+(20241126152020),
+(20241126152306),
+(20241127005918),
+(20241127155845),
+(20241127162407);
+
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2024-12-07 03:42:35.675841"], ["updated_at", "2024-12-07 03:42:35.675841"]]
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "533814f0ab4d496c01a9eac10cdfb77d35063b70"], ["created_at", "2024-12-07 03:42:35.676890"], ["updated_at", "2024-12-07 03:42:35.676890"]]
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 7ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 4822)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 272)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"-1"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 270)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 1719)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 7ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 4822)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 272)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"-1"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 270)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 3ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 1719)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 1719)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"-1"}
+Completed 200 OK in 3ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 1719)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"-1"}
+Completed 200 OK in 3ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 1719)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 299)
+Completed 200 OK in 8ms (Views: 2.1ms | ActiveRecord: 0.0ms | Allocations: 4822)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#index as HTML
+  Rendering matching_game/index.html.erb
+  Template rendering was prevented by rspec-rails. Use `render_views` to verify rendered view contents if necessary.
+  Rendered matching_game/index.html.erb (Duration: 0.1ms | Allocations: 66)
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 467)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 272)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"-1"}
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 270)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+Processing by MatchingGameController#flip as HTML
+  Parameters: {"index"=>"2"}
+Completed 200 OK in 0ms (Views: 0.1ms | ActiveRecord: 0.0ms | Allocations: 266)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
