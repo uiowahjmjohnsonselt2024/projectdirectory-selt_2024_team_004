@@ -142,56 +142,71 @@
         const saveWorldButton = document.querySelector('#save-world-button');
         const gridItems = document.querySelectorAll('.grid-item');
 
-        // Dimensions of the grid and tiles
+        // Grid configuration
         const gridSize = 6; // 6x6 grid
-        const tileSize = 100; // Each tile is 100px x 100px (adjust as needed)
+        const tileSize = 105; // Each tile is 100px x 100px
 
-        // Calculate the grid's offset to center it on the screen
-        const gridWidth = gridSize * tileSize + 3*tileSize;
-        const gridHeight = gridSize * tileSize;
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
+        // Function to calculate grid offsets
+        function calculateGridOffsets() {
+            const gridWidth = gridSize * tileSize;
+            const gridHeight = gridSize * tileSize;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
 
-        const gridOffsetX = (screenWidth - gridWidth) / 2;
-        const gridOffsetY = (screenHeight - gridHeight) / 2;
-
-        let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
-        let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
-
-        function moveCharacter(x, y) {
-            character.style.left = `${gridOffsetX + x}px`;
-            character.style.top = `${gridOffsetY + y}px`;
+            return {
+                x: (screenWidth - gridWidth) / 2,
+                y: (screenHeight - gridHeight) / 2
+            };
         }
 
+        // Function to move character to the correct tile
+        function moveCharacterToTile(x, y) {
+            const gridOffsets = calculateGridOffsets();
+
+            // Adjust the position to account for the misalignment
+            const characterX = gridOffsets.x + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+            const characterY = gridOffsets.y + y * tileSize + tileSize / 2 - 50;
+
+            character.style.left = `${characterX}px`;
+            character.style.top = `${characterY}px`;
+
+            // Update hidden fields for form submission
+            xCoordField.value = x;
+            yCoordField.value = y;
+        }
+
+        // Center the character initially
+        let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+        let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+        moveCharacterToTile(xCoord, yCoord);
+
+        // Add click event listeners to grid items
         gridItems.forEach((item) => {
             item.addEventListener('click', function () {
-                const x = parseInt(this.getAttribute('data-x')) * tileSize;
-                const y = parseInt(this.getAttribute('data-y')) * tileSize;
+                const tileX = parseInt(this.getAttribute('data-x'), 10);
+                const tileY = parseInt(this.getAttribute('data-y'), 10);
 
-                xCoord = x;
-                yCoord = y;
+                xCoord = tileX;
+                yCoord = tileY;
 
-                moveCharacter(x, y);
+                moveCharacterToTile(tileX, tileY);
 
-                // Update hidden fields for form submission
-                xCoordField.value = xCoord;
-                yCoordField.value = yCoord;
-            });
-        });
-
-        gridItems.forEach((item) => {
-            item.addEventListener('click', function () {
+                // Visual feedback for selected tile
                 gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
                 this.classList.add('selected-tile');
             });
         });
 
+        // Save button updates hidden fields
         saveWorldButton.addEventListener('click', function () {
             xCoordField.value = xCoord;
             yCoordField.value = yCoord;
         });
 
-        moveCharacter(xCoord, yCoord); // Initial positioning
+        // Recalculate offsets and reposition character on window resize
+        window.addEventListener('resize', () => {
+            moveCharacterToTile(xCoord, yCoord);
+        });
     });
 
 </script>
