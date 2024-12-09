@@ -77,31 +77,15 @@ class WorldsController < ApplicationController
 
   def start_game
     @world = World.find(params[:id])
-    
-    store
     @user = current_user
-    @user_world ||= UserWorld.find_by(user_id: @user.id)
-    @world ||= @user_world.world
-    @character ||= @world.characters.first
-
-    # Only create the three initial squares
-    initial_positions = [[0,0], [1,0], [0,1]]
-    
-    initial_positions.each do |x, y|
-      @world.squares.find_or_create_by!(
-        x: x,
-        y: y,
-        square_id: SecureRandom.hex(10),
-        world_id: @world.id,
-        state: "active",
-        terrain: ["forest", "desert", "water", "plains"].sample
-      )
-    end
-
-    # Generate content for these squares
-    generate_initial_squares(@world, 0, 0)
+    @user_world = UserWorld.find_by(user_id: @user.id)
+    @character = @world.characters.first
     @squares = @world.squares.order(:y, :x)
-
+    
+    # Add store-related variables
+    @currency = @user.default_currency || 'USD'
+    @prices = StoreService.fetch_prices(@user)
+    
     render 'squares/landing'
   end
 
@@ -131,6 +115,41 @@ class WorldsController < ApplicationController
     )
 
     render json: { square: square }
+  end
+
+  def generate_initial_squares
+    @world = World.find(params[:id])
+    
+    positions = [[0,0], [1,0], [0,1]]
+    
+    positions.each do |x, y|
+      next if @world.squares.exists?(x: x, y: y)
+      
+      square = @world.squares.create!(
+        x: x,
+        y: y,
+        square_id: SecureRandom.hex(10),
+        world_id: @world.id,
+        state: "active",
+        terrain: ["forest", "desert", "water", "plains"].sample
+      )
+      
+      terrain = square.terrain
+      adjacent_terrains = get_adjacent_terrains(@world, x, y)
+      
+      image_url = OpenaiService.generate_terrain_image(terrain, adjacent_terrains: adjacent_terrains)
+      
+      if image_url
+        downloaded_image = URI.open(image_url)
+        square.terrain_image.attach(
+          io: downloaded_image,
+          filename: "#{terrain}_#{x}_#{y}.png",
+          content_type: 'image/png'
+        )
+      end
+    end
+    
+    redirect_to start_game_world_path(@world), notice: 'Initial tiles generated successfully!'
   end
 
   private

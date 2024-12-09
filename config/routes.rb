@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
 
   post 'worlds/:world_id/generate_square', to: 'worlds#generate_square'
+  post 'worlds/:id/generate_initial_squares', to: 'worlds#generate_initial_squares', as: 'generate_initial_squares'
 end
