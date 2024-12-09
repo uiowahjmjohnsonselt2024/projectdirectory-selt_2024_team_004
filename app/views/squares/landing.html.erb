@@ -136,14 +136,67 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const character = document.querySelector('.character');
+    const xCoordField = document.querySelector('#x-coord');
+    const yCoordField = document.querySelector('#y-coord');
+    const saveWorldButton = document.querySelector('#save-world-button');
     const gridItems = document.querySelectorAll('.grid-item');
+
+    // Grid configuration
+    const gridSize = 6; // 6x6 grid
+    const tileSize = 105; // Each tile is 100px x 100px
+
+    // Function to calculate grid offsets
+    function calculateGridOffsets() {
+      const gridWidth = gridSize * tileSize;
+      const gridHeight = gridSize * tileSize;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      return {
+        x_char: (screenWidth - gridWidth) / 2,
+        y_char: (screenHeight - gridHeight) / 2
+      };
+    }
+
+    // Function to move character to the correct tile
+    function moveCharacterToTile(x, y) {
+      const gridOffsets = calculateGridOffsets();
+
+      // Adjust the position to account for the misalignment
+      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+
+      character.style.left = `${characterX}px`;
+      character.style.top = `${characterY}px`;
+
+      // Update hidden fields for form submission
+      xCoordField.value = x;
+      yCoordField.value = y;
+    }
+
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
     
     gridItems.forEach(item => {
       item.addEventListener('click', async function() {
         const x = this.getAttribute('data-x');
         const y = this.getAttribute('data-y');
         const squareId = this.getAttribute('data-square-id');
-        
+        const tileX = parseInt(this.getAttribute('data-x'), 10);
+        const tileY = parseInt(this.getAttribute('data-y'), 10);
+
+        xCoord = tileX;
+        yCoord = tileY;
+
+        moveCharacterToTile(tileX, tileY);
+
+        // Visual feedback for selected tile
+        gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
+        this.classList.add('selected-tile');
+
         try {
           const response = await fetch(`/generate_square_code?x=${x}&y=${y}`);
           if (!response.ok) {
@@ -171,6 +224,17 @@
           alert('Failed to generate terrain. Please try again.');
         }
       });
+    });
+
+    // Save button updates hidden fields
+    saveWorldButton.addEventListener('click', function () {
+        xCoordField.value = xCoord;
+        yCoordField.value = yCoord;
+    });
+
+    // Recalculate offsets and reposition character on window resize
+    window.addEventListener('resize', () => {
+        moveCharacterToTile(xCoord, yCoord);
     });
   });
 </script>
