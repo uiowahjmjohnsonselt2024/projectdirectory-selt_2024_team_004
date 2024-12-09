@@ -3,11 +3,26 @@ class WorldsController < ApplicationController
 
   def new
     @world_id = params[:world_id]
+    @user_world_id = params[:user_world_id]
   end
 
   def index
     if @current_user
       @user_worlds = @current_user.user_worlds
+      @invitations = Invitation.where(receiver_id: @current_user.id, status: 'pending')
+      
+      @invited_players = {}
+      @user_worlds.each do |user_world|
+        world = user_world.world
+        # Get all invitations for this world, excluding accepted ones and getting unique emails
+        @invited_players[world.id] = Invitation.where(world_id: world.id)
+                                           .where.not(status: 'accepted')
+                                           .includes(:receiver)
+                                           .map { |invitation| invitation.receiver.email }
+                                           .uniq
+      end
+      
+      @world = @user_worlds.first&.world
     else
       flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
@@ -16,26 +31,36 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
-    @world = World.new(
-      last_played: DateTime.now,
-      progress: 0,
-      world_name: params[:world_name]
-    )
-
-    if @world.save
+    if params[:user_world_id].present?
+      # Handle invited user character creation
+      @user_world = UserWorld.find(params[:user_world_id])
       @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
-      UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-      Character.create!(world: @world, shards: 10, x_coord: 175, y_coord: 30, image_code: @image_path) # Set your default image path
-
-      # Generate squares with progress tracking
-      generate_squares_for_world(@world)
-
-      flash[:notice] = "World '#{@world.world_name}' created successfully!"
-      redirect_to worlds_path
+      Character.create!(
+        world: @user_world.world,
+        shards: 10,
+        x_coord: 175,
+        y_coord: 30,
+        image_code: @image_path
+      )
     else
-      flash[:alert] = "Failed to create world. Please try again."
-      render :new
+      # Handle new world creation
+      @world = World.new(
+        last_played: DateTime.now,
+        progress: 0,
+        world_name: params[:world_name]
+      )
+
+      if @world.save
+        @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
+        UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
+        Character.create!(world: @world, shards: 10, x_coord: 175, y_coord: 30, image_code: @image_path)
+
+        generate_squares_for_world(@world)
+      end
     end
+
+    flash[:notice] = "Character created successfully!"
+    redirect_to worlds_path
   end
 
 
@@ -79,77 +104,118 @@ class WorldsController < ApplicationController
     #, locals: { world_id: @world.id }
   end
 
+  def generate_square_code
+    x = params[:x].to_i
+    y = params[:y].to_i
+    terrain_types = ["desert", "water", "forest", "plains"]
+    terrain = terrain_types.sample
+    
+    begin
+      square = @world.squares.find_or_initialize_by(x: x, y: y)
+      adjacent_terrains = get_adjacent_terrains(@world, x, y)
+      code = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
+      
+      if code.present?
+        square.update!(terrain: terrain, code: code)
+        render json: { success: true, code: code, terrain: terrain }
+      else
+        render json: { success: false, error: "Failed to generate terrain code" }, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Validation error: #{e.message}")
+      render json: { success: false, error: "Validation error: #{e.message}" }, status: :unprocessable_entity
+    rescue StandardError => e
+      Rails.logger.error("Error in generate_square_code: #{e.message}")
+      render json: { success: false, error: "Error generating terrain: #{e.message}" }, status: :unprocessable_entity
+    end
+  end
+
+  def join
+    @user_world_id = params[:user_world_id]
+  end
+
+  def join_existing
+    @user_world = UserWorld.find(params[:user_world_id])
+    @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
+    
+    Character.create!(
+      world: @user_world.world,
+      shards: 10,
+      x_coord: 175,
+      y_coord: 30,
+      image_code: @image_path
+    )
+
+    flash[:notice] = "Character created successfully!"
+    redirect_to worlds_path
+  end
+
 
   private
 
   def generate_squares_for_world(world)
-    # Generate 9 unique squares first
-    base_squares = []
-
-    # Ensure 3-4 desert squares
-    water_count = 9 - rand(3..4)
-    desert_count = 9 - water_count
-
-    # Generate water squares
-    water_count.times do |i|
-      drawing_commands = OpenaiService.generate_terrain_code("lake")
-      base_squares << {
-        terrain: "lake",
-        code: drawing_commands
-      }
-    end
-
-    # Generate desert squares
-    desert_count.times do |i|
-      drawing_commands = OpenaiService.generate_terrain_code("desert")
-      base_squares << {
-        terrain: "desert",
-        code: drawing_commands
-      }
-    end
-
-    # Now fill the 6x6 grid using these 9 squares
+    # Define available terrains
+    terrain_types = ["desert", "water", "forest", "plains"]
     js_functions = []
+    
+    # Define the initial three squares in the top-left corner
+    active_positions = [[0, 0], [1, 0], [0, 1]]
 
-    # Randomly choose coordinates for treasure
-    treasure_x = rand(6)
-    treasure_y = rand(6)
+    # Generate the initial three squares with random terrains
+    active_positions.each do |x, y|
+      # Get random terrain type
+      terrain = terrain_types.sample
+      
+      # Get adjacent terrains for context
+      adjacent_terrains = get_adjacent_terrains(world, x, y)
+      
+      # Generate terrain code with context
+      drawing_commands = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
 
+      # Create the function code
+      function_code = <<~JAVASCRIPT
+        function drawSquare_#{x}_#{y}(containerId) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 105;
+          canvas.height = 105;
+          const ctx = canvas.getContext('2d');
+          
+          #{drawing_commands}
+          
+          document.getElementById(containerId).appendChild(canvas);
+        }
+      JAVASCRIPT
+
+      js_functions << function_code
+
+      # Create the square with the generated code
+      world.squares.create!(
+        square_id: SecureRandom.hex(10),
+        world_id: world.id,
+        x: x,
+        y: y,
+        state: "active",
+        terrain: terrain,
+        code: drawing_commands
+      )
+    end
+
+    # Create the rest of the grid without code
     6.times do |y|
       6.times do |x|
-        selected_square = base_squares.sample
-
-        # Create the function definition
-        function_code = <<~JAVASCRIPT
-          function drawSquare_#{x}_#{y}(containerId) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 105;
-            canvas.height = 105;
-            const ctx = canvas.getContext('2d');
-            
-            #{selected_square[:code]}
-            
-            document.getElementById(containerId).appendChild(canvas);
-          }
-        JAVASCRIPT
-
-        js_functions << function_code
-
+        next if active_positions.include?([x, y])
+        
         world.squares.create!(
           square_id: SecureRandom.hex(10),
           world_id: world.id,
           x: x,
           y: y,
           state: "inactive",
-          terrain: selected_square[:terrain],
-          code: function_code,
-          treasure: (x == treasure_x && y == treasure_y)  # Set treasure for the randomly chosen square
+          terrain: "empty"
         )
       end
     end
-    treasure = world.squares.find_by(treasure: true)
-    puts "Treasure is at x: #{treasure.x}" if treasure
-    puts "Treasure is at y: #{treasure.y}" if treasure
+
     # Add a script tag to define all functions at once
     script_tag = <<~HTML
       <script>
@@ -157,7 +223,6 @@ class WorldsController < ApplicationController
       </script>
     HTML
 
-    # Store the script tag in a place where your view can access it
     @js_functions = script_tag
   end
 
@@ -369,6 +434,8 @@ class WorldsController < ApplicationController
   end
 
   def get_adjacent_terrains(world, x, y)
+    return {} unless world.present?
+    
     {
       north: world.squares.find_by(x: x, y: y - 1)&.terrain,
       south: world.squares.find_by(x: x, y: y + 1)&.terrain,

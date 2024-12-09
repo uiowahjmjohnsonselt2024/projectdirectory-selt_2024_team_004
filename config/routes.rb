@@ -30,4 +30,17 @@ Rails.application.routes.draw do
   post '/flip', to: 'matching_game#flip', as:'flip'
 
   post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
+  post '/generate_square_code', to: 'worlds#generate_square_code'
+
+  resources :invitations, only: [:create] do
+    member do
+      post 'accept'
+      post 'decline'
+    end
+  end
+
+  resources :characters, only: [:new, :create]
+
+  get 'worlds/join/:user_world_id', to: 'worlds#join', as: 'join_world_form'
+  post 'worlds/join', to: 'worlds#join_existing', as: 'join_world'
 end

@@ -37,57 +37,69 @@ class OpenaiService
       raw_code
         .gsub(/```(javascript|js)?\n?/, '')
         .gsub(/```/, '')
-        .gsub(/const canvas = document\.createElement\('canvas'\);/, '')
-        .gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
     end
   
     def self.terrain_system_prompt
       <<~PROMPT
-        You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
-  
-        OCEAN BACKGROUND:
-        - Fill ENTIRE canvas with EXACTLY #1E90FF
-        - Every single water tile must be identical
-        - NO variation in the blue color
-        - NO patterns or lines
-        - Just solid blue color
+        You are a JavaScript canvas expert creating connected terrain patterns.
         
-        DESERT ISLANDS (when present):
-        - Color: Muted sandy tan (#D2B48C)
-        - Single small organic shape with curved edges
-        - Must take up only 20-40% of tile maximum
-        - NO straight lines or edges anywhere
-        - Edges must be smooth bezier curves
-        - Natural, irregular island shapes
-        - Must be surrounded by water
+        TERRAIN RULES:
+        - Forest: Deep green (#228B22), must connect with adjacent forest tiles to form areas of 4 connected tiles. Add darker green (#006400) tree shapes.
+        - Desert: Single sandy color (#DEB887) for base, use slightly darker sand color (#C19A6B) for dune lines only. Must be single isolated tiles, no direct adjacency.
+        - Water: Ocean blue (#1E90FF), must connect with 2 other water tiles to form groups of 3.
+        - Plains: Light green (#90EE90), must connect with exactly one other plains tile to form pairs. Add darker green grass details.
         
-        CRITICAL RULES:
-        1. EVERY water tile must be pure #1E90FF only
-        2. Desert must take up LESS than 40% of any tile
-        3. NO straight lines in island shapes
-        4. Islands must have only curved boundaries
-        5. Perfect alignment between adjacent tiles
-        6. Water must be completely solid color
-        7. NO variation in background color
-        8. Islands must be small and well-spaced
-  
-        IMPORTANT: Only provide the drawing code. Do not create canvas or context variables.
+        CONNECTION RULES:
+        - Terrains must seamlessly connect with matching adjacent tiles
+        - Edges must align perfectly with neighboring tiles
+        - Use smooth transitions between different terrain types
+        - Maintain consistent base colors within each terrain type
+        
+        DESERT SPECIFIC:
+        - Use ONLY #DEB887 as the base color for ALL desert tiles
+        - Draw dune lines using #C19A6B (slightly darker sand color)
+        - Dune lines should be curved and natural looking
+        - No variation in the base color between desert tiles
+        - Only the dune line patterns should differ
+        
+        CRITICAL:
+        - Do not create canvas or context variables
+        - Use only the provided 'ctx' variable
+        - Generate only the drawing code
       PROMPT
     end
   
     def self.terrain_user_prompt(terrain_type, context)
       base_prompt = "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas)."
-      
-      if context[:adjacent_terrains]
-        base_prompt += "\nConnect with:"
-        context[:adjacent_terrains].each do |direction, terrain|
+  
+      # Add specific rules based on terrain type and adjacent tiles
+      case terrain_type
+      when "forest"
+        base_prompt += "\nThis forest tile must connect with adjacent forest tiles to form a larger forest area covering 4 connected tiles."
+        base_prompt += "\nUse deep green (#228B22) as the base color and add darker green (#006400) tree shapes."
+      when "desert"
+        base_prompt += "\nThis must be an isolated desert tile with no direct desert neighbors."
+        base_prompt += "\nUse ONLY #DEB887 as the base color and #C19A6B for dune line details."
+        base_prompt += "\nDraw curved dune lines to show sand patterns, but keep the base color consistent."
+      when "water"
+        base_prompt += "\nThis water tile must connect with two other water tiles to form a group of three."
+        base_prompt += "\nUse ocean blue (#1E90FF)."
+      when "plains"
+        base_prompt += "\nThis plains tile must connect with exactly one other plains tile to form a pair."
+        base_prompt += "\nUse light green (#90EE90) as base and add darker grass detail lines."
+      end
+  
+      # Include context about adjacent terrains to inform connections
+      if context.any?
+        base_prompt += "\nAdjacent terrains:"
+        context.each do |direction, terrain|
           base_prompt += "\n#{direction.capitalize}: #{terrain || 'unknown'}"
         end
       end
   
+      base_prompt += "\nEnsure seamless connections with matching adjacent terrains."
       base_prompt += "\nUse only the 'ctx' variable to draw."
       base_prompt += "\nDo not create canvas or context variables."
-      base_prompt += "\nDo not create a function wrapper."
       
       base_prompt
     end
