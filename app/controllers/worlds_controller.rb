@@ -10,7 +10,7 @@ class WorldsController < ApplicationController
     if @current_user
       @user_worlds = @current_user.user_worlds
       @invitations = Invitation.where(receiver_id: @current_user.id, status: 'pending')
-      
+
       @invited_players = {}
       @user_worlds.each do |user_world|
         world = user_world.world
@@ -21,7 +21,7 @@ class WorldsController < ApplicationController
                                            .map { |invitation| invitation.receiver.email }
                                            .uniq
       end
-      
+
       @world = @user_worlds.first&.world
     else
       flash[:alert] = 'Please log in to view your worlds.'
@@ -53,7 +53,7 @@ class WorldsController < ApplicationController
       if @world.save
         @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
         UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-        Character.create!(world: @world, shards: 10, x_coord: 175, y_coord: 30, image_code: @image_path)
+        Character.create!(world: @world, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path)
 
         generate_squares_for_world(@world)
       end
@@ -109,12 +109,12 @@ class WorldsController < ApplicationController
     y = params[:y].to_i
     terrain_types = ["desert", "water", "forest", "plains"]
     terrain = terrain_types.sample
-    
+
     begin
       square = @world.squares.find_or_initialize_by(x: x, y: y)
       adjacent_terrains = get_adjacent_terrains(@world, x, y)
       code = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
-      
+
       if code.present?
         square.update!(terrain: terrain, code: code)
         render json: { success: true, code: code, terrain: terrain }
@@ -137,7 +137,7 @@ class WorldsController < ApplicationController
   def join_existing
     @user_world = UserWorld.find(params[:user_world_id])
     @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
-    
+
     Character.create!(
       world: @user_world.world,
       shards: 10,
@@ -157,7 +157,7 @@ class WorldsController < ApplicationController
     # Define available terrains
     terrain_types = ["desert", "water", "forest", "plains"]
     js_functions = []
-    
+
     # Define the initial three squares in the top-left corner
     active_positions = [[0, 0], [1, 0], [0, 1]]
 
@@ -165,10 +165,10 @@ class WorldsController < ApplicationController
     active_positions.each do |x, y|
       # Get random terrain type
       terrain = terrain_types.sample
-      
+
       # Get adjacent terrains for context
       adjacent_terrains = get_adjacent_terrains(world, x, y)
-      
+
       # Generate terrain code with context
       drawing_commands = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
 
@@ -204,7 +204,7 @@ class WorldsController < ApplicationController
     6.times do |y|
       6.times do |x|
         next if active_positions.include?([x, y])
-        
+
         world.squares.create!(
           square_id: SecureRandom.hex(10),
           world_id: world.id,
@@ -223,6 +223,7 @@ class WorldsController < ApplicationController
       </script>
     HTML
 
+    # Store the script tag in a place where your view can access it
     @js_functions = script_tag
   end
 
@@ -435,7 +436,7 @@ class WorldsController < ApplicationController
 
   def get_adjacent_terrains(world, x, y)
     return {} unless world.present?
-    
+
     {
       north: world.squares.find_by(x: x, y: y - 1)&.terrain,
       south: world.squares.find_by(x: x, y: y + 1)&.terrain,
