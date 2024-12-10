@@ -25,7 +25,7 @@ class WorldsController < ApplicationController
     if @world.save
       @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
       UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-      Character.create!(world: @world, shards: 10, x_coord: 175, y_coord: 30, image_code: @image_path) # Set your default image path
+      Character.create!(world: @world, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path) # Set your default image path
 
       # Generate squares with progress tracking
       generate_squares_for_world(@world)
