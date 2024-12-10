@@ -26,43 +26,43 @@
   <div class="grid-teleport-container">
     <div class="grid">
       <% if @squares.present? %>
-        <%
-          # Define active squares (starting from top-left corner)
-          active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
-        %>
         <% @squares.each do |square| %>
-          <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>"
+          <div class="grid-item"
                id="square_<%= square.square_id %>"
+               data-square-id="<%= square.square_id %>"
                data-x="<%= square.x %>"
                data-y="<%= square.y %>">
             <% if square.code.present? %>
+              <canvas width="105" height="105"></canvas>
               <script>
-                if (!window.squareInitialized_<%= square.square_id %>) {
-                  document.addEventListener('DOMContentLoaded', () => {
-                    <%= square.code.html_safe %>
-                    drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-                    <% unless active_squares.include?([square.x, square.y]) %>
-                      // Add grey overlay to inactive squares
-                      const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
-                      if (canvas) {
-                        const ctx = canvas.getContext('2d');
-                        ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                        ctx.fillRect(0, 0, canvas.width, canvas.height);
-                      }
-                    <% end %>
-                  });
-                  window.squareInitialized_<%= square.square_id %> = true;
-                }
+                document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
+                  <%= square.code.html_safe %>
+                });
               </script>
             <% else %>
-              <p>No code for (<%= square.x %>, <%= square.y %>)</p>
+              <canvas width="105" height="105"></canvas>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
+                  ctx.fillStyle = '#eee';
+                  ctx.fillRect(0, 0, 105, 105);
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  ctx.fillText('(<%= square.x %>, <%= square.y %>)', 35, 55);
+                });
+              </script>
             <% end %>
           </div>
         <% end %>
-        <div class="character"
-             style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
-          <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
-        </div>
+        <% @world.characters.each do |character| %>
+          <div class="character"
+               style="position: absolute; top: <%= character.y_coord %>px; left: <%= character.x_coord %>px;">
+            <%= image_tag asset_path(character.image_code), width: '100', height: '100' if character.image_code %>
+          </div>
+        <% end %>
       <% else %>
         <p>No squares found for this world!</p>
       <% end %>
@@ -131,83 +131,175 @@
       </div>
     </div>
   </div>
+  <!-- Unlock Square Modal -->
+  <div id="popup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Square Details</h3>
+      <p id="square-coordinates"></p>
+      <div class="button-container">
+        <a href="<%= matching_game_path %>" id="minigame-button" class="button">Play Minigame</a>
+        <button id="pay-shard-button" class="button">Pay 10 shards</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const character = document.querySelector('.character');
-        const xCoordField = document.querySelector('#x-coord');
-        const yCoordField = document.querySelector('#y-coord');
-        const saveWorldButton = document.querySelector('#save-world-button');
-        const gridItems = document.querySelectorAll('.grid-item');
+  document.addEventListener('DOMContentLoaded', function() {
+    const character = document.querySelector('.character');
+    const xCoordField = document.querySelector('#x-coord');
+    const yCoordField = document.querySelector('#y-coord');
+    const saveWorldButton = document.querySelector('#save-world-button');
+    const modal = document.getElementById('popup-modal');
+    const closeButton = modal.querySelector('.close-button');
+    const squareCoordinates = document.getElementById('square-coordinates');
+    const squareId = document.getElementById('square-id');
+    const gridItems = document.querySelectorAll('.grid-item');
+    const gameResult = <%= @game_result.to_json %>;
 
-        // Grid configuration
-        const gridSize = 6; // 6x6 grid
-        const tileSize = 105; // Each tile is 100px x 100px
+      // Grid configuration
+    const gridSize = 6; // 6x6 grid
+    const tileSize = 105; // Each tile is 100px x 100px
 
-        // Function to calculate grid offsets
-        function calculateGridOffsets() {
-            const gridWidth = gridSize * tileSize;
-            const gridHeight = gridSize * tileSize;
-            const screenWidth = window.innerWidth;
-            const screenHeight = window.innerHeight;
+    // Function to calculate grid offsets
+    function calculateGridOffsets() {
+      const gridWidth = gridSize * tileSize;
+      const gridHeight = gridSize * tileSize;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
 
-            return {
-                x: (screenWidth - gridWidth) / 2,
-                y: (screenHeight - gridHeight) / 2
-            };
+      return {
+        x_char: (screenWidth - gridWidth) / 2,
+        y_char: (screenHeight - gridHeight) / 2
+      };
+    }
+
+    // Function to move character to the correct tile
+    function moveCharacterToTile(x, y) {
+      const gridOffsets = calculateGridOffsets();
+
+      // Adjust the position to account for the misalignment
+      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+
+      character.style.left = `${characterX}px`;
+      character.style.top = `${characterY}px`;
+
+      // Update hidden fields for form submission
+      xCoordField.value = x;
+      yCoordField.value = y;
+    }
+
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
+    
+    gridItems.forEach(item => {
+      item.addEventListener('click', async function() {
+        const x = this.getAttribute('data-x');
+        const y = this.getAttribute('data-y');
+        const squareId = this.getAttribute('data-square-id');
+        const tileX = parseInt(this.getAttribute('data-x'), 10);
+        const tileY = parseInt(this.getAttribute('data-y'), 10);
+
+        xCoord = tileX;
+        yCoord = tileY;
+
+        moveCharacterToTile(tileX, tileY);
+
+        squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
+        squareId.textContent = `Square ID: ${id}`;
+        modal.style.display = 'flex';
+
+        // Visual feedback for selected tile
+        gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
+        this.classList.add('selected-tile');
+
+        try {
+          const response = await fetch(`/generate_square_code?x=${x}&y=${y}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          
+          if (data.success && data.code) {
+            const canvas = this.querySelector('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear the existing canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Execute the new code
+            eval(data.code);
+          } else {
+            console.error('Error:', data.error);
+            // Optionally show error to user
+            //alert('Failed to generate terrain. Please try again.');
+          }
+        } catch (error) {
+          console.error('Error generating square:', error);
+          // Optionally show error to user
+          //alert('Failed to generate terrain. Please try again.');
         }
 
-        // Function to move character to the correct tile
-        function moveCharacterToTile(x, y) {
-            const gridOffsets = calculateGridOffsets();
-
-            // Adjust the position to account for the misalignment
-            const characterX = gridOffsets.x + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
-            const characterY = gridOffsets.y + y * tileSize + tileSize / 2 - 50;
-
-            character.style.left = `${characterX}px`;
-            character.style.top = `${characterY}px`;
-
-            // Update hidden fields for form submission
-            xCoordField.value = x;
-            yCoordField.value = y;
-        }
-
-        // Center the character initially
-        let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
-        let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
-        moveCharacterToTile(xCoord, yCoord);
-
-        // Add click event listeners to grid items
-        gridItems.forEach((item) => {
-            item.addEventListener('click', function () {
-                const tileX = parseInt(this.getAttribute('data-x'), 10);
-                const tileY = parseInt(this.getAttribute('data-y'), 10);
-
-                xCoord = tileX;
-                yCoord = tileY;
-
-                moveCharacterToTile(tileX, tileY);
-
-                // Visual feedback for selected tile
-                gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
-                this.classList.add('selected-tile');
-            });
+        // Close the modal
+        closeButton.addEventListener('click', () => {
+          modal.style.display = 'none';
         });
-
-        // Save button updates hidden fields
-        saveWorldButton.addEventListener('click', function () {
-            xCoordField.value = xCoord;
-            yCoordField.value = yCoord;
-        });
-
-        // Recalculate offsets and reposition character on window resize
-        window.addEventListener('resize', () => {
-            moveCharacterToTile(xCoord, yCoord);
-        });
+      });
     });
 
+    // Save button updates hidden fields
+    saveWorldButton.addEventListener('click', function () {
+        xCoordField.value = xCoord;
+        yCoordField.value = yCoord;
+    });
+
+  });
 </script>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 105px);
+    gap: 2px;
+    padding: 20px;
+  }
+  
+  .grid-item {
+    width: 105px;
+    height: 105px;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  
+  .grid-item:hover {
+    transform: scale(1.05);
+  }
+  
+  canvas {
+    display: block;
+  }
+  .button-container .button {
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff; /* Text color */
+      background-color: #007bff; /* Button background color */
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .button-container .button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+  }
+
+</style>
 
 <%== @js_functions %>

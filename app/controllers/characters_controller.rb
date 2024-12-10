@@ -1,5 +1,7 @@
 class CharactersController < ApplicationController
-  before_action :set_character, :current_user
+  before_action :set_character, only: [:save_coordinates, :update_shards]
+  before_action :current_user
+
   def save_coordinates
     @character = Character.find(params[:id])
     if @character.update(x_coord: params[:x], y_coord: params[:y])
@@ -32,6 +34,22 @@ class CharactersController < ApplicationController
     end
   end
 
+  def new
+    @user_world = UserWorld.find(params[:user_world_id])
+    @character = Character.new
+  end
+
+  def create
+    @character = Character.new(character_params)
+    if @character.save
+      flash[:notice] = "Character created successfully!"
+      redirect_to worlds_path
+    else
+      flash.now[:alert] = "Error creating character."
+      render :new
+    end
+  end
+
   private
 
   def set_character
@@ -40,5 +58,9 @@ class CharactersController < ApplicationController
 
   def current_user
     @current_user ||= User.find_by id: params[:user_id]
+  end
+
+  def character_params
+    params.require(:character).permit(:name, :image_code, :user_world_id)
   end
 end

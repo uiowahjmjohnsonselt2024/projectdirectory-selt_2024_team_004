@@ -19,6 +19,9 @@
             <td>
               <%= button_to 'Delete', world_path(id: user_world.id), method: :delete, data: { confirm: 'Are you sure you want to delete this world?' }, class: 'btn btn-danger' %>
             </td>
+            <td>
+              <button class="btn btn-secondary" onclick="showInviteModal(<%= world.id %>)">Invite</button>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -39,4 +42,145 @@
   <%= form_with url: logout_path, method: :delete, local: true do |form| %>
     <%= form.submit 'Logout', class: 'btn btn-primary logout-btn' %>
   <% end %>
+
+  <h3>Pending Invitations</h3>
+  <% @invitations.each do |invitation| %>
+    <p>
+      <%= invitation.sender.email %> invited you to join <%= invitation.world.world_name %>
+      <%= button_to 'Accept', accept_invitation_path(invitation), method: :post, class: 'btn btn-success' %>
+      <%= button_to 'Decline', decline_invitation_path(invitation), method: :post, class: 'btn btn-danger' %>
+    </p>
+  <% end %>
 </div>
+
+<!-- Modal Structure -->
+<div id="invite-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Invited Players</h2>
+    <ul id="invited-players-list"></ul>
+    <h3>Invite a New Player</h3>
+    <div id="flash-messages"></div>
+    <%= form_with url: invitations_path, method: :post, local: false, id: 'invite-form' do |form| %>
+      <%= form.hidden_field :world_id, id: 'modal-world-id' %>
+      <%= form.text_field :email, placeholder: "Enter email to invite", class: 'form-control' %>
+      <%= form.submit 'Send Invitation', class: 'btn btn-secondary' %>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('invite-form');
+    const flashDiv = document.getElementById('flash-messages');
+    const closeBtn = document.querySelector('.close');
+
+    closeBtn.addEventListener('click', closeInviteModal);
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const token = document.querySelector('meta[name="csrf-token"]')?.content || '';
+      
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-Token': token,
+          'Accept': 'text/javascript'
+        },
+        credentials: 'same-origin'
+      })
+      .then(response => response.text())
+      .then(html => {
+        flashDiv.innerHTML = html;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        flashDiv.innerHTML = '<div class="alert alert-danger">An error occurred while sending the invitation.</div>';
+      });
+    });
+  });
+
+  function showInviteModal(worldId) {
+    document.getElementById('modal-world-id').value = worldId;
+    const invitedPlayers = <%= @invited_players.to_json.html_safe %>[worldId] || [];
+    const list = document.getElementById('invited-players-list');
+    list.innerHTML = invitedPlayers.map(email => `<li>${email}</li>`).join('');
+    
+    const modal = document.getElementById('invite-modal');
+    const flashDiv = document.getElementById('flash-messages');
+    flashDiv.innerHTML = ''; // Clear any previous flash messages
+    modal.style.display = 'block';
+  }
+
+  function closeInviteModal() {
+    const modal = document.getElementById('invite-modal');
+    modal.style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('invite-modal');
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  }
+</script>
+
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #invite-form {
+    margin-top: 15px;
+  }
+
+  #invited-players-list {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+</style>
