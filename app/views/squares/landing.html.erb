@@ -131,6 +131,18 @@
       </div>
     </div>
   </div>
+  <!-- Square Modal -->
+  <div id="popup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Square Details</h3>
+      <p id="square-coordinates"></p>
+      <div class="button-container">
+        <a href="<%= matching_game_path %>" id="minigame-button" class="button">Play Minigame</a>
+        <button id="pay-shard-button" class="button">Pay 10 shards</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -139,6 +151,10 @@
     const xCoordField = document.querySelector('#x-coord');
     const yCoordField = document.querySelector('#y-coord');
     const saveWorldButton = document.querySelector('#save-world-button');
+    const modal = document.getElementById('popup-modal');
+    const closeButton = modal.querySelector('.close-button');
+    const squareCoordinates = document.getElementById('square-coordinates');
+    const squareId = document.getElementById('square-id');
     const gridItems = document.querySelectorAll('.grid-item');
 
     // Grid configuration
@@ -192,6 +208,10 @@
 
         moveCharacterToTile(tileX, tileY);
 
+        squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
+        squareId.textContent = `Square ID: ${id}`;
+        modal.style.display = 'flex';
+
         // Visual feedback for selected tile
         gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
         this.classList.add('selected-tile');
@@ -215,13 +235,18 @@
           } else {
             console.error('Error:', data.error);
             // Optionally show error to user
-            alert('Failed to generate terrain. Please try again.');
+            //alert('Failed to generate terrain. Please try again.');
           }
         } catch (error) {
           console.error('Error generating square:', error);
           // Optionally show error to user
-          alert('Failed to generate terrain. Please try again.');
+          //alert('Failed to generate terrain. Please try again.');
         }
+
+        // Close the modal
+        closeButton.addEventListener('click', () => {
+          modal.style.display = 'none';
+        });
       });
     });
 
@@ -234,6 +259,9 @@
     // Recalculate offsets and reposition character on window resize
     window.addEventListener('resize', () => {
         moveCharacterToTile(xCoord, yCoord);
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
     });
   });
 </script>
@@ -260,6 +288,24 @@
   canvas {
     display: block;
   }
+  .button-container .button {
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff; /* Text color */
+      background-color: #007bff; /* Button background color */
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .button-container .button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+  }
+
 </style>
 
 <%== @js_functions %>
