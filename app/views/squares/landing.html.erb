@@ -131,7 +131,7 @@
       </div>
     </div>
   </div>
-  <!-- Square Modal -->
+  <!-- Unlock Square Modal -->
   <div id="popup-modal" class="modal">
     <div class="modal-content">
       <span class="close-button">&times;</span>
@@ -156,8 +156,9 @@
     const squareCoordinates = document.getElementById('square-coordinates');
     const squareId = document.getElementById('square-id');
     const gridItems = document.querySelectorAll('.grid-item');
+    const gameResult = <%= @game_result.to_json %>;
 
-    // Grid configuration
+      // Grid configuration
     const gridSize = 6; // 6x6 grid
     const tileSize = 105; // Each tile is 100px x 100px
 
@@ -256,13 +257,6 @@
         yCoordField.value = yCoord;
     });
 
-    // Recalculate offsets and reposition character on window resize
-    window.addEventListener('resize', () => {
-        moveCharacterToTile(xCoord, yCoord);
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
   });
 </script>
 
