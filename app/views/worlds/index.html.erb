@@ -45,11 +45,15 @@
 
   <h3>Pending Invitations</h3>
   <% @invitations.each do |invitation| %>
-    <p>
-      <%= invitation.sender.email %> invited you to join <%= invitation.world.world_name %>
-      <%= button_to 'Accept', accept_invitation_path(invitation), method: :post, class: 'btn btn-success' %>
-      <%= button_to 'Decline', decline_invitation_path(invitation), method: :post, class: 'btn btn-danger' %>
-    </p>
+    <% if invitation.world.present? %>
+      <p>
+        <%= invitation.sender.email %> invited you to join <%= invitation.world.world_name %>
+        <%= button_to 'Accept', accept_invitation_path(invitation), method: :post, class: 'btn btn-success' %>
+        <%= button_to 'Decline', decline_invitation_path(invitation), method: :post, class: 'btn btn-danger' %>
+      </p>
+    <% else %>
+      <% invitation.destroy %>
+    <% end %>
   <% end %>
 </div>
 

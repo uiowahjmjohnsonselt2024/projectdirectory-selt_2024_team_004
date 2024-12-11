@@ -37,6 +37,7 @@ class WorldsController < ApplicationController
       @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
       Character.create!(
         world: @user_world.world,
+        user: @current_user,
         shards: 10,
         x_coord: 175,
         y_coord: 30,
@@ -53,7 +54,7 @@ class WorldsController < ApplicationController
       if @world.save
         @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
         UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-        Character.create!(world: @world, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path)
+        Character.create!(world: @world, user: @current_user, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path)
 
         generate_squares_for_world(@world)
       end
@@ -85,12 +86,9 @@ class WorldsController < ApplicationController
 
     store
     @user = current_user
-    @user_world ||= UserWorld.find_by(user_id: @user.id)
-    @world ||= @user_world.world
-    @character ||= @world.characters.first
-
-    puts "World ID: #{@world.id}"
-    puts "Square count: #{@squares.count}"
+    @user_world = UserWorld.find_by(user_id: @user.id, world_id: @world.id)
+    # Find the specific character for this user in this world
+    @character = @world.characters.find_by(user_id: @user.id)
 
     if @squares.count != 36
       flash[:alert] = "Regenerating squares for this world"
@@ -98,10 +96,8 @@ class WorldsController < ApplicationController
       generate_squares_for_world(@world)
       @squares = @world.squares.reload.order(:y, :x)
     end
-    puts 'world id'
-    puts @world.id
+    
     render 'squares/landing'
-    #, locals: { world_id: @world.id }
   end
 
   def generate_square_code
@@ -140,6 +136,7 @@ class WorldsController < ApplicationController
 
     Character.create!(
       world: @user_world.world,
+      user: current_user,
       shards: 10,
       x_coord: 175,
       y_coord: 30,
