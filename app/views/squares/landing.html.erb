@@ -138,7 +138,7 @@
       <h3>Square Details</h3>
       <p id="square-coordinates"></p>
       <div class="button-container">
-        <a href="<%= matching_game_path %>" id="minigame-button" class="button">Play Minigame</a>
+        <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
         <button id="pay-shard-button" class="button">Pay 10 shards</button>
       </div>
     </div>

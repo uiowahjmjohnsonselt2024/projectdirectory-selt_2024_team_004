@@ -3,6 +3,8 @@ class MatchingGameController < ApplicationController
   def index
     # Create a new minigame instance each time user is directed to the view
     # Use session to store minigame data during each game
+    @user ||= User.find_by id: params[:user_id]
+    @world ||= World.find_by id: params[:world_id]
     @mini_game = MatchingGame.new
     session[:mini_game_state] = @mini_game.state
     @shuffled_cards = @mini_game.cards_idx
