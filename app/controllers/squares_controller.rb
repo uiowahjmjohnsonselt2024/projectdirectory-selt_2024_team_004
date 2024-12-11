@@ -2,6 +2,7 @@ class SquaresController < ApplicationController
   def landing
     store
     @world_id = params[:world_id]
+    #@game_result = params[:game_result] || false
 
     unless @world_id
       flash[:alert] = "No world selected"
@@ -9,6 +10,10 @@ class SquaresController < ApplicationController
     end
 
     @squares = Square.where(world_id: @world_id).order(:y, :x)
+  end
+
+  def pay_shards
+    puts "hhhhh #{@character}"
   end
 
   private

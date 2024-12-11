@@ -8,7 +8,7 @@
     <div class="dropdown-menu-container">
       <button class="dropdown-button">Menu</button>
       <div class="dropdown-content">
-        <%= link_to 'Quit Minigame', landing_path, class: 'btn btn-primary dropdown_link' %>
+        <%= link_to 'Quit Minigame', landing_path, class: 'btn btn-primary dropdown_link', game_result: true %>
       </div>
     </div>
   </div>
@@ -105,7 +105,8 @@
 
               // Wait 5 seconds, then redirect to landing page
               setTimeout(() => {
-                  window.location.href = '<%= landing_path %>';
+                  window.location.href = '<%= landing_path %>?game_result=false';
+
               }, 5000);
           }
           else {
@@ -145,7 +146,7 @@
 
           // Wait 5 seconds, then redirect to landing page
           setTimeout(() => {
-              window.location.href = '<%= landing_path %>';
+              window.location.href = '<%= landing_path %>?game_result=true';
           }, 5000);
       }
   }

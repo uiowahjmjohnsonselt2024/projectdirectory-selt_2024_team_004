@@ -14,12 +14,6 @@
       <div class="dropdown-content">
         <%= link_to 'Settings', settings_path(return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
         <a href="#" id="store-link">Store</a>
-        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-          <%= form.hidden_field :id, value: @character&.id %>
-          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
-        <% end %>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
@@ -75,8 +69,13 @@
     </div>
 
     <div class="teleport-container" data-character-id="<%= @character.id %>">
-      <button id="teleport-button" class="btn">Teleport<br>(1 shard per square)</button>
-      <p class="shards-count">Shards: <%= @character.shards || 100 %></p>
+      <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
+        <%= form.hidden_field :id, value: @character&.id %>
+        <%= form.hidden_field :x, value: '', id: 'x-coord' %>
+        <%= form.hidden_field :y, value: '', id: 'y-coord' %>
+        <%= form.submit 'Save World', class: 'btn btn-primary', id:"teleport-button" %>
+      <% end %>
+      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count.y" %></p>
     </div>
   </div>
 
@@ -132,18 +131,92 @@
       </div>
     </div>
   </div>
+  <!-- Unlock Square Modal -->
+  <div id="popup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Square Details</h3>
+      <p id="square-coordinates"></p>
+      <div class="button-container">
+        <a href="<%= matching_game_path %>" id="minigame-button" class="button">Play Minigame</a>
+        <button id="pay-shard-button" class="button">Pay 10 shards</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    const character = document.querySelector('.character');
+    const xCoordField = document.querySelector('#x-coord');
+    const yCoordField = document.querySelector('#y-coord');
+    const saveWorldButton = document.querySelector('#save-world-button');
+    const modal = document.getElementById('popup-modal');
+    const closeButton = modal.querySelector('.close-button');
+    const squareCoordinates = document.getElementById('square-coordinates');
+    const squareId = document.getElementById('square-id');
     const gridItems = document.querySelectorAll('.grid-item');
+    const gameResult = <%= @game_result.to_json %>;
+
+      // Grid configuration
+    const gridSize = 6; // 6x6 grid
+    const tileSize = 105; // Each tile is 100px x 100px
+
+    // Function to calculate grid offsets
+    function calculateGridOffsets() {
+      const gridWidth = gridSize * tileSize;
+      const gridHeight = gridSize * tileSize;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      return {
+        x_char: (screenWidth - gridWidth) / 2,
+        y_char: (screenHeight - gridHeight) / 2
+      };
+    }
+
+    // Function to move character to the correct tile
+    function moveCharacterToTile(x, y) {
+      const gridOffsets = calculateGridOffsets();
+
+      // Adjust the position to account for the misalignment
+      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+
+      character.style.left = `${characterX}px`;
+      character.style.top = `${characterY}px`;
+
+      // Update hidden fields for form submission
+      xCoordField.value = x;
+      yCoordField.value = y;
+    }
+
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
     
     gridItems.forEach(item => {
       item.addEventListener('click', async function() {
         const x = this.getAttribute('data-x');
         const y = this.getAttribute('data-y');
         const squareId = this.getAttribute('data-square-id');
-        
+        const tileX = parseInt(this.getAttribute('data-x'), 10);
+        const tileY = parseInt(this.getAttribute('data-y'), 10);
+
+        xCoord = tileX;
+        yCoord = tileY;
+
+        moveCharacterToTile(tileX, tileY);
+
+        squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
+        squareId.textContent = `Square ID: ${id}`;
+        modal.style.display = 'flex';
+
+        // Visual feedback for selected tile
+        gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
+        this.classList.add('selected-tile');
+
         try {
           const response = await fetch(`/generate_square_code?x=${x}&y=${y}`);
           if (!response.ok) {
@@ -163,15 +236,27 @@
           } else {
             console.error('Error:', data.error);
             // Optionally show error to user
-            alert('Failed to generate terrain. Please try again.');
+            //alert('Failed to generate terrain. Please try again.');
           }
         } catch (error) {
           console.error('Error generating square:', error);
           // Optionally show error to user
-          alert('Failed to generate terrain. Please try again.');
+          //alert('Failed to generate terrain. Please try again.');
         }
+
+        // Close the modal
+        closeButton.addEventListener('click', () => {
+          modal.style.display = 'none';
+        });
       });
     });
+
+    // Save button updates hidden fields
+    saveWorldButton.addEventListener('click', function () {
+        xCoordField.value = xCoord;
+        yCoordField.value = yCoord;
+    });
+
   });
 </script>
 
@@ -197,6 +282,24 @@
   canvas {
     display: block;
   }
+  .button-container .button {
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff; /* Text color */
+      background-color: #007bff; /* Button background color */
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .button-container .button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+  }
+
 </style>
 
 <%== @js_functions %>

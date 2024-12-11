@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get    'new_world',  to: 'worlds#new', as:'character'     # --Needs to be Updated later-- Will open new game server
   get    'roles', to: 'worlds#user_roles', as:'role'
   get    'landing', to: 'squares#landing', as: 'landing'
+  post   'pay_shards', to: 'squares#pay_shards', as: 'pay_shards'
 
   get    'settings', to: 'settings#show', as: 'settings'
   patch  'settings', to: 'settings#update'
