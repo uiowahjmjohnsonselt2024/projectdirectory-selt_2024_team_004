@@ -31,7 +31,8 @@
                id="square_<%= square.square_id %>"
                data-square-id="<%= square.square_id %>"
                data-x="<%= square.x %>"
-               data-y="<%= square.y %>">
+               data-y="<%= square.y %>"
+               data-state="<%= square.state %>">
             <% if square.code.present? %>
               <canvas width="105" height="105"></canvas>
               <script>
@@ -156,7 +157,7 @@
       <p id="square-coordinates"></p>
       <div class="button-container">
         <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
-        <button id="pay-shard-button" class="button">Pay 10 shards</button>
+        <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>">Pay 10 shards</button>
       </div>
     </div>
   </div>
@@ -220,15 +221,20 @@
         const squareId = this.getAttribute('data-square-id');
         const tileX = parseInt(this.getAttribute('data-x'), 10);
         const tileY = parseInt(this.getAttribute('data-y'), 10);
+        const state = this.getAttribute('data-state'); // Get the state of the square
 
-        xCoord = tileX;
-        yCoord = tileY;
 
-        moveCharacterToTile(tileX, tileY);
+        if (state === "inactive") {
+          squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
+          modal.style.display = 'flex';
+        }
 
-        squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
-        squareId.textContent = `Square ID: ${id}`;
-        modal.style.display = 'flex';
+        if (gameResult) {
+          xCoord = tileX;
+          yCoord = tileY;
+
+          moveCharacterToTile(tileX, tileY);
+        }
 
         // Visual feedback for selected tile
         gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
