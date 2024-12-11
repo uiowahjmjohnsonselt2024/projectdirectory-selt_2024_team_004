@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :worlds, only: [:index, :new, :create, :destroy]
   resources :characters do
     post :update_shards, on: :member
+    post 'save_coordinates', on: :member
   end
 
 
@@ -30,7 +31,7 @@ Rails.application.routes.draw do
   get 'matching_game', to: 'matching_game#index', as:'matching_game'
   post '/flip', to: 'matching_game#flip', as:'flip'
 
-  post 'coordinates', to: 'characters#save_coordinates', as: 'coordinates'
+  post 'coordinates', to: 'characters#save_coordinates'
   post '/generate_square_code', to: 'worlds#generate_square_code'
 
   resources :invitations, only: [:create] do
