@@ -58,8 +58,25 @@
           </div>
         <% end %>
         <% @world.characters.each do |character| %>
+          <% 
+            # Simple grid-based positioning
+            tile_size = 105
+            grid_offset_x = 450  # Adjusted base offset to match grid
+            grid_offset_y = 175  # Adjusted base offset to match grid
+            
+            # Calculate position based on grid coordinates
+            char_x = grid_offset_x + (character.x_coord.to_i * tile_size)
+            char_y = grid_offset_y + (character.y_coord.to_i * tile_size)
+          %>
           <div class="character"
-               style="position: absolute; top: <%= character.y_coord %>px; left: <%= character.x_coord %>px;">
+               data-character-id="<%= character.id %>"
+               data-is-current-user="<%= character.user_id == current_user.id %>"
+               data-x="<%= character.x_coord %>"
+               data-y="<%= character.y_coord %>"
+               style="position: absolute; 
+                      top: <%= char_y %>px; 
+                      left: <%= char_x %>px;
+                      z-index: 1000;">
             <%= image_tag asset_path(character.image_code), width: '100', height: '100' if character.image_code %>
           </div>
         <% end %>
@@ -147,7 +164,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const character = document.querySelector('.character');
+    const character = document.querySelector(`.character[data-character-id="${<%= @character.id %>}"]`);
     const xCoordField = document.querySelector('#x-coord');
     const yCoordField = document.querySelector('#y-coord');
     const saveWorldButton = document.querySelector('#save-world-button');

@@ -7,4 +7,5 @@ class Character < ActiveRecord::Base
   end
 
   belongs_to :world
+  belongs_to :user
 end
