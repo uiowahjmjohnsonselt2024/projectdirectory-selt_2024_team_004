@@ -17,10 +17,10 @@ class Square < ActiveRecord::Base
       
       # Get adjacent squares' terrain for context
       adjacent_squares = {
-        north: world.squares.find_by(x: x, y: y - 1)&.terrain_type,
-        south: world.squares.find_by(x: x, y: y + 1)&.terrain_type,
-        east: world.squares.find_by(x: x + 1, y: y)&.terrain_type,
-        west: world.squares.find_by(x: x - 1, y: y)&.terrain_type
+        north: world.squares.find_by(x: x, y: y - 1)&.terrain,
+        south: world.squares.find_by(x: x, y: y + 1)&.terrain,
+        east: world.squares.find_by(x: x + 1, y: y)&.terrain,
+        west: world.squares.find_by(x: x - 1, y: y)&.terrain
       }
       
       # Generate code using OpenAI
