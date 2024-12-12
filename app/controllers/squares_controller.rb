@@ -17,7 +17,7 @@ class SquaresController < ApplicationController
 
   def pay_shards
     @character = Character.find_by(id: params[:character_id])
-    @square = Square.find_by(id: params[:square_id])
+    @square = Square.find_by(square_id: params[:square_id])
 
     if @character && @square && @character.shards >= 10
       # Deduct shards and generate terrain
@@ -30,10 +30,10 @@ class SquaresController < ApplicationController
         
         # Get adjacent squares for context
         adjacent_squares = {
-          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain_type,
-          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain_type,
-          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain_type,
-          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain_type
+          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
         }
 
         # Generate code using OpenAI
@@ -41,7 +41,7 @@ class SquaresController < ApplicationController
         
         @square.update!(
           state: 'active',
-          terrain_type: terrain,
+          terrain: terrain,
           code: generated_code
         )
 

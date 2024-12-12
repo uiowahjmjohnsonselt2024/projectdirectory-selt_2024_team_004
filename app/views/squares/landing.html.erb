@@ -171,6 +171,7 @@
     const modal = document.getElementById('popup-modal');
     const payShardButton = document.getElementById('pay-shard-button');
     const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    let gameResult = <%= @game_result.to_json %>;
 
     // Grid configuration
     const gridSize = 6;
@@ -233,6 +234,11 @@
       }
     }
 
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
+
     // Add click handlers for grid items
     const gridItems = document.querySelectorAll('.grid-item');
     gridItems.forEach(item => {
@@ -277,6 +283,35 @@
         }
       });
     });
+
+    if (payShardButton) {
+        payShardButton.addEventListener('click', function() {
+            const squareId = payShardButton.getAttribute('data-square-id');
+            const characterId = <%= @character.id %>; // Assume character ID is available in the template
+
+            fetch(payShardButton.getAttribute('data-url'), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                },
+                body: JSON.stringify({
+                    square_id: squareId,
+                    character_id: characterId
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Shards paid successfully!');
+                        // Optionally update the UI with new shard count or other data
+                    } else {
+                        console.error('Failed to pay shards:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    }
 
     // Add click handler for modal close button
     const closeButton = modal.querySelector('.close-button');
