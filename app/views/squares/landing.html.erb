@@ -174,7 +174,9 @@
     const squareCoordinates = document.getElementById('square-coordinates');
     const squareId = document.getElementById('square-id');
     const gridItems = document.querySelectorAll('.grid-item');
-    const gameResult = <%= @game_result.to_json %>;
+    const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    const payShardButton = document.querySelector('#pay-shard-button');
+    let gameResult = <%= @game_result.to_json %>;
 
       // Grid configuration
     const gridSize = 6; // 6x6 grid
@@ -223,10 +225,15 @@
         const tileY = parseInt(this.getAttribute('data-y'), 10);
         const state = this.getAttribute('data-state'); // Get the state of the square
 
-
         if (state === "inactive") {
           squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
           modal.style.display = 'flex';
+        }
+        else {
+          xCoord = tileX;
+          yCoord = tileY;
+          moveCharacterToTile(tileX, tileY);
+          gameResult = false
         }
 
         if (gameResult) {
@@ -234,6 +241,7 @@
           yCoord = tileY;
 
           moveCharacterToTile(tileX, tileY);
+          gameResult = false
         }
 
         // Visual feedback for selected tile
@@ -274,12 +282,41 @@
       });
     });
 
+    payShardButton.addEventListener('click', async function () {
+        const url = this.getAttribute('data-url');
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({ world_id: '<%= @world.id %>' }) // Pass any necessary parameters
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                gameResult = data.game_result;
+                alert('10 shards paid successfully!');
+
+                // Close the modal or update the UI
+                document.getElementById('popup-modal').style.display = 'none';
+            }
+            else {
+                alert('Failed to pay shards.');
+            }
+        } catch (error) {
+            console.error('Error paying shards:', error);
+            alert('An error occurred. Please try again.');
+        }
+    });
+
     // Save button updates hidden fields
     saveWorldButton.addEventListener('click', function () {
         xCoordField.value = xCoord;
         yCoordField.value = yCoord;
     });
-
   });
 </script>
 

@@ -19,7 +19,7 @@ class SquaresController < ApplicationController
     @game_result = true
 
     respond_to do |format|
-      format.json { render json: { success: true, message: "10 shards deducted successfully." } }
+      format.json { render json: { success: true, message: "10 shards deducted successfully.", game_result: @game_result } }
     end
   end
 

@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const shardsCountElement = document.querySelector('.shards-count');
     const teleportContainer = document.querySelector('.teleport-container');
     const characterId = teleportContainer.getAttribute('data-character-id');
-    const payShardButton = document.querySelector('#pay-shard-button');
+    //const payShardButton = document.querySelector('#pay-shard-button');
     let currentItemPriceUSD = 0;
+
     const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
     if (!csrfToken) {
         console.error("CSRF token not found in the page's meta tags.");
@@ -78,33 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         purchaseModal.style.display = 'none';
-    });
-
-    payShardButton.addEventListener('click', async function () {
-        const url = this.getAttribute('data-url');
-
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                },
-                body: JSON.stringify({ world_id: '<%= @world.id %>' }) // Pass any necessary parameters
-            });
-
-            const data = await response.json();
-            if (data.success) {
-                alert('10 shards paid successfully!');
-                // Optionally close the modal or update the UI
-                document.getElementById('popup-modal').style.display = 'none';
-            } else {
-                alert('Failed to pay shards.');
-            }
-        } catch (error) {
-            console.error('Error paying shards:', error);
-            alert('An error occurred. Please try again.');
-        }
     });
 
     storeLink.addEventListener('click', (event) => {
