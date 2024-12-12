@@ -225,21 +225,21 @@
         const tileY = parseInt(this.getAttribute('data-y'), 10);
         const state = this.getAttribute('data-state'); // Get the state of the square
 
+        xCoord = tileX;
+        yCoord = tileY;
+
+        // Only deploy pop up window if the square state is active - If active allow the character to move freely
         if (state === "inactive") {
           squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
           modal.style.display = 'flex';
         }
         else {
-          xCoord = tileX;
-          yCoord = tileY;
           moveCharacterToTile(tileX, tileY);
           gameResult = false
         }
 
+        // Move character only if game_results parameter is set to true
         if (gameResult) {
-          xCoord = tileX;
-          yCoord = tileY;
-
           moveCharacterToTile(tileX, tileY);
           gameResult = false
         }
@@ -282,34 +282,41 @@
       });
     });
 
+    // Event handling for pay_shards button in Unlock square modal
     payShardButton.addEventListener('click', async function () {
-        const url = this.getAttribute('data-url');
+      const url = this.getAttribute('data-url');
 
-        try {
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                },
-                body: JSON.stringify({ world_id: '<%= @world.id %>' }) // Pass any necessary parameters
-            });
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
+          body: JSON.stringify({ world_id: '<%= @world.id %>' }) // Pass any necessary parameters
+        });
 
-            const data = await response.json();
-            if (data.success) {
-                gameResult = data.game_result;
-                alert('10 shards paid successfully!');
+        const data = await response.json();
+        if (data.success) {
+          gameResult = data.game_result;
+          alert('Successfully paid 10 shards.');
 
-                // Close the modal or update the UI
-                document.getElementById('popup-modal').style.display = 'none';
-            }
-            else {
-                alert('Failed to pay shards.');
-            }
-        } catch (error) {
-            console.error('Error paying shards:', error);
-            alert('An error occurred. Please try again.');
+          // Close the modal or update the UI
+          document.getElementById('popup-modal').style.display = 'none';
+
+          if (gameResult) {
+            moveCharacterToTile(xCoord, yCoord);
+            gameResult = false; // Reset gameResult after moving
+          }
         }
+        else {
+          alert('Failed to pay shards.');
+        }
+      }
+      catch (error) {
+        console.error('Error paying shards:', error);
+        alert('An error occurred. Please try again.');
+      }
     });
 
     // Save button updates hidden fields
