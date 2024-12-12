@@ -195,8 +195,8 @@
       };
     }
 
-    // Function to move character to the correct tile
-    function moveCharacterToTile(x, y) {
+    // Function to move character to the correct tile and save coordinates
+    async function moveCharacterToTile(x, y) {
       const gridOffsets = calculateGridOffsets();
 
       // Adjust the position to account for the misalignment
@@ -209,6 +209,32 @@
       // Update hidden fields for form submission
       xCoordField.value = x;
       yCoordField.value = y;
+
+      // Save coordinates to the server
+      try {
+        const response = await fetch('/coordinates', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
+          body: JSON.stringify({
+            id: <%= @character.id %>,
+            x: x,
+            y: y
+          })
+        });
+
+        if (!response.ok) {
+            console.error('Failed to save coordinates:', response.statusText);
+        }
+        else {
+            console.log('Coordinates saved successfully.');
+        }
+      }
+      catch (error) {
+        console.error('Error saving coordinates:', error);
+      }
     }
 
     // Center the character initially
