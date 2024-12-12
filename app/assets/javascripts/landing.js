@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const shardsCountElement = document.querySelector('.shards-count');
     const teleportContainer = document.querySelector('.teleport-container');
     const characterId = teleportContainer.getAttribute('data-character-id');
+    //const payShardButton = document.querySelector('#pay-shard-button');
     let currentItemPriceUSD = 0;
+
     const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
     if (!csrfToken) {
         console.error("CSRF token not found in the page's meta tags.");

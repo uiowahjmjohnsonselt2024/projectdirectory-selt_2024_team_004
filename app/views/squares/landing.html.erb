@@ -31,7 +31,8 @@
                id="square_<%= square.square_id %>"
                data-square-id="<%= square.square_id %>"
                data-x="<%= square.x %>"
-               data-y="<%= square.y %>">
+               data-y="<%= square.y %>"
+               data-state="<%= square.state %>">
             <% if square.code.present? %>
               <canvas width="105" height="105"></canvas>
               <script>
@@ -156,7 +157,7 @@
       <p id="square-coordinates"></p>
       <div class="button-container">
         <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
-        <button id="pay-shard-button" class="button">Pay 10 shards</button>
+        <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>">Pay 10 shards</button>
       </div>
     </div>
   </div>
@@ -173,7 +174,9 @@
     const squareCoordinates = document.getElementById('square-coordinates');
     const squareId = document.getElementById('square-id');
     const gridItems = document.querySelectorAll('.grid-item');
-    const gameResult = <%= @game_result.to_json %>;
+    const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    const payShardButton = document.querySelector('#pay-shard-button');
+    let gameResult = <%= @game_result.to_json %>;
 
       // Grid configuration
     const gridSize = 6; // 6x6 grid
@@ -220,15 +223,26 @@
         const squareId = this.getAttribute('data-square-id');
         const tileX = parseInt(this.getAttribute('data-x'), 10);
         const tileY = parseInt(this.getAttribute('data-y'), 10);
+        const state = this.getAttribute('data-state'); // Get the state of the square
 
         xCoord = tileX;
         yCoord = tileY;
 
-        moveCharacterToTile(tileX, tileY);
+        // Only deploy pop up window if the square state is active - If active allow the character to move freely
+        if (state === "inactive") {
+          squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
+          modal.style.display = 'flex';
+        }
+        else {
+          moveCharacterToTile(tileX, tileY);
+          gameResult = false
+        }
 
-        squareCoordinates.textContent = `Coordinates: (${x}, ${y})`;
-        squareId.textContent = `Square ID: ${id}`;
-        modal.style.display = 'flex';
+        // Move character only if game_results parameter is set to true
+        if (gameResult) {
+          moveCharacterToTile(tileX, tileY);
+          gameResult = false
+        }
 
         // Visual feedback for selected tile
         gridItems.forEach((tile) => tile.classList.remove('selected-tile'));
@@ -268,12 +282,48 @@
       });
     });
 
+    // Event handling for pay_shards button in Unlock square modal
+    payShardButton.addEventListener('click', async function () {
+      const url = this.getAttribute('data-url');
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
+          body: JSON.stringify({ world_id: '<%= @world.id %>' }) // Pass any necessary parameters
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          gameResult = data.game_result;
+          alert('Successfully paid 10 shards.');
+
+          // Close the modal or update the UI
+          document.getElementById('popup-modal').style.display = 'none';
+
+          if (gameResult) {
+            moveCharacterToTile(xCoord, yCoord);
+            gameResult = false; // Reset gameResult after moving
+          }
+        }
+        else {
+          alert('Failed to pay shards.');
+        }
+      }
+      catch (error) {
+        console.error('Error paying shards:', error);
+        alert('An error occurred. Please try again.');
+      }
+    });
+
     // Save button updates hidden fields
     saveWorldButton.addEventListener('click', function () {
         xCoordField.value = xCoord;
         yCoordField.value = yCoord;
     });
-
   });
 </script>
 

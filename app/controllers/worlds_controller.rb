@@ -96,8 +96,8 @@ class WorldsController < ApplicationController
       generate_squares_for_world(@world)
       @squares = @world.squares.reload.order(:y, :x)
     end
-    
-    render 'squares/landing'
+
+    redirect_to landing_path(world_id: @world.id, user_id: @user.id)
   end
 
   def generate_square_code

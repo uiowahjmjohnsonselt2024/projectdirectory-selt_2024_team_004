@@ -5,7 +5,7 @@ class SquaresController < ApplicationController
     @user ||= User.find_by id: params[:user_id]
     @world ||= World.find_by id: params[:world_id]
     @character ||= Character.find_by world_id: @world.id
-    #@game_result = params[:game_result] || false
+    @game_result = params[:game_result] || false
 
     unless @world
       flash[:alert] = "No world selected"
@@ -16,7 +16,11 @@ class SquaresController < ApplicationController
   end
 
   def pay_shards
-    puts "hhhhh #{@character}"
+    @game_result = true
+
+    respond_to do |format|
+      format.json { render json: { success: true, message: "10 shards deducted successfully.", game_result: @game_result } }
+    end
   end
 
   private
