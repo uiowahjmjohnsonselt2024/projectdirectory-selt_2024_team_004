@@ -262,9 +262,21 @@
         });
 
         if (state === 'inactive') {
+          // Reset the button container to its original state
+          const buttonContainer = document.querySelector('.button-container');
+          buttonContainer.innerHTML = `
+            <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
+            <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>" data-square-id="${squareId}">Pay 10 shards</button>
+          `;
+          
+          // Reattach event listener to the new pay shard button
+          const newPayShardButton = document.getElementById('pay-shard-button');
+          if (newPayShardButton) {
+              setupPayShardButton(newPayShardButton);
+          }
+
           // Show popup for inactive tiles
           document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
-          payShardButton.setAttribute('data-square-id', squareId);
           modal.style.display = 'flex';
         } else if (state === 'active') {
           // Check if the clicked tile is adjacent
@@ -328,31 +340,15 @@
       });
     });
 
-    if (payShardButton) {
-        payShardButton.addEventListener('click', async function() {
+    // Move the pay shard button handler to a separate function
+    function setupPayShardButton(button) {
+        button.addEventListener('click', async function() {
             const squareId = this.getAttribute('data-square-id');
             const square = document.querySelector(`[data-square-id="${squareId}"]`);
-            
-            // Get the button container and create loading text
             const buttonContainer = document.querySelector('.button-container');
-            const originalButtons = buttonContainer.innerHTML;
-            
-            // Replace buttons with loading message
-            buttonContainer.innerHTML = `
-              <div class="loading-text">
-                Generating terrain<span class="dots"></span>
-              </div>
-            `;
-
-            // Start the dots animation
-            let dotCount = 0;
-            const dotsInterval = setInterval(() => {
-              dotCount = (dotCount + 1) % 4;
-              const dots = document.querySelector('.dots');
-              if (dots) dots.textContent = '.'.repeat(dotCount);
-            }, 500);
             
             try {
+                // Make the initial request to check if we can pay shards
                 const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
                     method: 'POST',
                     headers: {
@@ -368,9 +364,24 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    // Clear the interval and close modal
-                    clearInterval(dotsInterval);
-                    modal.style.display = 'none';
+                    // Show loading state immediately after successful payment
+                    const originalButtons = buttonContainer.innerHTML;
+                    buttonContainer.innerHTML = `
+                      <div class="loading-text">
+                        Generating terrain<span class="dots"></span>
+                      </div>
+                    `;
+
+                    // Start the dots animation
+                    let dotCount = 0;
+                    const dotsInterval = setInterval(() => {
+                      dotCount = (dotCount + 1) % 4;
+                      const dots = document.querySelector('.dots');
+                      if (dots) dots.textContent = '.'.repeat(dotCount);
+                    }, 500);
+
+                    // Add a small delay to show the loading state
+                    await new Promise(resolve => setTimeout(resolve, 1000));
                     
                     // Update the square's state
                     square.setAttribute('data-state', 'active');
@@ -395,20 +406,27 @@
                         const y = parseInt(square.getAttribute('data-y'));
                         moveCharacterToTile(x, y);
                     }
-                } else {
-                    // Restore original buttons if there's an error
-                    buttonContainer.innerHTML = originalButtons;
+
+                    // Add a small delay before closing
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Clear interval and close modal
                     clearInterval(dotsInterval);
+                    modal.style.display = 'none';
+                } else {
+                    // Just show the error message if payment failed
                     alert(data.message || 'Failed to pay shards');
                 }
             } catch (error) {
-                // Restore original buttons if there's an error
-                buttonContainer.innerHTML = originalButtons;
-                clearInterval(dotsInterval);
                 console.error('Error:', error);
                 alert('An error occurred while processing payment');
             }
         });
+    }
+
+    // Initial setup of the pay shard button
+    if (payShardButton) {
+        setupPayShardButton(payShardButton);
     }
 
     // Add click handler for modal close button
