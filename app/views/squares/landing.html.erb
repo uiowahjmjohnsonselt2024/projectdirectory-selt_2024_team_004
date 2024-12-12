@@ -149,6 +149,7 @@
       </div>
     </div>
   </div>
+
   <!-- Unlock Square Modal -->
   <div id="popup-modal" class="modal">
     <div class="modal-content">
@@ -191,48 +192,45 @@
     }
 
     // Function to move character to the correct tile and save coordinates
-    async function moveCharacterToTile(x, y) {
-      const gridOffsets = calculateGridOffsets();
+      const moveCharacterToTile = async (x, y, shardCost = 0) => {
+          const gridOffsets = calculateGridOffsets();
+          const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50;
+          const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
 
-      // Adjust the position to account for the misalignment
-      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50;
-      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+          character.style.left = `${characterX}px`;
+          character.style.top = `${characterY}px`;
 
-      character.style.left = `${characterX}px`;
-      character.style.top = `${characterY}px`;
+          character.setAttribute('data-x', x);
+          character.setAttribute('data-y', y);
+          xCoordField.value = x;
+          yCoordField.value = y;
 
-      // Update character's data attributes
-      character.setAttribute('data-x', x);
-      character.setAttribute('data-y', y);
+          try {
+              const response = await fetch('/coordinates', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRF-Token': csrfToken,
+                  },
+                  body: JSON.stringify({
+                      id: <%= @character.id %>,
+                      x,
+                      y,
+                      shards: shardCost,
+                  }),
+              });
 
-      // Update hidden fields for form submission
-      xCoordField.value = x;
-      yCoordField.value = y;
+              const data = await response.json();
 
-      // Save coordinates to the server
-      try {
-        const response = await fetch('/coordinates', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-          },
-          body: JSON.stringify({
-            id: <%= @character.id %>,
-            x: x,
-            y: y
-          })
-        });
-
-        if (!response.ok) {
-          console.error('Failed to save coordinates:', response.statusText);
-        } else {
-          console.log('Coordinates saved successfully.');
-        }
-      } catch (error) {
-        console.error('Error saving coordinates:', error);
-      }
-    }
+              if (response.ok && data.success) {
+                  shardCountElement.textContent = `Shards: ${data.updated_shards}`;
+              } else {
+                  alert(data.errors || 'Error updating character position.');
+              }
+          } catch (error) {
+              console.error('Error:', error);
+          }
+      };
 
     // Center the character initially
     let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
@@ -242,7 +240,7 @@
     // Add click handlers for grid items
     const gridItems = document.querySelectorAll('.grid-item');
     gridItems.forEach(item => {
-      item.addEventListener('click', function() {
+      item.addEventListener('click', async function() {
         const state = this.getAttribute('data-state');
         const x = parseInt(this.getAttribute('data-x'));
         const y = parseInt(this.getAttribute('data-y'));
@@ -251,6 +249,9 @@
         // Get current character position
         const currentX = parseInt(character.getAttribute('data-x'));
         const currentY = parseInt(character.getAttribute('data-y'));
+        const rowDifference = Math.abs(y - currentY);
+        const columnDifference = Math.abs(x - currentX);
+        const shardCost = rowDifference + columnDifference;
         
         console.log('Click detected:', {
           state,
@@ -279,6 +280,49 @@
           if (isAdjacent) {
             console.log('Moving to:', x, y);
             moveCharacterToTile(x, y);
+          }
+          else {
+            const confirmMove = confirm(
+                `This move will cost ${shardCost} shards. Do you want to proceed?`
+            );
+
+            if (confirmMove) {
+              try {
+                // Call pay_shards API
+                const response = await fetch('/pay_shards', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content,
+                  },
+                  body: JSON.stringify({
+                    character_id: character.getAttribute('data-character-id'),
+                    square_id: squareId
+                  })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                  console.log('Teleport successful!', data);
+
+                  // Update shard count
+                  document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+
+                  // Move character visually
+                  moveCharacterToTile(x, y);
+
+                  // Update square state if needed
+                  this.setAttribute('data-state', 'active');
+                  this.classList.add('active-square');
+                } else {
+                  alert(data.message || 'Failed to teleport.');
+                }
+              } catch (error) {
+                  console.error('Error teleporting:', error);
+                  alert('An error occurred while teleporting. Please try again.');
+              }
+            }
           }
         }
       });

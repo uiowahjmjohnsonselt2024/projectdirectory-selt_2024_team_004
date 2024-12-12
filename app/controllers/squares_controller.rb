@@ -19,7 +19,18 @@ class SquaresController < ApplicationController
     @character = Character.find_by(id: params[:character_id])
     @square = Square.find_by(square_id: params[:square_id])
 
-    if @character && @square && @character.shards >= 10
+    if !@character || !@square
+      render json: {
+        success: false,
+        message: "Invalid square/character"
+      }, status: :unprocessable_entity
+    end
+
+    row_difference = (@square.y - @character.y_coord).abs
+    column_difference = (@square.x - @character.x_coord).abs
+    shards_cost_for_teleporting = row_difference + column_difference
+
+    if @square.state == "inactive" && @character.shards >= 10
       # Deduct shards and generate terrain
       Square.transaction do
         @character.update!(shards: @character.shards - 10)
@@ -56,10 +67,23 @@ class SquaresController < ApplicationController
           }
         }
       end
+    elsif @square.state == "active" && @character.shards >= shards_cost_for_teleporting
+      puts "Teleporting..."
+      Square.transaction do
+        @character.update!(shards: @character.shards - shards_cost_for_teleporting)
+        render json: {
+          success: true,
+          game_result: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id
+          }
+        }
+      end
     else
       render json: {
         success: false,
-        message: "Not enough shards or invalid square/character"
+        message: "Not enough shards"
       }, status: :unprocessable_entity
     end
   end
