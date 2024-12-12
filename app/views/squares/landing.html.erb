@@ -285,31 +285,59 @@
     });
 
     if (payShardButton) {
-        payShardButton.addEventListener('click', function() {
-            const squareId = payShardButton.getAttribute('data-square-id');
-            const characterId = <%= @character.id %>; // Assume character ID is available in the template
+        payShardButton.addEventListener('click', async function() {
+            const squareId = this.getAttribute('data-square-id');
+            const square = document.querySelector(`[data-square-id="${squareId}"]`);
+            
+            try {
+                const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken,
+                    },
+                    body: JSON.stringify({
+                        square_id: squareId,
+                        character_id: '<%= @character.id %>'
+                    })
+                });
 
-            fetch(payShardButton.getAttribute('data-url'), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    square_id: squareId,
-                    character_id: characterId
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log('Shards paid successfully!');
-                        // Optionally update the UI with new shard count or other data
-                    } else {
-                        console.error('Failed to pay shards:', data.message);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Close modal first
+                    modal.style.display = 'none';
+                    
+                    // Update the square's state
+                    square.setAttribute('data-state', 'active');
+                    
+                    // Clear and update the canvas
+                    const canvas = square.querySelector('canvas');
+                    const ctx = canvas.getContext('2d');
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Execute the new terrain code immediately
+                    eval(data.square.code);
+                    
+                    // Update shards count
+                    const shardsDisplay = document.querySelector('.shards-count');
+                    if (shardsDisplay) {
+                        shardsDisplay.textContent = `Shards: ${data.new_shards}`;
                     }
-                })
-                .catch(error => console.error('Error:', error));
+                    
+                    // Move character if needed
+                    if (data.game_result) {
+                        const x = parseInt(square.getAttribute('data-x'));
+                        const y = parseInt(square.getAttribute('data-y'));
+                        moveCharacterToTile(x, y);
+                    }
+                } else {
+                    alert(data.message || 'Failed to pay shards');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing payment');
+            }
         });
     }
 
