@@ -16,11 +16,91 @@ class SquaresController < ApplicationController
   end
 
   def pay_shards
-    @game_result = true
+    @character = Character.find_by(id: params[:character_id])
+    @square = Square.find_by(id: params[:square_id])
 
-    respond_to do |format|
-      format.json { render json: { success: true, message: "10 shards deducted successfully.", game_result: @game_result } }
+    if @character && @square && @character.shards >= 10
+      # Deduct shards and generate terrain
+      Square.transaction do
+        @character.update!(shards: @character.shards - 10)
+        
+        # Generate terrain
+        terrain_types = ["forest", "desert", "water", "plains"]
+        terrain = terrain_types.sample
+        
+        # Get adjacent squares for context
+        adjacent_squares = {
+          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain_type,
+          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain_type,
+          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain_type,
+          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain_type
+        }
+
+        # Generate code using OpenAI
+        generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+        
+        @square.update!(
+          state: 'active',
+          terrain_type: terrain,
+          code: generated_code
+        )
+
+        render json: {
+          success: true,
+          game_result: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id,
+            code: generated_code,
+            terrain_type: terrain
+          }
+        }
+      end
+    else
+      render json: {
+        success: false,
+        message: "Not enough shards or invalid square/character"
+      }, status: :unprocessable_entity
     end
+  end
+
+  def activate_square
+    @square = Square.find_by(square_id: params[:square_id])
+    @character = Character.find(params[:character_id])
+
+    if @square.activate_square(@character)
+      render json: {
+        success: true,
+        message: "Square activated successfully!",
+        new_shards: @character.shards,
+        square: {
+          id: @square.square_id,
+          code: @square.code,
+          terrain_type: @square.terrain_type
+        }
+      }
+    else
+      render json: {
+        success: false,
+        message: "Failed to activate square. Make sure you have enough shards."
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def generate_square_code
+    x = params[:x]
+    y = params[:y]
+    
+    # Generate terrain code here
+    terrain_types = ["forest", "desert", "water", "plains"]
+    terrain = terrain_types.sample
+    
+    # You can implement your own terrain generation logic here
+    code = "ctx.fillStyle = '#eee'; ctx.fillRect(0, 0, 105, 105);"
+    
+    render json: { success: true, code: code }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :unprocessable_entity
   end
 
   private

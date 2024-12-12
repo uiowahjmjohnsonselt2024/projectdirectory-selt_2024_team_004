@@ -147,6 +147,81 @@ class WorldsController < ApplicationController
     redirect_to worlds_path
   end
 
+  def pay_shards
+    begin
+      @character = Character.find_by(id: params[:character_id])
+      @square = Square.find_by(square_id: params[:square_id])
+
+      Rails.logger.debug "Character ID: #{params[:character_id]}"
+      Rails.logger.debug "Square ID: #{params[:square_id]}"
+      Rails.logger.debug "Character found: #{@character.inspect}"
+      Rails.logger.debug "Square found: #{@square.inspect}"
+      Rails.logger.debug "Character shards: #{@character&.shards}"
+
+      if @character && @square && @character.shards >= 10
+        Square.transaction do
+          @character.update!(shards: @character.shards - 10)
+          
+          # Generate terrain
+          terrain_types = ["forest", "desert", "water", "plains"]
+          terrain = terrain_types.sample
+          
+          # Get adjacent squares for context
+          adjacent_squares = {
+            north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+            south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+            east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+            west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
+          }
+
+          Rails.logger.debug "Adjacent squares: #{adjacent_squares.inspect}"
+
+          # Generate code using OpenAI
+          generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+          Rails.logger.debug "Generated code: #{generated_code.inspect}"
+          
+          @square.update!(
+            state: 'active',
+            terrain: terrain,
+            code: generated_code
+          )
+
+          render json: {
+            success: true,
+            new_shards: @character.shards,
+            square: {
+              id: @square.id,
+              code: generated_code,
+              terrain: terrain
+            }
+          }
+        end
+      else
+        error_message = if !@character
+                         "Character not found"
+                       elsif !@square
+                         "Square not found"
+                       elsif @character.shards < 10
+                         "Not enough shards (has #{@character.shards}, needs 10)"
+                       else
+                         "Unknown error"
+                       end
+
+        Rails.logger.error "Pay shards failed: #{error_message}"
+        render json: {
+          success: false,
+          message: error_message
+        }, status: :unprocessable_entity
+      end
+    rescue StandardError => e
+      Rails.logger.error "Error in pay_shards: #{e.message}"
+      Rails.logger.error e.backtrace.join("\n")
+      render json: {
+        success: false,
+        message: "Server error: #{e.message}"
+      }, status: :internal_server_error
+    end
+  end
 
   private
 

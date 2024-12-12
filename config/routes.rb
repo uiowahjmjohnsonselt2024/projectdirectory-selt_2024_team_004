@@ -21,6 +21,12 @@ Rails.application.routes.draw do
 
   get 'world/:id/start', to: 'worlds#start_game', as: 'start_game'
   resources :worlds, only: [:index, :new, :create, :destroy]
+  resources :worlds do
+    member do
+      post 'pay_shards'
+      get :generate_square_code
+    end
+  end
   resources :characters do
     post :update_shards, on: :member
     post 'save_coordinates', on: :member
@@ -45,4 +51,14 @@ Rails.application.routes.draw do
 
   get 'worlds/join/:user_world_id', to: 'worlds#join', as: 'join_world_form'
   post 'worlds/join', to: 'worlds#join_existing', as: 'join_world'
+
+  resources :squares do
+    member do
+      post :activate_square
+      post :pay_shards
+    end
+    collection do
+      get :generate_square_code
+    end
+  end
 end
