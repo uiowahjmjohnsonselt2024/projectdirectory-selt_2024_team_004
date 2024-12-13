@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :json_request?
   before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:new, :create]
 
   helper_method :current_user
 
@@ -34,5 +35,9 @@ class ApplicationController < ActionController::Base
     @current_user = nil
     flash[:notice] = 'You have been logged out'
     redirect_to login_path
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
   end
 end
