@@ -30,3 +30,11 @@ Then 'I should remain on the login page and see {string}' do |message|
   expect(current_url).to eq(login_url)
   expect(page).to have_content(message)
 end
+
+And 'I try to login with an non-existent user email {string} and password {string}' do |email, password|
+  email = email.downcase
+
+  fill_in 'Email', with: email
+  fill_in 'Password', with: password
+  click_button 'Log In'
+end
