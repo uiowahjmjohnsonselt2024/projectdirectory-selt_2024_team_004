@@ -1,78 +1,53 @@
 class MatchingGame
-  attr_reader :cards_idx, :flipped_cards, :matches_idx
+  attr_reader :state, :cards_idx
 
-  def state
-    {
-      cards_idx: @cards_idx,
-      flipped_cards: @flipped_cards,
-      matches_idx: @matches_idx
-    }
-  end
   def initialize(state = nil)
     if state
+      @state = state
       @cards_idx = state[:cards_idx]
-      @flipped_cards = state[:flipped_cards]
-      @matches_idx = state[:matches_idx]
     else
-      @cards_idx = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4].shuffle  # index of the image that will show when card flips
-      @flipped_cards = []   # stores the indicies of the cards the user has flipped, can only flip 2
-      @matches_idx = []     # stores what images have been successfully matched by the user
+      # Initialize a new game
+      @cards_idx = (0..4).to_a.concat((0..4).to_a).shuffle
+      @state = {
+        cards_idx: @cards_idx,
+        flipped_cards: [],
+        matched_pairs: []
+      }
     end
   end
 
-  def flip_card(idx)
-    # First check if the card is already flipped or matched
-    return {status: 'invalid', reason: 'already flipped or matched'} if @flipped_cards.include?(idx) || @matches_idx.flatten.include?(idx)
+  def flip_card(index)
+    # Validate the index
+    return { error: "Invalid card index" } unless index.is_a?(Integer) && index >= 0 && index < @cards_idx.length
 
-    puts "Flipping card " + idx.to_s
-    puts "Before concatenation: " + @flipped_cards.inspect
+    # Get the card value at this index
+    card_value = @cards_idx[index]
 
-    # If not, add the index to flipped_cards
-    @flipped_cards.push(idx)
-    puts @flipped_cards.inspect
+    # Add to flipped cards
+    @state[:flipped_cards] ||= []
+    @state[:flipped_cards] << { index: index, value: card_value }
 
-    # If user has flipped 2 cards, check if they match, otherwise do nothing
-    if @flipped_cards.length == 2
-      # Check if the cards are a match
-
-      puts "In length = 2"
-
-      if @cards_idx[@flipped_cards[0]] == @cards_idx[@flipped_cards[1]]
-        # Add that index to the array of matches the user has made
-        @matches_idx << [@flipped_cards[0], @flipped_cards[1]]
-        matched = true
+    # Check for matches if we have 2 cards flipped
+    if @state[:flipped_cards].length == 2
+      card1, card2 = @state[:flipped_cards]
+      
+      if card1[:value] == card2[:value]
+        @state[:matched_pairs] ||= []
+        @state[:matched_pairs] << [card1[:index], card2[:index]]
+        result = { match: true }
       else
-        matched = false
+        result = { match: false }
       end
-
-      # Reset flipped cards
-      @flipped_cards = []
-      return {status: 'flipped', matched: matched}
+      
+      @state[:flipped_cards] = []
+    else
+      result = { waiting: true }
     end
 
-    {status: 'flipped', matched: nil}
+    result
   end
 
   def game_over?
-    @matches_idx.length == @cards_idx.length / 2
-  end
-
-  # Helper function for RSpec tests
-  def get_matches
-    matched_pairs = []
-
-    # Go through each card index
-    @cards_idx.each_with_index do |card_idx1, index1|
-      # Take a slice of the array from index1 + 1 so as to not include the index the first each block is on
-      # This prevents duplicate matches from showing up in matched_pairs
-      @cards_idx[(index1 + 1)..-1].each_with_index do |card_idx2, index2|
-        if card_idx1 == card_idx2
-          matched_pairs << [index1, index1 + index2 + 1]
-        end
-      end
-    end
-
-    # Return the indicies of the matching cards
-    matched_pairs
+    @state[:matched_pairs]&.length == 5  # All 5 pairs have been matched
   end
 end

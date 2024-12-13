@@ -1,3 +1,9 @@
+<head>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <!-- ... other head elements ... -->
+</head>
+
 <div class="container">
   <!-- Put a banner at the top of the page with a title and dropdown menu allowing user to quit if they want -->
   <div class="top-banner">
@@ -152,77 +158,87 @@
   }
 
   function flipCard(event) {
-      // Get the clicked card and its index
       const cardElement = event.currentTarget;
       const cardIdx = cardElement.dataset.card;
+      
+      // Prevent flipping if card is already flipped or matched
+      if (cardElement.classList.contains('flipped') || 
+          cardElement.classList.contains('matched') || 
+          document.querySelectorAll('.card.flipped:not(.matched)').length >= 2) {
+          return;
+      }
 
-      // Prevent flipping if the card is already flipped
-      if (cardElement.classList.contains('flipped')) return;
+      // Flip the card immediately
+      cardElement.classList.add('flipped');
+      const imgElement = cardElement.querySelector('.card-image');
+      imgElement.style.display = 'block';
 
-      // Send request to backend to flip the card
       fetch('/flip', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
+              'Accept': 'application/json'
           },
-          body: JSON.stringify({ index: cardIdx }),
+          body: JSON.stringify({ index: cardIdx })
       })
-        .then(response => response.json())
-        .then(data => {
-            // Flip the card by adding the 'flipped' class
-            cardElement.classList.add('flipped');
+      .then(response => response.json())
+      .then(data => {
+          // Only handle second card flip (when we have a match result)
+          if (data.first_card_index !== undefined) {
+              const firstCard = document.querySelector(`[data-card="${data.first_card_index}"]`);
+              const secondCard = document.querySelector(`[data-card="${data.second_card_index}"]`);
 
-            // Get the image element inside the card
-            const imgElement = cardElement.querySelector('.card-image');
+              // Temporarily disable all cards
+              document.querySelectorAll('.card').forEach(card => {
+                  card.style.pointerEvents = 'none';
+              });
 
-            // Get the card value using the shuffledCards array
-            const cardValue = shuffledCards[parseInt(cardIdx, 10)];
-            console.log("Card value: " + cardValue);
+              setTimeout(() => {
+                  if (data.result.match) {
+                      // Cards match - keep them face up
+                      firstCard.classList.add('matched');
+                      secondCard.classList.add('matched');
+                      
+                      if (data.game_over) {
+                          // Show victory message
+                          document.querySelector('.timer-and-start').style.display = 'none';
+                          document.getElementById('game-won-message').style.display = 'block';
+                          
+                          // Get current URL parameters
+                          const urlParams = new URLSearchParams(window.location.search);
+                          const worldId = urlParams.get('world_id');
+                          const userId = urlParams.get('user_id');
+                          
+                          // Redirect after 3 seconds
+                          setTimeout(() => {
+                              window.location.href = `/landing?user_id=${userId}&world_id=${worldId}&game_result=true`;
+                          }, 3000);
+                      }
+                  } else {
+                      // Cards don't match - flip them back
+                      firstCard.classList.remove('flipped');
+                      secondCard.classList.remove('flipped');
+                      firstCard.querySelector('.card-image').style.display = 'none';
+                      secondCard.querySelector('.card-image').style.display = 'none';
+                  }
 
-            // Set the src if it's not set yet (this is just a safeguard)
-            if (!imgElement.src || imgElement.src.includes('card_image')) {
-                imgElement.src = `/assets/card_image${cardValue + 1}.png`;
-            }
-
-            // Show the image by changing the display style
-            imgElement.style.display = 'block';
-
-            // Add the card to flippedCards array
-            flippedCards.push({ cardElement, cardIdx, cardValue, result: data.result });
-
-            // Check if 2 cards are currently flipped, and if they are check for a match
-            if (flippedCards.length === 2) {
-                const [card1, card2] = flippedCards;
-                console.log("Card 1: " + JSON.stringify(card1.result) + " and Card 2: " + JSON.stringify(card2.result));
-
-                if (card1.cardValue === card2.cardValue) {
-                    // This means a match has been made, so leave cards flipped over and disable them
-                    card1.cardElement.classList.add('disabled');
-                    card2.cardElement.classList.add('disabled');
-                }
-                else {
-                    // This means they don't match, so flip them back over after a slight delay
-                    setTimeout(() => {
-                        // Flip cards back over
-                        card1.cardElement.classList.remove('flipped');
-                        card2.cardElement.classList.remove('flipped');
-
-                        // Hide the images when the cards are flipped back
-                        card1.cardElement.querySelector('.card-image').style.display = 'none';
-                        card2.cardElement.querySelector('.card-image').style.display = 'none';
-                    }, 1000);
-                }
-
-                // Reset flipped cards
-                flippedCards = [];
-            }
-
-            // Check if the game is over
-            checkGameWon();
-        })
-        .catch(error => {
-            console.error('Error flipping card:', error);
-        });
+                  // Re-enable all unmatched cards
+                  document.querySelectorAll('.card:not(.matched)').forEach(card => {
+                      card.style.pointerEvents = 'auto';
+                  });
+              }, 1000);
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          cardElement.classList.remove('flipped');
+          imgElement.style.display = 'none';
+          
+          // Re-enable cards on error
+          document.querySelectorAll('.card:not(.matched)').forEach(card => {
+              card.style.pointerEvents = 'auto';
+          });
+      });
   }
 </script>
 

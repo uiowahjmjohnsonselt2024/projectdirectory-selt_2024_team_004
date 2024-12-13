@@ -34,8 +34,8 @@ Rails.application.routes.draw do
 
 
   # TMP ROUTE so I can go straight to minigame to test behavior
-  get 'matching_game', to: 'matching_game#index', as:'matching_game'
-  post '/flip', to: 'matching_game#flip', as:'flip'
+  get 'matching_game', to: 'matching_game#index', as: 'matching_game'
+  post '/flip', to: 'matching_game#flip', as: 'flip', defaults: { format: :json }
 
   post 'coordinates', to: 'characters#save_coordinates'
   post '/generate_square_code', to: 'worlds#generate_square_code'
