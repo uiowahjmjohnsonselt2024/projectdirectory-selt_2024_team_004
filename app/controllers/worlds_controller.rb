@@ -151,14 +151,26 @@ class WorldsController < ApplicationController
     @character = Character.find_by(id: params[:character_id])
     @square = Square.find_by(square_id: params[:square_id])
 
-    if @character && @square && @character.shards >= 10
+    if !@character || !@square
+      render json: {
+        success: false,
+        message: "Invalid square/character"
+      }, status: :unprocessable_entity
+    end
+
+    row_difference = (@square.y - @character.y_coord).abs
+    column_difference = (@square.x - @character.x_coord).abs
+    shards_cost_for_teleporting = row_difference + column_difference
+
+    if @square.state == "inactive" && @character.shards >= 10
+      # Deduct shards and generate terrain
       Square.transaction do
         @character.update!(shards: @character.shards - 10)
-        
+
         # Generate terrain
         terrain_types = ["forest", "desert", "water", "plains"]
         terrain = terrain_types.sample
-        
+
         # Get adjacent squares for context
         adjacent_squares = {
           north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
@@ -169,7 +181,7 @@ class WorldsController < ApplicationController
 
         # Generate code using OpenAI
         generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
-        
+
         @square.update!(
           state: 'active',
           terrain: terrain,
@@ -182,16 +194,27 @@ class WorldsController < ApplicationController
           new_shards: @character.shards,
           square: {
             id: @square.id,
-            square_id: @square.square_id,
             code: generated_code,
-            terrain: terrain
+            terrain_type: terrain
+          }
+        }
+      end
+    elsif @square.state == "active" && @character.shards >= shards_cost_for_teleporting
+      Square.transaction do
+        @character.update!(shards: @character.shards - shards_cost_for_teleporting)
+        render json: {
+          success: true,
+          game_result: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id
           }
         }
       end
     else
       render json: {
         success: false,
-        message: "Not enough shards or invalid square/character"
+        message: "Not enough shards"
       }, status: :unprocessable_entity
     end
   end

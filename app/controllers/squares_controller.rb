@@ -68,7 +68,6 @@ class SquaresController < ApplicationController
         }
       end
     elsif @square.state == "active" && @character.shards >= shards_cost_for_teleporting
-      puts "Teleporting..."
       Square.transaction do
         @character.update!(shards: @character.shards - shards_cost_for_teleporting)
         render json: {

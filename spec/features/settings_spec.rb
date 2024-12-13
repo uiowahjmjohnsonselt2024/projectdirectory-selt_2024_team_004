@@ -1,19 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Settings Page', type: :feature do
+    let(:user) { User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password', name: 'Test User') }
+    let(:world) { World.create!(name: 'World 1') }
+
     before do
-      user = User.create!(email: 'test@example.com', password: 'password', name: 'Test User')
-
-      page.driver.header 'Authorization', ActionController::HttpAuthentication::Digest.encode_credentials(
-        'GET',
-        '/settings',
-        'test@example.com',
-        'password',
-        realm: 'Application'
-      )
-
+      UserWorld.create!(user_id: user.id, world_id: world.id, user_role: 'Captain')
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       allow(OpenExchangeService).to receive(:fetch_currencies).and_return({ 'USD' => 'United States Dollar', 'EUR' => 'Euro' })
-      visit settings_path
+      visit settings_path(world_id: world.id)
     end
 
     scenario "displays the user's name and email address" do

@@ -70,17 +70,20 @@ RSpec.describe MatchingGame, type: :model do
       expect(@test_game.matches_idx.length).to eq(3)
       expect(@test_game.flipped_cards.length).to eq(1)
     end
-    it 'should return nil if the user tries to flip a card that is already flipped' do
+    it 'should return an error hash if the user tries to flip a card that is already flipped' do
       @test_game.flip_card(0)
       attempt = @test_game.flip_card(0)
-      expect(attempt).to be_nil
+
+      expected_output = { reason: "already flipped or matched", status: "invalid" }
+      expect(attempt).to eq(expected_output)
     end
     it 'should return nil if the user tries to flip a card that is already matched' do
       all_matches = @test_game.get_matches
       @test_game.flip_card(all_matches[1][1])
       @test_game.flip_card(all_matches[1][0])
       attempt = @test_game.flip_card(all_matches[1][1])
-      expect(attempt).to be_nil
+      expected_output = { reason: "already flipped or matched", status: "invalid" }
+      expect(attempt).to eq(expected_output)
     end
   end
 

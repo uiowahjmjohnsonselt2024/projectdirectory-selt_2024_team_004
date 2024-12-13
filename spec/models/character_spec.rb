@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.describe Character, type: :model do
   describe 'validations' do
     context 'With a properly instantiated World and Character' do
+      let(:valid_user) do
+        User.new(
+          name: 'John Doe',
+          email: 'jdoe@gmail.com',
+          password: 'Password101!',
+          password_confirmation: 'Password101!'
+        )
+      end
       let(:valid_world) do
         World.new(
           world_name: 'World 1',
@@ -17,24 +25,25 @@ RSpec.describe Character, type: :model do
           x_coord: 0,
           y_coord: 0,
           world: valid_world,
+          user: valid_user,
         )
       end
       it 'character should be valid with valid instance variables' do
         expect(valid_character).to be_valid
       end
       it 'generates a unique character ID following established hex code expectations' do
-        character = Character.create!(world: valid_world)
+        character = Character.create!(world: valid_world, user: valid_user)
         expect(character.character_id).to be_present
         expect(character.character_id.length).to eq(20)
       end
       it 'generates unique character IDs for different characters' do
-        character1 = Character.create!(world: valid_world)
-        character2 = Character.create!(world: valid_world)
+        character1 = Character.create!(world: valid_world, user: valid_user)
+        character2 = Character.create!(world: valid_world, user: valid_user)
 
         expect(character1.character_id).not_to eq(character2.character_id)
       end
       it 'should belong to world' do
-        character = Character.create!(world: valid_world)
+        character = Character.create!(world: valid_world, user: valid_user)
 
         expect(character.world).to eq(valid_world)
       end
