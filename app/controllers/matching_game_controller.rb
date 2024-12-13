@@ -5,6 +5,9 @@ class MatchingGameController < ApplicationController
   def index
     @user = User.find_by(id: params[:user_id])
     @world = World.find_by(id: params[:world_id])
+    @square_id = params[:square_id]
+    
+    Rails.logger.debug "Matching game initialized with: user_id=#{params[:user_id]}, world_id=#{params[:world_id]}, square_id=#{params[:square_id]}"
     
     # Initialize game state
     session[:shuffled_cards] = (0..4).to_a.concat((0..4).to_a).shuffle

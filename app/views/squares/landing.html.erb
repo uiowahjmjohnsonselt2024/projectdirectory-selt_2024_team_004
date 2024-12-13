@@ -166,181 +166,126 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Get all the necessary elements and data
     const character = document.querySelector(`.character[data-character-id="${<%= @character.id %>}"]`);
     const xCoordField = document.getElementById('x-coord');
     const yCoordField = document.getElementById('y-coord');
     const modal = document.getElementById('popup-modal');
     const payShardButton = document.getElementById('pay-shard-button');
     const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
-    let gameResult = <%= @game_result.to_json %>;
+    
+    // Add these variables from Ruby
+    const worldId = '<%= @world.id %>';
+    const userId = '<%= @user.id %>';
+    
+    // Grid click handler
+    document.querySelectorAll('.grid-item').forEach(square => {
+        square.addEventListener('click', async function() {
+            const state = this.getAttribute('data-state');
+            const x = parseInt(this.getAttribute('data-x'));
+            const y = parseInt(this.getAttribute('data-y'));
+            const squareId = this.getAttribute('data-square-id');
+            
+            // Get current character position
+            const currentX = parseInt(character.getAttribute('data-x'));
+            const currentY = parseInt(character.getAttribute('data-y'));
+            const rowDifference = Math.abs(y - currentY);
+            const columnDifference = Math.abs(x - currentX);
+            const shardCost = rowDifference + columnDifference;
 
-    // Grid configuration
-    const gridSize = 6;
-    const tileSize = 105;
-
-    // Function to calculate grid offsets
-    function calculateGridOffsets() {
-      const gridWidth = gridSize * tileSize;
-      const gridHeight = gridSize * tileSize;
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-
-      return {
-        x_char: (screenWidth - gridWidth) / 2,
-        y_char: (screenHeight - gridHeight) / 2
-      };
-    }
-
-    // Function to move character to the correct tile and save coordinates
-      const moveCharacterToTile = async (x, y, shardCost = 0) => {
-          const gridOffsets = calculateGridOffsets();
-          const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50;
-          const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
-
-          character.style.left = `${characterX}px`;
-          character.style.top = `${characterY}px`;
-
-          character.setAttribute('data-x', x);
-          character.setAttribute('data-y', y);
-          xCoordField.value = x;
-          yCoordField.value = y;
-
-          try {
-              const response = await fetch('/coordinates', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRF-Token': csrfToken,
-                  },
-                  body: JSON.stringify({
-                      id: <%= @character.id %>,
-                      x,
-                      y,
-                      shards: shardCost,
-                  }),
-              });
-
-              const data = await response.json();
-
-              if (response.ok && data.success) {
-                  shardCountElement.textContent = `Shards: ${data.updated_shards}`;
-              } else {
-                  alert(data.errors || 'Error updating character position.');
-              }
-          } catch (error) {
-              console.error('Error:', error);
-          }
-      };
-
-    // Center the character initially
-    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
-    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
-    moveCharacterToTile(xCoord, yCoord);
-
-    // Add click handlers for grid items
-    const gridItems = document.querySelectorAll('.grid-item');
-    gridItems.forEach(item => {
-      item.addEventListener('click', async function() {
-        const state = this.getAttribute('data-state');
-        const x = parseInt(this.getAttribute('data-x'));
-        const y = parseInt(this.getAttribute('data-y'));
-        const squareId = this.getAttribute('data-square-id');
-        
-        // Get current character position
-        const currentX = parseInt(character.getAttribute('data-x'));
-        const currentY = parseInt(character.getAttribute('data-y'));
-        const rowDifference = Math.abs(y - currentY);
-        const columnDifference = Math.abs(x - currentX);
-        const shardCost = rowDifference + columnDifference;
-        
-        console.log('Click detected:', {
-          state,
-          clickedX: x,
-          clickedY: y,
-          currentX,
-          currentY
-        });
-
-        if (state === 'inactive') {
-          // Reset the button container to its original state
-          const buttonContainer = document.querySelector('.button-container');
-          buttonContainer.innerHTML = `
-            <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
-            <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>" data-square-id="${squareId}">Pay 10 shards</button>
-          `;
-          
-          // Reattach event listener to the new pay shard button
-          const newPayShardButton = document.getElementById('pay-shard-button');
-          if (newPayShardButton) {
-              setupPayShardButton(newPayShardButton);
-          }
-
-          // Show popup for inactive tiles
-          document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
-          modal.style.display = 'flex';
-        } else if (state === 'active') {
-          // Check if the clicked tile is adjacent
-          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) &&
-                            !(x === currentX && y === currentY);
-          
-          console.log('Movement check:', {
-            isAdjacent,
-            xDiff: Math.abs(x - currentX),
-            yDiff: Math.abs(y - currentY)
-          });
-
-          if (isAdjacent) {
-            console.log('Moving to:', x, y);
-            moveCharacterToTile(x, y);
-          }
-          else {
-            const confirmMove = confirm(
-                `This move will cost ${shardCost} shards. Do you want to proceed?`
-            );
-
-            if (confirmMove) {
-              try {
-                // Call pay_shards API
-                const response = await fetch('/pay_shards', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content,
-                  },
-                  body: JSON.stringify({
-                    character_id: character.getAttribute('data-character-id'),
-                    square_id: squareId
-                  })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                  console.log('Teleport successful!', data);
-
-                  // Update shard count
-                  document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-
-                  // Move character visually
-                  moveCharacterToTile(x, y);
-
-                  // Update square state if needed
-                  this.setAttribute('data-state', 'active');
-                  this.classList.add('active-square');
-                } else {
-                  alert(data.message || 'Failed to teleport.');
+            if (state === 'inactive') {
+                // Reset the button container to its original state
+                const buttonContainer = document.querySelector('.button-container');
+                const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
+                
+                buttonContainer.innerHTML = `
+                    <a href="${minigameUrl}" 
+                       id="minigame-button" 
+                       class="button">Play Minigame</a>
+                    <button id="pay-shard-button" 
+                            class="button" 
+                            data-url="<%= pay_shards_path %>" 
+                            data-square-id="${squareId}">Pay 10 shards</button>
+                `;
+                
+                // Reattach event listener to the new pay shard button
+                const newPayShardButton = document.getElementById('pay-shard-button');
+                if (newPayShardButton) {
+                    setupPayShardButton(newPayShardButton);
                 }
-              } catch (error) {
-                  console.error('Error teleporting:', error);
-                  alert('An error occurred while teleporting. Please try again.');
-              }
+
+                // Show popup for inactive tiles
+                document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
+                modal.style.display = 'flex';
+            } else if (state === 'active') {
+                // Check if the clicked tile is adjacent
+                const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) &&
+                                 !(x === currentX && y === currentY);
+                
+                if (isAdjacent) {
+                    moveCharacterToTile(x, y);
+                } else {
+                    const confirmMove = confirm(
+                        `This move will cost ${shardCost} shards. Do you want to proceed?`
+                    );
+
+                    if (confirmMove) {
+                        try {
+                            const response = await fetch('/pay_shards', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    character_id: character.getAttribute('data-character-id'),
+                                    square_id: squareId
+                                })
+                            });
+
+                            const data = await response.json();
+
+                            if (response.ok && data.success) {
+                                // Update shard count
+                                document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+                                moveCharacterToTile(x, y);
+                            } else {
+                                alert(data.message || 'Failed to teleport.');
+                            }
+                        } catch (error) {
+                            console.error('Error teleporting:', error);
+                            alert('An error occurred while teleporting. Please try again.');
+                        }
+                    }
+                }
             }
-          }
-        }
-      });
+        });
     });
 
-    // Move the pay shard button handler to a separate function
+    // Function to move character
+    function moveCharacterToTile(x, y, shardCost = 0) {
+        const gridOffsets = calculateGridOffsets();
+        const characterX = gridOffsets.x_char + (x * 105) + 52.5 - 50;
+        const characterY = gridOffsets.y_char + (y * 105) + 52.5 - 50;
+
+        character.style.left = `${characterX}px`;
+        character.style.top = `${characterY}px`;
+
+        character.setAttribute('data-x', x);
+        character.setAttribute('data-y', y);
+        xCoordField.value = x;
+        yCoordField.value = y;
+    }
+
+    // Calculate grid offsets
+    function calculateGridOffsets() {
+        return {
+            x_char: 450,  // Base offset for grid
+            y_char: 175   // Base offset for grid
+        };
+    }
+
+    // Setup pay shard button functionality
     function setupPayShardButton(button) {
         button.addEventListener('click', async function() {
             const squareId = this.getAttribute('data-square-id');
@@ -348,7 +293,6 @@
             const buttonContainer = document.querySelector('.button-container');
             
             try {
-                // Make the initial request to check if we can pay shards
                 const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
                     method: 'POST',
                     headers: {
@@ -364,57 +308,25 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    // Show loading state immediately after successful payment
-                    const originalButtons = buttonContainer.innerHTML;
+                    // Show loading state
                     buttonContainer.innerHTML = `
-                      <div class="loading-text">
-                        Generating terrain<span class="dots"></span>
-                      </div>
+                        <div class="loading-text">
+                            Generating terrain<span class="dots"></span>
+                        </div>
                     `;
 
-                    // Start the dots animation
-                    let dotCount = 0;
-                    const dotsInterval = setInterval(() => {
-                      dotCount = (dotCount + 1) % 4;
-                      const dots = document.querySelector('.dots');
-                      if (dots) dots.textContent = '.'.repeat(dotCount);
-                    }, 500);
-
-                    // Add a small delay to show the loading state
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    
-                    // Update the square's state
+                    // Update the square's state and move character
                     square.setAttribute('data-state', 'active');
-                    
-                    // Clear and update the canvas
-                    const canvas = square.querySelector('canvas');
-                    const ctx = canvas.getContext('2d');
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Execute the new terrain code immediately
-                    eval(data.square.code);
+                    const x = parseInt(square.getAttribute('data-x'));
+                    const y = parseInt(square.getAttribute('data-y'));
+                    moveCharacterToTile(x, y);
                     
                     // Update shards count
-                    const shardsDisplay = document.querySelector('.shards-count');
-                    if (shardsDisplay) {
-                        shardsDisplay.textContent = `Shards: ${data.new_shards}`;
-                    }
+                    document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
                     
-                    // Move character if needed
-                    if (data.game_result) {
-                        const x = parseInt(square.getAttribute('data-x'));
-                        const y = parseInt(square.getAttribute('data-y'));
-                        moveCharacterToTile(x, y);
-                    }
-
-                    // Add a small delay before closing
-                    await new Promise(resolve => setTimeout(resolve, 500));
-
-                    // Clear interval and close modal
-                    clearInterval(dotsInterval);
+                    // Close modal
                     modal.style.display = 'none';
                 } else {
-                    // Just show the error message if payment failed
                     alert(data.message || 'Failed to pay shards');
                 }
             } catch (error) {
@@ -424,17 +336,32 @@
         });
     }
 
-    // Initial setup of the pay shard button
+    // Initial setup of pay shard button
     if (payShardButton) {
         setupPayShardButton(payShardButton);
     }
 
-    // Add click handler for modal close button
+    // Handle game result if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameResult = urlParams.get('game_result');
+    const squareId = urlParams.get('square_id');
+    
+    if (gameResult === 'true' && squareId) {
+        const winningSquare = document.querySelector(`.grid-item[data-square-id="${squareId}"]`);
+        if (winningSquare) {
+            const x = parseInt(winningSquare.getAttribute('data-x'));
+            const y = parseInt(winningSquare.getAttribute('data-y'));
+            winningSquare.setAttribute('data-state', 'active');
+            moveCharacterToTile(x, y);
+        }
+    }
+
+    // Close modal when clicking X
     const closeButton = modal.querySelector('.close-button');
     if (closeButton) {
-      closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-      });
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
     }
   });
 </script>
@@ -491,5 +418,15 @@
   }
 
 </style>
+
+<% if Rails.env.development? %>
+  <script>
+    console.log('Game Result:', '<%= @game_result %>');
+    console.log('Square ID:', '<%= @square_id %>');
+    <% if @square %>
+      console.log('Square Data:', <%= raw @square.to_json %>);
+    <% end %>
+  </script>
+<% end %>
 
 <%== @js_functions %>

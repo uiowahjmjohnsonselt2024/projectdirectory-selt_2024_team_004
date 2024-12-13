@@ -4,6 +4,14 @@
   <!-- ... other head elements ... -->
 </head>
 
+<%= hidden_field_tag :square_id, @square_id %>
+
+<% if Rails.env.development? %>
+  <script>
+    console.log('Square ID from server:', '<%= @square_id %>');
+  </script>
+<% end %>
+
 <div class="container">
   <!-- Put a banner at the top of the page with a title and dropdown menu allowing user to quit if they want -->
   <div class="top-banner">
@@ -208,10 +216,15 @@
                           const urlParams = new URLSearchParams(window.location.search);
                           const worldId = urlParams.get('world_id');
                           const userId = urlParams.get('user_id');
+                          const squareId = urlParams.get('square_id');
                           
-                          // Redirect after 3 seconds
+                          console.log('Redirecting with square_id:', squareId); // Debug log
+                          
+                          // Redirect after 3 seconds with all necessary parameters
                           setTimeout(() => {
-                              window.location.href = `/landing?user_id=${userId}&world_id=${worldId}&game_result=true`;
+                              const redirectUrl = `/landing?user_id=${userId}&world_id=${worldId}&game_result=true&square_id=${squareId}`;
+                              console.log('Redirect URL:', redirectUrl); // Debug log
+                              window.location.href = redirectUrl;
                           }, 3000);
                       }
                   } else {

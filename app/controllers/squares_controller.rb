@@ -6,13 +6,80 @@ class SquaresController < ApplicationController
     @world ||= World.find_by id: params[:world_id]
     @character ||= Character.find_by world_id: @world.id
     @game_result = params[:game_result] || false
+    @square_id = params[:square_id]
+
+    Rails.logger.debug "Landing params: #{params.inspect}"
+    Rails.logger.debug "Game result: #{@game_result}, Square ID: #{@square_id}"
 
     unless @world
+      Rails.logger.error "No world found for ID: #{params[:world_id]}"
       flash[:alert] = "No world selected"
       redirect_to worlds_path and return
     end
 
+    # Handle minigame victory
+    if @game_result == 'true' && @square_id.present?
+      Rails.logger.info "=== Starting minigame victory handling ==="
+      Rails.logger.info "Looking for square with square_id: #{@square_id}"
+      
+      @square = Square.find_by(square_id: @square_id)
+      
+      if @square
+        Rails.logger.info "Found square: #{@square.inspect}"
+        Rails.logger.info "Square current state: #{@square.state}"
+        
+        if @square.state == 'inactive'
+          Rails.logger.info "Square is inactive, proceeding with terrain generation"
+          
+          begin
+            Square.transaction do
+              # Generate terrain
+              terrain_types = ["forest", "desert", "water", "plains"]
+              terrain = terrain_types.sample
+              Rails.logger.info "Selected terrain type: #{terrain}"
+              
+              # Get adjacent squares for context
+              adjacent_squares = {
+                north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+                south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+                east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+                west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
+              }
+              Rails.logger.info "Adjacent squares: #{adjacent_squares.inspect}"
+
+              # Generate code using OpenAI
+              Rails.logger.info "Generating terrain code..."
+              generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+              Rails.logger.info "Generated code length: #{generated_code&.length}"
+              
+              update_result = @square.update!(
+                state: 'active',
+                terrain: terrain,
+                code: generated_code
+              )
+              
+              Rails.logger.info "Square update successful: #{update_result}"
+              Rails.logger.info "Updated square attributes: #{@square.reload.attributes}"
+            end
+          rescue => e
+            Rails.logger.error "Error during square update: #{e.message}"
+            Rails.logger.error e.backtrace.join("\n")
+            raise e
+          end
+        else
+          Rails.logger.info "Square is already active, skipping terrain generation"
+        end
+      else
+        Rails.logger.error "No square found with square_id: #{@square_id}"
+      end
+    else
+      Rails.logger.info "Not a minigame victory or no square_id present"
+      Rails.logger.info "game_result: #{@game_result.inspect}"
+      Rails.logger.info "square_id: #{@square_id.inspect}"
+    end
+
     @squares = Square.where(world_id: @world.id).order(:y, :x)
+    Rails.logger.info "Total squares loaded for world: #{@squares.count}"
   end
 
   def pay_shards
