@@ -96,7 +96,7 @@ body {
   }
   
   /* New Adventure Button (+) */
-.new-world-btn {
+  .new-world-btn {
     width: 40px; /* Smaller width */
     height: 40px; /* Smaller height */
     border-radius: 50%; /* Ensures it remains circular */
