@@ -5,8 +5,6 @@ class CharactersController < ApplicationController
   def save_coordinates
     @character = Character.find(params[:id])
     if @character.update(x_coord: params[:x], y_coord: params[:y])
-      puts "kkkk#{@character.x_coord}"
-      puts "kkkk#{@character.y_coord}"
       render json: { success: true, message: 'Coordinates saved successfully.' }
     else
       render json: { success: false, errors: @character.errors.full_messages }, status: :unprocessable_entity
