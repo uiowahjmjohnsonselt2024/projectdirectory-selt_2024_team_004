@@ -5,10 +5,8 @@ Feature: Login to an existing Sea Raiders user account
 
   Scenario: Successful login
     Given the following user exists:
-      | name      | John                |
-      | email     | myUser@example.com  |
-      | password  | strongPass#123      |
-      | password_confirmation | strongPass#123 |
+      | name      | email              | password         | password_confirmation |
+      | John      | myUser@example.com | strongPass#123   | strongPass#123        |
     When I visit the login page
     And I log in with email "myUser@example.com" and password "strongPass#123"
     Then I should be redirected to the world selection page and see "Welcome Back, John!"
