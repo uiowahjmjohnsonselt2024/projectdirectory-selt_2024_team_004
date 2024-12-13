@@ -19,13 +19,14 @@ And 'I log in with email {string} and password {string}' do |email, password|
   fill_in 'Email', with: email
   fill_in 'Password', with: password
   click_button 'Log In'
-
-  if page.has_content?('Invalid email or password')
-    raise "Login failed for email: #{email} with password: #{password}"
-  end
 end
 
 Then 'I should be redirected to the world selection page and see {string}' do |message|
   expect(current_url).to eq(worlds_url(user_id: @user.id))
+  expect(page).to have_content(message)
+end
+
+Then 'I should remain on the login page and see {string}' do |message|
+  expect(current_url).to eq(login_url)
   expect(page).to have_content(message)
 end
