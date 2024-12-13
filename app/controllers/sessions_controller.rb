@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
-      puts "hhh#{params[:password]}"
       session[:session_token] = user.session_token
       session[:user_id] = user.id
       @current_user = user

@@ -8,12 +8,14 @@ class SettingsController < ApplicationController
   end
 
   def update
-    previous_session_token = @current_user.session_token # Save the current session token
+    previous_session_token = @current_user.session_token
 
     if @current_user.update(default_currency: params[:currency])
       @current_user.update_column(:session_token, previous_session_token)
       @prices = StoreService.fetch_prices(@current_user.default_currency)
       flash[:notice] = 'Settings saved successfully!'
+      puts "Flash message set: #{flash[:notice]}"
+      redirect_to settings_path
     else
       Rails.logger.error "Update failed: #{current_user.errors.full_messages}"
       flash[:alert] = 'Could not save settings.'
@@ -31,7 +33,6 @@ class SettingsController < ApplicationController
   end
 
   def current_user
-    puts session
     @current_user ||= User.find_by(id: session[:user_id])
   end
 end

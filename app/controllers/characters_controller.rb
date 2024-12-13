@@ -14,7 +14,6 @@ class CharactersController < ApplicationController
   end
 
   def update_shards
-    puts "Received params: #{params.inspect}"
     character = Character.find(params[:id])
     shards_being_bought = params[:shards].to_i
     price = params[:price].to_f
@@ -23,7 +22,6 @@ class CharactersController < ApplicationController
     result = FakePaymentService.charge(price, credit_card)
 
     if result[:status] == 'Success'
-      puts character.shards
       character.update!(shards: character.shards + shards_being_bought)
 
       render json: {
@@ -55,11 +53,13 @@ class CharactersController < ApplicationController
   private
 
   def set_character
-    @character = Character.find_by id: params[:id]
+    @character = Character.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { success: false, message: 'Character not found.' }, status: :not_found
   end
 
   def current_user
-    @current_user ||= User.find_by id: params[:user_id]
+    @current_user ||= User.find_by(id: session[:user_id]) || User.find_by(id: params[:user_id])
   end
 
   def character_params

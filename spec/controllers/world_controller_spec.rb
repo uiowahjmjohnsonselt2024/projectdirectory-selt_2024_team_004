@@ -20,7 +20,7 @@ describe WorldsController, type: :controller do
     )
   end
 
-  let(:valid_user_world) do
+  let!(:valid_user_world) do
     UserWorld.create(
       user_role: 'admin',
       owner: true,
@@ -65,5 +65,4 @@ describe WorldsController, type: :controller do
       end
     end
   end
-
 end

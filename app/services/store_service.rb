@@ -9,7 +9,6 @@ class StoreService
       hat_of_shards_50: 30.00,
       chest_of_shards_100: 50.00
     }
-    puts "FETCH_PRICES DATA: #{exchange_rates}, #{usd_prices}, #{currency}"
 
     # Convert prices to the user's selected currency
     new_prices = usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2).to_s }
