@@ -167,7 +167,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Get all the necessary elements and data
-    const character = document.querySelector(`.character[data-character-id="${<%= @character.id %>}"]`);
+    const character = document.querySelector(`.character[data-is-current-user="true"]`);
     const xCoordField = document.getElementById('x-coord');
     const yCoordField = document.getElementById('y-coord');
     const modal = document.getElementById('popup-modal');
@@ -267,6 +267,7 @@
 
     // Function to move character to the correct tile and save coordinates
     async function moveCharacterToTile(x, y) {
+      if (!character) return;
       const gridOffsets = calculateGridOffsets();
 
       // Adjust the position to account for the misalignment
@@ -276,35 +277,37 @@
       character.style.left = `${characterX}px`;
       character.style.top = `${characterY}px`;
 
-      // Update hidden fields for form submission
-      xCoordField.value = x;
-      yCoordField.value = y;
+        character.setAttribute('data-x', x);
+        character.setAttribute('data-y', y);
+        xCoordField.value = x;
+        yCoordField.value = y;
 
-      // Save coordinates to the server
-      try {
-        const response = await fetch('/coordinates', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-          },
-          body: JSON.stringify({
-            id: <%= @character.id %>,
-            x: x,
-            y: y
-          })
-        });
+        try {
+            const response = await fetch('/coordinates', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({
+                    id: character.getAttribute('data-character-id'),
+                    x,
+                    y,
+                    shards: shardCost,
+                }),
+            });
 
-        if (!response.ok) {
-          console.error('Failed to save coordinates:', response.statusText);
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                document.querySelector('.shards-count').textContent =
+                    `Shards: ${data.updated_shards}`;
+            } else {
+                alert(data.errors || 'Error updating character position.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-        else {
-          console.log('Coordinates saved successfully.');
-        }
-      }
-      catch (error) {
-        console.error('Error saving coordinates:', error);
-      }
     }
 
     // Center the character initially
@@ -435,6 +438,30 @@
       closeButton.addEventListener('click', () => {
         modal.style.display = 'none';
       });
+    }
+
+    // Add Action Cable subscription
+    App.game = App.cable.subscriptions.create({ channel: "GameChannel", world_id: <%= @world.id %> }, {
+      received: function(data) {
+        if (data.type === 'character_moved') {
+          updateCharacterPosition(data.character_id, data.x, data.y);
+        }
+      }
+    });
+
+    // Function to update other characters' positions
+    function updateCharacterPosition(characterId, x, y) {
+      const characterElement = document.querySelector(`.character[data-character-id="${characterId}"]`);
+      if (characterElement && characterElement.getAttribute('data-is-current-user') !== 'true') {
+        const gridOffsets = calculateGridOffsets();
+        const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50;
+        const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+
+        characterElement.style.left = `${characterX}px`;
+        characterElement.style.top = `${characterY}px`;
+        characterElement.setAttribute('data-x', x);
+        characterElement.setAttribute('data-y', y);
+      }
     }
   });
 </script>

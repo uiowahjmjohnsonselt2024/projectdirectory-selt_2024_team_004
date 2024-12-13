@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   root "sessions#new"  # Define a root path (e.g., a home or welcome page)
 
   # Session routes

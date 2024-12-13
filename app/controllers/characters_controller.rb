@@ -4,10 +4,33 @@ class CharactersController < ApplicationController
 
   def save_coordinates
     @character = Character.find(params[:id])
-    if @character.update(x_coord: params[:x], y_coord: params[:y])
-      render json: { success: true, message: 'Coordinates saved successfully.' }
+
+    # Make sure the character belongs to the current user
+    if @character.user_world.user_id == current_user.id
+      if @character.update(x_coord: params[:x], y_coord: params[:y])
+        # Broadcast the movement to all players in the world
+        ActionCable.server.broadcast(
+          "game_channel_#{@character.user_world.world_id}",
+          {
+            type: 'character_moved',
+            character_id: @character.id,
+            x: @character.x_coord,
+            y: @character.y_coord
+          }
+        )
+
+        render json: {
+          success: true,
+          message: 'Coordinates saved successfully.',
+          updated_shards: @character.shards
+        }
+      else
+        render json: { success: false, errors: @character.errors.full_messages },
+               status: :unprocessable_entity
+      end
     else
-      render json: { success: false, errors: @character.errors.full_messages }, status: :unprocessable_entity
+      render json: { success: false, error: 'Unauthorized' },
+             status: :unauthorized
     end
   end
 
@@ -53,11 +76,11 @@ class CharactersController < ApplicationController
   private
 
   def set_character
-    @character = Character.find_by id: params[:id]
+    @character = Character.find_by(id: params[:id])
   end
 
   def current_user
-    @current_user ||= User.find_by id: params[:user_id]
+    @current_user ||= User.find(session[:user_id])
   end
 
   def character_params
