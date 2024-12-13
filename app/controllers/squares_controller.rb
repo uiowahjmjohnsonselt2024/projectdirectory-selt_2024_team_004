@@ -33,6 +33,10 @@ class SquaresController < ApplicationController
           
           begin
             Square.transaction do
+              # Add 1 shard to character for winning the game
+              @character.update!(shards: (@character.shards || 0) + 1)
+              Rails.logger.info "Added 1 shard to character. New total: #{@character.shards}"
+
               # Generate terrain
               terrain_types = ["forest", "desert", "water", "plains"]
               terrain = terrain_types.sample
@@ -91,11 +95,8 @@ class SquaresController < ApplicationController
         success: false,
         message: "Invalid square/character"
       }, status: :unprocessable_entity
+      return
     end
-
-    row_difference = (@square.y - @character.y_coord).abs
-    column_difference = (@square.x - @character.x_coord).abs
-    shards_cost_for_teleporting = row_difference + column_difference
 
     if @square.state == "inactive" && @character.shards >= 10
       # Deduct shards and generate terrain
@@ -125,31 +126,18 @@ class SquaresController < ApplicationController
 
         render json: {
           success: true,
-          game_result: true,
           new_shards: @character.shards,
           square: {
             id: @square.id,
             code: generated_code,
-            terrain_type: terrain
-          }
-        }
-      end
-    elsif @square.state == "active" && @character.shards >= shards_cost_for_teleporting
-      Square.transaction do
-        @character.update!(shards: @character.shards - shards_cost_for_teleporting)
-        render json: {
-          success: true,
-          game_result: true,
-          new_shards: @character.shards,
-          square: {
-            id: @square.id
+            terrain: terrain
           }
         }
       end
     else
       render json: {
         success: false,
-        message: "Not enough shards"
+        message: "Not enough shards (need 10)"
       }, status: :unprocessable_entity
     end
   end

@@ -285,7 +285,21 @@
         };
     }
 
-    // Setup pay shard button functionality
+    // Add this function at the top level of your JavaScript
+    function animateDots() {
+        const dots = document.querySelector('.dots');
+        if (dots) {
+            let count = 0;
+            const interval = setInterval(() => {
+                count = (count + 1) % 4;
+                dots.textContent = '.'.repeat(count);
+            }, 500);
+            return interval;
+        }
+        return null;
+    }
+
+    // Update the setupPayShardButton function
     function setupPayShardButton(button) {
         button.addEventListener('click', async function() {
             const squareId = this.getAttribute('data-square-id');
@@ -293,7 +307,7 @@
             const buttonContainer = document.querySelector('.button-container');
             
             try {
-                const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
+                const response = await fetch(`/pay_shards`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -301,33 +315,52 @@
                     },
                     body: JSON.stringify({
                         square_id: squareId,
-                        character_id: '<%= @character.id %>'
+                        character_id: '<%= @character.id %>',
+                        world_id: worldId
                     })
                 });
 
                 const data = await response.json();
                 
                 if (data.success) {
-                    // Show loading state
+                    // Show loading state with animated dots
                     buttonContainer.innerHTML = `
-                        <div class="loading-text">
-                            Generating terrain<span class="dots"></span>
+                        <div class="loading-container">
+                            <div class="loading-text">
+                                Generating terrain<span class="dots"></span>
+                            </div>
                         </div>
                     `;
+                    
+                    const dotsInterval = animateDots();
+                    
+                    // Add a slight delay to show the loading state
+                    await new Promise(resolve => setTimeout(resolve, 2000));
 
-                    // Update the square's state and move character
+                    // Clear the dots animation
+                    if (dotsInterval) clearInterval(dotsInterval);
+
+                    // Update the square's state and appearance
                     square.setAttribute('data-state', 'active');
+                    if (data.square && data.square.code) {
+                        const canvas = square.querySelector('canvas');
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        eval(data.square.code);
+                    }
+                    
+                    // Update shards count in the UI
+                    document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+                    
+                    // Move character to the new square
                     const x = parseInt(square.getAttribute('data-x'));
                     const y = parseInt(square.getAttribute('data-y'));
                     moveCharacterToTile(x, y);
                     
-                    // Update shards count
-                    document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-                    
                     // Close modal
                     modal.style.display = 'none';
                 } else {
-                    alert(data.message || 'Failed to pay shards');
+                    alert(data.message || 'Not enough shards');
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -415,6 +448,22 @@
 
   .button-container {
     text-align: center;
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .loading-text {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .dots {
+    display: inline-block;
+    min-width: 30px;
+    text-align: left;
   }
 
 </style>
