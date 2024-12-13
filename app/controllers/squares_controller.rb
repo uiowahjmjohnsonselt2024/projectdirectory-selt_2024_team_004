@@ -4,6 +4,7 @@ class SquaresController < ApplicationController
     store
     @user ||= User.find_by id: params[:user_id]
     @world ||= World.find_by id: params[:world_id]
+    @world_id = @world&.id
     @character ||= Character.find_by world_id: @world.id
     @game_result = params[:game_result] || false
     @square_id = params[:square_id]

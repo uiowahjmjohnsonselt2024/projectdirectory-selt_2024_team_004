@@ -62,7 +62,7 @@ describe SquaresController, type: :controller do
 
     context 'when world_id is not provided' do
       it 'redirects to worlds_path with a flash alert' do
-        get :landing, params: { user_id: valid_user.id, world_id: valid_world.id }
+        get :landing, params: { user_id: valid_user.id }
 
         expect(flash[:alert]).to eq('No world selected')
         expect(response).to redirect_to(worlds_path)
