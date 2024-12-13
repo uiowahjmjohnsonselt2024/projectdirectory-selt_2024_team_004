@@ -5,28 +5,25 @@
     "@rails/actioncable": "^6.0.0-alpha",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
-    "@rails/webpacker": "5.4.4",
+    "@rails/webpacker": "4.3.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
-    "autoprefixer": "^10.4.20",
-    "babel-loader": "^8.3.0",
-    "braces": "^3.0.3",
-    "css-loader": "^7.1.2",
-    "jasmine": "^5.4.0",
-    "jsdom": "^25.0.1",
-    "mini-css-extract-plugin": "^2.9.2",
-    "nth-check": "^2.1.1",
-    "postcss": "^8.4.49",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.96.1",
-    "webpack-cli": "^5.1.4"
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "4.46.0",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.2",
+    "sass": "1.32.13",
+    "sass-loader": "10.1.1"
   },
   "engines": {
-    "node": ">=16.x <=20.x",
-    "yarn": "1.22.22"
+    "node": "16.x",
+    "yarn": "1.22.x"
+  },
+  "resolutions": {
+    "node-sass": "npm:sass@^1.32.13"
   }
 }
