@@ -1,22 +1,23 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:new, :create]
+
   def new
   end
 
   def create
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password])
-      session[:session_token] = user.session_token
+    user = User.find_by(email: params[:email].downcase)
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      @current_user = user
-      redirect_to worlds_path(user_id: user.id), notice: 'Logged in successfully!'
+      redirect_to worlds_path
     else
-      flash.now[:warning] = 'Invalid email or password'
+      flash.now[:alert] = 'Invalid email/password combination'
       render 'new'
     end
   end
 
   def destroy
-    session[:session_token] = nil
-    redirect_to root_path, notice: 'Logged out successfully!'
+    session[:user_id] = nil
+    flash[:notice] = 'You have been logged out'
+    redirect_to login_path
   end
 end

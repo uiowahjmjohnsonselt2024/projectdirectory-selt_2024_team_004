@@ -1,23 +1,28 @@
 class WorldsController < ApplicationController
-  before_action :set_current_user
-
-  def landing
-    store
-    @user_world ||= UserWorld.find_by(user_id: @user.id)
-    @world ||= @user_world.world
-    @character ||= @world.characters.first
-    @character.x_coord ||= 0
-    @character.y_coord ||= 27
-  end
+  before_action :current_user
 
   def new
     @world_id = params[:world_id]
+    @user_world_id = params[:user_world_id]
   end
 
   def index
-    #@worlds parameter will be a list of all the world keys the current user has
     if @current_user
       @user_worlds = @current_user.user_worlds
+      @invitations = Invitation.where(receiver_id: @current_user.id, status: 'pending')
+
+      @invited_players = {}
+      @user_worlds.each do |user_world|
+        world = user_world.world
+        # Get all invitations for this world, excluding accepted ones and getting unique emails
+        @invited_players[world.id] = Invitation.where(world_id: world.id)
+                                           .where.not(status: 'accepted')
+                                           .includes(:receiver)
+                                           .map { |invitation| invitation.receiver.email }
+                                           .uniq
+      end
+
+      @world = @user_worlds.first&.world
     else
       flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
@@ -26,26 +31,37 @@ class WorldsController < ApplicationController
 
   def create
     puts "Form submitted successfully!"
-    @world = World.new(
-      last_played: DateTime.now,
-      progress: 0,
-      world_name: params[:world_name]
-    )
-
-    if @world.save
+    if params[:user_world_id].present?
+      # Handle invited user character creation
+      @user_world = UserWorld.find(params[:user_world_id])
       @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
-      UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-      Character.create!(world: @world, x_coord: 0, y_coord: 27, image_code: @image_path) # Set your default image path
-
-      # Generate squares with progress tracking
-      generate_squares_for_world(@world)
-
-      flash[:notice] = "World '#{@world.world_name}' created successfully!"
-      redirect_to worlds_path
+      Character.create!(
+        world: @user_world.world,
+        user: @current_user,
+        shards: 10,
+        x_coord: 175,
+        y_coord: 30,
+        image_code: @image_path
+      )
     else
-      flash[:alert] = "Failed to create world. Please try again."
-      render :new
+      # Handle new world creation
+      @world = World.new(
+        last_played: DateTime.now,
+        progress: 0,
+        world_name: params[:world_name]
+      )
+
+      if @world.save
+        @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
+        UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
+        Character.create!(world: @world, user: @current_user, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path)
+
+        generate_squares_for_world(@world)
+      end
     end
+
+    flash[:notice] = "Character created successfully!"
+    redirect_to worlds_path
   end
 
 
@@ -64,35 +80,15 @@ class WorldsController < ApplicationController
     redirect_to worlds_path
   end
 
-  def user_roles
-    @gender = params[:gender]
-    @preload = params[:preload]
-    @role = params[:role]
-
-    if @gender && @preload && @role
-      @image_path = "#{@gender}_#{@preload}_#{@role}.png"
-    else
-      @image_path = "1_1_1.png"
-    end
-  end
-
   def start_game
     @world = World.find(params[:id])
     @squares = @world.squares.order(:y, :x)
 
     store
-    @user_world ||= UserWorld.find_by(user_id: @user.id)
-    @world ||= @user_world.world
-    @character ||= @world.characters.first
-
-    # Add these lines to initialize store-related variables
-    @prices = {
-      sea_shard: 0.99  # Set your default price here
-    }
-    @currency = 'USD'  # Set default currency
-
-    puts "World ID: #{@world.id}"
-    puts "Square count: #{@squares.count}"
+    @user = current_user
+    @user_world = UserWorld.find_by(user_id: @user.id, world_id: @world.id)
+    # Find the specific character for this user in this world
+    @character = @world.characters.find_by(user_id: @user.id)
 
     if @squares.count != 36
       flash[:alert] = "Regenerating squares for this world"
@@ -100,182 +96,182 @@ class WorldsController < ApplicationController
       generate_squares_for_world(@world)
       @squares = @world.squares.reload.order(:y, :x)
     end
-    puts 'world id'
-    puts @world.id
-    render 'squares/landing'
-    #, locals: { world_id: @world.id }
+
+    redirect_to landing_path(world_id: @world.id, user_id: @user.id)
   end
 
+  def generate_square_code
+    x = params[:x].to_i
+    y = params[:y].to_i
+    terrain_types = ["desert", "water", "forest", "plains"]
+    terrain = terrain_types.sample
+
+    begin
+      square = @world.squares.find_or_initialize_by(x: x, y: y)
+      adjacent_terrains = get_adjacent_terrains(@world, x, y)
+      code = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
+
+      if code.present?
+        square.update!(terrain: terrain, code: code)
+        render json: { success: true, code: code, terrain: terrain }
+      else
+        render json: { success: false, error: "Failed to generate terrain code" }, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Validation error: #{e.message}")
+      render json: { success: false, error: "Validation error: #{e.message}" }, status: :unprocessable_entity
+    rescue StandardError => e
+      Rails.logger.error("Error in generate_square_code: #{e.message}")
+      render json: { success: false, error: "Error generating terrain: #{e.message}" }, status: :unprocessable_entity
+    end
+  end
+
+  def join
+    @user_world_id = params[:user_world_id]
+  end
+
+  def join_existing
+    @user_world = UserWorld.find(params[:user_world_id])
+    @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
+
+    Character.create!(
+      world: @user_world.world,
+      user: current_user,
+      shards: 10,
+      x_coord: 175,
+      y_coord: 30,
+      image_code: @image_path
+    )
+
+    flash[:notice] = "Character created successfully!"
+    redirect_to worlds_path
+  end
+
+  def pay_shards
+    @character = Character.find_by(id: params[:character_id])
+    @square = Square.find_by(square_id: params[:square_id])
+
+    if !@character || !@square
+      render json: {
+        success: false,
+        message: "Invalid square/character"
+      }, status: :unprocessable_entity
+    end
+
+    row_difference = (@square.y - @character.y_coord).abs
+    column_difference = (@square.x - @character.x_coord).abs
+    shards_cost_for_teleporting = row_difference + column_difference
+
+    if @square.state == "inactive" && @character.shards >= 10
+      # Deduct shards and generate terrain
+      Square.transaction do
+        @character.update!(shards: @character.shards - 10)
+
+        # Generate terrain
+        terrain_types = ["forest", "desert", "water", "plains"]
+        terrain = terrain_types.sample
+
+        # Get adjacent squares for context
+        adjacent_squares = {
+          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
+        }
+
+        # Generate code using OpenAI
+        generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+
+        @square.update!(
+          state: 'active',
+          terrain: terrain,
+          code: generated_code
+        )
+
+        render json: {
+          success: true,
+          game_result: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id,
+            code: generated_code,
+            terrain_type: terrain
+          }
+        }
+      end
+    elsif @square.state == "active" && @character.shards >= shards_cost_for_teleporting
+      Square.transaction do
+        @character.update!(shards: @character.shards - shards_cost_for_teleporting)
+        render json: {
+          success: true,
+          game_result: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id
+          }
+        }
+      end
+    else
+      render json: {
+        success: false,
+        message: "Not enough shards"
+      }, status: :unprocessable_entity
+    end
+  end
 
   private
 
   def generate_squares_for_world(world)
-    require 'openai'
-    client = OpenAI::Client.new(access_token: ENV['OPENAI_API_KEY'])
-
-    # Generate 9 unique squares first
-    base_squares = []
-
-    # Ensure 3-4 desert squares
-    water_count = 9 - rand(3..4)
-    desert_count = 9 - water_count
-
-    # Helper function to format the JavaScript code
-    def format_js_code(raw_code)
-      cleaned_code = raw_code.gsub(/```(javascript|js)?\n?/, '').gsub(/```/, '')
-      cleaned_code = cleaned_code.gsub(/const canvas = document\.createElement\('canvas'\);/, '')
-      cleaned_code = cleaned_code.gsub(/const ctx = canvas\.getContext\('2d'\);/, '')
-
-      # Just return the drawing commands
-      cleaned_code
-    end
-
-    # Generate water squares
-    water_count.times do |i|
-      terrain_type = "lake"
-      response = client.chat(
-        parameters: {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
-
-              OCEAN BACKGROUND:
-              - Fill ENTIRE canvas with EXACTLY #1E90FF
-              - Every single water tile must be identical
-              - NO variation in the blue color
-              - NO patterns or lines
-              - Just solid blue color
-              
-              DESERT ISLANDS (when present):
-              - Color: Muted sandy tan (#D2B48C)
-              - Single small organic shape with curved edges
-              - Must take up only 20-40% of tile maximum
-              - NO straight lines or edges anywhere
-              - Edges must be smooth bezier curves
-              - Natural, irregular island shapes
-              - Must be surrounded by water
-              
-              CRITICAL RULES:
-              1. EVERY water tile must be pure #1E90FF only
-              2. Desert must take up LESS than 40% of any tile
-              3. NO straight lines in island shapes
-              4. Islands must have only curved boundaries
-              5. Perfect alignment between adjacent tiles
-              6. Water must be completely solid color
-              7. NO variation in background color
-              8. Islands must be small and well-spaced
-
-              IMPORTANT: Only provide the drawing code. Do not create canvas or context variables."
-            },
-            {
-              role: "user",
-              content: "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas).
-                Use only the 'ctx' variable to draw a solid #1E90FF background.
-                Do not create canvas or context variables.
-                Do not create a function wrapper."
-            }
-          ],
-          temperature: 0.7
-        }
-      )
-
-      raw_code = response.dig('choices', 0, 'message', 'content')
-      drawing_commands = format_js_code(raw_code)
-
-      base_squares << {
-        terrain: terrain_type,
-        code: drawing_commands
-      }
-    end
-
-    # Generate desert squares
-    desert_count.times do |i|
-      terrain_type = "desert"
-      response = client.chat(
-        parameters: {
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a JavaScript canvas expert creating a minimalist ocean with small sandy desert islands. EVERY water tile must be EXACTLY identical.
-
-              OCEAN BACKGROUND:
-              - Fill ENTIRE canvas with EXACTLY #1E90FF
-              - Every single water tile must be identical
-              - NO variation in the blue color
-              - NO patterns or lines
-              - Just solid blue color
-              
-              DESERT ISLANDS (when present):
-              - Color: Muted sandy tan (#D2B48C)
-              - Single small organic shape with curved edges
-              - Must take up only 20-40% of tile maximum
-              - NO straight lines or edges anywhere
-              - Edges must be smooth bezier curves
-              - Natural, irregular island shapes
-              - Must be surrounded by water
-              
-              CRITICAL RULES:
-              1. EVERY water tile must be pure #1E90FF only
-              2. Desert must take up LESS than 40% of any tile
-              3. NO straight lines in island shapes
-              4. Islands must have only curved boundaries
-              5. Perfect alignment between adjacent tiles
-              6. Water must be completely solid color
-              7. NO variation in background color
-              8. Islands must be small and well-spaced
-
-              IMPORTANT: Only provide the drawing code. Do not create canvas or context variables."
-            },
-            {
-              role: "user",
-              content: "Generate JavaScript code for a #{terrain_type} tile (105x105 canvas).
-                Use only the 'ctx' variable to draw a solid #1E90FF background with a desert island.
-                Do not create canvas or context variables.
-                Do not create a function wrapper."
-            }
-          ],
-          temperature: 0.7
-        }
-      )
-
-      raw_code = response.dig('choices', 0, 'message', 'content')
-      drawing_commands = format_js_code(raw_code)
-
-      base_squares << {
-        terrain: terrain_type,
-        code: drawing_commands
-      }
-    end
-
-    # Now fill the 6x6 grid using these 9 squares
+    # Define available terrains
+    terrain_types = ["desert", "water", "forest", "plains"]
     js_functions = []
 
-    # Randomly choose coordinates for treasure
-    treasure_x = rand(6)
-    treasure_y = rand(6)
+    # Define the initial three squares in the top-left corner
+    active_positions = [[0, 0], [1, 0], [0, 1]]
 
+    # Generate the initial three squares with random terrains
+    active_positions.each do |x, y|
+      # Get random terrain type
+      terrain = terrain_types.sample
+
+      # Get adjacent terrains for context
+      adjacent_terrains = get_adjacent_terrains(world, x, y)
+
+      # Generate terrain code with context
+      drawing_commands = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
+
+      # Create the function code
+      function_code = <<~JAVASCRIPT
+        function drawSquare_#{x}_#{y}(containerId) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 105;
+          canvas.height = 105;
+          const ctx = canvas.getContext('2d');
+          
+          #{drawing_commands}
+          
+          document.getElementById(containerId).appendChild(canvas);
+        }
+      JAVASCRIPT
+
+      js_functions << function_code
+
+      # Create the square with the generated code
+      world.squares.create!(
+        square_id: SecureRandom.hex(10),
+        world_id: world.id,
+        x: x,
+        y: y,
+        state: "active",
+        terrain: terrain,
+        code: drawing_commands
+      )
+    end
+
+    # Create the rest of the grid without code
     6.times do |y|
       6.times do |x|
-        selected_square = base_squares.sample
-
-        # Create the function definition
-        function_code = <<~JAVASCRIPT
-          function drawSquare_#{x}_#{y}(containerId) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 105;
-            canvas.height = 105;
-            const ctx = canvas.getContext('2d');
-            
-            #{selected_square[:code]}
-            
-            document.getElementById(containerId).appendChild(canvas);
-          }
-        JAVASCRIPT
-
-        js_functions << function_code
+        next if active_positions.include?([x, y])
 
         world.squares.create!(
           square_id: SecureRandom.hex(10),
@@ -283,15 +279,11 @@ class WorldsController < ApplicationController
           x: x,
           y: y,
           state: "inactive",
-          terrain: selected_square[:terrain],
-          code: function_code,
-          treasure: (x == treasure_x && y == treasure_y)  # Set treasure for the randomly chosen square
+          terrain: "empty"
         )
       end
     end
-    treasure = world.squares.find_by(treasure: true)
-    puts "Treasure is at x: #{treasure.x}" if treasure
-    puts "Treasure is at y: #{treasure.y}" if treasure
+
     # Add a script tag to define all functions at once
     script_tag = <<~HTML
       <script>
@@ -511,6 +503,8 @@ class WorldsController < ApplicationController
   end
 
   def get_adjacent_terrains(world, x, y)
+    return {} unless world.present?
+
     {
       north: world.squares.find_by(x: x, y: y - 1)&.terrain,
       south: world.squares.find_by(x: x, y: y + 1)&.terrain,
@@ -519,19 +513,21 @@ class WorldsController < ApplicationController
     }
   end
 
-  def store
-    @user = current_user
-    @currency = @user.default_currency || 'USD'
-    @prices = StoreService.fetch_prices(@user)
-  end
-
   def api_call
     client = OpenAI::Client.new(
       access_token: "access_token_goes_here",
       log_errors: true # Highly recommended in development, so you can see what errors OpenAI is returning. Not recommended in production because it could leak private data to your logs.
     )
   end
+
+  def store
+    @user = current_user
+    @currency = @user.default_currency || 'USD'
+    puts "USER: #{@user}\nCURRENCY: #{@currency}"
+    @prices = StoreService.fetch_prices(@currency)
+  end
+
   def current_user
-    @current_user ||= User.find_by id: params[:user_id]
+    @current_user ||= User.find_by id: session[:user_id]
   end
 end
