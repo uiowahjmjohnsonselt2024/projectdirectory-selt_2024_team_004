@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_11_27_165322) do
+ActiveRecord::Schema.define(version: 2024_12_11_151649) do
 
   create_table "characters", force: :cascade do |t|
     t.string "character_id"
@@ -19,8 +19,19 @@ ActiveRecord::Schema.define(version: 2024_11_27_165322) do
     t.integer "y_coord", default: 10
     t.integer "shards"
     t.integer "world_id", null: false
+    t.integer "user_id", null: false
     t.index ["character_id"], name: "index_characters_on_character_id", unique: true
+    t.index ["user_id"], name: "index_characters_on_user_id"
     t.index ["world_id"], name: "index_characters_on_world_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "receiver_id"
+    t.integer "world_id"
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "squares", force: :cascade do |t|
@@ -72,6 +83,7 @@ ActiveRecord::Schema.define(version: 2024_11_27_165322) do
     t.index ["world_id"], name: "index_worlds_on_world_id", unique: true
   end
 
+  add_foreign_key "characters", "users"
   add_foreign_key "characters", "worlds"
   add_foreign_key "squares", "worlds", on_delete: :cascade
   add_foreign_key "user_worlds", "users"

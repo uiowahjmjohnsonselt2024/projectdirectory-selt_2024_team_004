@@ -1,4 +1,8 @@
 <div class="container">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <div class="top-banner">
     <h2 class="title">Pretty Pirates</h2>
 
@@ -10,12 +14,6 @@
       <div class="dropdown-content">
         <%= link_to 'Settings', settings_path(return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
         <a href="#" id="store-link">Store</a>
-        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-          <%= form.hidden_field :id, value: @character&.id %>
-          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
-        <% end %>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
@@ -25,48 +23,78 @@
   <% if @squares.present? %>
   <% end %>
 
-  <div class="grid">
-    <% if @squares.present? %>
-      <% 
-        # Define active squares (starting from top-left corner)
-        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
-      %>
-      <% @squares.each do |square| %>
-        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
-             id="square_<%= square.square_id %>"
-             data-x="<%= square.x %>"
-             data-y="<%= square.y %>">
-          <% if square.code.present? %>
-            <script>
-              if (!window.squareInitialized_<%= square.square_id %>) {
+  <div class="grid-teleport-container">
+    <div class="grid">
+      <% if @squares.present? %>
+        <% @squares.each do |square| %>
+          <div class="grid-item"
+               id="square_<%= square.square_id %>"
+               data-square-id="<%= square.square_id %>"
+               data-x="<%= square.x %>"
+               data-y="<%= square.y %>"
+               data-state="<%= square.state %>">
+            <% if square.code.present? %>
+              <canvas width="105" height="105"></canvas>
+              <script>
                 document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
                   <%= square.code.html_safe %>
-                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-                  <% unless active_squares.include?([square.x, square.y]) %>
-                    // Add grey overlay to inactive squares
-                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
-                    if (canvas) {
-                      const ctx = canvas.getContext('2d');
-                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                      ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                  <% end %>
                 });
-                window.squareInitialized_<%= square.square_id %> = true;
-              }
-            </script>
-          <% else %>
-            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
-          <% end %>
-        </div>
+              </script>
+            <% else %>
+              <canvas width="105" height="105"></canvas>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
+                  ctx.fillStyle = '#eee';
+                  ctx.fillRect(0, 0, 105, 105);
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  ctx.fillText('(<%= square.x %>, <%= square.y %>)', 35, 55);
+                });
+              </script>
+            <% end %>
+          </div>
+        <% end %>
+        <% @world.characters.each do |character| %>
+          <% 
+            # Simple grid-based positioning
+            tile_size = 105
+            grid_offset_x = 450  # Adjusted base offset to match grid
+            grid_offset_y = 175  # Adjusted base offset to match grid
+            
+            # Calculate position based on grid coordinates
+            char_x = grid_offset_x + (character.x_coord.to_i * tile_size)
+            char_y = grid_offset_y + (character.y_coord.to_i * tile_size)
+          %>
+          <div class="character"
+               data-character-id="<%= character.id %>"
+               data-is-current-user="<%= character.user_id == current_user.id %>"
+               data-x="<%= character.x_coord %>"
+               data-y="<%= character.y_coord %>"
+               style="position: absolute; 
+                      top: <%= char_y %>px; 
+                      left: <%= char_x %>px;
+                      z-index: 1000;">
+            <%= image_tag asset_path(character.image_code), width: '100', height: '100' if character.image_code %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No squares found for this world!</p>
       <% end %>
-      <div class="character"
-           style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
-        <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
-      </div>
-    <% else %>
-      <p>No squares found for this world!</p>
-    <% end %>
+    </div>
+
+    <div class="teleport-container" data-character-id="<%= @character.id %>">
+      <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
+        <%= form.hidden_field :id, value: @character&.id %>
+        <%= form.hidden_field :x, value: '', id: 'x-coord' %>
+        <%= form.hidden_field :y, value: '', id: 'y-coord' %>
+        <%= form.submit 'Save World', class: 'btn btn-primary', id:"teleport-button" %>
+      <% end %>
+      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count.y" %></p>
+    </div>
   </div>
 
   <!-- Store Modal -->
@@ -78,12 +106,16 @@
       <span class="close-button">&times;</span>
       <div class="store-grid">
         <% @prices.each do |key, price| %>
-          <% puts "Rendering item: #{key}, price: #{price}, currency: #{@currency}" %>
           <div class="store-grid-item">
-            <button class="item-button" data-name="#{key.to_s.humanize" data-price="<%= price %> <%= @currency %>">
+            <button class="item-button" data-name="<%= key.to_s.humanize %>" data-price="<%= price %> <%= @currency %>">
               <div class="item-content">
                 <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
                 <p class="item-price"><%= key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
+                <% if key.to_s == 'hat_of_shards_50' %>
+                  <p class="discount">20% off!</p>
+                <% elsif key.to_s == 'chest_of_shards_100' %>
+                  <p class="discount">33% off!</p>
+                <% end %>
               </div>
             </button>
           </div>
@@ -117,228 +149,333 @@
       </div>
     </div>
   </div>
+
+  <!-- Unlock Square Modal -->
+  <div id="popup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Square Details</h3>
+      <p id="square-coordinates"></p>
+      <div class="button-container">
+        <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
+        <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>" data-square-id="">Pay 10 shards</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const character = document.querySelector('.character');
-        const xCoordField = document.querySelector('#x-coord');
-        const yCoordField = document.querySelector('#y-coord');
-        const saveWorldButton = document.querySelector('#save-world-button');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all the necessary elements and data
+    const character = document.querySelector(`.character[data-character-id="${<%= @character.id %>}"]`);
+    const xCoordField = document.getElementById('x-coord');
+    const yCoordField = document.getElementById('y-coord');
+    const modal = document.getElementById('popup-modal');
+    const payShardButton = document.getElementById('pay-shard-button');
+    const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    
+    // Add these variables from Ruby
+    const worldId = '<%= @world.id %>';
+    const userId = '<%= @user.id %>';
+    
+    // Grid click handler
+    document.querySelectorAll('.grid-item').forEach(square => {
+        square.addEventListener('click', async function() {
+            const state = this.getAttribute('data-state');
+            const x = parseInt(this.getAttribute('data-x'));
+            const y = parseInt(this.getAttribute('data-y'));
+            const squareId = this.getAttribute('data-square-id');
+            
+            // Get current character position
+            const currentX = parseInt(character.getAttribute('data-x'));
+            const currentY = parseInt(character.getAttribute('data-y'));
+            const rowDifference = Math.abs(y - currentY);
+            const columnDifference = Math.abs(x - currentX);
+            const shardCost = rowDifference + columnDifference;
 
-        let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
-        let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
+            if (state === 'inactive') {
+                // Reset the button container to its original state
+                const buttonContainer = document.querySelector('.button-container');
+                const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
+                
+                buttonContainer.innerHTML = `
+                    <a href="${minigameUrl}" 
+                       id="minigame-button" 
+                       class="button">Play Minigame</a>
+                    <button id="pay-shard-button" 
+                            class="button" 
+                            data-url="<%= pay_shards_path %>" 
+                            data-square-id="${squareId}">Pay 10 shards</button>
+                `;
+                
+                // Reattach event listener to the new pay shard button
+                const newPayShardButton = document.getElementById('pay-shard-button');
+                if (newPayShardButton) {
+                    setupPayShardButton(newPayShardButton);
+                }
 
-        const playableWidth = (window.innerWidth * 0.39 - character.offsetWidth) - (window.innerHeight * 0.29);
-        const playableHeight = (window.innerHeight * 0.58 - character.offsetHeight) - (window.innerHeight * 0.03);
+                // Show popup for inactive tiles
+                document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
+                modal.style.display = 'flex';
+            } else if (state === 'active') {
+                // Check if the clicked tile is adjacent
+                const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) &&
+                                 !(x === currentX && y === currentY);
+                
+                if (isAdjacent) {
+                    moveCharacterToTile(x, y);
+                } else {
+                    const confirmMove = confirm(
+                        `This move will cost ${shardCost} shards. Do you want to proceed?`
+                    );
 
-        const xStep = playableWidth / 5;
-        const yStep = playableHeight / 5;
+                    if (confirmMove) {
+                        try {
+                            const response = await fetch('/pay_shards', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': csrfToken,
+                                },
+                                body: JSON.stringify({
+                                    character_id: character.getAttribute('data-character-id'),
+                                    square_id: squareId
+                                })
+                            });
 
+                            const data = await response.json();
 
-        function moveCharacter() {
-            character.style.left = (xCoord * 2) + 'px';
-            character.style.top = (yCoord * 2) + 'px';
-        }
-
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'ArrowUp') {
-                yCoord = Math.max(window.innerHeight * 0.03, yCoord - yStep);
-            } else if (e.key === 'ArrowDown') {
-                yCoord = Math.min(window.innerHeight * 0.58 - character.offsetHeight, yCoord + yStep);
-            } else if (e.key === 'ArrowLeft') {
-                xCoord = Math.max(window.innerHeight * 0.29, xCoord - xStep);
-            } else if (e.key === 'ArrowRight') {
-                xCoord = Math.min(window.innerWidth * 0.39 - character.offsetWidth, xCoord + xStep);
+                            if (response.ok && data.success) {
+                                // Update shard count
+                                document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+                                moveCharacterToTile(x, y);
+                            } else {
+                                alert(data.message || 'Failed to teleport.');
+                            }
+                        } catch (error) {
+                            console.error('Error teleporting:', error);
+                            alert('An error occurred while teleporting. Please try again.');
+                        }
+                    }
+                }
             }
-
-            moveCharacter();
         });
-
-        saveWorldButton.addEventListener('click', function (e) {
-            xCoordField.value = xCoord;
-            yCoordField.value = yCoord;
-        });
-
-        moveCharacter();
     });
+
+    // Function to move character
+    function moveCharacterToTile(x, y, shardCost = 0) {
+        const gridOffsets = calculateGridOffsets();
+        const characterX = gridOffsets.x_char + (x * 105) + 52.5 - 50;
+        const characterY = gridOffsets.y_char + (y * 105) + 52.5 - 50;
+
+        character.style.left = `${characterX}px`;
+        character.style.top = `${characterY}px`;
+
+        character.setAttribute('data-x', x);
+        character.setAttribute('data-y', y);
+        xCoordField.value = x;
+        yCoordField.value = y;
+    }
+
+    // Calculate grid offsets
+    function calculateGridOffsets() {
+        return {
+            x_char: 450,  // Base offset for grid
+            y_char: 175   // Base offset for grid
+        };
+    }
+
+    // Add this function at the top level of your JavaScript
+    function animateDots() {
+        const dots = document.querySelector('.dots');
+        if (dots) {
+            let count = 0;
+            const interval = setInterval(() => {
+                count = (count + 1) % 4;
+                dots.textContent = '.'.repeat(count);
+            }, 500);
+            return interval;
+        }
+        return null;
+    }
+
+    // Update the setupPayShardButton function
+    function setupPayShardButton(button) {
+        button.addEventListener('click', async function() {
+            const squareId = this.getAttribute('data-square-id');
+            const square = document.querySelector(`[data-square-id="${squareId}"]`);
+            const buttonContainer = document.querySelector('.button-container');
+            
+            try {
+                const response = await fetch(`/pay_shards`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken,
+                    },
+                    body: JSON.stringify({
+                        square_id: squareId,
+                        character_id: '<%= @character.id %>',
+                        world_id: worldId
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Show loading state with animated dots
+                    buttonContainer.innerHTML = `
+                        <div class="loading-container">
+                            <div class="loading-text">
+                                Generating terrain<span class="dots"></span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const dotsInterval = animateDots();
+                    
+                    // Add a slight delay to show the loading state
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    // Clear the dots animation
+                    if (dotsInterval) clearInterval(dotsInterval);
+
+                    // Update the square's state and appearance
+                    square.setAttribute('data-state', 'active');
+                    if (data.square && data.square.code) {
+                        const canvas = square.querySelector('canvas');
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        eval(data.square.code);
+                    }
+                    
+                    // Update shards count in the UI
+                    document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+                    
+                    // Move character to the new square
+                    const x = parseInt(square.getAttribute('data-x'));
+                    const y = parseInt(square.getAttribute('data-y'));
+                    moveCharacterToTile(x, y);
+                    
+                    // Close modal
+                    modal.style.display = 'none';
+                } else {
+                    alert(data.message || 'Not enough shards');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing payment');
+            }
+        });
+    }
+
+    // Initial setup of pay shard button
+    if (payShardButton) {
+        setupPayShardButton(payShardButton);
+    }
+
+    // Handle game result if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameResult = urlParams.get('game_result');
+    const squareId = urlParams.get('square_id');
+    
+    if (gameResult === 'true' && squareId) {
+        const winningSquare = document.querySelector(`.grid-item[data-square-id="${squareId}"]`);
+        if (winningSquare) {
+            const x = parseInt(winningSquare.getAttribute('data-x'));
+            const y = parseInt(winningSquare.getAttribute('data-y'));
+            winningSquare.setAttribute('data-state', 'active');
+            moveCharacterToTile(x, y);
+        }
+    }
+
+    // Close modal when clicking X
+    const closeButton = modal.querySelector('.close-button');
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+  });
 </script>
 
 <style>
-  /* Combined styles from both versions */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f3f4f6;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .container {
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  .top-banner {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: #fff;
-    padding: 20px;
-    width: 100%;
-    height: 11%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .title {
-    font-size: 2.5rem;
-    margin: 0;
-    flex: 1;
-  }
-
-  .dropdown-menu-container {
-  position: relative;
-}
-
-.dropdown-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.dropdown-button:hover {
-  background-color: #0056b3;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%; /* Below the button */
-  right: 0;
-  background-color: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #007bff;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-content a:hover {
-  background-color: #f0f0f0;
-}
-
-.dropdown-menu-container:hover .dropdown-content {
-  display: block; /* Keep the dropdown visible when hovering over the container */
-}
-
-  /* Grid */
   .grid {
     display: grid;
     grid-template-columns: repeat(6, 105px);
-    gap: 0;
-    margin: 20px auto;
-    width: fit-content;
-    padding: 0;
+    gap: 2px;
+    padding: 20px;
   }
-
+  
   .grid-item {
-    background: none;
-    padding: 0;
-    text-align: center;
     width: 105px;
     height: 105px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s;
   }
-
+  
   .grid-item:hover {
-    transform: none;
-    box-shadow: none;
+    transform: scale(1.05);
   }
-
-  .grid-item h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-  /* Pixel Art */
-  .pixel-art {
-    font-family: "Courier New", monospace;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    overflow: auto;
-    white-space: pre-wrap; /* Preserve spacing in art */
-    color: #555;
-  }
-
-  .no-pixel-art {
-    font-size: 0.9rem;
-    color: #999;
-    margin: 10px 0 0;
-  }
-
-  .map-square {
+  
+  canvas {
     display: block;
-    width: 32px;
-    height: 32px;
+  }
+  .button-container .button {
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff; /* Text color */
+      background-color: #007bff; /* Button background color */
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
   }
 
-  .square-container {
-    display: flex;
-    flex-wrap: wrap;
-    width: 6300px; /* 128 * 6*/
-    height: 630px; /* 128 * 6 */
+  .button-container .button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
   }
 
-  .square-container canvas {
-    display: block; /* Removes any default spacing */
-    margin: 0;
-    padding: 0;
+  .loading-text {
+    color: #666;
+    font-size: 1.2em;
+    margin: 20px 0;
+    text-align: center;
   }
 
-  .inactive-square {
-    opacity: 0.7;
-    pointer-events: none;
+  .button-container {
+    text-align: center;
   }
 
-  .inactive-square:hover {
-    transform: none;
-    cursor: default;
+  .loading-container {
+    text-align: center;
+    padding: 20px;
   }
+  
+  .loading-text {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .dots {
+    display: inline-block;
+    min-width: 30px;
+    text-align: left;
+  }
+
 </style>
+
+<% if Rails.env.development? %>
+  <script>
+    console.log('Game Result:', '<%= @game_result %>');
+    console.log('Square ID:', '<%= @square_id %>');
+    <% if @square %>
+      console.log('Square Data:', <%= raw @square.to_json %>);
+    <% end %>
+  </script>
+<% end %>
 
 <%== @js_functions %>

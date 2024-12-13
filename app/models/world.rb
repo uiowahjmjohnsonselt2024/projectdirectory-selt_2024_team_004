@@ -1,10 +1,11 @@
 class World < ActiveRecord::Base
   before_create :generate_unique_world_id
 
-  has_many :user_worlds
+  has_many :user_worlds, dependent: :destroy
   has_many :users, through: :user_worlds
   has_many :squares, dependent: :destroy
   has_many :characters, dependent: :destroy
+  has_many :invitations, dependent: :destroy
 
   def storm
     # Get all squares in the world

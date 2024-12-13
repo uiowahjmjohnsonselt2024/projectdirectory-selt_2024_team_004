@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Landing Page', type: :view do
   before do
-    render template: 'landing_page/index' # Adjust the template path
+    render template: 'squares/landing' # Adjust the template path
   end
 
   it 'renders the page title' do
