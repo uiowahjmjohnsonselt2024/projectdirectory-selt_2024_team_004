@@ -6,6 +6,13 @@ def login_user(user)
   click_button 'Log In'
 end
 
+def login_user(user)
+  visit login_path
+  fill_in 'Email', with: user.email
+  fill_in 'Password', with: 'password'
+  click_button 'Log In'
+end
+
 RSpec.describe 'Settings Page', type: :feature do
     let(:user) { User.create!(email: 'test@example.com', password: 'password', password_confirmation: 'password', name: 'Test User') }
     let(:world) { World.create!(world_name: 'World 1') }
