@@ -177,112 +177,152 @@
     // Add these variables from Ruby
     const worldId = '<%= @world.id %>';
     const userId = '<%= @user.id %>';
+
+    // Grid configuration
+    const gridSize = 6; // 6x6 grid
+    const tileSize = 105; // Each tile is 100px x 100px
     
     // Grid click handler
     document.querySelectorAll('.grid-item').forEach(square => {
-        square.addEventListener('click', async function() {
-            const state = this.getAttribute('data-state');
-            const x = parseInt(this.getAttribute('data-x'));
-            const y = parseInt(this.getAttribute('data-y'));
-            const squareId = this.getAttribute('data-square-id');
-            
-            // Get current character position
-            const currentX = parseInt(character.getAttribute('data-x'));
-            const currentY = parseInt(character.getAttribute('data-y'));
-            const rowDifference = Math.abs(y - currentY);
-            const columnDifference = Math.abs(x - currentX);
-            const shardCost = rowDifference + columnDifference;
+      square.addEventListener('click', async function() {
+        const state = this.getAttribute('data-state');
+        const x = parseInt(this.getAttribute('data-x'));
+        const y = parseInt(this.getAttribute('data-y'));
+        const squareId = this.getAttribute('data-square-id');
 
-            if (state === 'inactive') {
-                // Reset the button container to its original state
-                const buttonContainer = document.querySelector('.button-container');
-                const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
-                
-                buttonContainer.innerHTML = `
-                    <a href="${minigameUrl}" 
-                       id="minigame-button" 
-                       class="button">Play Minigame</a>
-                    <button id="pay-shard-button" 
-                            class="button" 
-                            data-url="<%= pay_shards_path %>" 
-                            data-square-id="${squareId}">Pay 10 shards</button>
-                `;
-                
-                // Reattach event listener to the new pay shard button
-                const newPayShardButton = document.getElementById('pay-shard-button');
-                if (newPayShardButton) {
-                    setupPayShardButton(newPayShardButton);
-                }
+        // Get current character position
+        const currentX = parseInt(character.getAttribute('data-x'));
+        const currentY = parseInt(character.getAttribute('data-y'));
+        const rowDifference = Math.abs(y - currentY);
+        const columnDifference = Math.abs(x - currentX);
+        const shardCost = rowDifference + columnDifference;
 
-                // Show popup for inactive tiles
-                document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
-                modal.style.display = 'flex';
-            } else if (state === 'active') {
-                // Check if the clicked tile is adjacent
-                const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) &&
-                                 !(x === currentX && y === currentY);
-                
-                if (isAdjacent) {
-                    moveCharacterToTile(x, y);
+        if (state === 'inactive') {
+          // Reset the button container to its original state
+          const buttonContainer = document.querySelector('.button-container');
+          const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
+
+          buttonContainer.innerHTML = `
+            <a href="${minigameUrl}"
+             id="minigame-button"
+             class="button">Play Minigame</a>
+            <button id="pay-shard-button"
+              class="button"
+              data-url="<%= pay_shards_path %>"
+              data-square-id="${squareId}">Pay 10 shards</button>
+          `;
+
+          // Reattach event listener to the new pay shard button
+          const newPayShardButton = document.getElementById('pay-shard-button');
+          if (newPayShardButton) {
+            setupPayShardButton(newPayShardButton);
+          }
+
+          // Show popup for inactive tiles
+          document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
+          modal.style.display = 'flex';
+        } else if (state === 'active') {
+          // Check if the clicked tile is adjacent
+          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
+
+          if (isAdjacent) {
+            moveCharacterToTile(x, y);
+          } else {
+            const confirmMove = confirm(
+                `This move will cost ${shardCost} shards. Do you want to proceed?`
+            );
+
+            if (confirmMove) {
+              try {
+                const response = await fetch('/pay_shards', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                  },
+                  body: JSON.stringify({
+                    character_id: character.getAttribute('data-character-id'),
+                    square_id: squareId
+                  })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                  // Update shard count
+                  document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+                  moveCharacterToTile(x, y);
                 } else {
-                    const confirmMove = confirm(
-                        `This move will cost ${shardCost} shards. Do you want to proceed?`
-                    );
-
-                    if (confirmMove) {
-                        try {
-                            const response = await fetch('/pay_shards', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-Token': csrfToken,
-                                },
-                                body: JSON.stringify({
-                                    character_id: character.getAttribute('data-character-id'),
-                                    square_id: squareId
-                                })
-                            });
-
-                            const data = await response.json();
-
-                            if (response.ok && data.success) {
-                                // Update shard count
-                                document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-                                moveCharacterToTile(x, y);
-                            } else {
-                                alert(data.message || 'Failed to teleport.');
-                            }
-                        } catch (error) {
-                            console.error('Error teleporting:', error);
-                            alert('An error occurred while teleporting. Please try again.');
-                        }
-                    }
+                  alert(data.message || 'Failed to teleport.');
                 }
+              } catch (error) {
+                console.error('Error teleporting:', error);
+                alert('An error occurred while teleporting. Please try again.');
+              }
             }
-        });
+          }
+        }
+      });
     });
 
-    // Function to move character
-    function moveCharacterToTile(x, y, shardCost = 0) {
-        const gridOffsets = calculateGridOffsets();
-        const characterX = gridOffsets.x_char + (x * 105) + 52.5 - 50;
-        const characterY = gridOffsets.y_char + (y * 105) + 52.5 - 50;
+    // Function to move character to the correct tile and save coordinates
+    async function moveCharacterToTile(x, y) {
+      const gridOffsets = calculateGridOffsets();
 
-        character.style.left = `${characterX}px`;
-        character.style.top = `${characterY}px`;
+      // Adjust the position to account for the misalignment
+      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
+      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
 
-        character.setAttribute('data-x', x);
-        character.setAttribute('data-y', y);
-        xCoordField.value = x;
-        yCoordField.value = y;
+      character.style.left = `${characterX}px`;
+      character.style.top = `${characterY}px`;
+
+      // Update hidden fields for form submission
+      xCoordField.value = x;
+      yCoordField.value = y;
+
+      // Save coordinates to the server
+      try {
+        const response = await fetch('/coordinates', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
+          body: JSON.stringify({
+            id: <%= @character.id %>,
+            x: x,
+            y: y
+          })
+        });
+
+        if (!response.ok) {
+          console.error('Failed to save coordinates:', response.statusText);
+        }
+        else {
+          console.log('Coordinates saved successfully.');
+        }
+      }
+      catch (error) {
+        console.error('Error saving coordinates:', error);
+      }
     }
 
-    // Calculate grid offsets
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
+
+    // Function to calculate grid offsets
     function calculateGridOffsets() {
-        return {
-            x_char: 450,  // Base offset for grid
-            y_char: 175   // Base offset for grid
-        };
+      const gridWidth = gridSize * tileSize;
+      const gridHeight = gridSize * tileSize;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      return {
+        x_char: (screenWidth - gridWidth) / 2,
+        y_char: (screenHeight - gridHeight) / 2
+      };
     }
 
     // Add this function at the top level of your JavaScript
