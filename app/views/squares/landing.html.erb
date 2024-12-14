@@ -193,11 +193,26 @@
         // Get current character position
         const currentX = parseInt(character.getAttribute('data-x'));
         const currentY = parseInt(character.getAttribute('data-y'));
-        const rowDifference = Math.abs(y - currentY);
-        const columnDifference = Math.abs(x - currentX);
-        const shardCost = rowDifference + columnDifference;
+        
+        if (state === 'active') {
+          // Check if the clicked tile is adjacent
+          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
 
-        if (state === 'inactive') {
+          if (isAdjacent) {
+            moveCharacterToTile(x, y);
+          } else {
+            // Calculate shard cost for non-adjacent movement
+            const calculatedShardCost = Math.abs(x - currentX) + Math.abs(y - currentY);
+            
+            const confirmMove = confirm(
+              `This move will cost ${calculatedShardCost} shards. Do you want to proceed?`
+            );
+
+            if (confirmMove) {
+              moveCharacterToTile(x, y, calculatedShardCost);
+            }
+          }
+        } else if (state === 'inactive') {
           // Reset the button container to its original state
           const buttonContainer = document.querySelector('.button-container');
           const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
@@ -221,57 +236,55 @@
           // Show popup for inactive tiles
           document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
           modal.style.display = 'flex';
-        } else if (state === 'active') {
-          // Check if the clicked tile is adjacent
-          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
-
-          if (isAdjacent) {
-            moveCharacterToTile(x, y);
-          } else {
-            const confirmMove = confirm(
-                `This move will cost ${shardCost} shards. Do you want to proceed?`
-            );
-
-            if (confirmMove) {
-              try {
-                const response = await fetch('/pay_shards', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                  },
-                  body: JSON.stringify({
-                    character_id: character.getAttribute('data-character-id'),
-                    square_id: squareId
-                  })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                  // Update shard count
-                  document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-                  moveCharacterToTile(x, y);
-                } else {
-                  alert(data.message || 'Failed to teleport.');
-                }
-              } catch (error) {
-                console.error('Error teleporting:', error);
-                alert('An error occurred while teleporting. Please try again.');
-              }
-            }
-          }
         }
       });
     });
 
     // Function to move character to the correct tile and save coordinates
-    async function moveCharacterToTile(x, y) {
+    async function moveCharacterToTile(x, y, shardCost = null) {
       if (!character) return;
       
-      // Find the target square element
+      // If there's a shard cost, handle payment first
+      if (shardCost !== null) {
+        try {
+          const response = await fetch('/pay_shards', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': csrfToken,
+            },
+            body: JSON.stringify({
+              character_id: character.getAttribute('data-character-id'),
+              square_id: document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`).getAttribute('data-square-id'),
+              shard_cost: shardCost,
+              user_id: '<%= @user.id %>'
+            })
+          });
+
+          if (response.status === 401) {
+            window.location.href = '/login';
+            return false;
+          }
+
+          const data = await response.json();
+
+          if (!response.ok || !data.success) {
+            alert(data.message || 'Failed to move.');
+            return false;
+          }
+
+          document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred while moving. Please try again.');
+          return false;
+        }
+      }
+
+      // Only proceed with movement if payment was successful or no payment was needed
       const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
-      if (!targetSquare) return;
+      if (!targetSquare) return false;
 
       // Get the grid container's position
       const gridContainer = document.querySelector('.grid');
@@ -286,43 +299,40 @@
       const relativeX = squareRect.left - gridRect.left;
       const relativeY = squareRect.top - gridRect.top;
       
-      // Position character relative to grid container
-      character.style.position = 'absolute'; // Change to absolute positioning
+      // Position character relative to grid container and center it
+      character.style.position = 'absolute';
       character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
       character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
       
-      // Update data attributes and form fields
+      // Update data attributes
       character.setAttribute('data-x', x);
       character.setAttribute('data-y', y);
-      xCoordField.value = x;
-      yCoordField.value = y;
 
+      // Save coordinates to the server
       try {
-          const response = await fetch('/coordinates', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRF-Token': csrfToken,
-              },
-              body: JSON.stringify({
-                  id: character.getAttribute('data-character-id'),
-                  x,
-                  y,
-                  shards: shardCost,
-              }),
-          });
+        const saveResponse = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-CSRF-Token': csrfToken,
+          },
+          body: JSON.stringify({
+            character: {
+              x_coord: x,
+              y_coord: y
+            }
+          })
+        });
 
-          const data = await response.json();
-
-          if (response.ok && data.success) {
-              document.querySelector('.shards-count').textContent =
-                  `Shards: ${data.updated_shards}`;
-          } else {
-              alert(data.errors || 'Error updating character position.');
-          }
+        if (!saveResponse.ok) {
+          console.error('Error:', saveResponse.statusText);
+        }
       } catch (error) {
-          console.error('Error:', error);
+        console.error('Error:', error);
       }
+
+      return true;
     }
 
     // Center the character initially
@@ -455,15 +465,6 @@
       });
     }
 
-    // Add Action Cable subscription
-    App.game = App.cable.subscriptions.create({ channel: "GameChannel", world_id: <%= @world.id %> }, {
-      received: function(data) {
-        if (data.type === 'character_moved') {
-          updateCharacterPosition(data.character_id, data.x, data.y);
-        }
-      }
-    });
-
     // Function to update other characters' positions
     function updateCharacterPosition(characterId, x, y) {
       const characterElement = document.querySelector(`.character[data-character-id="${characterId}"]`);
@@ -488,9 +489,25 @@
       }
     }
 
-    // Add window resize handler to update positions
+    // Set up Action Cable subscription
+    if (typeof App !== 'undefined' && App.cable) {
+      App.game = App.cable.subscriptions.create(
+        { 
+          channel: "GameChannel", 
+          world_id: '<%= @world.id %>' 
+        },
+        {
+          received: function(data) {
+            if (data.type === 'character_moved') {
+              updateCharacterPosition(data.character_id, data.x, data.y);
+            }
+          }
+        }
+      );
+    }
+
+    // Add window resize handler to update all character positions
     window.addEventListener('resize', () => {
-      // Update all character positions on resize
       document.querySelectorAll('.character').forEach(char => {
         const x = parseInt(char.getAttribute('data-x'));
         const y = parseInt(char.getAttribute('data-y'));
