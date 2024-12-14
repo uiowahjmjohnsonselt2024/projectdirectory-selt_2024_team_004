@@ -4,16 +4,16 @@ class SquaresController < ApplicationController
     store
     @user ||= User.find_by id: params[:user_id]
     @world ||= World.find_by id: params[:world_id]
-    @world_id = @world&.id
-    @character ||= Character.find_by world_id: @world.id
-    @game_result = params[:game_result] || false
 
     unless @world
       flash[:alert] = "No world selected"
       redirect_to worlds_path and return
     end
 
+    @world_id = @world&.id
     @squares = Square.where(world_id: @world.id).order(:y, :x)
+    @character ||= @world.characters.find_by(user_id: @user.id)
+    @game_result = params[:game_result] || false
   end
 
   def pay_shards
