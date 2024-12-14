@@ -103,13 +103,7 @@
     </div>
 
     <div class="teleport-container" data-character-id="<%= @character.id %>">
-      <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-        <%= form.hidden_field :id, value: @character&.id %>
-        <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-        <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-        <%= form.submit 'Save World', class: 'btn btn-primary', id:"teleport-button" %>
-      <% end %>
-      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count.y" %></p>
+      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count." %></p>
     </div>
   </div>
 
