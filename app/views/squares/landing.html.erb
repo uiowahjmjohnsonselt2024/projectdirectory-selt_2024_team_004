@@ -209,7 +209,22 @@
             );
 
             if (confirmMove) {
-              moveCharacterToTile(x, y, calculatedShardCost);
+              try {
+                // First attempt to move the character
+                const moveResult = await moveCharacterToTile(x, y);
+                
+                if (moveResult && moveResult.success) {
+                  // If movement was successful, update shards display
+                  const shardsDisplay = document.querySelector('.shards-count');
+                  if (shardsDisplay) {
+                    const currentShards = parseInt(shardsDisplay.textContent.match(/\d+/)[0]);
+                    shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
+                  }
+                }
+              } catch (error) {
+                console.error('Movement failed:', error);
+                alert('Unable to complete movement. Please try again.');
+              }
             }
           }
         } else if (state === 'inactive') {
@@ -243,12 +258,20 @@
     // Function to move character to the correct tile and save coordinates
     async function moveCharacterToTile(x, y, specificCharacter = null) {
       const targetCharacter = specificCharacter || character;
-      if (!targetCharacter) return;
+      if (!targetCharacter) {
+        console.error('No character found');
+        return { success: false };
+      }
 
       const gridContainer = document.querySelector('.grid');
       const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
       
-      if (gridContainer && targetSquare) {
+      if (!gridContainer || !targetSquare) {
+        console.error('Grid container or target square not found');
+        return { success: false };
+      }
+
+      try {
         const gridRect = gridContainer.getBoundingClientRect();
         const squareRect = targetSquare.getBoundingClientRect();
         
@@ -262,33 +285,42 @@
         targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
         targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
         
+        // Update the data attributes
         targetCharacter.setAttribute('data-x', x);
         targetCharacter.setAttribute('data-y', y);
 
         // If this is the current user's movement, save to server
         if (targetCharacter === character) {
-          try {
-            const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-              },
-              body: JSON.stringify({
-                x: x,
-                y: y
-              })
-            });
+          const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+            },
+            body: JSON.stringify({
+              x: x,
+              y: y
+            })
+          });
 
-            if (!response.ok) {
-              console.error('Failed to save coordinates');
-              // Optionally revert the movement here
-            }
-          } catch (error) {
-            console.error('Error saving coordinates:', error);
+          const data = await response.json();
+          
+          if (!response.ok) {
+            console.error('Failed to save coordinates:', data.error);
+            // Revert the movement if save failed
+            targetCharacter.setAttribute('data-x', data.x);
+            targetCharacter.setAttribute('data-y', data.y);
+            return { success: false, error: data.error };
           }
+          
+          return { success: true, data };
         }
+        
+        return { success: true };
+      } catch (error) {
+        console.error('Error in moveCharacterToTile:', error);
+        return { success: false, error: error.message };
       }
     }
 
