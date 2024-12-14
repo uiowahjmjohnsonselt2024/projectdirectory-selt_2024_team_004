@@ -69,7 +69,3 @@ Feature: Sign up for a new Sea Raiders user account
     And I have filled out all fields: "Mackenzie", "mack_ryan@gmail.com", "abcDEF%926", "abcDEF%926"
     When I click the Sign Up button
     Then I should be redirected to the login page and see "Successfully created account!"
-  
-
-    # All sign up scenarios:
-  # Successful creation, redirected to login page: "Successfully created account!"
