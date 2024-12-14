@@ -6,11 +6,11 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
 
     # Make sure the character belongs to the current user
-    if @character.user_world.user_id == current_user.id
-      if @character.update(x_coord: params[:x], y_coord: params[:y])
+    if @character.user_id == current_user.id
+      if @character.update!(x_coord: params[:x], y_coord: params[:y])
         # Broadcast the movement to all players in the world
         ActionCable.server.broadcast(
-          "game_channel_#{@character.user_world.world_id}",
+          "game_channel_#{@character.world_id}",
           {
             type: 'character_moved',
             character_id: @character.id,
@@ -22,7 +22,8 @@ class CharactersController < ApplicationController
         render json: {
           success: true,
           message: 'Coordinates saved successfully.',
-          updated_shards: @character.shards
+          x: @character.x_coord,
+          y: @character.y_coord
         }
       else
         render json: { success: false, errors: @character.errors.full_messages },
@@ -32,6 +33,9 @@ class CharactersController < ApplicationController
       render json: { success: false, error: 'Unauthorized' },
              status: :unauthorized
     end
+  rescue => e
+    Rails.logger.error("Error saving coordinates: #{e.message}")
+    render json: { success: false, error: e.message }, status: :internal_server_error
   end
 
   def update_shards

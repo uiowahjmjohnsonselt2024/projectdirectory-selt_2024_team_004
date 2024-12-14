@@ -86,6 +86,13 @@ class SquaresController < ApplicationController
 
     @squares = Square.where(world_id: @world.id).order(:y, :x)
     Rails.logger.info "Total squares loaded for world: #{@squares.count}"
+
+    @character = @world.characters.find_by(user_id: current_user.id)
+    
+    # Ensure we have valid coordinates
+    @character.x_coord ||= 0
+    @character.y_coord ||= 0
+    @character.save! if @character.changed?
   end
 
   def pay_shards
