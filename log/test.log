@@ -18678,3 +18678,279 @@ Completed 200 OK in 3ms (Views: 1.4ms | ActiveRecord: 0.1ms | Allocations: 1367)
   [1m[36mCharacter Load (0.1ms)[0m  [1m[34mSELECT "characters".* FROM "characters" WHERE "characters"."world_id" = ?[0m  [["world_id", 1]]
   Rendered squares/landing.html.erb (Duration: 249.8ms | Allocations: 5717)
   [1m[35m (10.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 116.6ms | Allocations: 201630)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 20.1ms | Allocations: 3130)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 22.8ms | Allocations: 3102)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 20.7ms | Allocations: 3122)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 22.9ms | Allocations: 3103)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 23.7ms | Allocations: 3122)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 19.4ms | Allocations: 3103)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 22.3ms | Allocations: 3102)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 19.7ms | Allocations: 3122)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 19.4ms | Allocations: 3103)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 3.6ms | Allocations: 1905)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.7ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 14.1ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 3.7ms | Allocations: 1905)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 12.1ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 23.4ms | Allocations: 1978)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 541)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.2ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (10.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 27.7ms | Allocations: 1978)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.6ms | Allocations: 541)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.5ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.5ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.7ms | Allocations: 538)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.7ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.5ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (9.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 5.8ms | Allocations: 1978)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 541)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.7ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.4ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.9ms | Allocations: 538)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 2.3ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.5ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 0.5ms | Allocations: 538)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering matching_game/index.html.erb
+  Rendered matching_game/index.html.erb (Duration: 1.4ms | Allocations: 538)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m

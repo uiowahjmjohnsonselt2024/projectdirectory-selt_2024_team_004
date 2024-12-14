@@ -73,9 +73,4 @@ RSpec.describe 'settings/show.html.erb', type: :view do
     expect(rendered).to have_selector("input[name='_method'][value='delete']", visible: :all)
     expect(rendered).to have_selector("input.logout-button[type='submit'][value='Logout']")
   end
-
-  it 'debug the rendered output' do
-    render
-    puts "Rendered: #{rendered}"
-  end
 end
