@@ -91,6 +91,7 @@ class SquaresController < ApplicationController
     @character.x_coord ||= 0
     @character.y_coord ||= 0
     @character.save! if @character.changed?
+    session[:character_id] = @character.character_id
   end
 
   def pay_shards

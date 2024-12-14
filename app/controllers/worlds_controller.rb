@@ -4,6 +4,7 @@ class WorldsController < ApplicationController
   def new
     @world_id = params[:world_id]
     @user_world_id = params[:user_world_id]
+    session[:world_id] = @world_id
   end
 
   def index

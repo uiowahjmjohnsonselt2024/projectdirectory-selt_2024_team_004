@@ -9,7 +9,8 @@
 <section>
   <h2>Character</h2>
   <% if @character %>
-    <p><strong>Role:</strong> <%= @character.role %></p>
+    <p><strong>Role:</strong> <%= @role %></p>
+    <%= image_tag @character_image, alt: "Character Image" %>
   <% else %>
     <p>No character available.</p>
   <% end %>
