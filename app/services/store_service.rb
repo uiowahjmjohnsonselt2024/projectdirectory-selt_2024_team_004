@@ -6,23 +6,39 @@ class StoreService
     chest_of_shards_100: 50.00
   }
 
-  def self.fetch_prices(currency = 'USD')
-    return PRICES if currency == 'USD'
+  def self.fetch_prices(currency)
+    puts "\n=== Starting Price Conversion ==="
+    puts "Original USD prices: #{PRICES}"
+    puts "Target currency: #{currency}"
+    
+    return PRICES if currency.nil? || currency == 'USD'
 
     begin
-      app_id = ENV['OPEN_EXCHANGE_APP_ID']
-      response = HTTParty.get("https://openexchangerates.org/api/latest.json?app_id=#{app_id}")
+      rates_data = OpenExchangeService.fetch_exchange_rates
+      puts "Received exchange rates data: #{rates_data.inspect}"
       
-      if response.success? && response['rates'] && response['rates'][currency]
-        rate = response['rates'][currency]
-        PRICES.transform_values { |price| (price * rate).round(2) }
+      if rates_data && rates_data['rates'] && rates_data['rates'][currency]
+        rate = rates_data['rates'][currency].to_f
+        puts "\nExchange rate found: 1 USD = #{rate} #{currency}"
+        
+        converted_prices = {}
+        PRICES.each do |key, usd_price|
+          converted_price = (usd_price * rate).round(2)
+          puts "Converting #{key}: #{usd_price} USD -> #{converted_price} #{currency}"
+          converted_prices[key] = converted_price
+        end
+        
+        puts "\nFinal converted prices: #{converted_prices}"
+        puts "=== Conversion Complete ===\n"
+        converted_prices
       else
-        # If API call fails, return USD prices as fallback
+        Rails.logger.error "Failed to get exchange rate for #{currency}"
+        puts "Failed to get rate - returning USD prices"
         PRICES
       end
     rescue => e
       Rails.logger.error "Currency conversion error: #{e.message}"
-      # Return USD prices as fallback
+      puts "Error during conversion: #{e.message}"
       PRICES
     end
   end

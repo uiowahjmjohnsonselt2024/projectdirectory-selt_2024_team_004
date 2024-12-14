@@ -588,9 +588,15 @@ class WorldsController < ApplicationController
 
   def store
     @user = current_user
-    @currency = @user.default_currency || 'USD'
-    puts "USER: #{@user}\nCURRENCY: #{@currency}"
+    @currency = @user&.default_currency || 'USD'
+    puts "Current user currency: #{@currency}"
+    
     @prices = StoreService.fetch_prices(@currency)
+    puts "Fetched prices for #{@currency}: #{@prices}"
+    
+    # Force prices to be converted to floats
+    @prices = @prices.transform_values(&:to_f)
+    puts "Final prices after conversion: #{@prices}"
   end
 
   def current_user
