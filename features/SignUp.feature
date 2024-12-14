@@ -14,14 +14,21 @@ Feature: Sign up for a new Sea Raiders user account
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Error: Password can't be blank, Password is too short (minimum is 6 characters), Email can't be blank, Email is invalid, Password confirmation can't be blank"
 
-  Scenario:
-  Given I am on the sign up page
-  And I have only filled out the "Email" field with "johnDoe@gmail.com"
-  When I click the Sign Up button
-  Then I should remain on the sign up page and see "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Password confirmation can't be blank"
+  Scenario: Only filling out email
+    Given I am on the sign up page
+    And I have only filled out the "Email" field with "johnDoe@gmail.com"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Password confirmation can't be blank"
+
+  Scenario: Only filling out password
+    Given I am on the sign up page
+    And I have only filled out the "Password" field with "myPassword#10"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Error: Password confirmation doesn't match Password, Password confirmation can't be blank, Name can't be blank, Email can't be blank, Email is invalid"
+
+
 
     # All sign up scenarios:
-  # Only fill out email: "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Password confirmation can't be blank"
   # Only fill out password: "Error: Password confirmation doesn't match Password, Password confirmation can't be blank, Name can't be blank, Email can't be blank, Email is invalid"
   # Only fill out conf: "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Email can't be blank, Email is invalid"
   # Password too short: "Error: Password is too short (minimum is 6 characters)"
