@@ -18954,3 +18954,1366 @@ Completed 200 OK in 3ms (Views: 1.4ms | ActiveRecord: 0.1ms | Allocations: 1367)
   Rendering matching_game/index.html.erb
   Rendered matching_game/index.html.erb (Duration: 1.4ms | Allocations: 538)
   [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (9.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 83.1ms | Allocations: 6596)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.3ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.1ms | Allocations: 772)
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (14.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 18.8ms | Allocations: 772)
+  [1m[35m (1.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (7.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 15.5ms | Allocations: 772)
+  [1m[35m (0.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (4.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 7.6ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 775)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 14.2ms | Allocations: 6596)
+  [1m[35m (0.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.9ms | Allocations: 777)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (6.6ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 71.4ms | Allocations: 6600)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.9ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.9ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.9ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 19.8ms | Allocations: 6597)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.3ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.6ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 23.5ms | Allocations: 6596)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (14.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 21.0ms | Allocations: 777)
+  [1m[35m (1.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (6.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 10.1ms | Allocations: 772)
+  [1m[35m (0.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (5.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 7.9ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.0ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.5ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.3ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 19.2ms | Allocations: 6597)
+  [1m[35m (1.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (5.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 7.5ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (6.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 8.8ms | Allocations: 772)
+  [1m[35m (1.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (4.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 6.6ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (8.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 11.3ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (8.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 13.3ms | Allocations: 772)
+  [1m[35m (1.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 27.0ms | Allocations: 6596)
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (12.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 17.6ms | Allocations: 772)
+  [1m[35m (1.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (3.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 7.6ms | Allocations: 772)
+  [1m[35m (2.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (5.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 8.5ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 5.1ms | Allocations: 772)
+  [1m[35m (0.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.0ms | Allocations: 777)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.3ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.8ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (1.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.8ms | Allocations: 772)
+  [1m[35m (0.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.1ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (4.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 5.7ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 38.2ms | Allocations: 6597)
+  [1m[35m (1.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (3.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 6.0ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (4.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 8.5ms | Allocations: 772)
+  [1m[35m (1.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.1ms | Allocations: 772)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.9ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.5ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.5ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.3ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (4.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 111.9ms | Allocations: 6596)
+  [1m[35m (3.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (3.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 5.3ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.7ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.5ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (11.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 13.2ms | Allocations: 772)
+  [1m[35m (1.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 19.2ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.7ms | Allocations: 775)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 30.6ms | Allocations: 6600)
+  [1m[35m (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (3.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.3ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (2.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.0ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (3.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.5ms | Allocations: 772)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.3ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (4.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (4.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (8.7ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "b29c955a5afe2b2e3096"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "e5f4f3426e5c9c4a2ce6"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 7.6ms | Allocations: 4155)
+  [1m[35m (25.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (38.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "4cf373df553ee775315b"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "245d620915380e32bc29"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.4ms | Allocations: 2303)
+  [1m[35m (16.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (9.6ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "3a05ac05cd26b2102ba9"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "bcfc14aad640831287f5"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2302)
+  [1m[35m (4.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "c4574857d6bc4bfe5a01"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "3a0ec050df8b7e7dbf9c"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.7ms | Allocations: 2302)
+  [1m[35m (5.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (4.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "36d2e6baa7734513f6e0"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "d5df59ae46e664b639bf"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2302)
+  Rendering worlds/index.html.erb
+  Rendered worlds/index.html.erb (Duration: 0.4ms | Allocations: 1247)
+  [1m[35m (3.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "72f4ebea8dbe0975793b"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "ff30af0f2aa65afbea85"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2302)
+  [1m[35m (2.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.7ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "f13ba76ff5a49cabcd70"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "16ef63bdcac612a92051"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2302)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2629)
+  [1m[35m (3.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.8ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "121e09f09b2107b34baf"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "399ec7a648c5faa7797a"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2302)
+  [1m[35m (2.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (2.9ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "c9b6d9e76880f79f1a8f"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "9ed87992990fb80c23ad"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2302)
+  [1m[35m (3.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (7.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "a7bef845fe56532a356c"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "a0edb9f93a90c860e0d5"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 2302)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.6ms | Allocations: 1915)
+  [1m[35m (14.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (24.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "5365d8cdad69cb7727fc"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "fb51bdbcb65d0fd7e1ec"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2302)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 2275)
+  [1m[35m (5.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (11.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 1], ["world_id", "fb65a8d65d0f97d9293c"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id") VALUES (?, ?)[0m  [["id", 2], ["world_id", "dfabbe5aed4388002147"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 2302)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2275)
+  [1m[35m (3.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (9.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 13.9ms | Allocations: 6596)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.3ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.2ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 12.8ms | Allocations: 777)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.7ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.3ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.9ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.6ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.8ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.1ms | Allocations: 772)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.5ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.1ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (1.3ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 772)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "1eb86a54248eaa55f3d3"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "772e57af52119dfcb1d0"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 19.1ms | Allocations: 4134)
+  [1m[35m (18.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (9.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "04b35d181178dd706bbd"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "c03dc01d79f505a4f90f"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.3ms | Allocations: 2280)
+  [1m[35m (5.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (7.7ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "c0fdc255d48ba0d4fc15"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "04a8842efeda72d89e0b"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 18.8ms | Allocations: 2280)
+  [1m[35m (5.6ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (6.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "afedeb9e173aff8665b5"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "fdbe3980c80bf4b4b732"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.5ms | Allocations: 2281)
+  [1m[35m (15.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (20.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "621ef90db3b893f6d542"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "e70a19972122524f677d"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  Rendered worlds/index.html.erb (Duration: 0.7ms | Allocations: 1247)
+  [1m[35m (10.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (16.9ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "d76e7fc4f1b284764b5a"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "cfc39ddb40075fbf9fc0"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2280)
+  [1m[35m (5.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.6ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "bdc6aa9e0f96b3973fad"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "b225fa2476bd2b98381b"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2638)
+  [1m[35m (3.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "a96073a245a2fa8681c0"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "12e04ffc3f5f20c00e46"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2280)
+  [1m[35m (3.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (4.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "ad2eead2a7c339ffdbc8"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "15844027e28fd8663356"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2280)
+  [1m[35m (3.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (4.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "118d496a19d2507f3179"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "4e3287f422d8d09637be"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.4ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.1ms | Allocations: 1893)
+  [1m[35m (3.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (4.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "bc3b61c968696c3ea445"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "3196b8879139a907a6e4"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.1ms | Allocations: 2253)
+  [1m[35m (3.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (15.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "6524ed7af6d839b0f3c2"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "9aa1e47d61096dad92bb"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 8.5ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 4.9ms | Allocations: 2253)
+  [1m[35m (3.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (9.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "7c5315188421ccf5a3e9"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "dbbaa051c9095bcf2a5e"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.4ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 13.2ms | Allocations: 4134)
+  [1m[35m (17.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (23.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "017e301c32a6c751e303"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (2.8ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "c36b861f234e172f240e"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 2281)
+  [1m[35m (6.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "366c788a50113a995903"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "2b10da5808584bb922de"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.8ms | Allocations: 2280)
+  [1m[35m (3.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.6ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "fa4337c56ecb637e41dd"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "0341044d9a7d66a11745"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2280)
+  [1m[35m (2.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "50f8584f604d754d63ca"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "f5c3f99b36f0b16fd7a5"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  Rendered worlds/index.html.erb (Duration: 0.5ms | Allocations: 1247)
+  [1m[35m (6.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (9.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "faaf5623ea4715d17d30"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "e46b0d36cfe4f51772f4"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.0ms | Allocations: 2280)
+  [1m[35m (3.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (12.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "1502752d0e309e71baa4"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "4be05a7d0fb8733dfa12"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.7ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 1893)
+  [1m[35m (14.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (8.9ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "0b5d3a79a84bf3bf4383"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "7e539701b36d0da36279"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.2ms | Allocations: 2280)
+  [1m[35m (6.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (4.7ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "e00a54d7c7d51d4009e3"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "f3d5a4feac4c2d3d171c"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.9ms | Allocations: 2280)
+  [1m[35m (2.9ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.4ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "d205a76256d9e53ef635"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "5f1d86956d2c38657843"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.0ms | Allocations: 1893)
+  [1m[35m (3.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "0be7bc820b88fb1a241b"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "3c257aaae334453d4ab8"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.7ms | Allocations: 2280)
+  [1m[35m (3.8ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.8ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "8995db499a9a13717ba3"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.0ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "c19c3dfb153bb4d0c544"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.2ms | Allocations: 2253)
+  [1m[35m (4.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (10.3ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "853bd128581294b9b14b"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "e0e004b0da39b7872b0d"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.2ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 28.4ms | Allocations: 4134)
+  [1m[35m (7.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (13.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "1e7e7f8428dd97e332e8"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.3ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "1e30438e2df257c30f2b"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 15.0ms | Allocations: 2283)
+  [1m[35m (9.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (10.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "55f414895e06ba2324d1"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.2ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "45cc2b86cc49f5381c33"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.8ms | Allocations: 2280)
+  [1m[35m (10.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (7.6ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "3e7e952b628345fa7569"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "7681a46b03c3e90ac219"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.0ms | Allocations: 2280)
+  [1m[35m (23.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (25.5ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "270002d920b6267953f2"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "6f63a505c0c0ace6e2ed"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.9ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  Rendered worlds/index.html.erb (Duration: 2.9ms | Allocations: 1247)
+  [1m[35m (14.7ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (16.3ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "331db009ce5f6568d370"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "e001f357e816a7e6c732"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.9ms | Allocations: 2280)
+  [1m[35m (3.5ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (6.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "33456e0273b57c3e2733"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "3b7a1f3b8de28cd2dbea"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 3.6ms | Allocations: 2280)
+  [1m[35m (4.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (3.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "9e081cb9b865a2b6c8ad"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.1ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "0933453dcf00ce60861e"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.5ms | Allocations: 2280)
+  [1m[35m (4.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (5.6ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 1], ["world_id", "cd85116b3ae4c4943bfe"], ["world_name", "Adventure World 1"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mWorld Create (0.2ms)[0m  [1m[32mINSERT INTO "worlds" ("id", "world_id", "world_name") VALUES (?, ?, ?)[0m  [["id", 2], ["world_id", "eb224f6add934876f3ab"], ["world_name", "Adventure World 2"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 2.4ms | Allocations: 2280)
+  Rendering worlds/index.html.erb
+  [1m[36mWorld Load (0.1ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2253)
+  [1m[35m (3.3ms)[0m  [1m[31mrollback transaction[0m
