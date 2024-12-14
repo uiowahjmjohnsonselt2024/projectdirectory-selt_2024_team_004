@@ -38,8 +38,15 @@ Feature: Sign up for a new Sea Raiders user account
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Error: Password is too short (minimum is 6 characters)"
 
+  Scenario: Password does not match password confirmation
+    Given I am on the sign up page
+    And I have filled out all fields: "Emily", "emily_82@gmail.com", "password#286", "Password$268"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Error: Password confirmation doesn't match Password"
+
+
+
     # All sign up scenarios:
-  # Password too short: "Error: Password is too short (minimum is 6 characters)"
   # Password and conf dont match: "Error: Password confirmation doesn't match Password"
   # Invalid email: "Email is invalid"
   # Email already used: "Error: Email has already been taken"
