@@ -1,28 +1,29 @@
 class StoreService
-  def self.fetch_prices(currency)
-    exchange_rates = fetch_exchange_rates
+  PRICES = {
+    sea_shard_1: 0.75,
+    pile_of_shards_10: 7.50,
+    hat_of_shards_50: 30.00,
+    chest_of_shards_100: 50.00
+  }
 
-    # Base USD prices
-    usd_prices = {
-      sea_shard_1: 0.75,
-      pile_of_shards_10: 7.50,
-      hat_of_shards_50: 30.00,
-      chest_of_shards_100: 50.00
-    }
-    puts "FETCH_PRICES DATA: #{exchange_rates}, #{usd_prices}, #{currency}"
+  def self.fetch_prices(currency = 'USD')
+    return PRICES if currency == 'USD'
 
-    # Convert prices to the user's selected currency
-    new_prices = usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2).to_s }
-    new_prices.transform_values! { |value| '%.2f' % value.to_f }
-  end
-
-  def self.fetch_exchange_rates
-    cached_rates = Rails.cache.fetch('exchange_rates', expires_in: 12.hours) do
-      OpenExchangeService.fetch_exchange_rates
+    begin
+      app_id = ENV['OPEN_EXCHANGE_APP_ID']
+      response = HTTParty.get("https://openexchangerates.org/api/latest.json?app_id=#{app_id}")
+      
+      if response.success? && response['rates'] && response['rates'][currency]
+        rate = response['rates'][currency]
+        PRICES.transform_values { |price| (price * rate).round(2) }
+      else
+        # If API call fails, return USD prices as fallback
+        PRICES
+      end
+    rescue => e
+      Rails.logger.error "Currency conversion error: #{e.message}"
+      # Return USD prices as fallback
+      PRICES
     end
-    cached_rates['rates']
-  rescue StandardError => e
-    Rails.logger.error "Exception fetching exchange rates: #{e.message}"
-    { 'USD' => 1.0 }
   end
 end
