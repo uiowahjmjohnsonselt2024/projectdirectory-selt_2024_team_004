@@ -1,6 +1,4 @@
 class SquaresController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_current_user
 
   def landing
     store
@@ -89,41 +87,50 @@ class SquaresController < ApplicationController
   end
 
   def pay_shards
+    Rails.logger.info "Pay shards params: #{params.inspect}"
+    
     @character = Character.find_by(id: params[:character_id])
-    @square = Square.find_by(square_id: params[:square_id])
+    @square = Square.find_by(id: params[:square_id])
 
-    unless @current_user
+    Rails.logger.info "Character found: #{@character.inspect}"
+    Rails.logger.info "Square found: #{@square.inspect}"
+
+    if @character.nil? || @square.nil?
+      Rails.logger.error "Character or square not found"
       render json: {
         success: false,
-        message: "Please log in to continue"
-      }, status: :unauthorized
+        message: "Character or square not found"
+      }
       return
     end
 
-    unless @character && @square
-      render json: {
-        success: false,
-        message: "Invalid square/character"
-      }, status: :unprocessable_entity
-      return
+    # Calculate shard cost based on distance
+    current_x = @character.x_coord.to_i
+    current_y = @character.y_coord.to_i
+    target_x = @square.x.to_i
+    target_y = @square.y.to_i
+    
+    # Different costs based on square state
+    if @square.state == "inactive"
+      shard_cost = 10  # Cost to activate new square
+    else
+      # Cost based on distance for moving between active squares
+      shard_cost = (target_x - current_x).abs + (target_y - current_y).abs
     end
 
-    unless @character.user_id == @current_user.id
-      render json: {
-        success: false,
-        message: "Unauthorized action"
-      }, status: :unauthorized
-      return
-    end
+    Rails.logger.info "Shard cost calculation: #{shard_cost} (from #{current_x},#{current_y} to #{target_x},#{target_y})"
 
-    if @square.state == "inactive" && @character.shards >= 10
-      begin
-        Square.transaction do
-          @character.update!(shards: @character.shards - 10)
-          
+    # Check if character has enough shards
+    if @character.shards >= shard_cost
+      Rails.logger.info "Character has enough shards. Updating position..."
+      
+      Square.transaction do
+        # If square is inactive, activate it
+        if @square.state == "inactive"
           terrain_types = ["forest", "desert", "water", "plains"]
           terrain = terrain_types.sample
           
+          # Get adjacent squares for context
           adjacent_squares = {
             north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
             south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
@@ -131,6 +138,7 @@ class SquaresController < ApplicationController
             west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
           }
 
+          # Generate code using OpenAI
           generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
           
           @square.update!(
@@ -138,30 +146,41 @@ class SquaresController < ApplicationController
             terrain: terrain,
             code: generated_code
           )
-
-          render json: {
-            success: true,
-            new_shards: @character.shards,
-            square: {
-              id: @square.id,
-              code: generated_code,
-              terrain: terrain
-            }
-          }
         end
-      rescue => e
-        Rails.logger.error("Error in pay_shards: #{e.message}")
-        render json: {
-          success: false,
-          message: "An error occurred while processing the payment"
-        }, status: :internal_server_error
+
+        # Update character position and shards
+        @character.update!(
+          shards: @character.shards - shard_cost,
+          x_coord: target_x,
+          y_coord: target_y
+        )
       end
+
+      render json: {
+        success: true,
+        new_shards: @character.shards,
+        square: {
+          id: @square.id,
+          code: @square.code,
+          terrain: @square.terrain
+        },
+        message: "Successfully moved to new position"
+      }
     else
+      Rails.logger.info "Not enough shards (has: #{@character.shards}, needs: #{shard_cost})"
       render json: {
         success: false,
-        message: "Not enough shards (need 10) or square is already active"
-      }, status: :unprocessable_entity
+        message: "Not enough shards (need #{shard_cost})"
+      }
     end
+
+  rescue => e
+    Rails.logger.error "Error in pay_shards: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    render json: {
+      success: false,
+      message: e.message
+    }
   end
 
   def activate_square
@@ -214,20 +233,7 @@ class SquaresController < ApplicationController
     puts "Prices: #{@prices}"
   end
 
-  def set_current_user
-    @current_user = current_user
-  end
-
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-
-  def authenticate_user!
-    unless current_user
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { render json: { success: false, message: 'Please log in to continue' }, status: :unauthorized }
-      end
-    end
+    @current_user ||= User.find_by id: params[:user_id]
   end
 end

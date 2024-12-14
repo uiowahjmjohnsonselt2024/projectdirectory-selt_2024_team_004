@@ -268,46 +268,61 @@
     // Function to move character to the correct tile and save coordinates
     async function moveCharacterToTile(x, y) {
       if (!character) return;
-      const gridOffsets = calculateGridOffsets();
+      
+      // Find the target square element
+      const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+      if (!targetSquare) return;
 
-      // Adjust the position to account for the misalignment
-      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 2 * tileSize;
-      const characterY = gridOffsets.y_char + (y - 1) * tileSize + tileSize / 2;
+      // Get the grid container's position
+      const gridContainer = document.querySelector('.grid');
+      const gridRect = gridContainer.getBoundingClientRect();
+      
+      // Calculate position relative to the grid container
+      const squareRect = targetSquare.getBoundingClientRect();
+      const characterWidth = character.offsetWidth;
+      const characterHeight = character.offsetHeight;
 
-      character.style.left = `${characterX}px`;
-      character.style.top = `${characterY}px`;
+      // Calculate the relative position within the grid
+      const relativeX = squareRect.left - gridRect.left;
+      const relativeY = squareRect.top - gridRect.top;
+      
+      // Position character relative to grid container
+      character.style.position = 'absolute'; // Change to absolute positioning
+      character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+      character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+      
+      // Update data attributes and form fields
+      character.setAttribute('data-x', x);
+      character.setAttribute('data-y', y);
+      xCoordField.value = x;
+      yCoordField.value = y;
 
-        character.setAttribute('data-x', x);
-        character.setAttribute('data-y', y);
-        xCoordField.value = x;
-        yCoordField.value = y;
+      try {
+          const response = await fetch('/coordinates', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': csrfToken,
+              },
+              body: JSON.stringify({
+                  id: character.getAttribute('data-character-id'),
+                  x,
+                  y,
+                  shards: shardCost,
+              }),
+          });
 
-        try {
-            const response = await fetch('/coordinates', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                },
-                body: JSON.stringify({
-                    id: character.getAttribute('data-character-id'),
-                    x,
-                    y,
-                    shards: shardCost,
-                }),
-            });
+          const data = await response.json();
 
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                document.querySelector('.shards-count').textContent =
-                    `Shards: ${data.updated_shards}`;
-            } else {
-                alert(data.errors || 'Error updating character position.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+          if (response.ok && data.success) {
+              document.querySelector('.shards-count').textContent =
+                  `Shards: ${data.updated_shards}`;
+          } else {
+              alert(data.errors || 'Error updating character position.');
+          }
+      } catch (error) {
+          console.error('Error:', error);
+      }
     }
 
     // Center the character initially
@@ -453,21 +468,45 @@
     function updateCharacterPosition(characterId, x, y) {
       const characterElement = document.querySelector(`.character[data-character-id="${characterId}"]`);
       if (characterElement && characterElement.getAttribute('data-is-current-user') !== 'true') {
-        const gridOffsets = calculateGridOffsets();
-        const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50;
-        const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
+        const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+        if (!targetSquare) return;
 
-        characterElement.style.left = `${characterX}px`;
-        characterElement.style.top = `${characterY}px`;
+        const gridContainer = document.querySelector('.grid');
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
         characterElement.setAttribute('data-x', x);
         characterElement.setAttribute('data-y', y);
       }
     }
+
+    // Add window resize handler to update positions
+    window.addEventListener('resize', () => {
+      // Update all character positions on resize
+      document.querySelectorAll('.character').forEach(char => {
+        const x = parseInt(char.getAttribute('data-x'));
+        const y = parseInt(char.getAttribute('data-y'));
+        if (char.getAttribute('data-is-current-user') === 'true') {
+          moveCharacterToTile(x, y);
+        } else {
+          updateCharacterPosition(char.getAttribute('data-character-id'), x, y);
+        }
+      });
+    });
   });
 </script>
 
 <style>
   .grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(6, 105px);
     gap: 2px;
@@ -531,6 +570,11 @@
     display: inline-block;
     min-width: 30px;
     text-align: left;
+  }
+
+  .character {
+    position: absolute;
+    z-index: 1000;
   }
 
 </style>
