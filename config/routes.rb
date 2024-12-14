@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     member do
       post :activate_square
       post :pay_shards
+      post :validate_movement
     end
     collection do
       get :generate_square_code

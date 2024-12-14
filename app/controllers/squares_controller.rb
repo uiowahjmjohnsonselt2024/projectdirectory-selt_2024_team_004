@@ -100,7 +100,8 @@ class SquaresController < ApplicationController
     if !@character || !@square
       render json: {
         success: false,
-        message: "Invalid square/character"
+        message: "Invalid square/character",
+        flash_message: "Invalid square or character selection"
       }, status: :unprocessable_entity
       return
     end
@@ -142,9 +143,14 @@ class SquaresController < ApplicationController
         }
       end
     else
+      message = @square.state != "inactive" ? 
+                "Square is already active" : 
+                "Not enough shards (need 10)"
+      
       render json: {
         success: false,
-        message: "Not enough shards (need 10)"
+        message: message,
+        flash_message: message
       }, status: :unprocessable_entity
     end
   end
@@ -186,6 +192,35 @@ class SquaresController < ApplicationController
     render json: { success: true, code: code }
   rescue => e
     render json: { success: false, error: e.message }, status: :unprocessable_entity
+  end
+
+  def validate_movement
+    @character = Character.find_by(id: params[:character_id])
+    target_square = Square.find_by(square_id: params[:square_id])
+    
+    if !@character || !target_square
+      render json: {
+        success: false,
+        message: "Invalid square or character",
+        flash_message: "Invalid square or character selection"
+      }, status: :unprocessable_entity
+      return
+    end
+
+    # Check if character has enough shards (1 shard per move)
+    if @character.shards < 1
+      render json: {
+        success: false,
+        message: "Not enough shards to move",
+        flash_message: "You need 1 shard to move to another square"
+      }, status: :unprocessable_entity
+      return
+    end
+
+    render json: {
+      success: true,
+      message: "Movement allowed"
+    }
   end
 
   private

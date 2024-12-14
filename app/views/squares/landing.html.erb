@@ -162,7 +162,13 @@
       </div>
     </div>
   </div>
+
+  <!-- Add this near the top of your view -->
+  <div id="flash-message-container" class="flash-message" style="display: none;">
+  </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -203,28 +209,31 @@
           } else {
             // Calculate shard cost for non-adjacent movement
             const calculatedShardCost = Math.abs(x - currentX) + Math.abs(y - currentY);
+            const currentShards = parseInt(document.querySelector('.shards-count').textContent.match(/\d+/)[0]);
             
-            const confirmMove = confirm(
-              `This move will cost ${calculatedShardCost} shards. Do you want to proceed?`
-            );
+            if (currentShards >= calculatedShardCost) {
+              const confirmMove = confirm(
+                `This move will cost ${calculatedShardCost} shards. Do you want to proceed?`
+              );
 
-            if (confirmMove) {
-              try {
-                // First attempt to move the character
-                const moveResult = await moveCharacterToTile(x, y);
-                
-                if (moveResult && moveResult.success) {
-                  // If movement was successful, update shards display
-                  const shardsDisplay = document.querySelector('.shards-count');
-                  if (shardsDisplay) {
-                    const currentShards = parseInt(shardsDisplay.textContent.match(/\d+/)[0]);
-                    shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
+              if (confirmMove) {
+                try {
+                  const moveResult = await moveCharacterToTile(x, y);
+                  
+                  if (moveResult && moveResult.success) {
+                    // Update shards display
+                    const shardsDisplay = document.querySelector('.shards-count');
+                    if (shardsDisplay) {
+                      shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
+                    }
                   }
+                } catch (error) {
+                  console.error('Movement failed:', error);
+                  alert('Unable to complete movement. Please try again.');
                 }
-              } catch (error) {
-                console.error('Movement failed:', error);
-                alert('Unable to complete movement. Please try again.');
               }
+            } else {
+              alert(`Not enough shards! You need ${calculatedShardCost} shards for this move, but you only have ${currentShards}.`);
             }
           }
         } else if (state === 'inactive') {
@@ -358,71 +367,57 @@
 
     // Update the setupPayShardButton function
     function setupPayShardButton(button) {
-      button.addEventListener('click', async function() {
-        const squareId = this.getAttribute('data-square-id');
-        const square = document.querySelector(`[data-square-id="${squareId}"]`);
-        const buttonContainer = document.querySelector('.button-container');
-
-        try {
-          const response = await fetch(`/pay_shards`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-Token': csrfToken,
-            },
-            body: JSON.stringify({
-              square_id: squareId,
-              character_id: '<%= @character.id %>',
-              world_id: worldId
-            })
-          });
-
-          const data = await response.json();
-
-          if (data.success) {
-            // Show loading state with animated dots
-            buttonContainer.innerHTML = `
-              <div class="loading-container">
-                <div class="loading-text">
-                  Generating terrain<span class="dots"></span>
-                </div>
-              </div>
-            `;
-
-            const dotsInterval = animateDots();
-
-            // Add a slight delay to show the loading state
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Clear the dots animation
-            if (dotsInterval) clearInterval(dotsInterval);
-
-            // Update the square's state and appearance
-            square.setAttribute('data-state', 'active');
-            if (data.square && data.square.code) {
-              const canvas = square.querySelector('canvas');
+      $(button).on('click', function() {
+        console.log('Pay shard button clicked');
+        const squareId = $(this).data('square-id');
+        console.log('Square ID:', squareId);
+        
+        $.ajax({
+          url: '/pay_shards',
+          type: 'POST',
+          dataType: 'json',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
+          data: {
+            square_id: squareId,
+            character_id: '<%= @character&.id %>',
+            user_id: '<%= current_user&.id %>',
+            world_id: '<%= @world&.id %>'
+          },
+          success: function(data) {
+            console.log('Success:', data);
+            if (data.success) {
+              // Update shards count
+              $('.shards-count').text(`Shards: ${data.new_shards}`);
+              
+              // Update square appearance
+              const square = $(`[data-square-id="${squareId}"]`);
+              square.attr('data-state', 'active');
+              square.find('canvas').removeClass('inactive').addClass('active');
+              
+              // Redraw the square as active
+              const canvas = square.find('canvas')[0];
               const ctx = canvas.getContext('2d');
-              ctx.clearRect(0, 0, canvas.width, canvas.height);
-              eval(data.square.code);
+              ctx.fillStyle = '#90EE90'; // Default active color
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              
+              // Close the modal
+              $('#popup-modal').hide();
+              
+              // Refresh the page to ensure everything is updated
+              location.reload();
+            } else {
+              alert(data.message || 'Failed to unlock square');
             }
-
-            // Update shards count in the UI
-            document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-
-            // Move character to the new square
-            const x = parseInt(square.getAttribute('data-x'));
-            const y = parseInt(square.getAttribute('data-y'));
-            moveCharacterToTile(x, y);
-
-            // Close modal
-            modal.style.display = 'none';
-          } else {
-            alert(data.message || 'Not enough shards');
+          },
+          error: function(xhr, status, error) {
+            console.error('Error:', error);
+            console.error('Status:', status);
+            console.error('Response:', xhr.responseText);
+            alert('An error occurred. Please try again.');
           }
-        } catch (error) {
-          console.error('Error:', error);
-          alert('An error occurred while processing payment');
-        }
+        });
       });
     }
 

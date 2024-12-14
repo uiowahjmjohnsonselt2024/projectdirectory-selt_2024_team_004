@@ -93,4 +93,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     closeButton.addEventListener('click', () => {
         storeModal.style.display = 'none';
     });
+
+    // Add this before moving the character
+    function validateMovement(characterId, squareId) {
+        fetch(`/squares/${squareId}/validate_movement`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                character_id: characterId,
+                square_id: squareId
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Proceed with movement
+                moveCharacter(/* your movement parameters */);
+            } else {
+                // Show flash message in modal
+                showFlashMessage(data.flash_message);
+            }
+        });
+    }
+
+    function showFlashMessage(message) {
+        // Assuming you have a modal or flash message container
+        const flashContainer = document.getElementById('flash-message-container');
+        if (flashContainer) {
+            flashContainer.textContent = message;
+            flashContainer.style.display = 'block';
+            
+            // Optionally hide after a few seconds
+            setTimeout(() => {
+                flashContainer.style.display = 'none';
+            }, 3000);
+        }
+    }
 });
