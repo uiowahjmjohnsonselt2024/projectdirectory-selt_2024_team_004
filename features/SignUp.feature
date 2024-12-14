@@ -1,7 +1,7 @@
 Feature: Sign up for a new Sea Raiders user account
   As a new Sea Raiders user without an account yet
   So that I can play Sea Raiders
-  I want to sign up for a new account with my email, password, and password confirmation
+  I want to sign up for a new account with my name, email, password, and password confirmation
 
   Scenario: Clicking sign up
     Given I am on the login page
@@ -26,10 +26,13 @@ Feature: Sign up for a new Sea Raiders user account
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Error: Password confirmation doesn't match Password, Password confirmation can't be blank, Name can't be blank, Email can't be blank, Email is invalid"
 
-
+  Scenario: Only filling out password confirmation
+    Given I am on the sign up page
+    And I have only filled out the "Password confirmation" field with "strongPass$456"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Email can't be blank, Email is invalid"
 
     # All sign up scenarios:
-  # Only fill out password: "Error: Password confirmation doesn't match Password, Password confirmation can't be blank, Name can't be blank, Email can't be blank, Email is invalid"
   # Only fill out conf: "Error: Password can't be blank, Password is too short (minimum is 6 characters), Name can't be blank, Email can't be blank, Email is invalid"
   # Password too short: "Error: Password is too short (minimum is 6 characters)"
   # Password and conf dont match: "Error: Password confirmation doesn't match Password"
