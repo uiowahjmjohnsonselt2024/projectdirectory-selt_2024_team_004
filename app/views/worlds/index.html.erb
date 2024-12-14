@@ -17,8 +17,8 @@
               <% end %>
             </td>
             <td>
-              <%= button_to 'Delete', 
-                  world_path(id: user_world.world.id), 
+              <%= button_to 'Delete',
+                  remove_world_path(id: user_world.world.id),
                   method: :delete, 
                   class: 'btn btn-danger',
                   data: { 
