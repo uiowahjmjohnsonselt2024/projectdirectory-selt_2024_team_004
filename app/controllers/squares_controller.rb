@@ -1,6 +1,4 @@
 class SquaresController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_current_user
 
   def landing
     store
@@ -99,15 +97,7 @@ class SquaresController < ApplicationController
     @character = Character.find_by(id: params[:character_id])
     @square = Square.find_by(square_id: params[:square_id])
 
-    unless @current_user
-      render json: {
-        success: false,
-        message: "Please log in to continue"
-      }, status: :unauthorized
-      return
-    end
-
-    unless @character && @square
+    if !@character || !@square
       render json: {
         success: false,
         message: "Invalid square/character"
@@ -115,58 +105,46 @@ class SquaresController < ApplicationController
       return
     end
 
-    unless @character.user_id == @current_user.id
-      render json: {
-        success: false,
-        message: "Unauthorized action"
-      }, status: :unauthorized
-      return
-    end
-
     if @square.state == "inactive" && @character.shards >= 10
-      begin
-        Square.transaction do
-          @character.update!(shards: @character.shards - 10)
-          
-          terrain_types = ["forest", "desert", "water", "plains"]
-          terrain = terrain_types.sample
-          
-          adjacent_squares = {
-            north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
-            south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
-            east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
-            west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
-          }
+      # Deduct shards and generate terrain
+      Square.transaction do
+        @character.update!(shards: @character.shards - 10)
+        
+        # Generate terrain
+        terrain_types = ["forest", "desert", "water", "plains"]
+        terrain = terrain_types.sample
+        
+        # Get adjacent squares for context
+        adjacent_squares = {
+          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
+        }
 
-          generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
-          
-          @square.update!(
-            state: 'active',
-            terrain: terrain,
-            code: generated_code
-          )
+        # Generate code using OpenAI
+        generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+        
+        @square.update!(
+          state: 'active',
+          terrain: terrain,
+          code: generated_code
+        )
 
-          render json: {
-            success: true,
-            new_shards: @character.shards,
-            square: {
-              id: @square.id,
-              code: generated_code,
-              terrain: terrain
-            }
-          }
-        end
-      rescue => e
-        Rails.logger.error("Error in pay_shards: #{e.message}")
         render json: {
-          success: false,
-          message: "An error occurred while processing the payment"
-        }, status: :internal_server_error
+          success: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id,
+            code: generated_code,
+            terrain: terrain
+          }
+        }
       end
     else
       render json: {
         success: false,
-        message: "Not enough shards (need 10) or square is already active"
+        message: "Not enough shards (need 10)"
       }, status: :unprocessable_entity
     end
   end
@@ -221,20 +199,7 @@ class SquaresController < ApplicationController
     puts "Prices: #{@prices}"
   end
 
-  def set_current_user
-    @current_user = current_user
-  end
-
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
-  end
-
-  def authenticate_user!
-    unless current_user
-      respond_to do |format|
-        format.html { redirect_to login_path }
-        format.json { render json: { success: false, message: 'Please log in to continue' }, status: :unauthorized }
-      end
-    end
+    @current_user ||= User.find_by id: params[:user_id]
   end
 end

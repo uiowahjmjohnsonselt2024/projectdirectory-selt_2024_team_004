@@ -475,6 +475,21 @@
         characterElement.style.position = 'absolute';
         characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
         characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+        const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+        if (!targetSquare) return;
+
+        const gridContainer = document.querySelector('.grid');
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
         characterElement.setAttribute('data-x', x);
         characterElement.setAttribute('data-y', y);
       }
@@ -519,6 +534,7 @@
 
 <style>
   .grid {
+    position: relative;
     position: relative;
     display: grid;
     grid-template-columns: repeat(6, 105px);
@@ -583,6 +599,11 @@
     display: inline-block;
     min-width: 30px;
     text-align: left;
+  }
+
+  .character {
+    position: absolute;
+    z-index: 1000;
   }
 
   .character {

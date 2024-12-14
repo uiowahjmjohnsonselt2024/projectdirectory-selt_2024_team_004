@@ -77,6 +77,22 @@ class CharactersController < ApplicationController
     end
   end
 
+  def update
+    @character = Character.find(params[:id])
+    
+    if @character.update(character_params)
+      render json: {
+        success: true,
+        message: "Position saved successfully!"
+      }
+    else
+      render json: {
+        success: false,
+        message: "Failed to save position"
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_character
@@ -88,6 +104,6 @@ class CharactersController < ApplicationController
   end
 
   def character_params
-    params.require(:character).permit(:name, :image_code, :user_world_id)
+    params.require(:character).permit(:x_coord, :y_coord, :shards)
   end
 end
