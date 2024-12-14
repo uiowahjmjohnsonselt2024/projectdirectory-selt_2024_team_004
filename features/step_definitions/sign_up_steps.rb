@@ -3,7 +3,7 @@ Given 'I am on the login page' do
 end
 
 When 'I click Sign Up' do
-  click_button 'Sign Up'
+  click_link 'Sign Up'
 end
 
 Then 'I should be redirected to the sign up page' do
