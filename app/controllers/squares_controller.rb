@@ -138,7 +138,9 @@ class SquaresController < ApplicationController
           square: {
             id: @square.id,
             code: generated_code,
-            terrain: terrain
+            terrain: terrain,
+            x: @square.x,
+            y: @square.y
           }
         }
       end
