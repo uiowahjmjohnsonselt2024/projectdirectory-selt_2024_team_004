@@ -58,9 +58,13 @@ Feature: Sign up for a new Sea Raiders user account
     And I have filled out all fields: "John", "myUser@example.com", "johnsPass&2", "johnsPass&2"
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Error: Email has already been taken"
+
+  Scenario: User clicks Log In to go back to the login page
+    Given I am on the sign up page
+    When I click the Log In button
+    Then I should be redirected to the login page
   
 
     # All sign up scenarios:
-  # Email already used: "Error: Email has already been taken"
   # User clicks Log In to go back to log in page
   # Successful creation, redirected to login page: "Successfully created account!"

@@ -33,3 +33,11 @@ And 'I have filled out all fields: {string}, {string}, {string}, {string}' do |n
   fill_in "Password", with: password
   fill_in 'Password confirmation', with: confirmation
 end
+
+When 'I click the Log In button' do
+  click_link 'Log In'
+end
+
+Then 'I should be redirected to the login page' do
+  expect(current_url).to eq(login_url)
+end
