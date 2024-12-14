@@ -44,10 +44,13 @@ Feature: Sign up for a new Sea Raiders user account
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Error: Password confirmation doesn't match Password"
 
-
+  Scenario: Invalid email given
+    Given I am on the sign up page
+    And I have filled out all fields: "Zach", "z_murphy#notAnEmail", "goodPassword%567", "goodPassword%567"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Email is invalid"
 
     # All sign up scenarios:
-  # Password and conf dont match: "Error: Password confirmation doesn't match Password"
   # Invalid email: "Email is invalid"
   # Email already used: "Error: Email has already been taken"
   # User clicks Log In to go back to log in page
