@@ -1,32 +1,12 @@
 class SquaresController < ApplicationController
-  protect_from_forgery with: :exception
-  skip_before_action :verify_authenticity_token, only: [:pay_shards]
-  before_action :authenticate_user!
 
   def landing
     store
     @user ||= User.find_by id: params[:user_id]
     @world ||= World.find_by id: params[:world_id]
-    @character ||= Character.find_by(world_id: @world.id, user_id: @user.id)
+    @character ||= Character.find_by world_id: @world.id
     @game_result = params[:game_result] || false
     @square_id = params[:square_id]
-
-    # Make sure we have the character's saved position
-    if @character
-      @character.x_coord ||= 0
-      @character.y_coord ||= 0
-      @character.save if @character.changed?
-    end
-
-    @squares = Square.where(world_id: @world.id).order(:y, :x)
-
-    # Update the character's position whenever the page loads
-    if @character && params[:x].present? && params[:y].present?
-      @character.update(
-        x_coord: params[:x],
-        y_coord: params[:y]
-      )
-    end
 
     Rails.logger.debug "Landing params: #{params.inspect}"
     Rails.logger.debug "Game result: #{@game_result}, Square ID: #{@square_id}"
@@ -107,52 +87,59 @@ class SquaresController < ApplicationController
   end
 
   def pay_shards
-    respond_to do |format|
-      format.json do
-        @character = Character.find_by(id: params[:character_id])
-        @square = Square.find_by(square_id: params[:square_id])
-        shard_cost = params[:shard_cost].to_i
+    @character = Character.find_by(id: params[:character_id])
+    @square = Square.find_by(square_id: params[:square_id])
 
-        unless @character && @square
-          render json: { success: false, message: "Invalid request" }, status: :unprocessable_entity
-          return
-        end
-
-        if @character.shards >= shard_cost
-          Square.transaction do
-            @character.update!(
-              shards: @character.shards - shard_cost,
-              x_coord: @square.x,
-              y_coord: @square.y
-            )
-
-            # Broadcast the character movement to all players in the world
-            ActionCable.server.broadcast "game_channel_#{@character.world_id}", {
-              type: 'character_moved',
-              character_id: @character.id,
-              x: @square.x,
-              y: @square.y
-            }
-
-            render json: {
-              success: true,
-              new_shards: @character.shards,
-              message: "Move successful"
-            }
-          end
-        else
-          render json: {
-            success: false,
-            message: "Not enough shards (need #{shard_cost})"
-          }, status: :unprocessable_entity
-        end
-      end
+    if !@character || !@square
+      render json: {
+        success: false,
+        message: "Invalid square/character"
+      }, status: :unprocessable_entity
+      return
     end
-  rescue => e
-    render json: {
-      success: false,
-      message: e.message
-    }, status: :unprocessable_entity
+
+    if @square.state == "inactive" && @character.shards >= 10
+      # Deduct shards and generate terrain
+      Square.transaction do
+        @character.update!(shards: @character.shards - 10)
+        
+        # Generate terrain
+        terrain_types = ["forest", "desert", "water", "plains"]
+        terrain = terrain_types.sample
+        
+        # Get adjacent squares for context
+        adjacent_squares = {
+          north: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y - 1)&.terrain,
+          south: Square.find_by(world_id: @square.world_id, x: @square.x, y: @square.y + 1)&.terrain,
+          east: Square.find_by(world_id: @square.world_id, x: @square.x + 1, y: @square.y)&.terrain,
+          west: Square.find_by(world_id: @square.world_id, x: @square.x - 1, y: @square.y)&.terrain
+        }
+
+        # Generate code using OpenAI
+        generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_squares)
+        
+        @square.update!(
+          state: 'active',
+          terrain: terrain,
+          code: generated_code
+        )
+
+        render json: {
+          success: true,
+          new_shards: @character.shards,
+          square: {
+            id: @square.id,
+            code: generated_code,
+            terrain: terrain
+          }
+        }
+      end
+    else
+      render json: {
+        success: false,
+        message: "Not enough shards (need 10)"
+      }, status: :unprocessable_entity
+    end
   end
 
   def activate_square
@@ -205,13 +192,7 @@ class SquaresController < ApplicationController
     puts "Prices: #{@prices}"
   end
 
-  def authenticate_user!
-    unless current_user
-      render json: { success: false, message: "Please log in" }, status: :unauthorized
-    end
-  end
-
   def current_user
-    @current_user ||= User.find_by(id: params[:user_id])
+    @current_user ||= User.find_by id: params[:user_id]
   end
 end
