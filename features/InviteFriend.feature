@@ -3,18 +3,27 @@ Feature: Inviting a friend to your world
   So that I can play Sea Raiders with my friends
   I want to be able to send and receive invites from my friends
 
-  Scenario: Invite a friend to your world
-    Given the following user exists:
+  Background:
+    Given the following users exist:
       | name      | email              | password         | password_confirmation |
       | John      | myUser@example.com | strongPass#123   | strongPass#123        |
-    And I am logged in
-    And I am on the worlds page
+      | James     | friend@example.com | thisPass%678     | thisPass%678          |
     And I have created a new world with name "My World"
+    And the following user worlds exist:
+      | user_email         | world_name |
+      | myUser@example.com | My World   |
+    And I am logged in as "myUser@example.com"
+
+  Scenario: Click invite on an existing world
+    Given I am on the worlds page
     And I click the invite button for "My World"
     Then the invite modal should appear
     And the modal should contain the title "Invited Players"
     And the modal should have an email field
     And the modal should have a "Send Invitation" button
+
+
+
 
 
 
