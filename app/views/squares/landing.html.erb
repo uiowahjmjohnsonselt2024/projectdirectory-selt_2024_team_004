@@ -182,13 +182,6 @@
     const gridSize = 6; // 6x6 grid
     const tileSize = 105; // Each tile is 100px x 100px
     
-    // Load the initial position from the server-side data
-    const initialX = parseInt(character.getAttribute('data-x'));
-    const initialY = parseInt(character.getAttribute('data-y'));
-    
-    // Center the character initially at its saved position
-    moveCharacterToTile(initialX, initialY);
-
     // Grid click handler
     document.querySelectorAll('.grid-item').forEach(square => {
       square.addEventListener('click', async function() {
@@ -216,22 +209,7 @@
             );
 
             if (confirmMove) {
-              try {
-                // First attempt to move the character
-                const moveResult = await moveCharacterToTile(x, y);
-                
-                if (moveResult && moveResult.success) {
-                  // If movement was successful, update shards display
-                  const shardsDisplay = document.querySelector('.shards-count');
-                  if (shardsDisplay) {
-                    const currentShards = parseInt(shardsDisplay.textContent.match(/\d+/)[0]);
-                    shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
-                  }
-                }
-              } catch (error) {
-                console.error('Movement failed:', error);
-                alert('Unable to complete movement. Please try again.');
-              }
+              moveCharacterToTile(x, y, calculatedShardCost);
             }
           }
         } else if (state === 'inactive') {
@@ -265,20 +243,12 @@
     // Function to move character to the correct tile and save coordinates
     async function moveCharacterToTile(x, y, specificCharacter = null) {
       const targetCharacter = specificCharacter || character;
-      if (!targetCharacter) {
-        console.error('No character found');
-        return { success: false };
-      }
+      if (!targetCharacter) return;
 
       const gridContainer = document.querySelector('.grid');
       const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
       
-      if (!gridContainer || !targetSquare) {
-        console.error('Grid container or target square not found');
-        return { success: false };
-      }
-
-      try {
+      if (gridContainer && targetSquare) {
         const gridRect = gridContainer.getBoundingClientRect();
         const squareRect = targetSquare.getBoundingClientRect();
         
@@ -292,44 +262,40 @@
         targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
         targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
         
-        // Update the data attributes
         targetCharacter.setAttribute('data-x', x);
         targetCharacter.setAttribute('data-y', y);
 
         // If this is the current user's movement, save to server
         if (targetCharacter === character) {
-          const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-            },
-            body: JSON.stringify({
-              x: x,
-              y: y
-            })
-          });
+          try {
+            const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+              },
+              body: JSON.stringify({
+                x: x,
+                y: y
+              })
+            });
 
-          const data = await response.json();
-          
-          if (!response.ok) {
-            console.error('Failed to save coordinates:', data.error);
-            // Revert the movement if save failed
-            targetCharacter.setAttribute('data-x', data.x);
-            targetCharacter.setAttribute('data-y', data.y);
-            return { success: false, error: data.error };
+            if (!response.ok) {
+              console.error('Failed to save coordinates');
+              // Optionally revert the movement here
+            }
+          } catch (error) {
+            console.error('Error saving coordinates:', error);
           }
-          
-          return { success: true, data };
         }
-        
-        return { success: true };
-      } catch (error) {
-        console.error('Error in moveCharacterToTile:', error);
-        return { success: false, error: error.message };
       }
     }
+
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
 
     // Function to calculate grid offsets
     function calculateGridOffsets() {
@@ -475,31 +441,42 @@
         characterElement.style.position = 'absolute';
         characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
         characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-        const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
-        if (!targetSquare) return;
-
-        const gridContainer = document.querySelector('.grid');
-        const gridRect = gridContainer.getBoundingClientRect();
-        const squareRect = targetSquare.getBoundingClientRect();
-        const characterWidth = characterElement.offsetWidth;
-        const characterHeight = characterElement.offsetHeight;
-
-        const relativeX = squareRect.left - gridRect.left;
-        const relativeY = squareRect.top - gridRect.top;
-
-        characterElement.style.position = 'absolute';
-        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
         characterElement.setAttribute('data-x', x);
         characterElement.setAttribute('data-y', y);
       }
     }
 
-    // Set up Action Cable consumer
-    const consumer = ActionCable.createConsumer();
-    
-    // Create the subscription
-    const gameChannel = consumer.subscriptions.create(
+    // Set up Action Cable subscription
+    if (typeof App !== 'undefined' && App.cable) {
+      App.game = App.cable.subscriptions.create(
+        { 
+          channel: "GameChannel", 
+          world_id: '<%= @world.id %>' 
+        },
+        {
+          received: function(data) {
+            if (data.type === 'character_moved') {
+              updateCharacterPosition(data.character_id, data.x, data.y);
+            }
+          }
+        }
+      );
+    }
+
+    // Add window resize handler to update all character positions
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.character').forEach(char => {
+        const x = parseInt(char.getAttribute('data-x'));
+        const y = parseInt(char.getAttribute('data-y'));
+        if (char.getAttribute('data-is-current-user') === 'true') {
+          moveCharacterToTile(x, y);
+        } else {
+          updateCharacterPosition(char.getAttribute('data-character-id'), x, y);
+        }
+      });
+    });
+
+    App.gameChannel = App.cable.subscriptions.create(
       { 
         channel: "GameChannel",
         world_id: '<%= @world.id %>',
@@ -516,25 +493,11 @@
         }
       }
     );
-
-    // Add window resize handler to update all character positions
-    window.addEventListener('resize', () => {
-      document.querySelectorAll('.character').forEach(char => {
-        const x = parseInt(char.getAttribute('data-x'));
-        const y = parseInt(char.getAttribute('data-y'));
-        if (char.getAttribute('data-is-current-user') === 'true') {
-          moveCharacterToTile(x, y);
-        } else {
-          updateCharacterPosition(char.getAttribute('data-character-id'), x, y);
-        }
-      });
-    });
   });
 </script>
 
 <style>
   .grid {
-    position: relative;
     position: relative;
     display: grid;
     grid-template-columns: repeat(6, 105px);
@@ -599,11 +562,6 @@
     display: inline-block;
     min-width: 30px;
     text-align: left;
-  }
-
-  .character {
-    position: absolute;
-    z-index: 1000;
   }
 
   .character {
