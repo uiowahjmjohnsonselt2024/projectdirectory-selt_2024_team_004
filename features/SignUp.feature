@@ -63,8 +63,13 @@ Feature: Sign up for a new Sea Raiders user account
     Given I am on the sign up page
     When I click the Log In button
     Then I should be redirected to the login page
+
+  Scenario: Successful creation of a new user
+    Given I am on the sign up page
+    And I have filled out all fields: "Mackenzie", "mack_ryan@gmail.com", "abcDEF%926", "abcDEF%926"
+    When I click the Sign Up button
+    Then I should be redirected to the login page and see "Successfully created account!"
   
 
     # All sign up scenarios:
-  # User clicks Log In to go back to log in page
   # Successful creation, redirected to login page: "Successfully created account!"

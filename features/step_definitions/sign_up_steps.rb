@@ -41,3 +41,8 @@ end
 Then 'I should be redirected to the login page' do
   expect(current_url).to eq(login_url)
 end
+
+Then 'I should be redirected to the login page and see {string}' do |message|
+  expect(current_url).to eq(login_url)
+  expect(page).to have_content(message)
+end
