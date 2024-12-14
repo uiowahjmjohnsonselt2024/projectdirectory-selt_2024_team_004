@@ -36,10 +36,6 @@ class SettingsController < ApplicationController
 
   private
 
-  def character_picture_url(role)
-    @character.image_code
-  end
-
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])
   end
