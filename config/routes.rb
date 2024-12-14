@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     member do
       post 'pay_shards'
       get :generate_square_code
+      post 'restart'
+      post 'award_treasure_shards'
     end
   end
   resources :characters do

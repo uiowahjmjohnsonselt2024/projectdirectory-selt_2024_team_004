@@ -1,3 +1,5 @@
+
+
 <div class="container">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,8 +25,22 @@
   <% if @squares.present? %>
   <% end %>
 
+  <% if Rails.env.development? %>
+  <div style="background: #f0f0f0; padding: 10px; margin: 10px; border-radius: 5px;">
+    <h4>Debug Info:</h4>
+    <% treasure_square = @world.squares.find_by(treasure: true) %>
+    <% if treasure_square %>
+      <p>Treasure Location: (<%= treasure_square.x %>, <%= treasure_square.y %>)</p>
+    <% else %>
+      <p>No treasure found in this world</p>
+    <% end %>
+  </div>
+<% end %>
+
   <div class="grid-teleport-container">
     <div class="grid">
+      <!-- Debug info - add this near the top of your grid section -->
+     
       <% if @squares.present? %>
         <% @squares.each do |square| %>
           <div class="grid-item"
@@ -166,6 +182,20 @@
   <!-- Add this near the top of your view -->
   <div id="flash-message-container" class="flash-message" style="display: none;">
   </div>
+
+  <!-- Add this near your other modals in the HTML section -->
+  <div id="victory-modal" class="modal">
+    <div class="modal-content">
+      <div class="victory-banner">
+        <h2 class="victory-title">Congratulations!</h2>
+      </div>
+      <p>You have found the treasure and completed this world!</p>
+      <div class="button-container">
+        <button id="delete-world-button" class="button">Delete World</button>
+        <button id="restart-world-button" class="button">Restart World</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -298,6 +328,141 @@
         targetCharacter.setAttribute('data-x', x);
         targetCharacter.setAttribute('data-y', y);
 
+        // Check for treasure after movement
+        console.log('Checking for treasure at:', x, y);
+        const treasureX = <%= treasure_square&.x || 'null' %>;
+        const treasureY = <%= treasure_square&.y || 'null' %>;
+        console.log('Treasure location:', treasureX, treasureY);
+        
+        if (x === treasureX && y === treasureY) {
+          console.log('TREASURE FOUND!');
+          
+          // Award shards to all characters in the world
+          try {
+            const response = await fetch(`/worlds/<%= @world.id %>/award_treasure_shards`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+              }
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+              console.log('Shards awarded successfully:', data);
+              // Update the shards display for the current user
+              const shardsDisplay = document.querySelector('.shards-count');
+              if (shardsDisplay) {
+                shardsDisplay.textContent = `Shards: ${data.current_user_shards}`;
+              }
+            }
+          } catch (error) {
+            console.error('Error awarding shards:', error);
+          }
+
+          const victoryModal = document.getElementById('victory-modal');
+          if (victoryModal) {
+            console.log('Showing victory modal');
+            victoryModal.style.display = 'flex';
+            
+            // Delete World button handler
+            document.getElementById('delete-world-button').onclick = async () => {
+              console.log('Delete button clicked');
+              const deleteButton = document.getElementById('delete-world-button');
+              deleteButton.disabled = true;  // Prevent double-clicks
+              
+              try {
+                const token = document.querySelector('[name="csrf-token"]').content;
+                const response = await fetch('/world', {  // Changed URL format
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token,
+                    'Accept': 'application/json'
+                  },
+                  body: JSON.stringify({ id: <%= @world.id %> })  // Send ID in body
+                });
+                
+                if (response.ok) {
+                  console.log('World deleted successfully');
+                  window.location.href = '/worlds';
+                } else {
+                  console.error('Failed to delete world');
+                  deleteButton.disabled = false;
+                  alert('Failed to delete world. Please try again.');
+                }
+              } catch (error) {
+                console.error('Error deleting world:', error);
+                deleteButton.disabled = false;
+                alert('Error deleting world. Please try again.');
+              }
+            };
+            
+            // Restart World button handler
+            document.getElementById('restart-world-button').onclick = async () => {
+              console.log('Restart button clicked');
+              const restartButton = document.getElementById('restart-world-button');
+              const deleteButton = document.getElementById('delete-world-button');
+              const modalContent = document.querySelector('#victory-modal .modal-content');
+              
+              // Hide delete button and update modal content
+              deleteButton.style.display = 'none';
+              modalContent.innerHTML = `
+                <div class="victory-banner">
+                  <h2 class="victory-title">Restarting world...</h2>
+                </div>
+                <div class="loading-spinner"></div>
+              `;
+              
+              try {
+                const response = await fetch(`/worlds/<%= @world.id %>/restart`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                  }
+                });
+                
+                if (response.ok) {
+                  console.log('World restarted successfully');
+                  
+                  // First move character back to (0,0)
+                  const moveResponse = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                      'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify({
+                      x: 0,
+                      y: 0
+                    })
+                  });
+
+                  if (moveResponse.ok) {
+                    console.log('Character position reset to (0,0)');
+                    await moveCharacterToTile(0, 0);
+                    // Add a small delay to see the character move
+                    setTimeout(() => {
+                      location.reload();
+                    }, 500);
+                  } else {
+                    console.error('Failed to reset character position');
+                    location.reload();
+                  }
+                } else {
+                  console.error('Failed to restart world');
+                }
+              } catch (error) {
+                console.error('Error restarting world:', error);
+              }
+            };
+          } else {
+            console.error('Victory modal not found in DOM');
+          }
+        }
+
         // If this is the current user's movement, save to server
         if (targetCharacter === character) {
           const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
@@ -317,9 +482,6 @@
           
           if (!response.ok) {
             console.error('Failed to save coordinates:', data.error);
-            // Revert the movement if save failed
-            targetCharacter.setAttribute('data-x', data.x);
-            targetCharacter.setAttribute('data-y', data.y);
             return { success: false, error: data.error };
           }
           
@@ -745,6 +907,35 @@
     z-index: 1000;
   }
 
+  #victory-modal .modal-content {
+    text-align: center;
+    padding: 20px;
+  }
+
+  #victory-modal .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  #victory-modal .button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #delete-world-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+
+  #restart-world-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+  }
 </style>
 
 <% if Rails.env.development? %>

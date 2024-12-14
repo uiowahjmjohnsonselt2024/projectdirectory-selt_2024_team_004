@@ -39,8 +39,8 @@ class WorldsController < ApplicationController
         world: @user_world.world,
         user: @current_user,
         shards: 10,
-        x_coord: 175,
-        y_coord: 30,
+        x_coord: 0,
+        y_coord: 0,
         image_code: @image_path
       )
     else
@@ -54,7 +54,14 @@ class WorldsController < ApplicationController
       if @world.save
         @image_path = "#{params[:gender]}_#{params[:preload]}_#{params[:role]}.png"
         UserWorld.create!(user: @current_user, world: @world, user_role: params[:role], owner: true)
-        Character.create!(world: @world, user: @current_user, shards: 10, x_coord: 0, y_coord: 0, image_code: @image_path)
+        Character.create!(
+          world: @world, 
+          user: @current_user, 
+          shards: 10,
+          x_coord: 0, 
+          y_coord: 0, 
+          image_code: @image_path
+        )
 
         generate_squares_for_world(@world)
       end
@@ -66,18 +73,32 @@ class WorldsController < ApplicationController
 
 
   def destroy
-    @user_world = UserWorld.find_by(id: params[:id])
-    @world = World.find_by(id: @user_world.world_id)
+    begin
+      @user_world = UserWorld.find_by(world_id: params[:id], user_id: current_user.id)
+      @world = World.find_by(id: params[:id])
 
-    if @user_world.owner
-      UserWorld.where(world_id: @world.id).destroy_all
-      @world.destroy
-      flash[:notice] = "World '#{@world.world_id}' deleted."
-    else
-      @user_world.destroy
-      flash[:notice] = "World '#{@world.world_id}' removed."
+      if @user_world&.owner
+        # Delete everything if owner
+        UserWorld.where(world_id: @world.id).destroy_all
+        @world.destroy
+        flash[:notice] = "World deleted successfully."
+      else
+        # Just remove user's association if not owner
+        @user_world&.destroy
+        flash[:notice] = "Left the world successfully."
+      end
+
+      respond_to do |format|
+        format.html { redirect_to worlds_path }
+        format.json { head :no_content }
+      end
+    rescue => e
+      Rails.logger.error "Error in destroy action: #{e.message}"
+      respond_to do |format|
+        format.html { redirect_to worlds_path, alert: 'Error processing request.' }
+        format.json { render json: { error: e.message }, status: :internal_server_error }
+      end
     end
-    redirect_to worlds_path
   end
 
   def start_game
@@ -219,6 +240,43 @@ class WorldsController < ApplicationController
     end
   end
 
+  def restart
+    @world = World.find(params[:id])
+    
+    Square.transaction do
+      @world.squares.destroy_all
+      generate_squares_for_world(@world)
+    end
+
+    render json: { success: true }
+  rescue => e
+    render json: { success: false, error: e.message }, status: :unprocessable_entity
+  end
+
+  def award_treasure_shards
+    @world = World.find(params[:id])
+    
+    begin
+      World.transaction do
+        # Award 10 shards to all characters in this world
+        @world.characters.each do |character|
+          character.update!(shards: character.shards + 10)
+        end
+        
+        render json: {
+          success: true,
+          message: "Shards awarded to all characters",
+          current_user_shards: @world.characters.find_by(user: current_user)&.shards
+        }
+      end
+    rescue => e
+      render json: {
+        success: false,
+        error: e.message
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def generate_squares_for_world(world)
@@ -269,20 +327,28 @@ class WorldsController < ApplicationController
     end
 
     # Create the rest of the grid without code
+    remaining_positions = []
     6.times do |y|
       6.times do |x|
         next if active_positions.include?([x, y])
-
-        world.squares.create!(
+        
+        square = world.squares.create!(
           square_id: SecureRandom.hex(10),
           world_id: world.id,
           x: x,
           y: y,
           state: "inactive",
-          terrain: "empty"
+          terrain: "empty",
+          treasure: false  # explicitly set to false
         )
+        remaining_positions << [x, y]
       end
     end
+
+    # Select a random position for treasure from remaining positions
+    treasure_x, treasure_y = remaining_positions.sample
+    treasure_square = world.squares.find_by(x: treasure_x, y: treasure_y)
+    treasure_square.update!(treasure: true)
 
     # Add a script tag to define all functions at once
     script_tag = <<~HTML
