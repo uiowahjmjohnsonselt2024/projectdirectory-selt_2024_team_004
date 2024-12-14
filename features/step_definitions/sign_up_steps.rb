@@ -26,3 +26,10 @@ Then 'I should remain on the sign up page and see {string}' do |message|
   expect(current_url).to eq(signup_url)
   expect(page).to have_content(message)
 end
+
+And 'I have filled out all fields: {string}, {string}, {string}, {string}' do |name, email, password, confirmation|
+  fill_in 'Name', with: name
+  fill_in "Email", with: email
+  fill_in "Password", with: password
+  fill_in 'Password confirmation', with: confirmation
+end
