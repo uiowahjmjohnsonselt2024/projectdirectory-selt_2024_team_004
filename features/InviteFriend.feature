@@ -4,15 +4,13 @@ Feature: Inviting a friend to your world
   I want to be able to send and receive invites from my friends
 
   Background:
-    Given the following users exist:
+    Given the following user exists:
       | name      | email              | password         | password_confirmation |
       | John      | myUser@example.com | strongPass#123   | strongPass#123        |
       | James     | friend@example.com | thisPass%678     | thisPass%678          |
-    And I have created a new world with name "My World"
-    And the following user worlds exist:
-      | user_email         | world_name |
-      | myUser@example.com | My World   |
-    And I am logged in as "myUser@example.com"
+    And I am on the login page
+    And I log in with email "myUser@example.com" and password "strongPass#123"
+    And I have added a world with gender "Male" and role "Doctor" and preload "2" and name "My World"
 
   Scenario: Click invite on an existing world
     Given I am on the worlds page

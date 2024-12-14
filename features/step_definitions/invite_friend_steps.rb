@@ -59,7 +59,7 @@ end
 
 Given 'the following user worlds exist:' do |table|
   table.hashes.each do |user_world|
-    user = User.find_by(email: user_world['user_email'])
+    user = User.find_by(email: user_world['user_email'].downcase)
     world = World.find_by(world_name: user_world['world_name'])
     UserWorld.create!(user: user, world: world)
   end
@@ -71,15 +71,4 @@ Given 'I am logged in as {string}' do |email|
   fill_in 'Email', with: user.email
   fill_in 'Password', with: 'password'
   click_button 'Log in'
-end
-
-Given 'the following users exist:' do |table|
-  table.hashes.each do |user_data|
-    # Use find_or_create_by to ensure users are either found or created
-    User.find_or_create_by!(email: user_data['email']) do |user|
-      user.name = user_data['name']
-      user.password = user_data['password']
-      user.password_confirmation = user_data['password_confirmation']
-    end
-  end
 end
