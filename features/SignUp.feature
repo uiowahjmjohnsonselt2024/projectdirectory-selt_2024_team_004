@@ -49,9 +49,18 @@ Feature: Sign up for a new Sea Raiders user account
     And I have filled out all fields: "Zach", "z_murphy#notAnEmail", "goodPassword%567", "goodPassword%567"
     When I click the Sign Up button
     Then I should remain on the sign up page and see "Email is invalid"
+  
+  Scenario: Email already has an account
+    Given the following user exists:
+      | name      | email              | password         | password_confirmation |
+      | John      | myUser@example.com | strongPass#123   | strongPass#123        |
+    And I am on the sign up page
+    And I have filled out all fields: "John", "myUser@example.com", "johnsPass&2", "johnsPass&2"
+    When I click the Sign Up button
+    Then I should remain on the sign up page and see "Error: Email has already been taken"
+  
 
     # All sign up scenarios:
-  # Invalid email: "Email is invalid"
   # Email already used: "Error: Email has already been taken"
   # User clicks Log In to go back to log in page
   # Successful creation, redirected to login page: "Successfully created account!"
