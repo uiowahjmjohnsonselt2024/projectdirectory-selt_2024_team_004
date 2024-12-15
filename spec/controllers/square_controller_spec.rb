@@ -3,6 +3,7 @@ require 'rails_helper'
 require 'action_controller_workaround'
 
 describe SquaresController, type: :controller do
+  let(:valid_character) { double('Character', x_coord: 0, y_coord: 0) }
   let(:valid_user) do
     User.create(
       name: 'John Doe',
@@ -46,7 +47,10 @@ describe SquaresController, type: :controller do
 
   before do
     allow(StoreService).to receive(:fetch_prices).and_return({ 'item1' => 10, 'item2' => 20 })
+    allow(Character).to receive(:find_by).with(world_id: valid_world.id).and_return(valid_character)
+    allow(controller).to receive(:current_user).and_return(valid_user)
     session[:user_id] = valid_user.id
+    session[:world_id] = valid_world.id
   end
 
   describe 'GET #landing' do
@@ -57,6 +61,17 @@ describe SquaresController, type: :controller do
         expect(assigns(:world_id)).to eq(valid_world.id.to_s)
         expect(assigns(:squares)).to eq([square2, square1])
         expect(response).to have_http_status(:success)
+      end
+
+      it 'assigns @character with x_coord and y_coord defaults' do
+        allow(Character).to receive(:find_by).with(world_id: valid_world.id).and_return(nil)
+
+        get :landing, params: { world_id: valid_world.id }
+        character = assigns(:character)
+
+        expect(character).not_to be_nil
+        expect(character.x_coord).to eq(0)
+        expect(character.y_coord).to eq(0)
       end
     end
 

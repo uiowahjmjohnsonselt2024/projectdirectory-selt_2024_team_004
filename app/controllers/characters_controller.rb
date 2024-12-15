@@ -70,7 +70,6 @@ class CharactersController < ApplicationController
   end
 
   def update_shards
-    puts "Received params: #{params.inspect}"
     character = Character.find(params[:id])
     shards_being_bought = params[:shards].to_i
     price = params[:price].to_f
@@ -79,7 +78,6 @@ class CharactersController < ApplicationController
     result = FakePaymentService.charge(price, credit_card)
 
     if result[:status] == 'Success'
-      puts character.shards
       character.update!(shards: character.shards + shards_being_bought)
 
       render json: {

@@ -1,105 +1,99 @@
 require 'spec_helper'
 require 'rails_helper'
-require 'action_controller_workaround'
 
 describe MatchingGameController, type: :controller do
-  describe "GET #index" do
-    context 'when user has entered the mini-game suite' do
+  describe 'GET #index' do
+    context 'when user enters the mini-game suite' do
+      before do
+        allow(User).to receive(:find_by).and_return(double('User'))
+        allow(World).to receive(:find_by).and_return(double('World'))
+        allow(controller).to receive(:authenticate_user!).and_return(true)
+      end
+
       it 'renders the index view successfully' do
-        get :index
+        get :index, params: { user_id: 1, world_id: 2 }
         expect(response).to have_http_status(:ok)
         expect(response).to render_template(:index)
       end
 
-      it 'initializes a new mini game and sets session state' do
-        get :index
-        expect(assigns(:mini_game)).to be_a(MatchingGame)
-        expect(session[:mini_game_state]).not_to be_nil
+      it 'assigns shuffled cards to session state' do
+        get :index, params: { user_id: 1, world_id: 2 }
+        expect(session[:shuffled_cards]).to be_present
+        expect(session[:shuffled_cards].length).to eq(10)
+      end
+    end
+  end
+
+  describe 'POST #flip' do
+    before do
+      session[:shuffled_cards] = (0..4).to_a.concat((0..4).to_a).shuffle
+      session[:flipped_cards] = []
+      session[:matched_pairs] = []
+    end
+
+    context 'when a valid card index is provided' do
+      before do
+        session[:mini_game_state] = MatchingGame.new
       end
 
-      it 'assigns shuffled cards to @shuffled_cards' do
-        get :index
-        expect(assigns(:shuffled_cards)).to be_present
-        expect(assigns(:shuffled_cards)).to be_an(Array)
+      it 'flips a card and returns waiting status on first flip' do
+        post :flip, params: { index: 2 }
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to eq({ 'waiting' => true })
       end
 
-      it 'loads card images into @images' do
-        get :index
-        expect(assigns(:images)).to match_array(
-                                      ["card_image1.png", "card_image2.png", "card_image3.png", "card_image4.png", "card_image5.png"]
-                                    )
+      it 'flips two cards and indicates a match or mismatch' do
+        post :flip, params: { index: 0 }
+        expect(JSON.parse(response.body)).to eq({ 'waiting' => true })
+        post :flip, params: { index: 1 }
+        json_response = JSON.parse(response.body)
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to include('result')
+        expect(json_response['result']).to have_key('match')
       end
     end
 
-    # Test for flip action
-
-    describe "POST #flip" do
-      context 'when mini game state is valid' do
-        before do
-          session[:mini_game_state] = MatchingGame.new.state
-        end
-
-        it 'flips a card and returns the correct response' do
-          post :flip, params: { index: 2 }
-          json_response = JSON.parse(response.body)
-
-          expect(response).to have_http_status(:ok)
-          expect(json_response['card']['index']).to eq(2)
-          expect(json_response['card']['image']).to eq('card_image3.png')
-          expect(json_response['result']).not_to be_nil
-          expect(json_response['game_status']).not_to be_nil
-        end
-
-        it 'updates session state after flipping a card' do
-          initial_game = MatchingGame.new
-          session[:mini_game_state] = initial_game.state
-          post :flip, params: { index: 2 }
-
-          expect(session[:mini_game_state]).not_to eq(initial_game.state)
-        end
+    context 'when an invalid card index is provided' do
+      before do
+        session[:mini_game_state] = MatchingGame.new
       end
 
-      context 'when an invalid card index is provided' do
-        before do
-          session[:mini_game_state] = MatchingGame.new.state
-        end
-
-        it 'handles invalid card index gracefully' do
-          post :flip, params: { index: -1 }
-          json_response = JSON.parse(response.body)
-
-          expect(response).to have_http_status(:ok) # or another expected status
-          expect(json_response['result']).to eq('invalid') # Depending on your game logic
-        end
+      it 'returns an error for out-of-range index' do
+        post :flip, params: { index: -1 }
+        json_response = JSON.parse(response.body)
+        expect(response).to have_http_status(:ok)
+        expect(json_response['result']).to eq('invalid')
       end
 
-      context 'when mini game is not initialized' do
-        before do
-          session[:mini_game_state] = nil
-        end
-
-        it 'returns an error when mini game is not properly instantiated' do
-          post :flip, params: { index: 2 }
-
-          json_response = JSON.parse(response.body)
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(json_response['error']).to eq('Failed to generate and set new mini game.')
-        end
+      it 'returns an error for index exceeding card count' do
+        post :flip, params: { index: 10 }
+        expect(response).to have_http_status(:unprocessable_entity)
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq('Invalid card index')
       end
+    end
 
-      context 'when game is over' do
-        before do
-          game = MatchingGame.new
-          allow(game).to receive(:game_over?).and_return(true)
-          session[:mini_game_state] = game.state
-        end
+    context 'when the game is over' do
+      it 'indicates the game is over' do
+        session[:matched_pairs] = [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
+        post :flip, params: { index: 0 }
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
 
-        it 'indicates when the game is over' do
-          post :flip, params: { index: 2 }
-          json_response = JSON.parse(response.body)
+        expect(json_response['game_over']).to eq(true)
+      end
+    end
 
-          expect(json_response['game_status']).to eq(true)
-        end
+    context 'when the game state is missing' do
+      it 'returns an error if shuffled_cards is missing' do
+        session[:shuffled_cards] = nil
+        post :flip, params: { index: 2 }
+        expect(response).to have_http_status(:internal_server_error)
+        json_response = JSON.parse(response.body)
+
+        expect(json_response['error']).to eq('Game state is not initialized')
       end
     end
   end

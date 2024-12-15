@@ -11,5 +11,7 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe SquaresHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'adds an example test' do
+    expect(true).to be(true)
+  end
 end

@@ -31,7 +31,6 @@ class WorldsController < ApplicationController
   end
 
   def create
-    puts "Form submitted successfully!"
     if params[:user_world_id].present?
       # Handle invited user character creation
       @user_world = UserWorld.find(params[:user_world_id])
@@ -598,7 +597,6 @@ class WorldsController < ApplicationController
         code: formatted_code
       )
     rescue => e
-      puts "Error generating square: #{e.message}"
       unless world.squares.exists?(x: x, y: y)
         world.squares.create!(
           square_id: SecureRandom.hex(10),
@@ -634,14 +632,8 @@ class WorldsController < ApplicationController
   def store
     @user = current_user
     @currency = @user&.default_currency || 'USD'
-    puts "Current user currency: #{@currency}"
-    
     @prices = StoreService.fetch_prices(@currency)
-    puts "Fetched prices for #{@currency}: #{@prices}"
-    
-    # Force prices to be converted to floats
     @prices = @prices.transform_values(&:to_f)
-    puts "Final prices after conversion: #{@prices}"
   end
 
   def current_user

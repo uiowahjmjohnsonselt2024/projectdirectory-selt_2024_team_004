@@ -2,8 +2,9 @@ class SettingsController < ApplicationController
   before_action :current_user
 
   def show
-    @user = @current_user
-    @character = Character.find_by(character_id: session[:character_id])
+    @user ||= User.find_by id: params[:user_id] || User.find_by(id: session[:user_id])
+    @world ||= World.find_by id: params[:world_id] || World.find_by(id: session[:world_id])
+    @character ||= Character.find_or_initialize_by(world_id: @world.id, user_id: @user.id)
     @currencies = OpenExchangeService.fetch_currencies
     session[:return_path] = params[:return_path] || request.referrer
 
@@ -22,7 +23,9 @@ class SettingsController < ApplicationController
       flash[:notice] = 'Settings saved successfully!'
       return_path = session[:return_path]
       if return_path.present?
-        return_path = "#{return_path}#{return_path.include?('?') ? '&' : '?'}user_id=#{@current_user.id}" unless return_path.include?('user_id=')
+        unless return_path.include?('user_id=')
+          return_path = "#{return_path}#{return_path.include?('?') ? '&' : '?'}user_id=#{@current_user.id}"
+        end
       else
         return_path = landing_path(user_id: @current_user.id)
       end

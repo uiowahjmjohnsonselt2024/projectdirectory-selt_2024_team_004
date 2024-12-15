@@ -25,12 +25,14 @@ class MatchingGame
 
     # Add to flipped cards
     @state[:flipped_cards] ||= []
+    render json: { status: 'invalid', reason: 'already flipped' } if @state[:flipped_cards].include? card_value
+    render json: { status: 'invalid', reason: 'already matched' } if @state[:matched_pairs].include? card_value
     @state[:flipped_cards] << { index: index, value: card_value }
 
     # Check for matches if we have 2 cards flipped
     if @state[:flipped_cards].length == 2
       card1, card2 = @state[:flipped_cards]
-      
+
       if card1[:value] == card2[:value]
         @state[:matched_pairs] ||= []
         @state[:matched_pairs] << [card1[:index], card2[:index]]
@@ -38,7 +40,7 @@ class MatchingGame
       else
         result = { match: false }
       end
-      
+
       @state[:flipped_cards] = []
     else
       result = { waiting: true }
