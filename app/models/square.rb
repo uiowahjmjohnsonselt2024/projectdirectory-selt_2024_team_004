@@ -3,6 +3,7 @@ class Square < ActiveRecord::Base
   
   before_create :generate_unique_square_id
   before_save :ensure_single_treasure
+  before_save :prevent_treasure_in_starting_area
 
   def activate_square(character)
     return false unless character.shards >= 10
@@ -49,6 +50,15 @@ class Square < ActiveRecord::Base
   def ensure_single_treasure
     if treasure_changed? && treasure
       world.squares.where.not(id: id).update_all(treasure: false)
+    end
+  end
+
+  def prevent_treasure_in_starting_area
+    if treasure_changed? && treasure
+      # Prevent treasure placement in (0,0), (0,1), and (1,0)
+      if (x == 0 && y == 0) || (x == 0 && y == 1) || (x == 1 && y == 0)
+        self.treasure = false
+      end
     end
   end
 end

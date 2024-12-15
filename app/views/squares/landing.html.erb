@@ -369,6 +369,39 @@
     character.setAttribute('data-x', x);
     character.setAttribute('data-y', y);
   }
+
+  // Add this function near the top of your JavaScript
+  function checkForTreasure(x, y, characterId) {
+    console.log(`Checking for treasure at: ${x} ${y}`);
+    const treasureLocation = document.querySelector('.grid-item[data-has-treasure="true"]');
+    if (treasureLocation) {
+      const treasureX = parseInt(treasureLocation.getAttribute('data-x'));
+      const treasureY = parseInt(treasureLocation.getAttribute('data-y'));
+      console.log(`Treasure location: ${treasureX} ${treasureY}`);
+      
+      if (x === treasureX && y === treasureY) {
+        // Broadcast treasure found
+        App.gameChannel.perform('broadcast_treasure_found', {
+          finder_id: characterId
+        });
+      }
+    }
+  }
+
+  // In your Action Cable subscription received handler
+  App.gameChannel.received = function(data) {
+    console.log("Received websocket data:", data);
+    
+    if (data.type === 'treasure_found') {
+      // Only show modal for players who didn't find the treasure
+      const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+      if (currentCharacter) {
+        const x = parseInt(currentCharacter.getAttribute('data-x'));
+        const y = parseInt(currentCharacter.getAttribute('data-y'));
+        checkForTreasure(x, y, currentCharacter.getAttribute('data-character-id'));
+      }
+    }
+  };
 </script>
 
 <div class="container">
