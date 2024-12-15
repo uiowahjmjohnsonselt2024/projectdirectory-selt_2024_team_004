@@ -18,19 +18,26 @@ class MatchingGame
 
   def flip_card(index)
     # Validate the index
-    return { error: "Invalid card index" } unless index.is_a?(Integer) && index >= 0 && index < @cards_idx.length
+    return { error: 'Invalid card index' } unless index.is_a?(Integer) && index >= 0 && index < @cards_idx.length
+
+    if @state[:flipped_cards].any? { |card| card[:index] == index }
+      return { status: 'invalid', reason: 'already flipped' }
+    end
+    if @state[:matched_pairs].flatten.include?(index)
+      return { status: 'invalid', reason: 'already matched' }
+    end
 
     # Get the card value at this index
     card_value = @cards_idx[index]
 
     # Add to flipped cards
-    @state[:flipped_cards] ||= []
+    card_value = @cards_idx[index]
     @state[:flipped_cards] << { index: index, value: card_value }
 
     # Check for matches if we have 2 cards flipped
     if @state[:flipped_cards].length == 2
       card1, card2 = @state[:flipped_cards]
-      
+
       if card1[:value] == card2[:value]
         @state[:matched_pairs] ||= []
         @state[:matched_pairs] << [card1[:index], card2[:index]]
@@ -38,7 +45,7 @@ class MatchingGame
       else
         result = { match: false }
       end
-      
+
       @state[:flipped_cards] = []
     else
       result = { waiting: true }
