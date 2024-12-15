@@ -51,6 +51,7 @@
   <% end %>
 
   <h3>Pending Invitations</h3>
+  <p>(Refresh the page to see updated invitations)</p>
   <% @invitations.each do |invitation| %>
     <% if invitation.world.present? %>
       <p>
