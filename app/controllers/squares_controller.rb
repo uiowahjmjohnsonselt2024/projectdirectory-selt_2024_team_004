@@ -242,7 +242,6 @@ class SquaresController < ApplicationController
       if @square.save
         Rails.logger.info "Broadcasting terrain update for square #{@square.id}"
         
-        # Broadcast directly from controller
         ActionCable.server.broadcast(
           "game_channel_#{@square.world_id}",
           {

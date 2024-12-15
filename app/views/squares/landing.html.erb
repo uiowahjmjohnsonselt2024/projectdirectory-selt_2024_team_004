@@ -51,7 +51,20 @@
             } 
             else if (data.type === 'terrain_updated') {
               console.log("Terrain update received:", data);
-              updateTerrainDisplay(data);
+              const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+              if (square) {
+                // Update square appearance
+                updateSquareAppearance(square, data.terrain);
+                
+                // Update square state
+                square.setAttribute('data-state', data.state);
+                square.setAttribute('data-terrain', data.terrain);
+                
+                if (data.state === 'active') {
+                  square.classList.remove('inactive');
+                  square.classList.add('active');
+                }
+              }
             }
           }
         }
@@ -171,18 +184,30 @@
 
       const data = await response.json();
       console.log('Unlock response:', data);
+      
+      if (data.success) {
+        // Broadcast the terrain update through Action Cable
+        App.gameChannel.perform('broadcast_terrain_update', {
+          square_id: squareId,
+          terrain: data.terrain,
+          state: data.state
+        });
+      }
     } catch (error) {
       console.error('Error unlocking square:', error);
     }
   }
 
   // Update your pay shards button click handler
-  document.getElementById('pay-shard-button').addEventListener('click', async function() {
-    const squareId = this.getAttribute('data-square-id');
-    if (squareId) {
-      await unlockSquare(squareId);
-    }
-  });
+  const payShardButton = document.getElementById('pay-shard-button');
+  if (payShardButton) {
+    payShardButton.addEventListener('click', async function() {
+      const squareId = this.getAttribute('data-square-id');
+      if (squareId) {
+        await unlockSquare(squareId);
+      }
+    });
+  }
 
   // Add this function to handle terrain broadcasting
   function broadcastTerrainUpdate(squareId, terrain, state) {
