@@ -126,3 +126,10 @@ Then("I should not see a World list entry with buttons to play and delete with n
   expect(page).not_to have_content(world_name)
 end
 
+When 'I click the plus button' do
+  click_button '+'
+end
+
+Then 'I am redirected to the create world page' do
+  expect(current_url).to eq(character_url + "?commit=%2B")
+end

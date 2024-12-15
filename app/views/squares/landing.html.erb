@@ -94,7 +94,7 @@
                       top: <%= char_y %>px; 
                       left: <%= char_x %>px;
                       z-index: 1000;">
-            <%= image_tag asset_path(character.image_code), width: '100', height: '100' if character.image_code %>
+            <%= image_tag(asset_path(character.image_code), width: '100', height: '100') if character.image_code && Rails.application.assets.find_asset(character.image_code).present? rescue nil %>
           </div>
         <% end %>
       <% else %>
