@@ -27,6 +27,13 @@ Feature: Inviting a friend to your world
     And I click "Send Invitation"
     Then the modal should remain up
 
+  Scenario: Try to invite yourself
+    Given I am on the worlds page
+    And I click the invite button for "My World"
+    And I fill in "Enter email to invite" with "myUser@example.com"
+    And I click "Send Invitation"
+    Then the modal should remain up
+
 
 
 
