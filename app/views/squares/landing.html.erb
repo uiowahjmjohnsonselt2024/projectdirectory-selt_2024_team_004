@@ -1,9 +1,6 @@
+<%= javascript_include_tag 'action_cable' %>
 <script>
   // Action Cable setup
-  //= require action_cable
-  //= require_self
-  //= require_tree ./channels
-
   (function() {
     this.App || (this.App = {});
     App.cable = ActionCable.createConsumer();
