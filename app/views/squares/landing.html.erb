@@ -53,16 +53,17 @@
               console.log("Square updated:", data);
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
               if (square) {
-                // Update square appearance
+                // Update square state
                 if (data.state === 'active') {
                   square.classList.remove('inactive');
                   square.classList.add('active');
+                  square.setAttribute('data-state', 'active');
                 }
                 
-                // Update terrain if it changed
+                // Update terrain
                 if (data.terrain) {
+                  console.log(`Updating terrain for square ${data.square_id} to ${data.terrain}`);
                   square.setAttribute('data-terrain', data.terrain);
-                  // Update visual appearance based on terrain
                   updateSquareAppearance(square, data.terrain);
                 }
               }
@@ -130,26 +131,46 @@
 
   // Add this helper function
   function updateSquareAppearance(square, terrain) {
-    // Remove existing terrain classes
+    console.log(`Updating appearance for square with terrain: ${terrain}`);
+    
+    // Remove all terrain classes
     square.classList.remove('empty', 'water', 'mountain', 'forest');
     
     // Add new terrain class
     square.classList.add(terrain);
     
-    // Update any visual elements based on terrain
+    // Get the canvas context
+    const canvas = square.querySelector('canvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw based on terrain type
     switch(terrain) {
       case 'water':
-        square.style.backgroundColor = '#4a90e2';
+        ctx.fillStyle = '#4a90e2';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       case 'mountain':
-        square.style.backgroundColor = '#8b4513';
+        ctx.fillStyle = '#8b4513';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       case 'forest':
-        square.style.backgroundColor = '#228b22';
+        ctx.fillStyle = '#228b22';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       default:
-        square.style.backgroundColor = '#f0f0f0';
+        ctx.fillStyle = '#f0f0f0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
+    
+    // Draw coordinates
+    ctx.fillStyle = '#666';
+    ctx.font = '12px Arial';
+    const x = square.getAttribute('data-x');
+    const y = square.getAttribute('data-y');
+    ctx.fillText(`(${x}, ${y})`, 35, 55);
   }
 </script>
 

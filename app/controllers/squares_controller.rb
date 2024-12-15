@@ -233,8 +233,18 @@ class SquaresController < ApplicationController
 
   def update
     @square = Square.find(params[:id])
+    
+    # Log the incoming parameters
+    Rails.logger.info "Updating square with params: #{params.inspect}"
+    
     if @square.update(square_params)
-      # Broadcast the square update
+      # Generate random terrain if square is being activated
+      if params[:state] == 'active' && @square.terrain.blank?
+        @square.terrain = ['water', 'mountain', 'forest', 'empty'].sample
+        @square.save
+      end
+
+      # Broadcast the square update with terrain
       ActionCable.server.broadcast(
         "game_channel_#{@square.world_id}",
         {
@@ -245,7 +255,11 @@ class SquaresController < ApplicationController
         }
       )
       
-      render json: { success: true }
+      render json: { 
+        success: true, 
+        terrain: @square.terrain,
+        state: @square.state 
+      }
     else
       render json: { success: false }, status: :unprocessable_entity
     end
@@ -264,5 +278,9 @@ class SquaresController < ApplicationController
 
   def current_user
     @current_user ||= User.find_by id: params[:user_id]
+  end
+
+  def square_params
+    params.permit(:state, :terrain)
   end
 end
