@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 def login_user(user)
   visit login_path
   fill_in 'Email', with: user.email

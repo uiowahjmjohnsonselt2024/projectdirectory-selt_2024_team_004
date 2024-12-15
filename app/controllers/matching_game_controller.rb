@@ -6,44 +6,44 @@ class MatchingGameController < ApplicationController
     @user = User.find_by(id: params[:user_id])
     @world = World.find_by(id: params[:world_id])
     @square_id = params[:square_id]
-    
-    Rails.logger.debug "Matching game initialized with: user_id=#{params[:user_id]}, world_id=#{params[:world_id]}, square_id=#{params[:square_id]}"
-    
+
     # Initialize game state
     session[:shuffled_cards] = (0..4).to_a.concat((0..4).to_a).shuffle
     session[:flipped_cards] = []
     session[:matched_pairs] = []
-    
+
     @shuffled_cards = session[:shuffled_cards]
   end
 
   def flip
     card_idx = params[:index].to_i
-    
+
     # Get current game state from session
     flipped_cards = session[:flipped_cards]
     matched_pairs = session[:matched_pairs] || []
     shuffled_cards = session[:shuffled_cards]
-    
+
+    render json: { status: 'invalid', reason: 'already flipped' } if flipped_cards.include? card_idx
+    render json: { status: 'invalid', reason: 'already matched' } if matched_pairs.include? card_idx
+
     # Add current card to flipped cards
     flipped_cards << card_idx
-    
+
     # If this is the second card
     if flipped_cards.length == 2
-      first_card_idx = flipped_cards[0]
-      second_card_idx = flipped_cards[1]
-      
+      first_card_idx, second_card_idx = flipped_cards
+
       # Check if cards match
       is_match = shuffled_cards[first_card_idx] == shuffled_cards[second_card_idx]
-      
+
       if is_match
         matched_pairs << [first_card_idx, second_card_idx]
         session[:matched_pairs] = matched_pairs
       end
-      
+
       # Clear flipped cards for next turn
       session[:flipped_cards] = []
-      
+
       render json: {
         first_card_index: first_card_idx,
         second_card_index: second_card_idx,

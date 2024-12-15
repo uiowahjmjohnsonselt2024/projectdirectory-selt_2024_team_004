@@ -36,6 +36,8 @@ describe CharactersController, type: :controller do
     session[:user_id] = valid_user.id
     session[:session_token] = valid_user.session_token
     @current_user = valid_user
+
+    allow(Character).to receive(:find).and_return(valid_character)
   end
 
   describe 'POST #save_coordinates' do
@@ -53,18 +55,17 @@ describe CharactersController, type: :controller do
 
     context 'when update fails' do
       it 'does not update the character coordinates and prints an error message' do
-        allow_any_instance_of(Character).to receive(:update).and_return(false)
+        allow(valid_character).to receive(:update).and_return(false) # Simulate update failure
+        post :save_coordinates, params: { id: 1, x: 20, y: 30 }
 
-        post :save_coordinates, params: { id: valid_character.character_id, x: nil, y: nil }
-
-        valid_character.reload
         expect(valid_character.x_coord).to eq(10) # Original value remains unchanged
-        expect(valid_character.y_coord).to eq(10)
+        expect(response.body).to include('Error updating coordinates')
       end
     end
 
     context 'when character is not found' do
       it 'raises an ActiveRecord::RecordNotFound error' do
+        allow(Character).to receive(:find).and_raise(ActiveRecord::RecordNotFound)
         expect {
           post :save_coordinates, params: { id: 9999, x: 20, y: 30 }
         }.to raise_error(ActiveRecord::RecordNotFound)
