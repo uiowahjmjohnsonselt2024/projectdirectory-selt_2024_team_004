@@ -18,7 +18,14 @@
             console.log("Connected to game channel!");
           },
           disconnected: function() {
-            console.log("Disconnected from game channel!");
+            console.log("Disconnected from game channel - attempting reconnect...");
+            this.perform('subscribed');
+          },
+          rejected: function() {
+            console.log("Connection rejected - retrying...");
+            setTimeout(() => {
+              App.cable.connection.reconnect();
+            }, 1000);
           },
           received: function(data) {
             console.log("Received websocket data:", data);
@@ -54,23 +61,43 @@
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
               
               if (square) {
-                console.log("Found square element, updating...");
+                const canvas = square.querySelector('canvas');
+                if (canvas) {
+                  const ctx = canvas.getContext('2d');
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Set fill color based on terrain
+                  switch(data.terrain) {
+                    case 'water':
+                      ctx.fillStyle = '#4a90e2';
+                      break;
+                    case 'mountain':
+                      ctx.fillStyle = '#8b4513';
+                      break;
+                    case 'forest':
+                      ctx.fillStyle = '#228b22';
+                      break;
+                    default:
+                      ctx.fillStyle = '#f0f0f0';
+                  }
+                  
+                  // Fill the square
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Draw coordinates
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  const x = square.getAttribute('data-x');
+                  const y = square.getAttribute('data-y');
+                  ctx.fillText(`(${x}, ${y})`, 35, 55);
+                }
                 
-                // Update state
+                // Update square attributes
+                square.setAttribute('data-terrain', data.terrain);
                 if (data.state === 'active') {
                   square.classList.remove('inactive');
                   square.classList.add('active');
-                  square.setAttribute('data-state', 'active');
                 }
-                
-                // Update terrain
-                if (data.terrain) {
-                  console.log(`Updating terrain for square ${data.square_id} to ${data.terrain}`);
-                  square.setAttribute('data-terrain', data.terrain);
-                  updateSquareAppearance(square, data.terrain);
-                }
-              } else {
-                console.log("Square element not found:", data.square_id);
               }
             }
           }
@@ -192,8 +219,21 @@
       console.log('Unlock response:', data);
       
       if (data.success) {
-        // Broadcast the terrain update
-        broadcastTerrainUpdate(data.square_id, data.terrain, data.state);
+        // Try broadcasting up to 3 times if it fails
+        let attempts = 0;
+        const maxAttempts = 3;
+        
+        const tryBroadcast = () => {
+          if (broadcastTerrainUpdate(data.square_id, data.terrain, data.state)) {
+            return;
+          }
+          attempts++;
+          if (attempts < maxAttempts) {
+            setTimeout(tryBroadcast, 1000);
+          }
+        };
+        
+        tryBroadcast();
       }
     } catch (error) {
       console.error('Error unlocking square:', error);
@@ -210,13 +250,24 @@
 
   // Add this function to handle terrain broadcasting
   function broadcastTerrainUpdate(squareId, terrain, state) {
-    App.gameChannel.perform('broadcast_terrain_update', {
-      action: 'broadcast_terrain_update',
-      square_id: squareId,
-      terrain: terrain,
-      state: state
-    });
+    try {
+      App.gameChannel.perform('broadcast_terrain_update', {
+        action: 'broadcast_terrain_update',
+        square_id: squareId,
+        terrain: terrain,
+        state: state
+      });
+      return true;
+    } catch (error) {
+      console.error('Error broadcasting terrain update:', error);
+      return false;
+    }
   }
+
+  // Add reconnection handling
+  App.cable.connection.reconnect = function() {
+    console.log("Reconnecting to Action Cable...");
+  };
 </script>
 
 <div class="container">
