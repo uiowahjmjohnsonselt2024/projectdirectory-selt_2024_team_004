@@ -1,0 +1,26 @@
+<div class="login-container">
+  <h1>Please Enter Recovery Code</h1>
+
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbo-track': 'reload' %>
+
+  <%= render 'shared/flash' %>
+
+  <%= form_with url: verify_path, local: true do |form| %>
+    <div>
+      <%= form.label :Recovery_code %>
+      <%= form.text_field :code%>
+    </div>
+    <div>
+      <%= form.label :New_Password %>
+      <%= form.password_field :password %>
+    </div>
+    <div>
+      <%= form.label :Retype_New_Password %>
+      <%= form.password_field :password_confirm %>
+    </div>
+    <%= form.submit "Submit", class: "btn-login" %>
+  <% end %>
+
+  <p>Return to Login</p>
+  <%= link_to 'Log In', login_path, class: 'btn btn-secondary' %>
+</div>
