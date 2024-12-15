@@ -231,6 +231,26 @@ class SquaresController < ApplicationController
     }
   end
 
+  def update
+    @square = Square.find(params[:id])
+    if @square.update(square_params)
+      # Broadcast the square update
+      ActionCable.server.broadcast(
+        "game_channel_#{@square.world_id}",
+        {
+          type: 'square_updated',
+          square_id: @square.id,
+          state: @square.state,
+          terrain: @square.terrain
+        }
+      )
+      
+      render json: { success: true }
+    else
+      render json: { success: false }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def store

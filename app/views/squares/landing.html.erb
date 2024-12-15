@@ -49,6 +49,23 @@
                   targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
                 }
               }
+            } else if (data.type === 'square_updated') {
+              console.log("Square updated:", data);
+              const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+              if (square) {
+                // Update square appearance
+                if (data.state === 'active') {
+                  square.classList.remove('inactive');
+                  square.classList.add('active');
+                }
+                
+                // Update terrain if it changed
+                if (data.terrain) {
+                  square.setAttribute('data-terrain', data.terrain);
+                  // Update visual appearance based on terrain
+                  updateSquareAppearance(square, data.terrain);
+                }
+              }
             }
           }
         }
@@ -110,6 +127,30 @@
   App.cable.connection.onclose = function() {
     console.log('WebSocket connection closed');
   };
+
+  // Add this helper function
+  function updateSquareAppearance(square, terrain) {
+    // Remove existing terrain classes
+    square.classList.remove('empty', 'water', 'mountain', 'forest');
+    
+    // Add new terrain class
+    square.classList.add(terrain);
+    
+    // Update any visual elements based on terrain
+    switch(terrain) {
+      case 'water':
+        square.style.backgroundColor = '#4a90e2';
+        break;
+      case 'mountain':
+        square.style.backgroundColor = '#8b4513';
+        break;
+      case 'forest':
+        square.style.backgroundColor = '#228b22';
+        break;
+      default:
+        square.style.backgroundColor = '#f0f0f0';
+    }
+  }
 </script>
 
 <div class="container">
