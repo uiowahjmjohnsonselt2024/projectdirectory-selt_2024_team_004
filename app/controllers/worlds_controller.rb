@@ -244,13 +244,57 @@ class WorldsController < ApplicationController
   def restart
     @world = World.find(params[:id])
     
-    Square.transaction do
-      @world.squares.destroy_all
-      generate_squares_for_world(@world)
+    World.transaction do
+      # Reset all squares to inactive except starting squares
+      @world.squares.each do |square|
+        # Keep starting squares active with basic terrain
+        if (square.x == 0 && square.y == 0) || 
+           (square.x == 0 && square.y == 1) || 
+           (square.x == 1 && square.y == 0)
+          square.update!(
+            state: 'active',
+            terrain: ['water', 'desert', 'forest', 'plains'].sample,
+            code: nil # Reset any custom terrain code
+          )
+        else
+          square.update!(
+            state: 'inactive',
+            terrain: nil,
+            code: nil
+          )
+        end
+      end
+
+      # Randomly place new treasure in valid location
+      old_treasure = @world.squares.find_by(treasure: true)
+      old_treasure.update!(treasure: false) if old_treasure
+
+      valid_squares = @world.squares.where.not(
+        x: [0, 1], 
+        y: [0, 1]
+      ).or(
+        @world.squares.where.not(x: 0).where.not(y: 0)
+      )
+      
+      new_treasure_square = valid_squares.sample
+      new_treasure_square.update!(treasure: true)
+
+      # Move all characters back to (0,0)
+      @world.characters.update_all(x_coord: 0, y_coord: 0)
     end
+
+    # Broadcast the world reset
+    ActionCable.server.broadcast(
+      "game_channel_#{@world.id}",
+      {
+        type: 'world_restart',
+        world_id: @world.id
+      }
+    )
 
     render json: { success: true }
   rescue => e
+    Rails.logger.error "Error restarting world: #{e.message}"
     render json: { success: false, error: e.message }, status: :unprocessable_entity
   end
 
