@@ -3,6 +3,7 @@ require 'rails_helper'
 require 'action_controller_workaround'
 
 describe SettingsController, type: :controller do
+  let(:valid_character) { double('Character', image_code: 'character.png') }
   let(:valid_user) do
     User.create(
       name: 'Jane Doe',
@@ -14,9 +15,20 @@ describe SettingsController, type: :controller do
     )
   end
 
+  let(:valid_world) do
+    World.create(
+      world_name: 'World 1',
+      last_played: DateTime.new(2024, 11, 29, 10, 0, 0),
+      progress: 0
+    )
+  end
+
   before do
     session[:user_id] = valid_user.id
+    session[:world_id] = valid_world.id
     session[:session_token] = valid_user.session_token
+    allow(controller).to receive(:current_user).and_return(valid_user)
+    allow(Character).to receive(:find_by).and_return(valid_character)
   end
 
   describe 'GET #show' do
@@ -32,6 +44,11 @@ describe SettingsController, type: :controller do
         expect(assigns(:currencies)).to eq(%w[USD EUR GBP])
         expect(session[:return_path]).to eq('/some/path')
         expect(response).to have_http_status(:success)
+      end
+
+      it 'assigns @character_image' do
+        get :show
+        expect(assigns(:character_image)).to eq('character.png')
       end
     end
   end
