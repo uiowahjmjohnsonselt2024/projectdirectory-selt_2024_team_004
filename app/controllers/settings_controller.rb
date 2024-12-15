@@ -4,7 +4,7 @@ class SettingsController < ApplicationController
   def show
     @user ||= User.find_by id: params[:user_id] || User.find_by(id: session[:user_id])
     @world ||= World.find_by id: params[:world_id] || World.find_by(id: session[:world_id])
-    @character ||= Character.find_or_initialize_by(world_id: @world.id, user_id: @user.id)
+    @character ||= Character.find_by(character_id: session[:character_id])
     @currencies = OpenExchangeService.fetch_currencies
     session[:return_path] = params[:return_path] || request.referrer
     @character_image = @character.image_code
