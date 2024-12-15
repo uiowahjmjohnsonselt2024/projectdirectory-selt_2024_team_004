@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     unless current_user
-      flash[:alert] = "You must be logged in to access this page"
+      flash[:alert] = 'Please log in to view your worlds.'
       redirect_to login_path
     end
   end

@@ -52,14 +52,14 @@ RSpec.describe MatchingGame, type: :model do
     it 'should return an error hash if the user tries to flip a card that is already flipped' do
       @test_game.flip_card(0)
       attempt = @test_game.flip_card(0)
-      expected_output = { reason: "already flipped", status: "invalid" }
+      expected_output = { reason: 'already flipped', status: 'invalid' }
       expect(attempt).to eq(expected_output)
     end
 
     it 'should return an error hash if the user tries to flip a card that is already matched' do
       @test_game.state[:matched_pairs] << [0, 1]
       attempt = @test_game.flip_card(0)
-      expected_output = { reason: "already matched", status: "invalid" }
+      expected_output = { reason: 'already matched', status: 'invalid' }
       expect(attempt).to eq(expected_output)
     end
   end

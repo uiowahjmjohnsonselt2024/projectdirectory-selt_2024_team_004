@@ -61,9 +61,41 @@ describe SettingsController, type: :controller do
         expect(assigns(:character_image)).to eq('1_1_1.png')
       end
     end
+
+    it 'handles missing @character gracefully' do
+      allow(Character).to receive(:find_by).and_return(nil)
+
+      get :show
+      expect(assigns(:character_image)).to be_nil
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  context 'when user is not logged in' do
+    before do
+      session[:user_id] = nil
+      allow(controller).to receive(:current_user).and_return(nil)
+    end
+
+    it 'redirects to login page' do
+      get :show
+      expect(response).to redirect_to(login_path)
+      expect(flash[:alert]).to eq('Please log in to view your worlds.')
+    end
   end
 
   describe 'PATCH #update' do
+    context 'when the update is successful' do
+      it 'updates the default currency and redirects back' do
+        patch :update, params: { currency: 'EUR', world_id: valid_world.id }
+
+        expect(flash[:notice]).to eq('Settings saved successfully!')
+        valid_user.reload
+        expect(valid_user.default_currency).to eq('EUR')
+        expect(response).to redirect_to(landing_path(user_id: valid_user.id))
+      end
+    end
+
     context 'when the update fails' do
       it 'logs an error and displays an alert' do
         allow_any_instance_of(User).to receive(:update).and_return(false)
@@ -74,6 +106,29 @@ describe SettingsController, type: :controller do
         valid_user.reload
         expect(valid_user.default_currency).to eq('USD') # Currency remains unchanged
       end
+    end
+
+    context 'when user is not logged in' do
+      before do
+        session[:user_id] = nil
+        allow(controller).to receive(:current_user).and_return(nil)
+      end
+
+      it 'redirects to login page' do
+        patch :update, params: { currency: 'EUR' }
+        expect(response).to redirect_to(login_path)
+        expect(flash[:alert]).to eq('Please log in to view your worlds.')
+      end
+    end
+  end
+
+  describe 'Error Handling' do
+    it 'handles unexpected errors gracefully' do
+      allow(controller).to receive(:current_user).and_raise(StandardError, 'Something went wrong')
+
+      expect do
+        get :show
+      end.to raise_error(StandardError, 'Something went wrong')
     end
   end
 end

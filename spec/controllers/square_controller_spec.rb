@@ -78,9 +78,9 @@ describe SquaresController, type: :controller do
         Character.where(user_id: valid_user.id, world_id: valid_world.id).delete_all # Ensure no character exists
 
         # Verify a new character is created
-expect do
-          get :landing, params: { world_id: valid_world.id, user_id: valid_user.id }
-        end.to change { Character.count }.by(1)
+        expect do
+                  get :landing, params: { world_id: valid_world.id, user_id: valid_user.id }
+                end.to change { Character.count }.by(1)
         character = assigns(:character)
         expect(character).not_to be_nil
         expect(character.x_coord).to eq(0) # Default x_coord

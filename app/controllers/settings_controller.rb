@@ -8,12 +8,12 @@ class SettingsController < ApplicationController
     @currencies = OpenExchangeService.fetch_currencies
     session[:return_path] = params[:return_path] || request.referrer
     @character_image = @character&.image_code
-    role = @character_image[4] # Code has form "gender_preload_role.png"
+    role = @character_image ? @character_image[4] : 4 # Code has form "gender_preload_role.png"
     @role = case role.to_i
             when 1 then 'Captain'
             when 2 then 'Doctor'
             when 3 then 'Navigator'
-            else 'Invalid role'
+            else 'Could not find role'
             end
   end
 
