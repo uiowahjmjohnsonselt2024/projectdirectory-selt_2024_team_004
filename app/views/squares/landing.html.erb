@@ -526,14 +526,9 @@
       $(button).on('click', function() {
         console.log('Pay shard button clicked');
         const squareId = $(this).data('square-id');
-        console.log('Square ID:', squareId);
-        
-        // Check shards before proceeding
-        const currentShards = parseInt(document.querySelector('.shards-count').textContent.match(/\d+/)[0]);
-        if (currentShards < 10) {
-          alert('Not enough shards! You need 10 shards to unlock this square.');
-          return;
-        }
+        const square = document.querySelector(`[data-square-id="${squareId}"]`);
+        const x = parseInt(square.getAttribute('data-x'));
+        const y = parseInt(square.getAttribute('data-y'));
         
         // Add loading message to modal
         const modalContent = $('#popup-modal .modal-content');
@@ -543,7 +538,6 @@
           <div class="loading-spinner"></div>
         `);
 
-        // Add animation for dots
         const dotsInterval = setInterval(() => {
           const dots = modalContent.find('.dots');
           const currentDots = dots.text();
@@ -564,50 +558,42 @@
             world_id: '<%= @world&.id %>'
           },
           success: function(data) {
-            clearInterval(dotsInterval);  // Clear the dots animation
+            clearInterval(dotsInterval);
             console.log('Success:', data);
             if (data.success) {
               // Update shards count
               $('.shards-count').text(`Shards: ${data.new_shards}`);
               
               // Update square appearance
-              const square = $(`[data-square-id="${squareId}"]`);
-              square.attr('data-state', 'active');
-              square.find('canvas').removeClass('inactive').addClass('active');
+              square.setAttribute('data-state', 'active');
               
-              // Redraw the square as active
-              const canvas = square.find('canvas')[0];
-              const ctx = canvas.getContext('2d');
-              ctx.fillStyle = '#90EE90';
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              // Close the modal
+              $('#popup-modal').hide();
               
-              // First save the new coordinates to the server
-              fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json',
-                  'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-                },
-                body: JSON.stringify({
-                  x: data.square.x,
-                  y: data.square.y
-                })
-              })
-              .then(response => response.json())
+              // Move the character to the new position
+              moveCharacterToTile(x, y).then(() => {
+                // Save the new coordinates to the server
+                return fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                  },
+                  body: JSON.stringify({
+                    x: x,
+                    y: y
+                  })
+                });
+              }).then(response => response.json())
               .then(coordData => {
                 if (coordData.success) {
-                  // After coordinates are saved, move the character and refresh
-                  moveCharacterToTile(data.square.x, data.square.y)
-                    .then(() => {
-                      $('#popup-modal').hide();
-                      location.reload();
-                    });
+                  // Reload the page to show the updated terrain
+                  location.reload();
                 }
               })
               .catch(error => {
-                console.error('Error saving coordinates:', error);
-                alert('Square unlocked but character movement failed');
+                console.error('Error moving character:', error);
               });
             } else {
               modalContent.html(originalContent);
@@ -615,8 +601,8 @@
             }
           },
           error: function(xhr, status, error) {
-            clearInterval(dotsInterval);  // Clear the dots animation
-            modalContent.html(originalContent);  // Restore original modal content
+            clearInterval(dotsInterval);
+            modalContent.html(originalContent);
             console.error('Error:', error);
             console.error('Status:', status);
             console.error('Response:', xhr.responseText);
