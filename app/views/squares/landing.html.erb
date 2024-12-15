@@ -26,11 +26,56 @@
             if (data.type === 'world_restart') {
               console.log("World restart received");
               
+              // Update terrain for initial squares first
+              if (data.squares) {
+                data.squares.forEach(square => {
+                  const squareElement = document.querySelector(`.grid-item[data-square-id="${square.square_id}"]`);
+                  if (squareElement) {
+                    squareElement.setAttribute('data-state', square.state);
+                    squareElement.classList.remove('inactive');
+                    squareElement.classList.add('active');
+
+                    const canvas = squareElement.querySelector('canvas');
+                    if (canvas) {
+                      const ctx = canvas.getContext('2d');
+                      ctx.clearRect(0, 0, canvas.width, canvas.height);
+                      
+                      if (square.code) {
+                        eval(square.code);
+                      } else {
+                        // Fallback terrain coloring
+                        switch(square.terrain) {
+                          case 'water':
+                            ctx.fillStyle = '#4a90e2';
+                            break;
+                          case 'desert':
+                            ctx.fillStyle = '#ffd700';
+                            break;
+                          case 'forest':
+                            ctx.fillStyle = '#228b22';
+                            break;
+                          case 'plains':
+                            ctx.fillStyle = '#90ee90';
+                            break;
+                          default:
+                            ctx.fillStyle = '#f0f0f0';
+                        }
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      }
+                      
+                      // Draw coordinates
+                      ctx.fillStyle = '#666';
+                      ctx.font = '12px Arial';
+                      ctx.fillText(`(${square.x}, ${square.y})`, 35, 55);
+                    }
+                  }
+                });
+              }
+              
               // Move all characters back to (0,0)
               document.querySelectorAll('.character').forEach(async (character) => {
                 await moveCharacterToTile(0, 0, character);
                 
-                // If this is the current user's character, save the position
                 if (character.getAttribute('data-is-current-user') === 'true') {
                   try {
                     await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
@@ -51,29 +96,10 @@
                 }
               });
               
-              // Reset all squares to inactive first
-              document.querySelectorAll('.grid-item').forEach(square => {
-                square.setAttribute('data-state', 'inactive');
-                const canvas = square.querySelector('canvas');
-                if (canvas) {
-                  const ctx = canvas.getContext('2d');
-                  ctx.clearRect(0, 0, canvas.width, canvas.height);
-                  ctx.fillStyle = '#f0f0f0';
-                  ctx.fillRect(0, 0, canvas.width, canvas.height);
-                  
-                  // Draw coordinates
-                  ctx.fillStyle = '#666';
-                  ctx.font = '12px Arial';
-                  const x = square.getAttribute('data-x');
-                  const y = square.getAttribute('data-y');
-                  ctx.fillText(`(${x}, ${y})`, 35, 55);
-                }
-              });
-              
               // Reload the page after a short delay
               setTimeout(() => {
                 window.location.reload();
-              }, 1000);
+              }, 500);
             }
             else if (data.type === 'character_moved') {
               const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
@@ -118,29 +144,26 @@
                   
                   // Execute the new terrain code
                   if (data.code) {
-                    try {
-                      eval(data.code);
-                    } catch (error) {
-                      console.error('Error executing terrain code:', error);
-                      // Fallback terrain coloring
-                      switch(data.terrain) {
-                        case 'water':
-                          ctx.fillStyle = '#4a90e2';
-                          break;
-                        case 'desert':
-                          ctx.fillStyle = '#ffd700';
-                          break;
-                        case 'forest':
-                          ctx.fillStyle = '#228b22';
-                          break;
-                        case 'plains':
-                          ctx.fillStyle = '#90ee90';
-                          break;
-                        default:
-                          ctx.fillStyle = '#f0f0f0';
-                      }
-                      ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    eval(data.code);
+                  } else {
+                    // Fallback terrain coloring
+                    switch(data.terrain) {
+                      case 'water':
+                        ctx.fillStyle = '#4a90e2';
+                        break;
+                      case 'desert':
+                        ctx.fillStyle = '#ffd700';
+                        break;
+                      case 'forest':
+                        ctx.fillStyle = '#228b22';
+                        break;
+                      case 'plains':
+                        ctx.fillStyle = '#90ee90';
+                        break;
+                      default:
+                        ctx.fillStyle = '#f0f0f0';
                     }
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                   }
                   
                   // Draw coordinates
@@ -454,110 +477,7 @@
   App.gameChannel.received = function(data) {
     console.log("Received websocket data:", data);
     
-    if (data.type === 'world_restart') {
-      console.log("World restart received");
-      
-      // Move all characters back to (0,0)
-      document.querySelectorAll('.character').forEach(async (character) => {
-        await moveCharacterToTile(0, 0, character);
-        
-        // If this is the current user's character, save the position
-        if (character.getAttribute('data-is-current-user') === 'true') {
-          try {
-            await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-              },
-              body: JSON.stringify({
-                x: 0,
-                y: 0
-              })
-            });
-          } catch (error) {
-            console.error('Error saving coordinates:', error);
-          }
-        }
-      });
-
-      // Reset all squares to inactive first
-      document.querySelectorAll('.grid-item').forEach(square => {
-        square.setAttribute('data-state', 'inactive');
-        const canvas = square.querySelector('canvas');
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.fillStyle = '#f0f0f0';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          
-          // Draw coordinates
-          ctx.fillStyle = '#666';
-          ctx.font = '12px Arial';
-          const x = square.getAttribute('data-x');
-          const y = square.getAttribute('data-y');
-          ctx.fillText(`(${x}, ${y})`, 35, 55);
-        }
-      });
-      
-      // Reload the page after a short delay
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    }
-    else if (data.type === 'terrain_updated') {
-      console.log("Terrain update received:", data);
-      const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
-      if (square) {
-        // Update square state and appearance
-        square.setAttribute('data-state', data.state);
-        square.classList.remove('inactive');
-        square.classList.add('active');
-
-        // Update the canvas with new terrain
-        const canvas = square.querySelector('canvas');
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          // Execute the new terrain code
-          if (data.code) {
-            try {
-              eval(data.code);
-            } catch (error) {
-              console.error('Error executing terrain code:', error);
-              // Fallback terrain coloring
-              switch(data.terrain) {
-                case 'water':
-                  ctx.fillStyle = '#4a90e2';
-                  break;
-                case 'desert':
-                  ctx.fillStyle = '#ffd700';
-                  break;
-                case 'forest':
-                  ctx.fillStyle = '#228b22';
-                  break;
-                case 'plains':
-                  ctx.fillStyle = '#90ee90';
-                  break;
-                default:
-                  ctx.fillStyle = '#f0f0f0';
-              }
-              ctx.fillRect(0, 0, canvas.width, canvas.height);
-            }
-          }
-          
-          // Draw coordinates
-          ctx.fillStyle = '#666';
-          ctx.font = '12px Arial';
-          const x = square.getAttribute('data-x');
-          const y = square.getAttribute('data-y');
-          ctx.fillText(`(${x}, ${y})`, 35, 55);
-        }
-      }
-    }
-    else if (data.type === 'treasure_found') {
+    if (data.type === 'treasure_found') {
       // Only show modal for players who didn't find the treasure
       const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
       if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
@@ -1418,58 +1338,32 @@
     App.gameChannel.received = function(data) {
       console.log("Received websocket data:", data);
       
-      if (data.type === 'world_restart') {
-        console.log("World restart received");
-        
-        // Move all characters back to (0,0)
-        document.querySelectorAll('.character').forEach(async (character) => {
-          await moveCharacterToTile(0, 0, character);
-          
-          // If this is the current user's character, save the position
-          if (character.getAttribute('data-is-current-user') === 'true') {
-            try {
-              await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json',
-                  'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-                },
-                body: JSON.stringify({
-                  x: 0,
-                  y: 0
-                })
-              });
-            } catch (error) {
-              console.error('Error saving coordinates:', error);
-            }
-          }
-        });
+      if (data.type === 'character_moved') {
+        const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+        if (character) {
+          const gridContainer = document.querySelector('.grid');
+          if (!gridContainer) return;
 
-        // Reset all squares to inactive first
-        document.querySelectorAll('.grid-item').forEach(square => {
-          square.setAttribute('data-state', 'inactive');
-          const canvas = square.querySelector('canvas');
-          if (canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#f0f0f0';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Draw coordinates
-            ctx.fillStyle = '#666';
-            ctx.font = '12px Arial';
-            const x = square.getAttribute('data-x');
-            const y = square.getAttribute('data-y');
-            ctx.fillText(`(${x}, ${y})`, 35, 55);
-          }
-        });
-        
-        // Reload the page after a short delay
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      }
+          const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+          if (!targetSquare) return;
+
+          const gridRect = gridContainer.getBoundingClientRect();
+          const squareRect = targetSquare.getBoundingClientRect();
+          
+          const characterWidth = character.offsetWidth;
+          const characterHeight = character.offsetHeight;
+          
+          const relativeX = squareRect.left - gridRect.left;
+          const relativeY = squareRect.top - gridRect.top;
+          
+          character.style.position = 'absolute';
+          character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+          character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+          
+          character.setAttribute('data-x', data.x);
+          character.setAttribute('data-y', data.y);
+        }
+      } 
       else if (data.type === 'terrain_updated') {
         console.log("Terrain update received:", data);
         const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
@@ -1487,29 +1381,26 @@
             
             // Execute the new terrain code
             if (data.code) {
-              try {
-                eval(data.code);
-              } catch (error) {
-                console.error('Error executing terrain code:', error);
-                // Fallback terrain coloring
-                switch(data.terrain) {
-                  case 'water':
-                    ctx.fillStyle = '#4a90e2';
-                    break;
-                  case 'desert':
-                    ctx.fillStyle = '#ffd700';
-                    break;
-                  case 'forest':
-                    ctx.fillStyle = '#228b22';
-                    break;
-                  case 'plains':
-                    ctx.fillStyle = '#90ee90';
-                    break;
-                  default:
-                    ctx.fillStyle = '#f0f0f0';
-                }
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+              eval(data.code);
+            } else {
+              // Fallback terrain coloring
+              switch(data.terrain) {
+                case 'water':
+                  ctx.fillStyle = '#4a90e2';
+                  break;
+                case 'desert':
+                  ctx.fillStyle = '#ffd700';
+                  break;
+                case 'forest':
+                  ctx.fillStyle = '#228b22';
+                  break;
+                case 'plains':
+                  ctx.fillStyle = '#90ee90';
+                  break;
+                default:
+                  ctx.fillStyle = '#f0f0f0';
               }
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
             
             // Draw coordinates
@@ -1560,6 +1451,84 @@
           `;
           document.head.appendChild(style);
         }
+      }
+      else if (data.type === 'world_restart') {
+        console.log("World restart received");
+        
+        // Update terrain for initial squares first
+        if (data.squares) {
+          data.squares.forEach(square => {
+            const squareElement = document.querySelector(`.grid-item[data-square-id="${square.square_id}"]`);
+            if (squareElement) {
+              squareElement.setAttribute('data-state', square.state);
+              squareElement.classList.remove('inactive');
+              squareElement.classList.add('active');
+
+              const canvas = squareElement.querySelector('canvas');
+              if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (square.code) {
+                  eval(square.code);
+                } else {
+                  // Fallback terrain coloring
+                  switch(square.terrain) {
+                    case 'water':
+                      ctx.fillStyle = '#4a90e2';
+                      break;
+                    case 'desert':
+                      ctx.fillStyle = '#ffd700';
+                      break;
+                    case 'forest':
+                      ctx.fillStyle = '#228b22';
+                      break;
+                    case 'plains':
+                      ctx.fillStyle = '#90ee90';
+                      break;
+                    default:
+                      ctx.fillStyle = '#f0f0f0';
+                  }
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                // Draw coordinates
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText(`(${square.x}, ${square.y})`, 35, 55);
+              }
+            }
+          });
+        }
+        
+        // Move all characters back to (0,0)
+        document.querySelectorAll('.character').forEach(async (character) => {
+          await moveCharacterToTile(0, 0, character);
+          
+          if (character.getAttribute('data-is-current-user') === 'true') {
+            try {
+              await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({
+                  x: 0,
+                  y: 0
+                })
+              });
+            } catch (error) {
+              console.error('Error saving coordinates:', error);
+            }
+          }
+        });
+        
+        // Reload the page after a short delay
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       }
     };
   });
