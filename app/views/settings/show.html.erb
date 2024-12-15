@@ -1,5 +1,7 @@
 <h1>Settings</h1>
 
+<%= render 'shared/flash' %>
+
 <section>
   <h2>Account Information</h2>
   <p><strong>Name:</strong> <%= @user.name %></p>
@@ -9,7 +11,8 @@
 <section>
   <h2>Character</h2>
   <% if @character %>
-    <p><strong>Role:</strong> <%= @character.role %></p>
+    <p><strong>Role:</strong> <%= @role %></p>
+    <%= image_tag @character_image, alt: "Character Image" %>
   <% else %>
     <p>No character available.</p>
   <% end %>
@@ -27,5 +30,4 @@
   <% end %>
 </section>
 
-<%= button_to 'Back to Game', session[:return_path] || landing_path, method: :get, class: 'landing-button' %>
 <%= button_to 'Logout', logout_path, method: :delete, class: 'logout-button' %>

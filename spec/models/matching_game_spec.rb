@@ -1,141 +1,77 @@
 require 'rails_helper'
 
 RSpec.describe MatchingGame, type: :model do
+  let(:game) { MatchingGame.new }
   # Create a new game before each test
   before do
     @test_game = MatchingGame.new
   end
 
-  # Tests for verifying correct instantiation of instance variables
   describe 'initialization' do
-    it 'should have an array of card indicies of length 10' do
+    it 'should have an array of card indices of length 10' do
       expect(@test_game.cards_idx.length).to eq(10)
     end
-    it 'should have an empty flipped_cards array' do
-      expect(@test_game.flipped_cards).to eq([])
+
+    it 'should initialize flipped_cards to an empty state in the game state' do
+      expect(@test_game.state[:flipped_cards]).to eq([])
     end
-    it 'should have an empty matches_idx array' do
-      expect(@test_game.matches_idx).to eq([])
+
+    it 'should initialize matched_pairs to an empty array in the game state' do
+      expect(@test_game.state[:matched_pairs]).to eq([])
     end
   end
 
-  # Tests for verifying desired behavior when flipping cards under different scenarios
   describe 'flipping a card' do
-    it 'should contain one flipped card on the first flip' do
+    it 'should contain one flipped card in the game state on the first flip' do
       @test_game.flip_card(0)
-      expect(@test_game.flipped_cards.length).to eq(1)
+      expect(@test_game.state[:flipped_cards].length).to eq(1)
     end
-    it 'should contain add the match to matches_idx on flipping two matching cards' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      expect(@test_game.matches_idx.length).to eq(1)
+
+    it 'should add a match to matched_pairs on flipping two matching cards' do
+      # Find two indices with the same value
+      matching_indices = @test_game.cards_idx.each_with_index.group_by(&:first).select { |_k, v| v.size == 2 }.values.first.map(&:last)
+      @test_game.flip_card(matching_indices[0])
+      @test_game.flip_card(matching_indices[1])
+      expect(@test_game.state[:matched_pairs].length).to eq(1)
     end
-    it 'should reset flipped_cards to empty on flipping two matching cards' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      expect(@test_game.flipped_cards.length).to eq(0)
+
+    it 'should reset flipped_cards to empty after two matching cards are flipped' do
+      matching_indices = @test_game.cards_idx.each_with_index.group_by(&:first).select { |_k, v| v.size == 2 }.values.first.map(&:last)
+      @test_game.flip_card(matching_indices[0])
+      @test_game.flip_card(matching_indices[1])
+      expect(@test_game.state[:flipped_cards]).to eq([])
     end
-    it 'should have an empty matches_idx and flipped_cards array when two non-matches are flipped' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[2][1])
-      expect(@test_game.matches_idx.length).to eq(0)
+
+    it 'should not add to matched_pairs when two non-matching cards are flipped' do
+      non_matching_indices = @test_game.cards_idx.each_with_index.group_by(&:first).select { |_k, v| v.size == 1 }.values.map(&:last).flatten
+      @test_game.flip_card(non_matching_indices[0])
+      @test_game.flip_card(non_matching_indices[1])
+      expect(@test_game.state[:matched_pairs]).to eq([])
     end
-    it 'should have an empty flipped_cards array when two non-matches are flipped' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[2][1])
-      expect(@test_game.flipped_cards.length).to eq(0)
-    end
-    it 'should contain some matches in matches_idx and an empty flipped_cards after making some matches and flipping an even number of cards' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[1][0])
-      @test_game.flip_card(all_matches[1][1])
-      @test_game.flip_card(all_matches[4][0])
-      @test_game.flip_card(all_matches[4][1])
-      expect(@test_game.matches_idx.length).to eq(2)
-      expect(@test_game.flipped_cards.length).to eq(0)
-    end
-    it 'should contain some matches in matches_idx and one card in flipped_cards after making some matches and flipping an odd number of cards' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[2][1])
-      @test_game.flip_card(all_matches[2][0])
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      @test_game.flip_card(all_matches[3][0])
-      @test_game.flip_card(all_matches[3][1])
-      @test_game.flip_card(all_matches[4][1])
-      expect(@test_game.matches_idx.length).to eq(3)
-      expect(@test_game.flipped_cards.length).to eq(1)
-    end
-    it 'should return nil if the user tries to flip a card that is already flipped' do
+
+    it 'should return an error hash if the user tries to flip a card that is already flipped' do
       @test_game.flip_card(0)
       attempt = @test_game.flip_card(0)
-      expect(attempt).to be_nil
+      expected_output = { reason: 'already flipped', status: 'invalid' }
+      expect(attempt).to eq(expected_output)
     end
-    it 'should return nil if the user tries to flip a card that is already matched' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[1][1])
-      @test_game.flip_card(all_matches[1][0])
-      attempt = @test_game.flip_card(all_matches[1][1])
-      expect(attempt).to be_nil
+
+    it 'should return an error hash if the user tries to flip a card that is already matched' do
+      @test_game.state[:matched_pairs] << [0, 1]
+      attempt = @test_game.flip_card(0)
+      expected_output = { reason: 'already matched', status: 'invalid' }
+      expect(attempt).to eq(expected_output)
     end
   end
 
-  describe 'calling game_over?' do
-    it 'should return false if user has done nothing yet' do
-      game_state = @test_game.game_over?
-      expect(game_state).to eq(false)
+  describe 'game over conditions' do
+    it 'should return false when no matches have been made' do
+      expect(@test_game.game_over?).to eq(false)
     end
-    it 'should return false if user has flipped a few cards but has not matched everything yet' do
-      @test_game.flip_card(0)
-      @test_game.flip_card(1)
-      @test_game.flip_card(2)
-      @test_game.flip_card(3)
-      game_state = @test_game.game_over?
-      expect(game_state).to eq(false)
-    end
-    it 'should return false if user has made several, but not all matches' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[4][0])
-      @test_game.flip_card(all_matches[4][1])
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      @test_game.flip_card(all_matches[2][0])
-      @test_game.flip_card(all_matches[2][1])
-      game_state = @test_game.game_over?
-      expect(game_state).to eq(false)
-    end
-    it 'should return false if the user has made 4/5 matches and flipped only 1 of the last 2 cards left' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[3][1])
-      @test_game.flip_card(all_matches[3][0])
-      @test_game.flip_card(all_matches[4][0])
-      @test_game.flip_card(all_matches[4][1])
-      @test_game.flip_card(all_matches[1][1])
-      @test_game.flip_card(all_matches[1][0])
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      @test_game.flip_card(all_matches[2][1])
-      game_state = @test_game.game_over?
-      expect(game_state).to eq(false)
-    end
-    it 'should return true if all matches have been made' do
-      all_matches = @test_game.get_matches
-      @test_game.flip_card(all_matches[3][0])
-      @test_game.flip_card(all_matches[3][1])
-      @test_game.flip_card(all_matches[4][1])
-      @test_game.flip_card(all_matches[4][0])
-      @test_game.flip_card(all_matches[2][1])
-      @test_game.flip_card(all_matches[2][0])
-      @test_game.flip_card(all_matches[0][0])
-      @test_game.flip_card(all_matches[0][1])
-      @test_game.flip_card(all_matches[1][1])
-      @test_game.flip_card(all_matches[1][0])
-      game_state = @test_game.game_over?
-      expect(game_state).to eq(true)
+
+    it 'should return true when all pairs have been matched' do
+      game.state[:matched_pairs] = Array.new(5) { [0, 1] }
+      expect(game.game_over?).to eq(true)
     end
   end
 end

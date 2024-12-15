@@ -16,15 +16,11 @@ Given("I am logged in") do
   click_button 'Log In'
   
   # Add debugging to verify login worked
-  puts "After login, current path: #{current_path}"
   expect(current_path).not_to eq('/login')
 end
 
 When("I have created a new world with name {string}") do |world_name|
   visit new_world_path
-  
-  # Debug output
-  puts "Current path: #{current_path}"
   
   # Wait for and fill in the form
   expect(page).to have_selector("input[name='world_name']", wait: 5)
@@ -35,24 +31,13 @@ When("I have created a new world with name {string}") do |world_name|
   find('#captain').click
   find('#preload1').click
   
-  # Debug before submission
-  puts "About to submit form with world name: #{world_name}"
-  
   click_button 'Time to Set Sail!'
-  
-  # Debug after submission
-  puts "After submission, current path: #{current_path}"
-  puts "Page content:"
-  puts page.html
 end
 
 Then("I should see a World list entry with buttons to play and delete with name {string}") do |name|
-  # Debug output
-  puts "Checking for world with name: #{name}"
   
   result = false
   all("tr").each do |tr|
-    puts "Checking row: #{tr.text}"
     if tr.has_content?(name) && 
        tr.has_selector?("input[value='Play']") && 
        tr.has_selector?("input[value='Delete']")
@@ -126,3 +111,10 @@ Then("I should not see a World list entry with buttons to play and delete with n
   expect(page).not_to have_content(world_name)
 end
 
+When 'I click the plus button' do
+  click_button '+'
+end
+
+Then 'I am redirected to the create world page' do
+  expect(current_url).to eq(character_url + "?commit=%2B")
+end

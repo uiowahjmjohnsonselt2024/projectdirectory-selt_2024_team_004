@@ -81,7 +81,6 @@ body {
   .btn-secondary {
     background-color: #28a745;
     color: white;
-    margin-top: 0.5rem;
   }
   
   .btn-secondary:hover {
@@ -96,7 +95,7 @@ body {
   }
   
   /* New Adventure Button (+) */
-.new-world-btn {
+  .new-world-btn {
     width: 40px; /* Smaller width */
     height: 40px; /* Smaller height */
     border-radius: 50%; /* Ensures it remains circular */

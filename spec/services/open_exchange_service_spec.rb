@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe OpenExchangeService do
   describe '.fetch_currencies' do

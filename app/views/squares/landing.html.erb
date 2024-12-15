@@ -1,21 +1,543 @@
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/@rails/actioncable@7.0.0/app/assets/javascripts/actioncable.js" %>
+<%= javascript_include_tag 'action_cable' %>
+<script>
+  // Action Cable setup
+  (function() {
+    this.App || (this.App = {});
+    App.cable = ActionCable.createConsumer('/cable');
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Action Cable subscription
+      App.gameChannel = App.cable.subscriptions.create(
+        { 
+          channel: "GameChannel",
+          world_id: '<%= @world.id %>'
+        },
+        {
+          connected: function() {
+            console.log("Connected to game channel!");
+          },
+          disconnected: function() {
+            console.log("Disconnected from game channel!");
+          },
+          received: function(data) {
+            console.log("Received websocket data:", data);
+            
+            if (data.type === 'world_restart') {
+              console.log("World restart received");
+              
+              // Update terrain for initial squares first
+              if (data.squares) {
+                data.squares.forEach(square => {
+                  const squareElement = document.querySelector(`.grid-item[data-square-id="${square.square_id}"]`);
+                  if (squareElement) {
+                    squareElement.setAttribute('data-state', square.state);
+                    squareElement.classList.remove('inactive');
+                    squareElement.classList.add('active');
+
+                    const canvas = squareElement.querySelector('canvas');
+                    if (canvas) {
+                      const ctx = canvas.getContext('2d');
+                      ctx.clearRect(0, 0, canvas.width, canvas.height);
+                      
+                      if (square.code) {
+                        eval(square.code);
+                      } else {
+                        // Fallback terrain coloring
+                        switch(square.terrain) {
+                          case 'water':
+                            ctx.fillStyle = '#4a90e2';
+                            break;
+                          case 'desert':
+                            ctx.fillStyle = '#ffd700';
+                            break;
+                          case 'forest':
+                            ctx.fillStyle = '#228b22';
+                            break;
+                          case 'plains':
+                            ctx.fillStyle = '#90ee90';
+                            break;
+                          default:
+                            ctx.fillStyle = '#f0f0f0';
+                        }
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                      }
+                      
+                      // Draw coordinates
+                      ctx.fillStyle = '#666';
+                      ctx.font = '12px Arial';
+                      ctx.fillText(`(${square.x}, ${square.y})`, 35, 55);
+                    }
+                  }
+                });
+              }
+              
+              // Move all characters back to (0,0)
+              document.querySelectorAll('.character').forEach(async (character) => {
+                await moveCharacterToTile(0, 0, character);
+                
+                if (character.getAttribute('data-is-current-user') === 'true') {
+                  try {
+                    await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                      },
+                      body: JSON.stringify({
+                        x: 0,
+                        y: 0
+                      })
+                    });
+                  } catch (error) {
+                    console.error('Error saving coordinates:', error);
+                  }
+                }
+              });
+              
+              // Reload the page after a short delay
+              setTimeout(() => {
+                window.location.reload();
+              }, 500);
+            }
+            else if (data.type === 'character_moved') {
+              const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+              if (character) {
+                const gridContainer = document.querySelector('.grid');
+                if (!gridContainer) return;
+
+                const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+                if (!targetSquare) return;
+
+                const gridRect = gridContainer.getBoundingClientRect();
+                const squareRect = targetSquare.getBoundingClientRect();
+                
+                const characterWidth = character.offsetWidth;
+                const characterHeight = character.offsetHeight;
+                
+                const relativeX = squareRect.left - gridRect.left;
+                const relativeY = squareRect.top - gridRect.top;
+                
+                character.style.position = 'absolute';
+                character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+                
+                character.setAttribute('data-x', data.x);
+                character.setAttribute('data-y', data.y);
+              }
+            } 
+            else if (data.type === 'terrain_updated') {
+              console.log("Terrain update received:", data);
+              const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+              if (square) {
+                // Update square state and appearance
+                square.setAttribute('data-state', data.state);
+                square.classList.remove('inactive');
+                square.classList.add('active');
+
+                // Update the canvas with new terrain
+                const canvas = square.querySelector('canvas');
+                if (canvas) {
+                  const ctx = canvas.getContext('2d');
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Execute the new terrain code
+                  if (data.code) {
+                    eval(data.code);
+                  } else {
+                    // Fallback terrain coloring
+                    switch(data.terrain) {
+                      case 'water':
+                        ctx.fillStyle = '#4a90e2';
+                        break;
+                      case 'desert':
+                        ctx.fillStyle = '#ffd700';
+                        break;
+                      case 'forest':
+                        ctx.fillStyle = '#228b22';
+                        break;
+                      case 'plains':
+                        ctx.fillStyle = '#90ee90';
+                        break;
+                      default:
+                        ctx.fillStyle = '#f0f0f0';
+                    }
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  }
+                  
+                  // Draw coordinates
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  const x = square.getAttribute('data-x');
+                  const y = square.getAttribute('data-y');
+                  ctx.fillText(`(${x}, ${y})`, 35, 55);
+                }
+              }
+            }
+            else if (data.type === 'treasure_found') {
+              // Only show modal for players who didn't find the treasure
+              const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+              if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+                // Create and show modal
+                const modal = document.createElement('div');
+                modal.className = 'treasure-found-modal';
+                modal.innerHTML = `
+                  <div class="modal-content">
+                    <h2>Treasure Found!</h2>
+                    <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add styles
+                const style = document.createElement('style');
+                style.textContent = `
+                  .treasure-found-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                  }
+                  .treasure-found-modal .modal-content {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 5px;
+                    text-align: center;
+                  }
+                `;
+                document.head.appendChild(style);
+              }
+            }
+          }
+        }
+      );
+
+      // Function to broadcast movement
+      function broadcastMovement(x, y, characterId) {
+        App.gameChannel.perform('broadcast_movement', {
+          x: x,
+          y: y,
+          character_id: characterId
+        });
+      }
+
+      // Update the moveCharacterToTile function to broadcast movement
+      async function moveCharacterToTile(x, y) {
+        const character = document.querySelector('.character[data-is-current-user="true"]');
+        if (!character) {
+          console.error('Current user character not found');
+          return { success: false };
+        }
+
+        try {
+          console.log('Attempting to save coordinates:', { x, y });
+          const response = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+            },
+            body: JSON.stringify({ x, y })
+          });
+
+          const data = await response.json();
+          console.log('Save coordinates response:', data);
+
+          if (response.ok) {
+            console.log('Broadcasting movement after successful save');
+            broadcastMovement(x, y, character.getAttribute('data-character-id'));
+            return { success: true };
+          } else {
+            console.error('Failed to save coordinates:', data);
+            return { success: false };
+          }
+        } catch (error) {
+          console.error('Error in moveCharacterToTile:', error);
+          return { success: false };
+        }
+      }
+    });
+  }).call(this);
+
+  // Add connection status logging
+  App.cable.connection.onopen = function() {
+    console.log('WebSocket connection established');
+  };
+
+  App.cable.connection.onclose = function() {
+    console.log('WebSocket connection closed');
+  };
+
+  // Add this helper function
+  function updateSquareAppearance(square, terrain) {
+    console.log(`Updating appearance for square with terrain: ${terrain}`);
+    
+    // Get the canvas context
+    const canvas = square.querySelector('canvas');
+    if (!canvas) {
+      console.error('Canvas not found in square');
+      return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw based on terrain type
+    switch(terrain) {
+      case 'water':
+        ctx.fillStyle = '#4a90e2';
+        break;
+      case 'mountain':
+        ctx.fillStyle = '#8b4513';
+        break;
+      case 'forest':
+        ctx.fillStyle = '#228b22';
+        break;
+      default:
+        ctx.fillStyle = '#f0f0f0';
+    }
+    
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw coordinates
+    ctx.fillStyle = '#666';
+    ctx.font = '12px Arial';
+    const x = square.getAttribute('data-x');
+    const y = square.getAttribute('data-y');
+    ctx.fillText(`(${x}, ${y})`, 35, 55);
+    
+    console.log(`Square appearance updated with terrain: ${terrain}`);
+  }
+
+  // Add this function to handle square unlocking
+  async function unlockSquare(squareId) {
+    try {
+      console.log('Attempting to unlock square:', squareId);
+      const response = await fetch(`/squares/${squareId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+        },
+        body: JSON.stringify({ unlock: true })
+      });
+
+      const data = await response.json();
+      console.log('Unlock response:', data);
+      
+      if (data.success) {
+        // Broadcast the terrain update through Action Cable
+        App.gameChannel.perform('broadcast_terrain_update', {
+          square_id: squareId,
+          terrain: data.terrain,
+          state: data.state
+        });
+      }
+    } catch (error) {
+      console.error('Error unlocking square:', error);
+    }
+  }
+
+  // Update your pay shards button click handler
+  const payShardButton = document.getElementById('pay-shard-button');
+  if (payShardButton) {
+    payShardButton.addEventListener('click', async function() {
+      const squareId = this.getAttribute('data-square-id');
+      if (squareId) {
+        await unlockSquare(squareId);
+      }
+    });
+  }
+
+  // Add this function to handle terrain broadcasting
+  function broadcastTerrainUpdate(squareId, terrain, state) {
+    try {
+      App.gameChannel.perform('broadcast_terrain_update', {
+        action: 'broadcast_terrain_update',
+        square_id: squareId,
+        terrain: terrain,
+        state: state
+      });
+      return true;
+    } catch (error) {
+      console.error('Error broadcasting terrain update:', error);
+      return false;
+    }
+  }
+
+  // Add reconnection handling
+  App.cable.connection.reconnect = function() {
+    console.log("Reconnecting to Action Cable...");
+  };
+
+  // Add this new function to handle terrain updates
+  function updateTerrainDisplay(data) {
+    const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+    if (!square) {
+      console.error("Square not found:", data.square_id);
+      return;
+    }
+
+    console.log(`Updating square ${data.square_id} with terrain ${data.terrain}`);
+    
+    const canvas = square.querySelector('canvas');
+    if (!canvas) {
+      console.error("Canvas not found in square");
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Set fill color based on terrain
+    switch(data.terrain) {
+      case 'water':
+        ctx.fillStyle = '#4a90e2';
+        break;
+      case 'mountain':
+        ctx.fillStyle = '#8b4513';
+        break;
+      case 'forest':
+        ctx.fillStyle = '#228b22';
+        break;
+      default:
+        ctx.fillStyle = '#f0f0f0';
+    }
+    
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw coordinates
+    ctx.fillStyle = '#666';
+    ctx.font = '12px Arial';
+    const x = square.getAttribute('data-x');
+    const y = square.getAttribute('data-y');
+    ctx.fillText(`(${x}, ${y})`, 35, 55);
+    
+    // Update square attributes
+    square.setAttribute('data-terrain', data.terrain);
+    if (data.state === 'active') {
+      square.classList.remove('inactive');
+      square.classList.add('active');
+    }
+  }
+
+  // Keep your existing character movement functions
+  function moveCharacter(character, x, y) {
+    const gridContainer = document.querySelector('.grid');
+    if (!gridContainer) return;
+
+    const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+    if (!targetSquare) return;
+
+    const gridRect = gridContainer.getBoundingClientRect();
+    const squareRect = targetSquare.getBoundingClientRect();
+    
+    const characterWidth = character.offsetWidth;
+    const characterHeight = character.offsetHeight;
+    
+    const relativeX = squareRect.left - gridRect.left;
+    const relativeY = squareRect.top - gridRect.top;
+    
+    character.style.position = 'absolute';
+    character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+    character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+    
+    character.setAttribute('data-x', x);
+    character.setAttribute('data-y', y);
+  }
+
+  // Add this function near the top of your JavaScript
+  function checkForTreasure(x, y, characterId) {
+    console.log(`Checking for treasure at: ${x} ${y}`);
+    const treasureLocation = document.querySelector('.grid-item[data-has-treasure="true"]');
+    if (treasureLocation) {
+      const treasureX = parseInt(treasureLocation.getAttribute('data-x'));
+      const treasureY = parseInt(treasureLocation.getAttribute('data-y'));
+      console.log(`Treasure location: ${treasureX} ${treasureY}`);
+      
+      if (x === treasureX && y === treasureY) {
+        // Broadcast treasure found
+        App.gameChannel.perform('broadcast_treasure_found', {
+          finder_id: characterId
+        });
+      }
+    }
+  }
+
+  // In your Action Cable subscription received handler
+  App.gameChannel.received = function(data) {
+    console.log("Received websocket data:", data);
+    
+    if (data.type === 'treasure_found') {
+      // Only show modal for players who didn't find the treasure
+      const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+      if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+        // Create and show modal
+        const modal = document.createElement('div');
+        modal.className = 'treasure-found-modal';
+        modal.innerHTML = `
+          <div class="modal-content">
+            <h2>Treasure Found!</h2>
+            <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+          .treasure-found-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+          .treasure-found-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    }
+  };
+</script>
+
 <div class="container">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <div class="top-banner">
-    <h2 class="title">Pretty Pirates</h2>
+    <h2 class="title">Sea Raiders</h2>
 
     <%= stylesheet_link_tag 'landing', media: 'all', 'data-turbo-track': 'reload', defer: true %>
     <%= javascript_include_tag 'landing', 'data-turbo-track': 'reload', defer: true %>
 
+
+   
     <div class="dropdown-menu-container">
       <button class="dropdown-button">Menu</button>
       <div class="dropdown-content">
-        <%= link_to 'Settings', settings_path(return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
+        <%= link_to 'Settings', settings_path(world_id: @world_id, return_path: request.fullpath), class:'btn btn-primary dropdown_link' %>
         <a href="#" id="store-link">Store</a>
-        <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-          <%= form.hidden_field :id, value: @character&.id %>
-          <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-          <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-          <%= form.submit 'Save World', class: 'btn btn-primary', id: 'save-world-button' %>
-        <% end %>
         <%= link_to 'Exit World', worlds_path, class:'btn btn-primary dropdown_link' %>
       </div>
     </div>
@@ -25,48 +547,87 @@
   <% if @squares.present? %>
   <% end %>
 
-  <div class="grid">
-    <% if @squares.present? %>
-      <% 
-        # Define active squares (starting from top-left corner)
-        active_squares = [[0,0], [1,0], [0,1]]  # Modify these coordinates for different corner patterns
-      %>
-      <% @squares.each do |square| %>
-        <div class="grid-item <%= active_squares.include?([square.x, square.y]) ? '' : 'inactive-square' %>" 
-             id="square_<%= square.square_id %>"
-             data-x="<%= square.x %>"
-             data-y="<%= square.y %>">
-          <% if square.code.present? %>
-            <script>
-              if (!window.squareInitialized_<%= square.square_id %>) {
-                document.addEventListener('DOMContentLoaded', () => {
-                  <%= square.code.html_safe %>
-                  drawSquare_<%= square.x %>_<%= square.y %>('square_<%= square.square_id %>');
-                  <% unless active_squares.include?([square.x, square.y]) %>
-                    // Add grey overlay to inactive squares
-                    const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
-                    if (canvas) {
-                      const ctx = canvas.getContext('2d');
-                      ctx.fillStyle = 'rgba(128, 128, 128, 0.7)';
-                      ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    }
-                  <% end %>
-                });
-                window.squareInitialized_<%= square.square_id %> = true;
-              }
-            </script>
-          <% else %>
-            <p>No code for (<%= square.x %>, <%= square.y %>)</p>
-          <% end %>
-        </div>
-      <% end %>
-      <div class="character"
-           style="position: absolute; top: <%= @character&.y_coord %>px; left: <%= @character&.x_coord %>px;">
-        <%= image_tag asset_path(@character&.image_code), width: '100', height: '100' if @character&.image_code %>
-      </div>
+  <% if Rails.env.development? %>
+  <div style="background: #f0f0f0; padding: 10px; margin: 10px; border-radius: 5px;">
+    <h4>Debug Info:</h4>
+    <% treasure_square = @world.squares.find_by(treasure: true) %>
+    <% if treasure_square %>
+      <p>Treasure Location: (<%= treasure_square.x %>, <%= treasure_square.y %>)</p>
     <% else %>
-      <p>No squares found for this world!</p>
+      <p>No treasure found in this world</p>
     <% end %>
+  </div>
+<% end %>
+
+  <div class="grid-teleport-container">
+    <div class="grid">
+      <!-- Debug info - add this near the top of your grid section -->
+     
+      <% if @squares.present? %>
+        <% @squares.each do |square| %>
+          <div class="grid-item"
+               id="square_<%= square.square_id %>"
+               data-square-id="<%= square.square_id %>"
+               data-x="<%= square.x %>"
+               data-y="<%= square.y %>"
+               data-state="<%= square.state %>"
+               data-has-treasure="<%= square.treasure %>">
+            <% if square.code.present? %>
+              <canvas width="105" height="105"></canvas>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
+                  <%= square.code.html_safe %>
+                });
+              </script>
+            <% else %>
+              <canvas width="105" height="105"></canvas>
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                  const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
+                  const ctx = canvas.getContext('2d');
+                  ctx.fillStyle = '#eee';
+                  ctx.fillRect(0, 0, 105, 105);
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  ctx.fillText('(<%= square.x %>, <%= square.y %>)', 35, 55);
+                });
+              </script>
+            <% end %>
+          </div>
+        <% end %>
+        <% @world.characters.each do |character| %>
+          <% 
+            # Simple grid-based positioning
+            tile_size = 105
+            grid_offset_x = 450  # Adjusted base offset to match grid
+            grid_offset_y = 175  # Adjusted base offset to match grid
+            
+            # Calculate position based on grid coordinates
+            char_x = grid_offset_x + (character.x_coord.to_i * tile_size)
+            char_y = grid_offset_y + (character.y_coord.to_i * tile_size)
+          %>
+          <div class="character"
+               data-character-id="<%= character.id %>"
+               data-is-current-user="<%= character.user_id == current_user.id %>"
+               data-x="<%= character.x_coord %>"
+               data-y="<%= character.y_coord %>"
+               style="position: absolute; 
+                      top: <%= char_y %>px; 
+                      left: <%= char_x %>px;
+                      z-index: 1000;">
+            <%= image_tag(asset_path(character.image_code), width: '100', height: '100') if character.image_code && Rails.application.assets.find_asset(character.image_code).present? rescue nil %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No squares found for this world!</p>
+      <% end %>
+    </div>
+
+    <div class="teleport-container" data-character-id="<%= @character.id %>">
+      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count." %></p>
+    </div>
   </div>
 
   <!-- Store Modal -->
@@ -77,15 +638,21 @@
       </div>
       <span class="close-button">&times;</span>
       <div class="store-grid">
-        <div class="store-grid-item">
-          <button class="item-button" data-name="Sea Shard (1)" data-price="<%= @prices[:sea_shard] %> <%= @currency %>">
-            <div class="item-content">
-              <%= image_tag "shards/DALLE/shard.png", alt: "Sea Shard", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
-              <p class="item-price">Sea Shard (1): <br><%= @prices[:sea_shard] %> <%= @currency %></p>
-            </div>
-          </button>
-        </div>
-        <!-- Add other store items similarly -->
+        <% @prices.each do |key, price| %>
+          <div class="store-grid-item">
+            <button class="item-button" data-name="<%= key.to_s.humanize %>" data-price="<%= price %> <%= @currency %>">
+              <div class="item-content">
+                <%= image_tag "shards/#{key}.png", alt: "#{key.to_s.humanize}", style: "width: 100%; height: auto; object-fit: cover; border-radius: 8px;" %>
+                <p class="item-price"><%= key.to_s.humanize %>: <br><%= price %> <%= @currency %></p>
+                <% if key.to_s == 'hat_of_shards_50' %>
+                  <p class="discount">20% off!</p>
+                <% elsif key.to_s == 'chest_of_shards_100' %>
+                  <p class="discount">33% off!</p>
+                <% end %>
+              </div>
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -115,224 +682,974 @@
       </div>
     </div>
   </div>
+
+  <!-- Unlock Square Modal -->
+  <div id="popup-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Square Details</h3>
+      <p id="square-coordinates"></p>
+      <div class="button-container">
+        <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" id="minigame-button" class="button">Play Minigame</a>
+        <button id="pay-shard-button" class="button" data-url="<%= pay_shards_path %>" data-square-id="">Pay 10 shards</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this near the top of your view -->
+  <div id="flash-message-container" class="flash-message" style="display: none;">
+  </div>
+
+  <!-- Add this near your other modals in the HTML section -->
+  <div id="victory-modal" class="modal">
+    <div class="modal-content">
+      <div class="victory-banner">
+        <h2 class="victory-title">Congratulations!</h2>
+      </div>
+      <p>You have found the treasure and completed this world!</p>
+      <div class="button-container">
+        <button id="delete-world-button" class="button" style="display: none;">Delete World</button>
+        <button id="restart-world-button" class="button">Restart World</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const character = document.querySelector('.character');
-    const xCoordField = document.querySelector('#x-coord');
-    const yCoordField = document.querySelector('#y-coord');
-    const saveWorldButton = document.querySelector('#save-world-button');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get all the necessary elements and data
+    const character = document.querySelector(`.character[data-is-current-user="true"]`);
+    const xCoordField = document.getElementById('x-coord');
+    const yCoordField = document.getElementById('y-coord');
+    const modal = document.getElementById('popup-modal');
+    const payShardButton = document.getElementById('pay-shard-button');
+    const csrfToken = document.querySelector('[name="csrf-token"]')?.content;
+    
+    // Add these variables from Ruby
+    const worldId = '<%= @world.id %>';
+    const userId = '<%= @user.id %>';
 
-    let xCoord = <%= @character&.x_coord || 0 %>; // Initial X coordinate
-    let yCoord = <%= @character&.y_coord || 0 %>; // Initial Y coordinate
+    // Grid configuration
+    const gridSize = 6; // 6x6 grid
+    const tileSize = 105; // Each tile is 100px x 100px
+    
+    // Grid click handler
+    document.querySelectorAll('.grid-item').forEach(square => {
+      square.addEventListener('click', async function() {
+        const state = this.getAttribute('data-state');
+        const x = parseInt(this.getAttribute('data-x'));
+        const y = parseInt(this.getAttribute('data-y'));
+        const squareId = this.getAttribute('data-square-id');
 
-    function moveCharacter() {
-      character.style.left = (xCoord * 2) + 'px';
-      character.style.top = (yCoord * 2) + 'px';
-    }
+        // Get current character position
+        const currentX = parseInt(character.getAttribute('data-x'));
+        const currentY = parseInt(character.getAttribute('data-y'));
+        
+        if (state === 'active') {
+          // Check if the clicked tile is adjacent
+          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowUp') {
-        yCoord -= (window.innerHeight*0.85)/12;
-      } else if (e.key === 'ArrowDown') {
-        yCoord += (window.innerHeight*0.85)/12;
-      } else if (e.key === 'ArrowLeft') {
-        xCoord -= window.innerWidth/12;
-      } else if (e.key === 'ArrowRight') {
-        xCoord += window.innerWidth/12;
+          if (isAdjacent) {
+            moveCharacterToTile(x, y);
+          } else {
+            // Calculate shard cost for non-adjacent movement
+            const calculatedShardCost = Math.abs(x - currentX) + Math.abs(y - currentY);
+            const currentShards = parseInt(document.querySelector('.shards-count').textContent.match(/\d+/)[0]);
+            
+            if (currentShards >= calculatedShardCost) {
+              const confirmMove = confirm(
+                `This move will cost ${calculatedShardCost} shards. Do you want to proceed?`
+              );
+
+              if (confirmMove) {
+                try {
+                  const moveResult = await moveCharacterToTile(x, y);
+                  
+                  if (moveResult && moveResult.success) {
+                    // Update shards display
+                    const shardsDisplay = document.querySelector('.shards-count');
+                    if (shardsDisplay) {
+                      shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
+                    }
+                  }
+                } catch (error) {
+                  console.error('Movement failed:', error);
+                  alert('Unable to complete movement. Please try again.');
+                }
+              }
+            } else {
+              alert(`Not enough shards! You need ${calculatedShardCost} shards for this move, but you only have ${currentShards}.`);
+            }
+          }
+        } else if (state === 'inactive') {
+          // Reset the button container to its original state
+          const buttonContainer = document.querySelector('.button-container');
+          const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
+
+          buttonContainer.innerHTML = `
+            <a href="${minigameUrl}"
+             id="minigame-button"
+             class="button">Play Minigame</a>
+            <button id="pay-shard-button"
+              class="button"
+              data-url="<%= pay_shards_path %>"
+              data-square-id="${squareId}">Pay 10 shards</button>
+          `;
+
+          // Reattach event listener to the new pay shard button
+          const newPayShardButton = document.getElementById('pay-shard-button');
+          if (newPayShardButton) {
+            setupPayShardButton(newPayShardButton);
+          }
+
+          // Show popup for inactive tiles
+          document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
+          modal.style.display = 'flex';
+        }
+      });
+    });
+
+    // Function to move character to the correct tile and save coordinates
+    async function moveCharacterToTile(x, y, specificCharacter = null) {
+      const targetCharacter = specificCharacter || character;
+      if (!targetCharacter) {
+        console.error('No character found');
+        return { success: false };
       }
 
-      xCoord = Math.max(0, Math.min(window.innerWidth*.5 - character.offsetWidth, xCoord));
-      yCoord = Math.max(window.innerHeight*0.04, Math.min(window.innerHeight*.54 - character.offsetHeight, yCoord));
+      const gridContainer = document.querySelector('.grid');
+      const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+      
+      if (!gridContainer || !targetSquare) {
+        console.error('Grid container or target square not found');
+        return { success: false };
+      }
 
-      moveCharacter();
+        var treasureX;
+        var treasureY;
+        try {
+            const gridRect = gridContainer.getBoundingClientRect();
+            const squareRect = targetSquare.getBoundingClientRect();
+
+            const characterWidth = targetCharacter.offsetWidth;
+            const characterHeight = targetCharacter.offsetHeight;
+
+            const relativeX = squareRect.left - gridRect.left;
+            const relativeY = squareRect.top - gridRect.top;
+
+            targetCharacter.style.position = 'absolute';
+            targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+            targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+
+            // Update the data attributes
+            targetCharacter.setAttribute('data-x', x);
+            targetCharacter.setAttribute('data-y', y);
+
+            // Check for treasure after movement
+            console.log('Checking for treasure at:', x, y);
+            <% if @world && (treasure_square = @world.squares.find_by(treasure: true)) %>
+            treasureX = <%= treasure_square.x %>;
+            treasureY = <%= treasure_square.y %>;
+            <% else %>
+            treasureX = null;
+            treasureY = null;
+            <% end %>
+            console.log('Treasure location:', treasureX, treasureY);
+
+            if (x === treasureX && y === treasureY) {
+                console.log('TREASURE FOUND!');
+
+                // Award shards to all characters in the world
+                try {
+                    const response = await fetch(`/worlds/<%= @world.id %>/award_treasure_shards`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Shards awarded successfully:', data);
+                        // Update the shards display for the current user
+                        const shardsDisplay = document.querySelector('.shards-count');
+                        if (shardsDisplay) {
+                            shardsDisplay.textContent = `Shards: ${data.current_user_shards}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error awarding shards:', error);
+                }
+
+                const victoryModal = document.getElementById('victory-modal');
+                if (victoryModal) {
+                    console.log('Showing victory modal');
+                    victoryModal.style.display = 'flex';
+
+                    // Delete World button handler
+                    document.getElementById('delete-world-button').onclick = async () => {
+                        console.log('Delete button clicked');
+                        const deleteButton = document.getElementById('delete-world-button');
+                        deleteButton.disabled = true;  // Prevent double-clicks
+
+                        try {
+                            const token = document.querySelector('[name="csrf-token"]').content;
+                            const response = await fetch('/world', {  // Changed URL format
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': token,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({id: <%= @world.id %>})  // Send ID in body
+                            });
+
+                            if (response.ok) {
+                                console.log('World deleted successfully');
+                                window.location.href = '/worlds';
+                            } else {
+                                console.error('Failed to delete world');
+                                deleteButton.disabled = false;
+                                alert('Failed to delete world. Please try again.');
+                            }
+                        } catch (error) {
+                            console.error('Error deleting world:', error);
+                            deleteButton.disabled = false;
+                            alert('Error deleting world. Please try again.');
+                        }
+                    };
+
+                    // Restart World button handler
+                    document.getElementById('restart-world-button').onclick = async () => {
+                        console.log('Restart button clicked');
+                        const restartButton = document.getElementById('restart-world-button');
+                        const deleteButton = document.getElementById('delete-world-button');
+                        const modalContent = document.querySelector('#victory-modal .modal-content');
+
+                        // Hide delete button and update modal content
+                        deleteButton.style.display = 'none';
+                        modalContent.innerHTML = `
+                <div class="victory-banner">
+                  <h2 class="victory-title">Restarting world...</h2>
+                </div>
+                <div class="loading-spinner"></div>
+              `;
+
+                        try {
+                            const response = await fetch(`/worlds/<%= @world.id %>/restart`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                                }
+                            });
+
+                            if (response.ok) {
+                                console.log('World restarted successfully');
+
+                                // Broadcast world restart to all players
+                                App.gameChannel.perform('broadcast_world_restart', {
+                                    world_id: '<%= @world.id %>'
+                                });
+
+                                // Move current player back to (0,0)
+                                await moveCharacterToTile(0, 0);
+
+                                // Add a small delay before reload
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 500);
+                            }
+                        } catch (error) {
+                            console.error('Error restarting world:', error);
+                        }
+                    };
+                } else {
+                    console.error('Victory modal not found in DOM');
+                }
+            }
+
+            // If this is the current user's movement, save to server
+            if (targetCharacter === character) {
+                const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify({
+                        x: x,
+                        y: y
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.error('Failed to save coordinates:', data.error);
+                    return {success: false, error: data.error};
+                }
+
+                return {success: true, data};
+            }
+
+            return {success: true};
+        } catch (error) {
+            console.error('Error in moveCharacterToTile:', error);
+            return {success: false, error: error.message};
+        }
+    }
+
+    // Center the character initially
+    let xCoord = parseInt(<%= @character&.x_coord || 0 %>, 10); // Initial X coordinate
+    let yCoord = parseInt(<%= @character&.y_coord || 0 %>, 10); // Initial Y coordinate
+    moveCharacterToTile(xCoord, yCoord);
+
+    // Function to calculate grid offsets
+    function calculateGridOffsets() {
+      const gridWidth = gridSize * tileSize;
+      const gridHeight = gridSize * tileSize;
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+
+      return {
+        x_char: (screenWidth - gridWidth) / 2,
+        y_char: (screenHeight - gridHeight) / 2
+      };
+    }
+
+    // Add this function at the top level of your JavaScript
+    function animateDots() {
+      const dots = document.querySelector('.dots');
+      if (dots) {
+        let count = 0;
+        const interval = setInterval(() => {
+          count = (count + 1) % 4;
+          dots.textContent = '.'.repeat(count);
+        }, 500);
+        return interval;
+      }
+      return null;
+    }
+
+    // Update the setupPayShardButton function
+    function setupPayShardButton(button) {
+      $(button).on('click', function() {
+        console.log('Pay shard button clicked');
+        const squareId = $(this).data('square-id');
+        const square = document.querySelector(`[data-square-id="${squareId}"]`);
+        const x = parseInt(square.getAttribute('data-x'));
+        const y = parseInt(square.getAttribute('data-y'));
+        
+        // Add loading message to modal
+        const modalContent = $('#popup-modal .modal-content');
+        const originalContent = modalContent.html();
+        modalContent.html(`
+          <h3>Generating terrain<span class="dots">...</span></h3>
+          <div class="loading-spinner"></div>
+        `);
+
+        const dotsInterval = setInterval(() => {
+          const dots = modalContent.find('.dots');
+          const currentDots = dots.text();
+          dots.text(currentDots.length >= 3 ? '' : currentDots + '.');
+        }, 500);
+        
+        $.ajax({
+          url: '/pay_shards',
+          type: 'POST',
+          dataType: 'json',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
+          data: {
+            square_id: squareId,
+            character_id: '<%= @character&.id %>',
+            user_id: '<%= current_user&.id %>',
+            world_id: '<%= @world&.id %>'
+          },
+          success: function(data) {
+            clearInterval(dotsInterval);
+            console.log('Success:', data);
+            if (data.success) {
+              // Update shards count
+              $('.shards-count').text(`Shards: ${data.new_shards}`);
+              
+              // Update square appearance and apply new terrain
+              square.setAttribute('data-state', 'active');
+              
+              // Apply the new terrain code to the canvas
+              const canvas = square.querySelector('canvas');
+              const ctx = canvas.getContext('2d');
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              eval(data.square.code);
+              
+              // Close and reset the modal
+              const modal = document.getElementById('popup-modal');
+              modal.style.display = 'none';
+              
+              // Reset modal content to original state
+              modalContent.html(`
+                <span class="close-button">&times;</span>
+                <h3>Square Details</h3>
+                <p id="square-coordinates"></p>
+                <div class="button-container">
+                  <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" 
+                     id="minigame-button" 
+                     class="button">Play Minigame</a>
+                  <button id="pay-shard-button" 
+                          class="button" 
+                          data-url="<%= pay_shards_path %>" 
+                          data-square-id="">Pay 10 shards</button>
+                </div>
+              `);
+
+              // Move the character to the new position
+              moveCharacterToTile(x, y).then(() => {
+                // Save the new coordinates to the server
+                return fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                  },
+                  body: JSON.stringify({
+                    x: x,
+                    y: y
+                  })
+                });
+              })
+              .catch(error => {
+                console.error('Error moving character:', error);
+              });
+            } else {
+              // Reset modal content and show error
+              modalContent.html(originalContent);
+              alert(data.message || 'Failed to unlock square');
+            }
+          },
+          error: function(xhr, status, error) {
+            clearInterval(dotsInterval);
+            // Reset modal content and show error
+            modalContent.html(originalContent);
+            alert(xhr.responseJSON?.message || 'Not enough shards to unlock this square');
+            console.error('Error:', error);
+            console.error('Status:', status);
+            console.error('Response:', xhr.responseText);
+          }
+        });
+      });
+
+      // Make sure close button works after error
+      $(document).on('click', '.close-button', function() {
+        $('#popup-modal').hide();
+      });
+    }
+
+    // Add CSS for loading spinner
+    const style = document.createElement('style');
+    style.textContent = `
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .dots {
+        display: inline-block;
+        min-width: 30px;
+        text-align: left;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Initial setup of pay shard button
+    if (payShardButton) {
+      payShardButton.addEventListener('click', async function() {
+        const squareId = this.getAttribute('data-square-id');
+        const square = document.querySelector(`[data-square-id="${squareId}"]`);
+        
+        // Get the button container and create loading text
+        const buttonContainer = document.querySelector('.button-container');
+        const originalButtons = buttonContainer.innerHTML;
+        
+        // Replace buttons with loading message
+        buttonContainer.innerHTML = `
+          <div class="loading-text">
+            Generating terrain<span class="dots"></span>
+          </div>
+        `;
+
+        // Start the dots animation
+        let dotCount = 0;
+        const dotsInterval = setInterval(() => {
+          dotCount = (dotCount + 1) % 4;
+          const dots = document.querySelector('.dots');
+          if (dots) dots.textContent = '.'.repeat(dotCount);
+        }, 500);
+        
+        try {
+            const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({
+                    square_id: squareId,
+                    character_id: '<%= @character.id %>'
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // Clear the interval and close modal
+                clearInterval(dotsInterval);
+                modal.style.display = 'none';
+                
+                // Update the square's state
+                square.setAttribute('data-state', 'active');
+                
+                // Update shards count
+                const shardsDisplay = document.querySelector('.shards-count');
+                if (shardsDisplay) {
+                    shardsDisplay.textContent = `Shards: ${data.new_shards}`;
+                }
+                
+                // Move character to the new square
+                const x = parseInt(square.getAttribute('data-x'));
+                const y = parseInt(square.getAttribute('data-y'));
+                await moveCharacterToTile(x, y);
+                
+                // Execute the new terrain code
+                const canvas = square.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                eval(data.square.code);
+            } else {
+                // Restore original buttons if there's an error
+                buttonContainer.innerHTML = originalButtons;
+                clearInterval(dotsInterval);
+                alert(data.message || 'Failed to pay shards');
+            }
+        } catch (error) {
+            // Restore original buttons if there's an error
+            buttonContainer.innerHTML = originalButtons;
+            clearInterval(dotsInterval);
+            console.error('Error:', error);
+            alert('An error occurred while processing payment');
+        }
+    });
+    }
+
+    // Handle game result if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameResult = urlParams.get('game_result');
+    const squareId = urlParams.get('square_id');
+    
+    if (gameResult === 'true' && squareId) {
+      const winningSquare = document.querySelector(`.grid-item[data-square-id="${squareId}"]`);
+      if (winningSquare) {
+        const x = parseInt(winningSquare.getAttribute('data-x'));
+        const y = parseInt(winningSquare.getAttribute('data-y'));
+        winningSquare.setAttribute('data-state', 'active');
+        moveCharacterToTile(x, y);
+      }
+    }
+
+    // Close modal when clicking X
+    const closeButton = modal.querySelector('.close-button');
+    if (closeButton) {
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    }
+
+    // Function to update other characters' positions
+    function updateCharacterPosition(characterId, x, y) {
+      const characterElement = document.querySelector(`.character[data-character-id="${characterId}"]`);
+      if (characterElement && characterElement.getAttribute('data-is-current-user') !== 'true') {
+        const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+        if (!targetSquare) return;
+
+        const gridContainer = document.querySelector('.grid');
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+        characterElement.setAttribute('data-x', x);
+        characterElement.setAttribute('data-y', y);
+      }
+    }
+
+    // Function to position a character on the grid
+    function positionCharacter(characterElement) {
+      const x = parseInt(characterElement.getAttribute('data-x'));
+      const y = parseInt(characterElement.getAttribute('data-y'));
+      const gridContainer = document.querySelector('.grid');
+      const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+      
+      if (gridContainer && targetSquare) {
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+        
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+        
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+      }
+    }
+
+    // Position all characters when the page loads
+    document.querySelectorAll('.character').forEach(characterElement => {
+      positionCharacter(characterElement);
     });
 
-    saveWorldButton.addEventListener('click', function (e) {
-      xCoordField.value = xCoord;
-      yCoordField.value = yCoord;
+    // Add window resize handler
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.character').forEach(char => {
+        positionCharacter(char);
+      });
     });
 
-    moveCharacter();
+    // In your Action Cable subscription received handler
+    App.gameChannel.received = function(data) {
+      console.log("Received websocket data:", data);
+      
+      if (data.type === 'character_moved') {
+        const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+        if (character) {
+          const gridContainer = document.querySelector('.grid');
+          if (!gridContainer) return;
+
+          const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+          if (!targetSquare) return;
+
+          const gridRect = gridContainer.getBoundingClientRect();
+          const squareRect = targetSquare.getBoundingClientRect();
+          
+          const characterWidth = character.offsetWidth;
+          const characterHeight = character.offsetHeight;
+          
+          const relativeX = squareRect.left - gridRect.left;
+          const relativeY = squareRect.top - gridRect.top;
+          
+          character.style.position = 'absolute';
+          character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+          character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+          
+          character.setAttribute('data-x', data.x);
+          character.setAttribute('data-y', data.y);
+        }
+      } 
+      else if (data.type === 'terrain_updated') {
+        console.log("Terrain update received:", data);
+        const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+        if (square) {
+          // Update square state and appearance
+          square.setAttribute('data-state', data.state);
+          square.classList.remove('inactive');
+          square.classList.add('active');
+
+          // Update the canvas with new terrain
+          const canvas = square.querySelector('canvas');
+          if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Execute the new terrain code
+            if (data.code) {
+              eval(data.code);
+            } else {
+              // Fallback terrain coloring
+              switch(data.terrain) {
+                case 'water':
+                  ctx.fillStyle = '#4a90e2';
+                  break;
+                case 'desert':
+                  ctx.fillStyle = '#ffd700';
+                  break;
+                case 'forest':
+                  ctx.fillStyle = '#228b22';
+                  break;
+                case 'plains':
+                  ctx.fillStyle = '#90ee90';
+                  break;
+                default:
+                  ctx.fillStyle = '#f0f0f0';
+              }
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Draw coordinates
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            const x = square.getAttribute('data-x');
+            const y = square.getAttribute('data-y');
+            ctx.fillText(`(${x}, ${y})`, 35, 55);
+          }
+        }
+      }
+      else if (data.type === 'treasure_found') {
+        // Only show modal for players who didn't find the treasure
+        const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+        if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+          // Create and show modal
+          const modal = document.createElement('div');
+          modal.className = 'treasure-found-modal';
+          modal.innerHTML = `
+            <div class="modal-content">
+              <h2>Treasure Found!</h2>
+              <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          
+          // Add styles
+          const style = document.createElement('style');
+          style.textContent = `
+            .treasure-found-modal {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.5);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 1000;
+            }
+            .treasure-found-modal .modal-content {
+              background-color: white;
+              padding: 20px;
+              border-radius: 5px;
+              text-align: center;
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+      else if (data.type === 'world_restart') {
+        console.log("World restart received");
+        
+        // Update terrain for initial squares first
+        if (data.squares) {
+          data.squares.forEach(square => {
+            const squareElement = document.querySelector(`.grid-item[data-square-id="${square.square_id}"]`);
+            if (squareElement) {
+              squareElement.setAttribute('data-state', square.state);
+              squareElement.classList.remove('inactive');
+              squareElement.classList.add('active');
+
+              const canvas = squareElement.querySelector('canvas');
+              if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (square.code) {
+                  eval(square.code);
+                } else {
+                  // Fallback terrain coloring
+                  switch(square.terrain) {
+                    case 'water':
+                      ctx.fillStyle = '#4a90e2';
+                      break;
+                    case 'desert':
+                      ctx.fillStyle = '#ffd700';
+                      break;
+                    case 'forest':
+                      ctx.fillStyle = '#228b22';
+                      break;
+                    case 'plains':
+                      ctx.fillStyle = '#90ee90';
+                      break;
+                    default:
+                      ctx.fillStyle = '#f0f0f0';
+                  }
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                // Draw coordinates
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.fillText(`(${square.x}, ${square.y})`, 35, 55);
+              }
+            }
+          });
+        }
+        
+        // Move all characters back to (0,0)
+        document.querySelectorAll('.character').forEach(async (character) => {
+          await moveCharacterToTile(0, 0, character);
+          
+          if (character.getAttribute('data-is-current-user') === 'true') {
+            try {
+              await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({
+                  x: 0,
+                  y: 0
+                })
+              });
+            } catch (error) {
+              console.error('Error saving coordinates:', error);
+            }
+          }
+        });
+        
+        // Reload the page after a short delay
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
+    };
   });
 </script>
 
 <style>
-  /* Combined styles from both versions */
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f3f4f6;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .container {
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  .top-banner {
-    background: linear-gradient(135deg, #007bff, #0056b3);
-    color: #fff;
-    padding: 20px;
-    width: 100%;
-    height: 11%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .title {
-    font-size: 2.5rem;
-    margin: 0;
-    flex: 1;
-  }
-
-  .dropdown-menu-container {
-  position: relative;
-}
-
-.dropdown-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.dropdown-button:hover {
-  background-color: #0056b3;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 100%; /* Below the button */
-  right: 0;
-  background-color: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  overflow: hidden;
-  z-index: 1000;
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #007bff;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-content a:hover {
-  background-color: #f0f0f0;
-}
-
-.dropdown-menu-container:hover .dropdown-content {
-  display: block; /* Keep the dropdown visible when hovering over the container */
-}
-
-  /* Grid */
   .grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(6, 105px);
-    gap: 0;
-    margin: 20px auto;
-    width: fit-content;
-    padding: 0;
+    gap: 2px;
+    padding: 20px;
   }
-
+  
   .grid-item {
-    background: none;
-    padding: 0;
-    text-align: center;
     width: 105px;
     height: 105px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.1s;
   }
-
+  
   .grid-item:hover {
-    transform: none;
-    box-shadow: none;
+    transform: scale(1.05);
   }
-
-  .grid-item h3 {
-    margin: 0 0 10px;
-    font-size: 1.2rem;
-    color: #333;
-  }
-
-  /* Pixel Art */
-  .pixel-art {
-    font-family: "Courier New", monospace;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    overflow: auto;
-    white-space: pre-wrap; /* Preserve spacing in art */
-    color: #555;
-  }
-
-  .no-pixel-art {
-    font-size: 0.9rem;
-    color: #999;
-    margin: 10px 0 0;
-  }
-
-  .map-square {
+  
+  canvas {
     display: block;
-    width: 32px;
-    height: 32px;
+  }
+  .button-container .button {
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #fff; /* Text color */
+      background-color: #007bff; /* Button background color */
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
   }
 
-  .square-container {
+  .button-container .button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .loading-text {
+    color: #666;
+    font-size: 1.2em;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .button-container {
+    text-align: center;
+  }
+
+  .loading-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .loading-text {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .dots {
+    display: inline-block;
+    min-width: 30px;
+    text-align: left;
+  }
+
+  .character {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  #victory-modal .modal-content {
+    text-align: center;
+    padding: 20px;
+  }
+
+  #victory-modal .button-container {
     display: flex;
-    flex-wrap: wrap;
-    width: 6300px; /* 128 * 6*/
-    height: 630px; /* 128 * 6 */
+    justify-content: space-around;
+    margin-top: 20px;
   }
 
-  .square-container canvas {
-    display: block; /* Removes any default spacing */
-    margin: 0;
-    padding: 0;
+  #victory-modal .button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
   }
 
-  .inactive-square {
-    opacity: 0.7;
-    pointer-events: none;
+  #delete-world-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
   }
 
-  .inactive-square:hover {
-    transform: none;
-    cursor: default;
+  #restart-world-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
   }
 </style>
+
+<% if Rails.env.development? %>
+  <script>
+    console.log('Game Result:', '<%= @game_result %>');
+    console.log('Square ID:', '<%= @square_id %>');
+    <% if @square %>
+      console.log('Square Data:', <%= raw @square.to_json %>);
+    <% end %>
+  </script>
+<% end %>
 
 <%== @js_functions %>

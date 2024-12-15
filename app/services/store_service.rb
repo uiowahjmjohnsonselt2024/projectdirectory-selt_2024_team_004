@@ -1,27 +1,33 @@
 class StoreService
-  def self.fetch_prices(user)
-    currency = user.default_currency || 'USD'
-    exchange_rates = fetch_exchange_rates
+  PRICES = {
+    sea_shard_1: 0.75,
+    pile_of_shards_10: 7.50,
+    hat_of_shards_50: 30.00,
+    chest_of_shards_100: 50.00
+  }
 
-    # Base USD prices
-    usd_prices = {
-      sea_shard: 0.75,
-      pile_shards: 7.00,
-      hat_shards: 30.00,
-      chest_shards: 50.00
-    }
+  def self.fetch_prices(currency)
+    return PRICES if currency.nil? || currency == 'USD'
 
-    # Convert prices to the user's selected currency
-    usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2) }
-  end
-
-  def self.fetch_exchange_rates
-    cached_rates = Rails.cache.fetch('exchange_rates', expires_in: 12.hours) do
-      OpenExchangeService.fetch_exchange_rates
+    begin
+      rates_data = OpenExchangeService.fetch_exchange_rates
+      
+      if rates_data && rates_data['rates'] && rates_data['rates'][currency]
+        rate = rates_data['rates'][currency].to_f
+        
+        converted_prices = {}
+        PRICES.each do |key, usd_price|
+          converted_price = (usd_price * rate).round(2)
+          converted_prices[key] = converted_price
+        end
+        converted_prices
+      else
+        Rails.logger.error "Failed to get exchange rate for #{currency}"
+        PRICES
+      end
+    rescue => e
+      Rails.logger.error "Currency conversion error: #{e.message}"
+      PRICES
     end
-    cached_rates['rates']
-  rescue StandardError => e
-    Rails.logger.error "Exception fetching exchange rates: #{e.message}"
-    { 'USD' => 1.0 }
   end
 end
