@@ -598,14 +598,6 @@
                 </div>
               `);
 
-              // Reattach close button event listener
-              const closeButton = modal.querySelector('.close-button');
-              if (closeButton) {
-                closeButton.addEventListener('click', () => {
-                  modal.style.display = 'none';
-                });
-              }
-              
               // Move the character to the new position
               moveCharacterToTile(x, y).then(() => {
                 // Save the new coordinates to the server
@@ -626,18 +618,26 @@
                 console.error('Error moving character:', error);
               });
             } else {
+              // Reset modal content and show error
               modalContent.html(originalContent);
               alert(data.message || 'Failed to unlock square');
             }
           },
           error: function(xhr, status, error) {
             clearInterval(dotsInterval);
+            // Reset modal content and show error
             modalContent.html(originalContent);
+            alert(xhr.responseJSON?.message || 'Not enough shards to unlock this square');
             console.error('Error:', error);
             console.error('Status:', status);
             console.error('Response:', xhr.responseText);
           }
         });
+      });
+
+      // Make sure close button works after error
+      $(document).on('click', '.close-button', function() {
+        $('#popup-modal').hide();
       });
     }
 

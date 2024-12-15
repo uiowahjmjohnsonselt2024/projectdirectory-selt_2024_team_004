@@ -160,8 +160,8 @@ class WorldsController < ApplicationController
       world: @user_world.world,
       user: current_user,
       shards: 10,
-      x_coord: 175,
-      y_coord: 30,
+      x_coord: 0,
+      y_coord: 0,
       image_code: @image_path
     )
 
