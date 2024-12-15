@@ -7,7 +7,6 @@ class SettingsController < ApplicationController
     @character ||= Character.find_or_initialize_by(world_id: @world.id, user_id: @user.id)
     @currencies = OpenExchangeService.fetch_currencies
     session[:return_path] = params[:return_path] || request.referrer
-
     @character_image = @character.image_code
     role = @character_image[4] # Code has form "gender_preload_role.png"
     @role = case role.to_i
