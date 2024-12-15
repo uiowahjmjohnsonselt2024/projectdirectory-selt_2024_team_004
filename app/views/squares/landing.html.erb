@@ -573,8 +573,33 @@
               ctx.clearRect(0, 0, canvas.width, canvas.height);
               eval(data.square.code);
               
-              // Close the modal
-              $('#popup-modal').hide();
+              // Close and reset the modal
+              const modal = document.getElementById('popup-modal');
+              modal.style.display = 'none';
+              
+              // Reset modal content to original state
+              modalContent.html(`
+                <span class="close-button">&times;</span>
+                <h3>Square Details</h3>
+                <p id="square-coordinates"></p>
+                <div class="button-container">
+                  <a href="<%= matching_game_path(world_id: @world.id, user_id: @user.id) %>" 
+                     id="minigame-button" 
+                     class="button">Play Minigame</a>
+                  <button id="pay-shard-button" 
+                          class="button" 
+                          data-url="<%= pay_shards_path %>" 
+                          data-square-id="">Pay 10 shards</button>
+                </div>
+              `);
+
+              // Reattach close button event listener
+              const closeButton = modal.querySelector('.close-button');
+              if (closeButton) {
+                closeButton.addEventListener('click', () => {
+                  modal.style.display = 'none';
+                });
+              }
               
               // Move the character to the new position
               moveCharacterToTile(x, y).then(() => {
@@ -594,8 +619,6 @@
               })
               .catch(error => {
                 console.error('Error moving character:', error);
-                // Even if saving coordinates fails, don't reload the page
-                // The visual movement will still work
               });
             } else {
               modalContent.html(originalContent);
