@@ -253,18 +253,19 @@ class SquaresController < ApplicationController
         }
         
         Rails.logger.info "Broadcasting square update: #{broadcast_data}"
+        channel = "game_channel_#{@square.world_id}"
+        Rails.logger.info "Broadcasting to channel: #{channel}"
         
-        ActionCable.server.broadcast(
-          "game_channel_#{@square.world_id}",
-          broadcast_data
-        )
+        ActionCable.server.broadcast(channel, broadcast_data)
 
         render json: { 
           success: true, 
           terrain: @square.terrain,
-          state: 'active'
+          state: 'active',
+          square_id: @square.id
         }
       else
+        Rails.logger.error "Failed to save square: #{@square.errors.full_messages}"
         render json: { success: false }, status: :unprocessable_entity
       end
     else

@@ -138,15 +138,12 @@
   function updateSquareAppearance(square, terrain) {
     console.log(`Updating appearance for square with terrain: ${terrain}`);
     
-    // Remove all terrain classes
-    square.classList.remove('empty', 'water', 'mountain', 'forest');
-    
-    // Add new terrain class
-    square.classList.add(terrain);
-    
     // Get the canvas context
     const canvas = square.querySelector('canvas');
-    if (!canvas) return;
+    if (!canvas) {
+      console.error('Canvas not found in square');
+      return;
+    }
     
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -155,20 +152,18 @@
     switch(terrain) {
       case 'water':
         ctx.fillStyle = '#4a90e2';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       case 'mountain':
         ctx.fillStyle = '#8b4513';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       case 'forest':
         ctx.fillStyle = '#228b22';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
         break;
       default:
         ctx.fillStyle = '#f0f0f0';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
+    
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     
     // Draw coordinates
     ctx.fillStyle = '#666';
@@ -176,6 +171,8 @@
     const x = square.getAttribute('data-x');
     const y = square.getAttribute('data-y');
     ctx.fillText(`(${x}, ${y})`, 35, 55);
+    
+    console.log(`Square appearance updated with terrain: ${terrain}`);
   }
 
   // Add this function to handle square unlocking
@@ -197,6 +194,11 @@
       
       if (data.success) {
         console.log('Square unlocked successfully with terrain:', data.terrain);
+        // Update the square immediately for the current user
+        const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+        if (square) {
+          updateSquareAppearance(square, data.terrain);
+        }
       }
     } catch (error) {
       console.error('Error unlocking square:', error);
