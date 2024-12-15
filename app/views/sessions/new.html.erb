@@ -1,5 +1,5 @@
 <div class="login-container">
-  <h1>Log In to Sea Raiders</h1>
+  <h1>Log In to Pretty Pirates</h1>
 
   <%= stylesheet_link_tag 'login', media: 'all', 'data-turbo-track': 'reload' %>
 
@@ -14,6 +14,9 @@
     <div>
       <%= form.label :password %>
       <%= form.password_field :password %>
+    </div>
+    <div class="forgot-password-link">
+      <%= link_to 'Forgot Password?', recovery_path, class: 'forgot-password' %>
     </div>
     <%= form.submit "Log In", class: "btn-login" %>
   <% end %>

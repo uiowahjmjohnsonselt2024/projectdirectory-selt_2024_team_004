@@ -1,0 +1,16 @@
+<div class="login-container">
+  <h1>Recover Account</h1>
+  <h4>Please Enter your email. A code will be sent to your email to recover your account.</h4>
+
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbo-track': 'reload' %>
+
+  <%= render 'shared/flash' %>
+
+  <%= form_with url: recovery_code_path, local: true do |form| %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email %>
+    </div>
+    <%= form.submit "Send Recovery Code", class: "btn-login" %>
+  <% end %>
+</div>

@@ -3,11 +3,17 @@ Rails.application.routes.draw do
   root "sessions#new"  # Define a root path (e.g., a home or welcome page)
 
   # Session routes
-  get    'login',  to: 'sessions#new', as:'login'       # Login form
-  post   'login',  to: 'sessions#create', as:'sessions' # Process login
-  delete 'logout', to: 'sessions#destroy', as:'logout'  # Log out
-  get    'signup',  to: 'users#new', as:'signup'        # Signup form
-  post   'signup',  to: 'users#create'                  # Process signup
+  # Session routes
+  get    'login',          to: 'sessions#new',         as: 'login'           # Login form
+  get    'recovery',       to: 'sessions#recovery',    as: 'recovery'        # Account Recovery form
+  get    'code',           to: 'sessions#code',        as: 'code'            # Recovery code entry
+  post 'recovery_code',    to: 'sessions#recovery_code', as: 'recovery_code' # Check email form
+  post   'verify',         to: 'sessions#verify',      as: 'verify'          # Verify recovery code
+  post   'login',          to: 'sessions#create',      as: 'sessions'        # Process login
+  delete 'logout',         to: 'sessions#destroy',     as: 'logout'          # Log out
+  get    'signup',         to: 'users#new',            as: 'signup'          # Signup form
+  post   'signup',         to: 'users#create'                                # Process signup
+
 
   get    'world',  to: 'worlds#index', as:'worlds'          # List of User worlds
   post   'world',  to: 'worlds#create', as:'create_world'   # Generate new Game ID and redirect to world#new (character form)
