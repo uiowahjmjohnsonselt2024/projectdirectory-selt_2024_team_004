@@ -4,7 +4,6 @@ class SquaresController < ApplicationController
     store
     @user ||= User.find_by id: params[:user_id]
     @world ||= World.find_by id: params[:world_id]
-    @world_id = @world&.id
     @character ||= Character.find_by world_id: @world.id
     @game_result = params[:game_result] || false
     @square_id = params[:square_id]
@@ -16,11 +15,6 @@ class SquaresController < ApplicationController
       Rails.logger.error "No world found for ID: #{params[:world_id]}"
       flash[:alert] = "No world selected"
       redirect_to worlds_path and return
-    end
-
-    if @world
-      @treasure_square = @world.squares.find_by(treasure: true)
-      Rails.logger.info "Treasure square found: #{@treasure_square.inspect}" if @treasure_square
     end
 
     # Handle minigame victory
@@ -251,10 +245,10 @@ class SquaresController < ApplicationController
     if params[:unlock] == 'true'
       @square.state = 'active'
       @square.terrain = ['water', 'mountain', 'forest'].sample
-      
+
       if @square.save
         Rails.logger.info "Broadcasting terrain update for square #{@square.id}"
-        
+
         ActionCable.server.broadcast(
           "game_channel_#{@square.world_id}",
           {
