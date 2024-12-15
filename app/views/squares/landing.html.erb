@@ -500,7 +500,7 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <div class="top-banner">
-    <button id="rules-button" class="btn btn-info">Rules & Help</button>
+    <button id="rules-button" class="btn btn-primary">Rules & Help</button>
     <h2 class="title">Sea Raiders</h2>
 
     <%= stylesheet_link_tag 'landing', media: 'all', 'data-turbo-track': 'reload', defer: true %>
@@ -718,6 +718,38 @@
     </div>
   </div>
 
+  <div id="rules-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-header">
+        <h2>How to Play Sea Raiders</h2>
+      </div>
+      <div class="rules-content">
+        <div class="rule-section">
+          <h3>Game Rules:</h3>
+          <ul>
+            <li>Explore the map by moving to adjacent squares or teleporting further away</li>
+            <li>Unlock new squares by either:
+              <ul>
+                <li>Playing the matching minigame</li>
+                <li>Spending 10 shards</li>
+              </ul>
+            </li>
+            <li>Find the hidden treasure to win!</li>
+          </ul>
+        </div>
+        
+        <div class="rule-section">
+          <h3>Rewards:</h3>
+          <ul>
+            <li>Finding the treasure awards 10 shards to all players in the world</li>
+            <li>Use shards to unlock new squares or teleport across the map</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <style>
   .modal {
     display: none;
@@ -753,6 +785,7 @@
     cursor: pointer;
     transition: all 0.2s;
     z-index: 1001;
+    line-height: 1;
   }
 
   .close:hover {
@@ -1778,6 +1811,7 @@
   cursor: pointer;
   transition: all 0.2s;
   z-index: 1001;
+  line-height: 1;
 }
 
 .close:hover {
