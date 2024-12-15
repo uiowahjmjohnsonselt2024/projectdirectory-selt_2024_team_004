@@ -617,6 +617,12 @@
               .catch(error => {
                 console.error('Error moving character:', error);
               });
+
+              // Broadcast the square unlock to other players
+              App.gameChannel.perform('broadcast_square_unlock', {
+                square_id: squareId,
+                square_code: data.square.code
+              });
             } else {
               // Reset modal content and show error
               modalContent.html(originalContent);
@@ -843,6 +849,17 @@
               targetCharacter.setAttribute('data-x', data.x);
               targetCharacter.setAttribute('data-y', data.y);
               positionCharacter(targetCharacter);
+            }
+          } else if (data.type === 'square_unlocked') {
+            // Handle square being unlocked by another player
+            const square = document.querySelector(`[data-square-id="${data.square_id}"]`);
+            if (square) {
+              square.setAttribute('data-state', 'active');
+              // Update the square's appearance
+              const canvas = square.querySelector('canvas');
+              const ctx = canvas.getContext('2d');
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              eval(data.square_code);
             }
           }
         }

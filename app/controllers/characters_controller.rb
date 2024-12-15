@@ -7,7 +7,7 @@ class CharactersController < ApplicationController
 
     if @character.user_id == current_user.id
       if @character.update!(x_coord: params[:x], y_coord: params[:y])
-        # Broadcast the movement to all players in the world
+        # Broadcast the movement immediately
         ActionCable.server.broadcast(
           "game_channel_#{@character.world_id}",
           {
