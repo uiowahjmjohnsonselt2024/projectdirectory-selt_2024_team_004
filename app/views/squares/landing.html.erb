@@ -51,9 +51,9 @@
                 }
               });
               
-              // Reload the page after a short delay
+              // Reload the page for all players after a short delay
               setTimeout(() => {
-                location.reload();
+                window.location.reload();
               }, 500);
             }
             else if (data.type === 'character_moved') {
