@@ -49,8 +49,8 @@
                   targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
                 }
               }
-            } else if (data.type === 'square_updated') {
-              console.log("Square update received:", data);
+            } else if (data.type === 'terrain_updated') {
+              console.log("Terrain update received:", data);
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
               
               if (square) {
@@ -178,7 +178,6 @@
   // Add this function to handle square unlocking
   async function unlockSquare(squareId) {
     try {
-      console.log('Attempting to unlock square:', squareId);
       const response = await fetch(`/squares/${squareId}`, {
         method: 'PATCH',
         headers: {
@@ -193,12 +192,8 @@
       console.log('Unlock response:', data);
       
       if (data.success) {
-        console.log('Square unlocked successfully with terrain:', data.terrain);
-        // Update the square immediately for the current user
-        const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
-        if (square) {
-          updateSquareAppearance(square, data.terrain);
-        }
+        // Broadcast the terrain update
+        broadcastTerrainUpdate(data.square_id, data.terrain, data.state);
       }
     } catch (error) {
       console.error('Error unlocking square:', error);
@@ -212,6 +207,16 @@
       await unlockSquare(squareId);
     }
   });
+
+  // Add this function to handle terrain broadcasting
+  function broadcastTerrainUpdate(squareId, terrain, state) {
+    App.gameChannel.perform('broadcast_terrain_update', {
+      action: 'broadcast_terrain_update',
+      square_id: squareId,
+      terrain: terrain,
+      state: state
+    });
+  }
 </script>
 
 <div class="container">

@@ -19,11 +19,11 @@ class GameChannel < ApplicationCable::Channel
     )
   end
 
-  def broadcast_square_update(data)
+  def broadcast_terrain_update(data)
     ActionCable.server.broadcast(
       "game_channel_#{params[:world_id]}", 
       {
-        type: 'square_updated',
+        type: 'terrain_updated',
         square_id: data['square_id'],
         terrain: data['terrain'],
         state: data['state']
@@ -35,8 +35,8 @@ class GameChannel < ApplicationCable::Channel
     case data['action']
     when 'broadcast_movement'
       broadcast_movement(data)
-    when 'broadcast_square_update'
-      broadcast_square_update(data)
+    when 'broadcast_terrain_update'
+      broadcast_terrain_update(data)
     end
   end
 end 
