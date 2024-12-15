@@ -238,9 +238,6 @@ class SquaresController < ApplicationController
     @user = current_user
     @currency = @user.default_currency || 'USD'
     @prices = StoreService.fetch_prices(@user.default_currency)
-    puts "User: #{@user}"
-    puts "Currency: #{@currency}"
-    puts "Prices: #{@prices}"
   end
 
   def current_user

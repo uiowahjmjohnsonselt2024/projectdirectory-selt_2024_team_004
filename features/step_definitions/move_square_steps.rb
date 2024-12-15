@@ -23,6 +23,4 @@ Given("I have a character in the database") do
     world_id: world.id,
     user_id: user.id
   )
-
-  puts @character.inspect
 end
