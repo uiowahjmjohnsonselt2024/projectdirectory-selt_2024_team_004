@@ -500,13 +500,13 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <div class="top-banner">
+    <button id="rules-button" class="btn btn-info">Rules & Help</button>
     <h2 class="title">Sea Raiders</h2>
 
     <%= stylesheet_link_tag 'landing', media: 'all', 'data-turbo-track': 'reload', defer: true %>
     <%= javascript_include_tag 'landing', 'data-turbo-track': 'reload', defer: true %>
 
 
-    <button id="rules-button" class="btn btn-info">Rules & Help</button>
     <div class="dropdown-menu-container">
       <button class="dropdown-button">Menu</button>
       <div class="dropdown-content">
@@ -516,6 +516,39 @@
       </div>
     </div>
   </div>
+
+  <!-- Add this modal div right after your banner -->
+<div id="rules-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="modal-header">
+      <h2>How to Play Sea Raiders</h2>
+    </div>
+    <div class="rules-content">
+      <div class="rule-section">
+        <h3>Game Rules:</h3>
+        <ul>
+          <li>Explore the map by moving to adjacent squares or teleporting further away</li>
+          <li>Unlock new squares by either:
+            <ul>
+              <li>Playing the matching minigame</li>
+              <li>Spending 10 shards</li>
+            </ul>
+          </li>
+          <li>Find the hidden treasure to win!</li>
+        </ul>
+      </div>
+      
+      <div class="rule-section">
+        <h3>Rewards:</h3>
+        <ul>
+          <li>Finding the treasure awards 10 shards to all players in the world</li>
+          <li>Use shards to unlock new squares or teleport across the map</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Debug info -->
   <% if @squares.present? %>
@@ -561,7 +594,7 @@
                 document.addEventListener('DOMContentLoaded', () => {
                   const canvas = document.querySelector('#square_<%= square.square_id %> canvas');
                   const ctx = canvas.getContext('2d');
-                  ctx.fillStyle = '#eee';
+                  ctx.fillStyle = '#808080';
                   ctx.fillRect(0, 0, 105, 105);
                 });
               </script>
@@ -684,6 +717,104 @@
       </div>
     </div>
   </div>
+
+  <style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-content {
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s ease-out;
+    position: relative;
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 1001;
+  }
+
+  .close:hover {
+    color: #666;
+  }
+
+  .modal-header {
+    margin-bottom: 20px;
+  }
+
+  .modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+  }
+
+  .rules-content {
+    color: #333;
+  }
+
+  .rule-section {
+    margin-bottom: 25px;
+  }
+
+  .rule-section h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 20px;
+  }
+
+  .rules-content ul {
+    list-style: none;
+    padding-left: 20px;
+  }
+
+  .rules-content ul li {
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .rules-content ul ul {
+    margin-top: 10px;
+    margin-left: 20px;
+  }
+
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #rules-modal .character-image,
+  #rules-modal img[src*="character"] {
+    display: none;
+  }
+  </style>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1610,3 +1741,128 @@
 <% end %>
 
 <%== @js_functions %>
+
+
+<style>
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background-color: #ffffff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: modalFadeIn 0.3s ease-out;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  color: #333;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  z-index: 1001;
+}
+
+.close:hover {
+  color: #666;
+}
+
+.modal-header {
+  margin-bottom: 20px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+}
+
+.rules-content {
+  color: #333;
+}
+
+.rule-section {
+  margin-bottom: 25px;
+}
+
+.rule-section h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.rules-content ul {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.rules-content ul li {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.rules-content ul ul {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#rules-modal .character-image,
+#rules-modal img[src*="character"] {
+  display: none;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the rules button, modal, and close button
+  const rulesButton = document.getElementById('rules-button');
+  const rulesModal = document.getElementById('rules-modal');
+  const closeButton = rulesModal.querySelector('.close');
+
+  // Show modal when rules button is clicked
+  rulesButton.addEventListener('click', function() {
+    rulesModal.style.display = 'block';
+  });
+
+  // Hide modal when close button is clicked
+  closeButton.addEventListener('click', function() {
+    rulesModal.style.display = 'none';
+  });
+
+  // Hide modal when clicking outside of it
+  window.addEventListener('click', function(event) {
+    if (event.target === rulesModal) {
+      rulesModal.style.display = 'none';
+    }
+  });
+});
+</script>
