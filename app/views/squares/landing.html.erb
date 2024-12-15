@@ -1183,6 +1183,86 @@
         positionCharacter(char);
       });
     });
+
+    // In your Action Cable subscription received handler
+    App.gameChannel.received = function(data) {
+      console.log("Received websocket data:", data);
+      
+      if (data.type === 'character_moved') {
+        const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+        if (character) {
+          const gridContainer = document.querySelector('.grid');
+          if (!gridContainer) return;
+
+          const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+          if (!targetSquare) return;
+
+          const gridRect = gridContainer.getBoundingClientRect();
+          const squareRect = targetSquare.getBoundingClientRect();
+          
+          const characterWidth = character.offsetWidth;
+          const characterHeight = character.offsetHeight;
+          
+          const relativeX = squareRect.left - gridRect.left;
+          const relativeY = squareRect.top - gridRect.top;
+          
+          character.style.position = 'absolute';
+          character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+          character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+          
+          character.setAttribute('data-x', data.x);
+          character.setAttribute('data-y', data.y);
+        }
+      } 
+      else if (data.type === 'terrain_updated') {
+        console.log("Terrain update received:", data);
+        const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+        if (square) {
+          // Update square state and appearance
+          square.setAttribute('data-state', data.state);
+          square.classList.remove('inactive');
+          square.classList.add('active');
+
+          // Update the canvas with new terrain
+          const canvas = square.querySelector('canvas');
+          if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Execute the new terrain code
+            if (data.code) {
+              eval(data.code);
+            } else {
+              // Fallback terrain coloring
+              switch(data.terrain) {
+                case 'water':
+                  ctx.fillStyle = '#4a90e2';
+                  break;
+                case 'desert':
+                  ctx.fillStyle = '#ffd700';
+                  break;
+                case 'forest':
+                  ctx.fillStyle = '#228b22';
+                  break;
+                case 'plains':
+                  ctx.fillStyle = '#90ee90';
+                  break;
+                default:
+                  ctx.fillStyle = '#f0f0f0';
+              }
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Draw coordinates
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            const x = square.getAttribute('data-x');
+            const y = square.getAttribute('data-y');
+            ctx.fillText(`(${x}, ${y})`, 35, 55);
+          }
+        }
+      }
+    };
   });
 </script>
 

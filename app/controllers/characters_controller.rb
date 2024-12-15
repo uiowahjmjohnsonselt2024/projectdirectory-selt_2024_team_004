@@ -11,19 +11,41 @@ class CharactersController < ApplicationController
     if @character.update(x_coord: params[:x], y_coord: params[:y])
       Rails.logger.info "Successfully updated character position"
       
-      # Broadcast the movement immediately after saving
+      # Get the square at the new coordinates
+      square = Square.find_by(
+        world_id: @character.world_id,
+        x: @character.x_coord,
+        y: @character.y_coord
+      )
+
+      # Broadcast both the character movement and terrain info
       channel = "game_channel_#{@character.world_id}"
-      message = {
+      
+      # First broadcast character movement
+      movement_message = {
         type: 'character_moved',
         character_id: @character.id,
         x: @character.x_coord,
         y: @character.y_coord
       }
       
-      Rails.logger.info "Broadcasting to channel: #{channel} with message: #{message}"
-      
-      ActionCable.server.broadcast(channel, message)
-      Rails.logger.info "Broadcast completed"
+      # Then broadcast terrain info if square exists and is active
+      if square && square.state == 'active'
+        terrain_message = {
+          type: 'terrain_updated',
+          square_id: square.square_id,
+          terrain: square.terrain,
+          state: square.state,
+          code: square.code
+        }
+        
+        # Broadcast both messages
+        ActionCable.server.broadcast(channel, movement_message)
+        ActionCable.server.broadcast(channel, terrain_message)
+      else
+        # Just broadcast movement if no active square
+        ActionCable.server.broadcast(channel, movement_message)
+      end
 
       render json: { 
         success: true,
