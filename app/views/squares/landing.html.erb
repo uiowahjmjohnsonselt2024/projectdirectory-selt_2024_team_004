@@ -23,7 +23,40 @@
           received: function(data) {
             console.log("Received websocket data:", data);
             
-            if (data.type === 'character_moved') {
+            if (data.type === 'world_restart') {
+              console.log("World restart received");
+              
+              // Move all characters back to (0,0)
+              document.querySelectorAll('.character').forEach(async (character) => {
+                await moveCharacterToTile(0, 0, character);
+                
+                // If this is the current user's character, save the position
+                if (character.getAttribute('data-is-current-user') === 'true') {
+                  try {
+                    await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                      },
+                      body: JSON.stringify({
+                        x: 0,
+                        y: 0
+                      })
+                    });
+                  } catch (error) {
+                    console.error('Error saving coordinates:', error);
+                  }
+                }
+              });
+              
+              // Reload the page after a short delay
+              setTimeout(() => {
+                location.reload();
+              }, 500);
+            }
+            else if (data.type === 'character_moved') {
               const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
               if (character) {
                 const gridContainer = document.querySelector('.grid');
@@ -763,33 +796,18 @@
                 if (response.ok) {
                   console.log('World restarted successfully');
                   
-                  // First move character back to (0,0)
-                  const moveResponse = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Accept': 'application/json',
-                      'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-                    },
-                    body: JSON.stringify({
-                      x: 0,
-                      y: 0
-                    })
+                  // Broadcast world restart to all players
+                  App.gameChannel.perform('broadcast_world_restart', {
+                    world_id: '<%= @world.id %>'
                   });
-
-                  if (moveResponse.ok) {
-                    console.log('Character position reset to (0,0)');
-                    await moveCharacterToTile(0, 0);
-                    // Add a small delay to see the character move
-                    setTimeout(() => {
-                      location.reload();
-                    }, 500);
-                  } else {
-                    console.error('Failed to reset character position');
+                  
+                  // Move current player back to (0,0)
+                  await moveCharacterToTile(0, 0);
+                  
+                  // Add a small delay before reload
+                  setTimeout(() => {
                     location.reload();
-                  }
-                } else {
-                  console.error('Failed to restart world');
+                  }, 500);
                 }
               } catch (error) {
                 console.error('Error restarting world:', error);

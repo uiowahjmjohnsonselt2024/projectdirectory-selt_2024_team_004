@@ -33,14 +33,25 @@ class GameChannel < ApplicationCable::Channel
     false
   end
 
+  def broadcast_world_restart(data)
+    ActionCable.server.broadcast(
+      "game_channel_#{@world_id}",
+      {
+        type: 'world_restart',
+        world_id: data['world_id']
+      }
+    )
+  end
+
   def receive(data)
     case data['action']
     when 'broadcast_movement'
       broadcast_movement(data)
-      false
     when 'broadcast_terrain_update'
       broadcast_terrain_update(data)
-      false
+    when 'broadcast_world_restart'
+      broadcast_world_restart(data)
     end
+    false
   end
 end 
