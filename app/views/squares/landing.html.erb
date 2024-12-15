@@ -564,8 +564,14 @@
               // Update shards count
               $('.shards-count').text(`Shards: ${data.new_shards}`);
               
-              // Update square appearance
+              // Update square appearance and apply new terrain
               square.setAttribute('data-state', 'active');
+              
+              // Apply the new terrain code to the canvas
+              const canvas = square.querySelector('canvas');
+              const ctx = canvas.getContext('2d');
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              eval(data.square.code);
               
               // Close the modal
               $('#popup-modal').hide();
@@ -585,15 +591,11 @@
                     y: y
                   })
                 });
-              }).then(response => response.json())
-              .then(coordData => {
-                if (coordData.success) {
-                  // Reload the page to show the updated terrain
-                  location.reload();
-                }
               })
               .catch(error => {
                 console.error('Error moving character:', error);
+                // Even if saving coordinates fails, don't reload the page
+                // The visual movement will still work
               });
             } else {
               modalContent.html(originalContent);
