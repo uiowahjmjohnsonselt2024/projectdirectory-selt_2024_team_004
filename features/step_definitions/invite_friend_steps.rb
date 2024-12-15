@@ -41,3 +41,23 @@ end
 Then 'the modal should remain up' do
   expect(page).to have_css('#invite-modal', visible: true)
 end
+
+#Then "the invitation to {string} for {string} should be sent" do |email, world_name|
+#  # Find the user by email
+#  user = User.find_by(email: email)
+#
+#  # Ensure the user exists
+#  expect(user).not_to be_nil
+#
+#  # Find the world by name
+#  world = World.find_by(world_name: world_name)
+#
+#  # Ensure the world exists
+#  expect(world).not_to be_nil
+#
+#  # Check if the invitation was created
+#  invitation = Invitation.find_by(sender_id: user.id, world_id: world.id, status: 'pending')
+#
+#  # Ensure the invitation exists
+#  expect(invitation).not_to be_nil
+#end

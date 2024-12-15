@@ -34,15 +34,9 @@ Feature: Inviting a friend to your world
     And I click "Send Invitation"
     Then the modal should remain up
 
-
-
-
-
-    # Make sure to covdr scenerio where user you want to invit doesnt have account
-  # Should stay on invite player popup and see "User with that email not found."
-  # Try to invite self: "You cannot invite yourself."
-  # Successful invite, user sees: "Invitation sent to littlemars22@gmail.com!"
-  # Receive invite: should see on page "Pending Invitations" and below that "johndoe@gmail.com invited you to join John's world"
-  # Should also have an accept and decline button
-
-  # More scenarios later
+  #Scenario: Successful invite
+  #  Given I am on the worlds page
+  #  And I click the invite button for "My World"
+  #  And I fill in "Enter email to invite" with "friend@example.com"
+  #  And I click "Send Invitation"
+  #  Then the invitation to "friend@example.com" for "My World" should be sent
