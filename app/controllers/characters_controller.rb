@@ -5,7 +5,6 @@ class CharactersController < ApplicationController
   def save_coordinates
     @character = Character.find(params[:id])
 
-    # Make sure the character belongs to the current user
     if @character.user_id == current_user.id
       if @character.update!(x_coord: params[:x], y_coord: params[:y])
         # Broadcast the movement to all players in the world

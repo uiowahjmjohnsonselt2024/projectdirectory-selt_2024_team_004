@@ -795,21 +795,47 @@
     }
 
     // Set up Action Cable subscription
-    if (typeof App !== 'undefined' && App.cable) {
-      App.game = App.cable.subscriptions.create(
-        { 
-          channel: "GameChannel", 
-          world_id: '<%= @world.id %>' 
+    App.gameChannel = App.cable.subscriptions.create(
+      { 
+        channel: "GameChannel",
+        world_id: '<%= @world.id %>'
+      },
+      {
+        connected: function() {
+          console.log("Connected to game channel!");
         },
-        {
-          received: function(data) {
-            if (data.type === 'character_moved') {
-              updateCharacterPosition(data.character_id, data.x, data.y);
+        disconnected: function() {
+          console.log("Disconnected from game channel!");
+        },
+        received: function(data) {
+          console.log("Received data:", data);
+          if (data.type === 'character_moved') {
+            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
+              console.log("Updating other player position:", data);
+              const gridContainer = document.querySelector('.grid');
+              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+              
+              if (gridContainer && targetSquare) {
+                const gridRect = gridContainer.getBoundingClientRect();
+                const squareRect = targetSquare.getBoundingClientRect();
+                const characterWidth = targetCharacter.offsetWidth;
+                const characterHeight = targetCharacter.offsetHeight;
+                
+                const relativeX = squareRect.left - gridRect.left;
+                const relativeY = squareRect.top - gridRect.top;
+                
+                targetCharacter.style.position = 'absolute';
+                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+                targetCharacter.setAttribute('data-x', data.x);
+                targetCharacter.setAttribute('data-y', data.y);
+              }
             }
           }
         }
-      );
-    }
+      }
+    );
 
     // Add window resize handler to update all character positions
     window.addEventListener('resize', () => {
@@ -823,24 +849,6 @@
         }
       });
     });
-
-    App.gameChannel = App.cable.subscriptions.create(
-      { 
-        channel: "GameChannel",
-        world_id: '<%= @world.id %>',
-        character_id: '<%= @character.id %>'
-      },
-      {
-        received: function(data) {
-          if (data.type === 'character_moved') {
-            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
-            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-              moveCharacterToTile(data.x, data.y, targetCharacter);
-            }
-          }
-        }
-      }
-    );
   });
 </script>
 
