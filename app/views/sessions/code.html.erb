@@ -6,6 +6,9 @@
   <%= render 'shared/flash' %>
 
   <%= form_with url: verify_path, local: true do |form| %>
+    <%= form.hidden_field :email, value: @user_email %>
+    <%= form.hidden_field :recovery_code, value: @recovery_code %>
+
     <div>
       <%= form.label :Recovery_code %>
       <%= form.text_field :code%>
@@ -18,7 +21,7 @@
       <%= form.label :Retype_New_Password %>
       <%= form.password_field :password_confirm %>
     </div>
-    <%= form.submit "Submit", class: "btn-login" %>
+    <%= form.submit "Change Password", class: "btn-login" %>
   <% end %>
 
   <p>Return to Login</p>

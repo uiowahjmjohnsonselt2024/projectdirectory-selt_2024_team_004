@@ -52,12 +52,12 @@ class SessionsController < ApplicationController
   end
 
   def verify
-    email = @user_email
-    recovery_code = params[:code]
+    @email = params[:email]
+    @recovery_code = params[:recovery_code]
 
     # Check if the entered code matches the one stored in the URL
-    if params[:code] == recovery_code && params[:password] == params[:password_confirm]
-      user = User.find_by(email: email)
+    if params[:code] == @recovery_code && params[:password] == params[:password_confirm]
+      user = User.find_by(email: @email)
 
       if user.present?
         # Update the password
