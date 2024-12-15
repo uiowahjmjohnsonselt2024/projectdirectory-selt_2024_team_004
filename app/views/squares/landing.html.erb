@@ -821,7 +821,7 @@
       positionCharacter(characterElement);
     });
 
-    // Update the received function in Action Cable subscription
+    // Update the Action Cable subscription
     App.gameChannel = App.cable.subscriptions.create(
       { 
         channel: "GameChannel",
@@ -835,14 +835,31 @@
           console.log("Disconnected from game channel!");
         },
         received: function(data) {
-          console.log("Received data:", data);
+          console.log("Received websocket data:", data);
           if (data.type === 'character_moved') {
             const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
             if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-              console.log("Updating other player position:", data);
+              console.log("Moving other player:", data);
               targetCharacter.setAttribute('data-x', data.x);
               targetCharacter.setAttribute('data-y', data.y);
-              positionCharacter(targetCharacter);
+              
+              // Use the existing positionCharacter function to update position
+              const gridContainer = document.querySelector('.grid');
+              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+              
+              if (gridContainer && targetSquare) {
+                const gridRect = gridContainer.getBoundingClientRect();
+                const squareRect = targetSquare.getBoundingClientRect();
+                const characterWidth = targetCharacter.offsetWidth;
+                const characterHeight = targetCharacter.offsetHeight;
+                
+                const relativeX = squareRect.left - gridRect.left;
+                const relativeY = squareRect.top - gridRect.top;
+                
+                targetCharacter.style.position = 'absolute';
+                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+              }
             }
           }
         }
