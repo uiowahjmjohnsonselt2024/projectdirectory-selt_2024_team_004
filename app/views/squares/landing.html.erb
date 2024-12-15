@@ -130,6 +130,46 @@
                 }
               }
             }
+            else if (data.type === 'treasure_found') {
+              // Only show modal for players who didn't find the treasure
+              const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+              if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+                // Create and show modal
+                const modal = document.createElement('div');
+                modal.className = 'treasure-found-modal';
+                modal.innerHTML = `
+                  <div class="modal-content">
+                    <h2>Treasure Found!</h2>
+                    <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+                  </div>
+                `;
+                document.body.appendChild(modal);
+                
+                // Add styles
+                const style = document.createElement('style');
+                style.textContent = `
+                  .treasure-found-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 1000;
+                  }
+                  .treasure-found-modal .modal-content {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 5px;
+                    text-align: center;
+                  }
+                `;
+                document.head.appendChild(style);
+              }
+            }
           }
         }
       );
@@ -395,10 +435,41 @@
     if (data.type === 'treasure_found') {
       // Only show modal for players who didn't find the treasure
       const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
-      if (currentCharacter) {
-        const x = parseInt(currentCharacter.getAttribute('data-x'));
-        const y = parseInt(currentCharacter.getAttribute('data-y'));
-        checkForTreasure(x, y, currentCharacter.getAttribute('data-character-id'));
+      if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+        // Create and show modal
+        const modal = document.createElement('div');
+        modal.className = 'treasure-found-modal';
+        modal.innerHTML = `
+          <div class="modal-content">
+            <h2>Treasure Found!</h2>
+            <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+          .treasure-found-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+          .treasure-found-modal .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+          }
+        `;
+        document.head.appendChild(style);
       }
     }
   };
@@ -452,7 +523,8 @@
                data-square-id="<%= square.square_id %>"
                data-x="<%= square.x %>"
                data-y="<%= square.y %>"
-               data-state="<%= square.state %>">
+               data-state="<%= square.state %>"
+               data-has-treasure="<%= square.treasure %>">
             <% if square.code.present? %>
               <canvas width="105" height="105"></canvas>
               <script>
@@ -1293,6 +1365,46 @@
             const y = square.getAttribute('data-y');
             ctx.fillText(`(${x}, ${y})`, 35, 55);
           }
+        }
+      }
+      else if (data.type === 'treasure_found') {
+        // Only show modal for players who didn't find the treasure
+        const currentCharacter = document.querySelector('.character[data-is-current-user="true"]');
+        if (currentCharacter && currentCharacter.getAttribute('data-character-id') !== data.finder_id.toString()) {
+          // Create and show modal
+          const modal = document.createElement('div');
+          modal.className = 'treasure-found-modal';
+          modal.innerHTML = `
+            <div class="modal-content">
+              <h2>Treasure Found!</h2>
+              <p>Your friend found the treasure! Wait until they restart the world to play.</p>
+            </div>
+          `;
+          document.body.appendChild(modal);
+          
+          // Add styles
+          const style = document.createElement('style');
+          style.textContent = `
+            .treasure-found-modal {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.5);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 1000;
+            }
+            .treasure-found-modal .modal-content {
+              background-color: white;
+              padding: 20px;
+              border-radius: 5px;
+              text-align: center;
+            }
+          `;
+          document.head.appendChild(style);
         }
       }
     };
