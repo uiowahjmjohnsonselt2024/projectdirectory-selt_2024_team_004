@@ -20,6 +20,12 @@ Feature: Inviting a friend to your world
     And the modal should have an email field
     And the modal should have a "Send Invitation" button
 
+  Scenario: Try to invite a user that does not exist
+    Given I am on the worlds page
+    And I click the invite button for "My World"
+    And I fill in "Enter email to invite" with "fakeEmail@madeup.com"
+    And I click "Send Invitation"
+    Then the modal should remain up
 
 
 

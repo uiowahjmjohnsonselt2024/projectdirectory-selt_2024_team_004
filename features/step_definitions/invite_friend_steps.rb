@@ -26,3 +26,18 @@ Then 'the modal should have a {string} button' do |button_text|
   end
 end
 
+When('I fill in {string} with {string}') do |field, value|
+  fill_in field, with: value
+end
+
+When('I click {string}') do |button_text|
+  click_button button_text
+end
+
+Then("I should see the error message {string} in the invite modal") do |error_message|
+  expect(page).to have_content(error_message)
+end
+
+Then 'the modal should remain up' do
+  expect(page).to have_css('#invite-modal', visible: true)
+end
