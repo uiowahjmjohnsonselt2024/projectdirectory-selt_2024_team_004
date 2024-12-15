@@ -49,9 +49,16 @@ jobs:
         bundle exec rails db:create
         bundle exec rails db:schema:load
 
-    - name: Run tests
+    - name: Run RSpec tests
       env:
         RAILS_ENV: test
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
       run: bundle exec rspec
+
+    - name: Run Cucumber features
+      env:
+        RAILS_ENV: test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+      run: bundle exec cucumber
