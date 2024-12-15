@@ -1,9 +1,59 @@
+<%= javascript_include_tag "https://cdn.jsdelivr.net/npm/@rails/actioncable@7.0.0/app/assets/javascripts/actioncable.js" %>
 <%= javascript_include_tag 'action_cable' %>
 <script>
   // Action Cable setup
   (function() {
     this.App || (this.App = {});
-    App.cable = ActionCable.createConsumer();
+    App.cable = ActionCable.createConsumer('/cable');
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Action Cable subscription
+      App.gameChannel = App.cable.subscriptions.create(
+        { 
+          channel: "GameChannel",
+          world_id: '<%= @world.id %>'
+        },
+        {
+          connected: function() {
+            console.log("Connected to game channel!");
+          },
+          disconnected: function() {
+            console.log("Disconnected from game channel!");
+          },
+          received: function(data) {
+            console.log("Received websocket data:", data);
+            if (data.type === 'character_moved') {
+              const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+              if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
+                console.log("Moving other player:", data);
+                
+                // Update character position immediately
+                const gridContainer = document.querySelector('.grid');
+                const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+                
+                if (gridContainer && targetSquare) {
+                  const gridRect = gridContainer.getBoundingClientRect();
+                  const squareRect = targetSquare.getBoundingClientRect();
+                  const characterWidth = targetCharacter.offsetWidth;
+                  const characterHeight = targetCharacter.offsetHeight;
+                  
+                  targetCharacter.setAttribute('data-x', data.x);
+                  targetCharacter.setAttribute('data-y', data.y);
+                  
+                  const relativeX = squareRect.left - gridRect.left;
+                  const relativeY = squareRect.top - gridRect.top;
+                  
+                  targetCharacter.style.transition = 'all 0.3s ease';
+                  targetCharacter.style.position = 'absolute';
+                  targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                  targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+                }
+              }
+            }
+          }
+        }
+      );
+    });
   }).call(this);
 
   // Rest of your existing JavaScript code
