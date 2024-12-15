@@ -20317,3 +20317,267 @@ Completed 200 OK in 3ms (Views: 1.4ms | ActiveRecord: 0.1ms | Allocations: 1367)
   [1m[36mWorld Load (0.0ms)[0m  [1m[34mSELECT "worlds".* FROM "worlds" WHERE "worlds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
   Rendered worlds/index.html.erb (Duration: 1.6ms | Allocations: 2253)
   [1m[35m (3.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (3.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (7.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 6.5ms | Allocations: 2816)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.4ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 5.4ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.6ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.3ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.7ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.7ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (5.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 4.4ms | Allocations: 2812)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.7ms | Allocations: 1483)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.1ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1455)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (4.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 19.5ms | Allocations: 2811)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 4.0ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.0ms | Allocations: 1483)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.9ms | Allocations: 1482)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 1.3ms | Allocations: 1455)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 13.5ms | Allocations: 2812)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.4ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 4.6ms | Allocations: 2812)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.8ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.7ms | Allocations: 1483)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.6ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  Rendering worlds/new.html.erb
+  Rendered worlds/new.html.erb (Duration: 0.5ms | Allocations: 1482)
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m

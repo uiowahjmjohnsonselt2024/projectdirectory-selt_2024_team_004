@@ -658,40 +658,6 @@
           null
         ]
       },
-      "/mnt/c/Users/SLiMKodaaxxx/RubymineProjects/projectdirectory-selt_2024_team_004/app/models/world.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          1,
-          1,
-          1,
-          1,
-          null,
-          1,
-          null,
-          0,
-          null,
-          null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          null,
-          null,
-          null,
-          1,
-          null,
-          1,
-          18,
-          null,
-          null
-        ]
-      },
       "/mnt/c/Users/SLiMKodaaxxx/RubymineProjects/projectdirectory-selt_2024_team_004/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
@@ -1588,6 +1554,42 @@
         "branches": {
         }
       },
+      "/mnt/c/Users/SLiMKodaaxxx/RubymineProjects/projectdirectory-selt_2024_team_004/app/models/world.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
       "/mnt/c/Users/SLiMKodaaxxx/RubymineProjects/projectdirectory-selt_2024_team_004/app/services/fake_payment_service.rb": {
         "lines": [
           0,
@@ -1808,6 +1810,6 @@
         }
       }
     },
-    "timestamp": 1734220466
+    "timestamp": 1734220786
   }
 }
