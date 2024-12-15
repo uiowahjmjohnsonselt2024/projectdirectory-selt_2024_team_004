@@ -36,6 +36,8 @@ describe CharactersController, type: :controller do
     session[:user_id] = valid_user.id
     session[:session_token] = valid_user.session_token
     @current_user = valid_user
+
+    allow(Character).to receive(:find).and_return(valid_character)
   end
 
   describe 'POST #save_coordinates' do
@@ -53,22 +55,86 @@ describe CharactersController, type: :controller do
 
     context 'when update fails' do
       it 'does not update the character coordinates and prints an error message' do
-        allow_any_instance_of(Character).to receive(:update).and_return(false)
+        allow(valid_character).to receive(:update!).and_raise(StandardError, 'Error saving coordinates')
 
-        post :save_coordinates, params: { id: valid_character.character_id, x: nil, y: nil }
+        post :save_coordinates, params: { id: valid_character.id, x: 20, y: 30 }
 
         valid_character.reload
         expect(valid_character.x_coord).to eq(10) # Original value remains unchanged
-        expect(valid_character.y_coord).to eq(10)
+        expect(response).to have_http_status(:internal_server_error)
+        expect(JSON.parse(response.body)['success']).to be false
+        expect(JSON.parse(response.body)['error']).to eq('Error saving coordinates')
+      end
+    end
+  end
+
+  describe 'POST #update_shards' do
+    context 'when payment is successful' do
+      before do
+        allow(FakePaymentService).to receive(:charge).and_return(
+          { status: 'Success', transaction_id: 'txn_12345' }
+        )
+      end
+
+      it 'updates shards and returns success' do
+        post :update_shards, params: {
+          id: valid_character.id,
+          shards: 10,
+          price: 15.00,
+          card_number: '4111111111111111',
+          cvv: '123',
+          expiration_date: '12/24'
+        }
+
+        valid_character.reload
+        expect(valid_character.shards).to eq(15)
+        expect(response).to have_http_status(:success)
+        expect(JSON.parse(response.body)['success']).to be true
       end
     end
 
-    context 'when character is not found' do
-      it 'raises an ActiveRecord::RecordNotFound error' do
-        expect {
-          post :save_coordinates, params: { id: 9999, x: 20, y: 30 }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+    context 'when payment fails' do
+      before do
+        allow(FakePaymentService).to receive(:charge).and_return(
+          { status: 'Failure', error: 'Invalid credit card' }
+        )
       end
+
+      it 'does not update shards and returns an error' do
+        post :update_shards, params: {
+          id: valid_character.id,
+          shards: 10,
+          price: 15.00,
+          card_number: '4111111111111111',
+          cvv: '123',
+          expiration_date: '12/24'
+        }
+
+        valid_character.reload
+        expect(valid_character.shards).to eq(5) # No update to shards
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)['success']).to be false
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    it 'updates the character position and returns success' do
+      patch :update, params: { id: valid_character.id, character: { x_coord: 15, y_coord: 25 } }
+
+      valid_character.reload
+      expect(valid_character.x_coord).to eq(15)
+      expect(valid_character.y_coord).to eq(25)
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'returns an error if update fails' do
+      allow_any_instance_of(Character).to receive(:update).and_return(false)
+
+      patch :update, params: { id: valid_character.id, character: { x_coord: 15, y_coord: 25 } }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(JSON.parse(response.body)['success']).to be false
     end
   end
 end

@@ -7,6 +7,15 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rspec'
+Capybara.register_driver :selenium do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless') # Optional: Run tests in headless mode
+  options.add_argument('--disable-gpu') # Improves performance in headless mode
+  options.add_argument('--no-sandbox') # Required for CI environments
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+Capybara.javascript_driver = :selenium
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
@@ -20,6 +29,8 @@ SimpleCov.start 'rails' do
   add_group 'Views', 'app/views'
 end
 SimpleCov.minimum_coverage 85
+require 'webmock/rspec'
+WebMock.allow_net_connect!(allow_localhost: true)
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
