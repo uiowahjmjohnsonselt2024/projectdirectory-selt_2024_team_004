@@ -245,27 +245,47 @@ class WorldsController < ApplicationController
     @world = World.find(params[:id])
     
     World.transaction do
-      # Reset all squares to inactive except starting squares
-      @world.squares.each do |square|
-        # Keep starting squares active with basic terrain
-        if (square.x == 0 && square.y == 0) || 
-           (square.x == 0 && square.y == 1) || 
-           (square.x == 1 && square.y == 0)
-          square.update!(
+      # First deactivate all squares
+      @world.squares.update_all(state: 'inactive', terrain: nil, code: nil)
+
+      # Set up initial three active squares with proper terrain generation
+      initial_positions = [[0,0], [1,0], [0,1]]
+      initial_positions.each do |x, y|
+        square = @world.squares.find_by(x: x, y: y)
+        terrain_types = ["forest", "desert", "water", "plains"]
+        terrain = terrain_types.sample
+
+        # Get adjacent terrains for context
+        adjacent_terrains = {
+          north: @world.squares.find_by(x: x, y: y - 1)&.terrain,
+          south: @world.squares.find_by(x: x, y: y + 1)&.terrain,
+          east: @world.squares.find_by(x: x + 1, y: y)&.terrain,
+          west: @world.squares.find_by(x: x - 1, y: y)&.terrain
+        }
+
+        # Generate code using OpenAI
+        generated_code = OpenaiService.generate_terrain_code(terrain, adjacent_terrains)
+
+        square.update!(
+          state: 'active',
+          terrain: terrain,
+          code: generated_code
+        )
+
+        # Broadcast each terrain update
+        ActionCable.server.broadcast(
+          "game_channel_#{@world.id}",
+          {
+            type: 'terrain_updated',
+            square_id: square.square_id,
+            terrain: terrain,
             state: 'active',
-            terrain: ['water', 'desert', 'forest', 'plains'].sample,
-            code: nil # Reset any custom terrain code
-          )
-        else
-          square.update!(
-            state: 'inactive',
-            terrain: nil,
-            code: nil
-          )
-        end
+            code: generated_code
+          }
+        )
       end
 
-      # Randomly place new treasure in valid location
+      # Reset treasure location
       old_treasure = @world.squares.find_by(treasure: true)
       old_treasure.update!(treasure: false) if old_treasure
 
@@ -283,7 +303,7 @@ class WorldsController < ApplicationController
       @world.characters.update_all(x_coord: 0, y_coord: 0)
     end
 
-    # Broadcast the world reset
+    # Broadcast the world reset to trigger character movement and page reload
     ActionCable.server.broadcast(
       "game_channel_#{@world.id}",
       {
