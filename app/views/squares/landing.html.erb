@@ -50,10 +50,13 @@
                 }
               }
             } else if (data.type === 'square_updated') {
-              console.log("Square updated:", data);
+              console.log("Square update received:", data);
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+              
               if (square) {
-                // Update square state
+                console.log("Found square element, updating...");
+                
+                // Update state
                 if (data.state === 'active') {
                   square.classList.remove('inactive');
                   square.classList.add('active');
@@ -66,6 +69,8 @@
                   square.setAttribute('data-terrain', data.terrain);
                   updateSquareAppearance(square, data.terrain);
                 }
+              } else {
+                console.log("Square element not found:", data.square_id);
               }
             }
           }
@@ -172,6 +177,39 @@
     const y = square.getAttribute('data-y');
     ctx.fillText(`(${x}, ${y})`, 35, 55);
   }
+
+  // Add this function to handle square unlocking
+  async function unlockSquare(squareId) {
+    try {
+      console.log('Attempting to unlock square:', squareId);
+      const response = await fetch(`/squares/${squareId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+        },
+        body: JSON.stringify({ unlock: true })
+      });
+
+      const data = await response.json();
+      console.log('Unlock response:', data);
+      
+      if (data.success) {
+        console.log('Square unlocked successfully with terrain:', data.terrain);
+      }
+    } catch (error) {
+      console.error('Error unlocking square:', error);
+    }
+  }
+
+  // Update your pay shards button click handler
+  document.getElementById('pay-shard-button').addEventListener('click', async function() {
+    const squareId = this.getAttribute('data-square-id');
+    if (squareId) {
+      await unlockSquare(squareId);
+    }
+  });
 </script>
 
 <div class="container">

@@ -233,35 +233,47 @@ class SquaresController < ApplicationController
 
   def update
     @square = Square.find(params[:id])
-    
-    # Log the incoming parameters
-    Rails.logger.info "Updating square with params: #{params.inspect}"
-    
-    if @square.update(square_params)
-      # Generate random terrain if square is being activated
-      if params[:state] == 'active' && @square.terrain.blank?
-        @square.terrain = ['water', 'mountain', 'forest', 'empty'].sample
-        @square.save
-      end
+    Rails.logger.info "Starting square update with params: #{params.inspect}"
 
-      # Broadcast the square update with terrain
-      ActionCable.server.broadcast(
-        "game_channel_#{@square.world_id}",
-        {
+    if params[:unlock] == 'true'
+      # Handle unlocking specifically
+      @square.state = 'active'
+      @square.terrain = ['water', 'mountain', 'forest', 'empty'].sample
+      success = @square.save
+      
+      Rails.logger.info "Square unlocked with terrain: #{@square.terrain}"
+
+      if success
+        # Broadcast immediately after successful save
+        broadcast_data = {
           type: 'square_updated',
           square_id: @square.id,
-          state: @square.state,
+          state: 'active',
           terrain: @square.terrain
         }
-      )
-      
-      render json: { 
-        success: true, 
-        terrain: @square.terrain,
-        state: @square.state 
-      }
+        
+        Rails.logger.info "Broadcasting square update: #{broadcast_data}"
+        
+        ActionCable.server.broadcast(
+          "game_channel_#{@square.world_id}",
+          broadcast_data
+        )
+
+        render json: { 
+          success: true, 
+          terrain: @square.terrain,
+          state: 'active'
+        }
+      else
+        render json: { success: false }, status: :unprocessable_entity
+      end
     else
-      render json: { success: false }, status: :unprocessable_entity
+      # Handle other updates
+      if @square.update(square_params)
+        render json: { success: true }
+      else
+        render json: { success: false }, status: :unprocessable_entity
+      end
     end
   end
 
@@ -281,6 +293,6 @@ class SquaresController < ApplicationController
   end
 
   def square_params
-    params.permit(:state, :terrain)
+    params.permit(:state, :terrain, :unlock)
   end
 end
