@@ -794,7 +794,34 @@
       }
     }
 
-    // Set up Action Cable subscription
+    // Function to position a character on the grid
+    function positionCharacter(characterElement) {
+      const x = parseInt(characterElement.getAttribute('data-x'));
+      const y = parseInt(characterElement.getAttribute('data-y'));
+      const gridContainer = document.querySelector('.grid');
+      const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+      
+      if (gridContainer && targetSquare) {
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+        
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+        
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+      }
+    }
+
+    // Position all characters when the page loads
+    document.querySelectorAll('.character').forEach(characterElement => {
+      positionCharacter(characterElement);
+    });
+
+    // Update the received function in Action Cable subscription
     App.gameChannel = App.cable.subscriptions.create(
       { 
         channel: "GameChannel",
@@ -813,40 +840,19 @@
             const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
             if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
               console.log("Updating other player position:", data);
-              const gridContainer = document.querySelector('.grid');
-              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
-              
-              if (gridContainer && targetSquare) {
-                const gridRect = gridContainer.getBoundingClientRect();
-                const squareRect = targetSquare.getBoundingClientRect();
-                const characterWidth = targetCharacter.offsetWidth;
-                const characterHeight = targetCharacter.offsetHeight;
-                
-                const relativeX = squareRect.left - gridRect.left;
-                const relativeY = squareRect.top - gridRect.top;
-                
-                targetCharacter.style.position = 'absolute';
-                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-                targetCharacter.setAttribute('data-x', data.x);
-                targetCharacter.setAttribute('data-y', data.y);
-              }
+              targetCharacter.setAttribute('data-x', data.x);
+              targetCharacter.setAttribute('data-y', data.y);
+              positionCharacter(targetCharacter);
             }
           }
         }
       }
     );
 
-    // Add window resize handler to update all character positions
+    // Add window resize handler
     window.addEventListener('resize', () => {
       document.querySelectorAll('.character').forEach(char => {
-        const x = parseInt(char.getAttribute('data-x'));
-        const y = parseInt(char.getAttribute('data-y'));
-        if (char.getAttribute('data-is-current-user') === 'true') {
-          moveCharacterToTile(x, y);
-        } else {
-          updateCharacterPosition(char.getAttribute('data-character-id'), x, y);
-        }
+        positionCharacter(char);
       });
     });
   });
