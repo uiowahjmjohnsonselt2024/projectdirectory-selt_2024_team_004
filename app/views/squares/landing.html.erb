@@ -18,87 +18,40 @@
             console.log("Connected to game channel!");
           },
           disconnected: function() {
-            console.log("Disconnected from game channel - attempting reconnect...");
-            this.perform('subscribed');
-          },
-          rejected: function() {
-            console.log("Connection rejected - retrying...");
-            setTimeout(() => {
-              App.cable.connection.reconnect();
-            }, 1000);
+            console.log("Disconnected from game channel!");
           },
           received: function(data) {
             console.log("Received websocket data:", data);
+            
             if (data.type === 'character_moved') {
-              const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
-              if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-                console.log("Moving other player:", data);
-                
-                // Update character position immediately
+              const character = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+              if (character) {
                 const gridContainer = document.querySelector('.grid');
+                if (!gridContainer) return;
+
                 const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+                if (!targetSquare) return;
+
+                const gridRect = gridContainer.getBoundingClientRect();
+                const squareRect = targetSquare.getBoundingClientRect();
                 
-                if (gridContainer && targetSquare) {
-                  const gridRect = gridContainer.getBoundingClientRect();
-                  const squareRect = targetSquare.getBoundingClientRect();
-                  const characterWidth = targetCharacter.offsetWidth;
-                  const characterHeight = targetCharacter.offsetHeight;
-                  
-                  targetCharacter.setAttribute('data-x', data.x);
-                  targetCharacter.setAttribute('data-y', data.y);
-                  
-                  const relativeX = squareRect.left - gridRect.left;
-                  const relativeY = squareRect.top - gridRect.top;
-                  
-                  targetCharacter.style.transition = 'all 0.3s ease';
-                  targetCharacter.style.position = 'absolute';
-                  targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-                  targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-                }
+                const characterWidth = character.offsetWidth;
+                const characterHeight = character.offsetHeight;
+                
+                const relativeX = squareRect.left - gridRect.left;
+                const relativeY = squareRect.top - gridRect.top;
+                
+                character.style.position = 'absolute';
+                character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+                
+                character.setAttribute('data-x', data.x);
+                character.setAttribute('data-y', data.y);
               }
-            } else if (data.type === 'terrain_updated') {
+            } 
+            else if (data.type === 'terrain_updated') {
               console.log("Terrain update received:", data);
-              const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
-              
-              if (square) {
-                const canvas = square.querySelector('canvas');
-                if (canvas) {
-                  const ctx = canvas.getContext('2d');
-                  ctx.clearRect(0, 0, canvas.width, canvas.height);
-                  
-                  // Set fill color based on terrain
-                  switch(data.terrain) {
-                    case 'water':
-                      ctx.fillStyle = '#4a90e2';
-                      break;
-                    case 'mountain':
-                      ctx.fillStyle = '#8b4513';
-                      break;
-                    case 'forest':
-                      ctx.fillStyle = '#228b22';
-                      break;
-                    default:
-                      ctx.fillStyle = '#f0f0f0';
-                  }
-                  
-                  // Fill the square
-                  ctx.fillRect(0, 0, canvas.width, canvas.height);
-                  
-                  // Draw coordinates
-                  ctx.fillStyle = '#666';
-                  ctx.font = '12px Arial';
-                  const x = square.getAttribute('data-x');
-                  const y = square.getAttribute('data-y');
-                  ctx.fillText(`(${x}, ${y})`, 35, 55);
-                }
-                
-                // Update square attributes
-                square.setAttribute('data-terrain', data.terrain);
-                if (data.state === 'active') {
-                  square.classList.remove('inactive');
-                  square.classList.add('active');
-                }
-              }
+              updateTerrainDisplay(data);
             }
           }
         }
@@ -205,6 +158,7 @@
   // Add this function to handle square unlocking
   async function unlockSquare(squareId) {
     try {
+      console.log('Attempting to unlock square:', squareId);
       const response = await fetch(`/squares/${squareId}`, {
         method: 'PATCH',
         headers: {
@@ -217,24 +171,6 @@
 
       const data = await response.json();
       console.log('Unlock response:', data);
-      
-      if (data.success) {
-        // Try broadcasting up to 3 times if it fails
-        let attempts = 0;
-        const maxAttempts = 3;
-        
-        const tryBroadcast = () => {
-          if (broadcastTerrainUpdate(data.square_id, data.terrain, data.state)) {
-            return;
-          }
-          attempts++;
-          if (attempts < maxAttempts) {
-            setTimeout(tryBroadcast, 1000);
-          }
-        };
-        
-        tryBroadcast();
-      }
     } catch (error) {
       console.error('Error unlocking square:', error);
     }
@@ -268,6 +204,82 @@
   App.cable.connection.reconnect = function() {
     console.log("Reconnecting to Action Cable...");
   };
+
+  // Add this new function to handle terrain updates
+  function updateTerrainDisplay(data) {
+    const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
+    if (!square) {
+      console.error("Square not found:", data.square_id);
+      return;
+    }
+
+    console.log(`Updating square ${data.square_id} with terrain ${data.terrain}`);
+    
+    const canvas = square.querySelector('canvas');
+    if (!canvas) {
+      console.error("Canvas not found in square");
+      return;
+    }
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Set fill color based on terrain
+    switch(data.terrain) {
+      case 'water':
+        ctx.fillStyle = '#4a90e2';
+        break;
+      case 'mountain':
+        ctx.fillStyle = '#8b4513';
+        break;
+      case 'forest':
+        ctx.fillStyle = '#228b22';
+        break;
+      default:
+        ctx.fillStyle = '#f0f0f0';
+    }
+    
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw coordinates
+    ctx.fillStyle = '#666';
+    ctx.font = '12px Arial';
+    const x = square.getAttribute('data-x');
+    const y = square.getAttribute('data-y');
+    ctx.fillText(`(${x}, ${y})`, 35, 55);
+    
+    // Update square attributes
+    square.setAttribute('data-terrain', data.terrain);
+    if (data.state === 'active') {
+      square.classList.remove('inactive');
+      square.classList.add('active');
+    }
+  }
+
+  // Keep your existing character movement functions
+  function moveCharacter(character, x, y) {
+    const gridContainer = document.querySelector('.grid');
+    if (!gridContainer) return;
+
+    const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+    if (!targetSquare) return;
+
+    const gridRect = gridContainer.getBoundingClientRect();
+    const squareRect = targetSquare.getBoundingClientRect();
+    
+    const characterWidth = character.offsetWidth;
+    const characterHeight = character.offsetHeight;
+    
+    const relativeX = squareRect.left - gridRect.left;
+    const relativeY = squareRect.top - gridRect.top;
+    
+    character.style.position = 'absolute';
+    character.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+    character.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+    
+    character.setAttribute('data-x', x);
+    character.setAttribute('data-y', y);
+  }
 </script>
 
 <div class="container">
