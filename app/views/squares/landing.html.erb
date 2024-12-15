@@ -324,8 +324,13 @@
 
         // Check for treasure after movement
         console.log('Checking for treasure at:', x, y);
-        const treasureX = <%= treasure_square&.x || 'null' %>;
-        const treasureY = <%= treasure_square&.y || 'null' %>;
+        <% if @world && (treasure_square = @world.squares.find_by(treasure: true)) %>
+          const treasureX = <%= treasure_square.x %>;
+          const treasureY = <%= treasure_square.y %>;
+        <% else %>
+          const treasureX = null;
+          const treasureY = null;
+        <% end %>
         console.log('Treasure location:', treasureX, treasureY);
         
         if (x === treasureX && y === treasureY) {

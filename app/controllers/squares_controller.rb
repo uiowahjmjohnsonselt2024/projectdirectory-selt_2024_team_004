@@ -17,6 +17,11 @@ class SquaresController < ApplicationController
       redirect_to worlds_path and return
     end
 
+    if @world
+      @treasure_square = @world.squares.find_by(treasure: true)
+      Rails.logger.info "Treasure square found: #{@treasure_square.inspect}" if @treasure_square
+    end
+
     # Handle minigame victory
     if @game_result == 'true' && @square_id.present?
       Rails.logger.info "=== Starting minigame victory handling ==="
