@@ -66,9 +66,13 @@
       // Update the moveCharacterToTile function to broadcast movement
       async function moveCharacterToTile(x, y) {
         const character = document.querySelector('.character[data-is-current-user="true"]');
-        if (!character) return { success: false };
+        if (!character) {
+          console.error('Current user character not found');
+          return { success: false };
+        }
 
         try {
+          console.log('Attempting to save coordinates:', { x, y });
           const response = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
             method: 'POST',
             headers: {
@@ -79,12 +83,17 @@
             body: JSON.stringify({ x, y })
           });
 
+          const data = await response.json();
+          console.log('Save coordinates response:', data);
+
           if (response.ok) {
-            // Broadcast the movement after successful save
+            console.log('Broadcasting movement after successful save');
             broadcastMovement(x, y, character.getAttribute('data-character-id'));
             return { success: true };
+          } else {
+            console.error('Failed to save coordinates:', data);
+            return { success: false };
           }
-          return { success: false };
         } catch (error) {
           console.error('Error in moveCharacterToTile:', error);
           return { success: false };
@@ -92,6 +101,15 @@
       }
     });
   }).call(this);
+
+  // Add connection status logging
+  App.cable.connection.onopen = function() {
+    console.log('WebSocket connection established');
+  };
+
+  App.cable.connection.onclose = function() {
+    console.log('WebSocket connection closed');
+  };
 </script>
 
 <div class="container">

@@ -1,16 +1,20 @@
 class GameChannel < ApplicationCable::Channel
   def subscribed
-    # Stream from a unique channel for this world
-    stream_from "game_channel_#{params[:world_id]}"
+    channel = "game_channel_#{params[:world_id]}"
+    Rails.logger.info "Subscribing to channel: #{channel}"
+    stream_from channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
+    Rails.logger.info "Unsubscribed from channel"
   end
 
   def broadcast_movement(data)
+    Rails.logger.info "Broadcasting movement: #{data.inspect}"
+    channel = "game_channel_#{params[:world_id]}"
+    
     ActionCable.server.broadcast(
-      "game_channel_#{params[:world_id]}", 
+      channel, 
       {
         type: 'character_moved',
         character_id: data['character_id'],
@@ -18,9 +22,11 @@ class GameChannel < ApplicationCable::Channel
         y: data['y']
       }
     )
+    Rails.logger.info "Movement broadcast completed"
   end
 
   def receive(data)
+    Rails.logger.info "Received data in GameChannel: #{data.inspect}"
     case data['action']
     when 'broadcast_movement'
       broadcast_movement(data)

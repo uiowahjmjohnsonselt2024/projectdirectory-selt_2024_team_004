@@ -3,26 +3,48 @@ class CharactersController < ApplicationController
   before_action :current_user
 
   def save_coordinates
+    Rails.logger.info "Starting save_coordinates with params: #{params.inspect}"
+    
     @character = Character.find(params[:id])
+    Rails.logger.info "Found character: #{@character.inspect}"
 
     if @character.update(x_coord: params[:x], y_coord: params[:y])
+      Rails.logger.info "Successfully updated character position"
+      
       # Broadcast the movement immediately after saving
-      ActionCable.server.broadcast(
-        "game_channel_#{@character.world_id}",
-        {
-          type: 'character_moved',
-          character_id: @character.id,
-          x: @character.x_coord,
-          y: @character.y_coord
-        }
-      )
+      channel = "game_channel_#{@character.world_id}"
+      message = {
+        type: 'character_moved',
+        character_id: @character.id,
+        x: @character.x_coord,
+        y: @character.y_coord
+      }
+      
+      Rails.logger.info "Broadcasting to channel: #{channel} with message: #{message}"
+      
+      ActionCable.server.broadcast(channel, message)
+      Rails.logger.info "Broadcast completed"
 
-      render json: { success: true }
+      render json: { 
+        success: true,
+        message: 'Position updated and broadcast successful',
+        x: @character.x_coord,
+        y: @character.y_coord
+      }
     else
-      render json: { success: false }, status: :unprocessable_entity
+      Rails.logger.error "Failed to update character: #{@character.errors.full_messages}"
+      render json: { 
+        success: false, 
+        errors: @character.errors.full_messages 
+      }, status: :unprocessable_entity
     end
   rescue => e
-    render json: { success: false, error: e.message }, status: :internal_server_error
+    Rails.logger.error "Error in save_coordinates: #{e.class} - #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
+    render json: { 
+      success: false, 
+      error: "#{e.class}: #{e.message}" 
+    }, status: :internal_server_error
   end
 
   def update_shards
