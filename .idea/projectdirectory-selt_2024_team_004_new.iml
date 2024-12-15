@@ -48,6 +48,7 @@
     <orderEntry type="library" scope="PROVIDED" name="database_cleaner (v2.1.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="database_cleaner-active_record (v2.2.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="database_cleaner-core (v2.0.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="date (v3.4.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.5.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="docile (v1.4.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="dotenv (v2.8.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
@@ -65,14 +66,17 @@
     <orderEntry type="library" scope="PROVIDED" name="launchy (v2.5.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="letter_opener (v1.10.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="listen (v3.1.5, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="logger (v1.6.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="loofah (v2.23.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mail (v2.8.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="marcel (v1.0.4, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="matrix (v0.4.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="method_source (v1.1.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v3.6.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="mime-types-data (v3.2024.1105, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_portile2 (v2.8.8, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="minitest (v5.25.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.7.5, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.15.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_test (v1.1.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
@@ -105,11 +109,13 @@
     <orderEntry type="library" scope="PROVIDED" name="rake (v13.2.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-fsevent (v0.11.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.11.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.9.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rexml (v3.3.9, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-core (v3.13.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-expectations (v3.13.3, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-mocks (v3.13.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-rails (v4.0.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rspec-support (v3.13.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop (v1.50.2, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop-ast (v1.30.0, Remote: ruby-2.6.10-p210) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop-rails (v2.19.1, Remote: ruby-2.6.10-p210) [gem]" level="application" />

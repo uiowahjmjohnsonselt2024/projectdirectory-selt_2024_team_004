@@ -780,179 +780,181 @@
         return { success: false };
       }
 
-      try {
-        const gridRect = gridContainer.getBoundingClientRect();
-        const squareRect = targetSquare.getBoundingClientRect();
-        
-        const characterWidth = targetCharacter.offsetWidth;
-        const characterHeight = targetCharacter.offsetHeight;
-        
-        const relativeX = squareRect.left - gridRect.left;
-        const relativeY = squareRect.top - gridRect.top;
-        
-        targetCharacter.style.position = 'absolute';
-        targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-        targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-        
-        // Update the data attributes
-        targetCharacter.setAttribute('data-x', x);
-        targetCharacter.setAttribute('data-y', y);
+        var treasureX;
+        var treasureY;
+        try {
+            const gridRect = gridContainer.getBoundingClientRect();
+            const squareRect = targetSquare.getBoundingClientRect();
 
-        // Check for treasure after movement
-        console.log('Checking for treasure at:', x, y);
-        <% if @world && (treasure_square = @world.squares.find_by(treasure: true)) %>
-          const treasureX = <%= treasure_square.x %>;
-          const treasureY = <%= treasure_square.y %>;
-        <% else %>
-          const treasureX = null;
-          const treasureY = null;
-        <% end %>
-        console.log('Treasure location:', treasureX, treasureY);
-        
-        if (x === treasureX && y === treasureY) {
-          console.log('TREASURE FOUND!');
-          
-          // Award shards to all characters in the world
-          try {
-            const response = await fetch(`/worlds/<%= @world.id %>/award_treasure_shards`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-              }
-            });
-            
-            if (response.ok) {
-              const data = await response.json();
-              console.log('Shards awarded successfully:', data);
-              // Update the shards display for the current user
-              const shardsDisplay = document.querySelector('.shards-count');
-              if (shardsDisplay) {
-                shardsDisplay.textContent = `Shards: ${data.current_user_shards}`;
-              }
-            }
-          } catch (error) {
-            console.error('Error awarding shards:', error);
-          }
+            const characterWidth = targetCharacter.offsetWidth;
+            const characterHeight = targetCharacter.offsetHeight;
 
-          const victoryModal = document.getElementById('victory-modal');
-          if (victoryModal) {
-            console.log('Showing victory modal');
-            victoryModal.style.display = 'flex';
-            
-            // Delete World button handler
-            document.getElementById('delete-world-button').onclick = async () => {
-              console.log('Delete button clicked');
-              const deleteButton = document.getElementById('delete-world-button');
-              deleteButton.disabled = true;  // Prevent double-clicks
-              
-              try {
-                const token = document.querySelector('[name="csrf-token"]').content;
-                const response = await fetch('/world', {  // Changed URL format
-                  method: 'DELETE',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': token,
-                    'Accept': 'application/json'
-                  },
-                  body: JSON.stringify({ id: <%= @world.id %> })  // Send ID in body
-                });
-                
-                if (response.ok) {
-                  console.log('World deleted successfully');
-                  window.location.href = '/worlds';
-                } else {
-                  console.error('Failed to delete world');
-                  deleteButton.disabled = false;
-                  alert('Failed to delete world. Please try again.');
+            const relativeX = squareRect.left - gridRect.left;
+            const relativeY = squareRect.top - gridRect.top;
+
+            targetCharacter.style.position = 'absolute';
+            targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+            targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+
+            // Update the data attributes
+            targetCharacter.setAttribute('data-x', x);
+            targetCharacter.setAttribute('data-y', y);
+
+            // Check for treasure after movement
+            console.log('Checking for treasure at:', x, y);
+            <% if @world && (treasure_square = @world.squares.find_by(treasure: true)) %>
+            treasureX = <%= treasure_square.x %>;
+            treasureY = <%= treasure_square.y %>;
+            <% else %>
+            treasureX = null;
+            treasureY = null;
+            <% end %>
+            console.log('Treasure location:', treasureX, treasureY);
+
+            if (x === treasureX && y === treasureY) {
+                console.log('TREASURE FOUND!');
+
+                // Award shards to all characters in the world
+                try {
+                    const response = await fetch(`/worlds/<%= @world.id %>/award_treasure_shards`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Shards awarded successfully:', data);
+                        // Update the shards display for the current user
+                        const shardsDisplay = document.querySelector('.shards-count');
+                        if (shardsDisplay) {
+                            shardsDisplay.textContent = `Shards: ${data.current_user_shards}`;
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error awarding shards:', error);
                 }
-              } catch (error) {
-                console.error('Error deleting world:', error);
-                deleteButton.disabled = false;
-                alert('Error deleting world. Please try again.');
-              }
-            };
-            
-            // Restart World button handler
-            document.getElementById('restart-world-button').onclick = async () => {
-              console.log('Restart button clicked');
-              const restartButton = document.getElementById('restart-world-button');
-              const deleteButton = document.getElementById('delete-world-button');
-              const modalContent = document.querySelector('#victory-modal .modal-content');
-              
-              // Hide delete button and update modal content
-              deleteButton.style.display = 'none';
-              modalContent.innerHTML = `
+
+                const victoryModal = document.getElementById('victory-modal');
+                if (victoryModal) {
+                    console.log('Showing victory modal');
+                    victoryModal.style.display = 'flex';
+
+                    // Delete World button handler
+                    document.getElementById('delete-world-button').onclick = async () => {
+                        console.log('Delete button clicked');
+                        const deleteButton = document.getElementById('delete-world-button');
+                        deleteButton.disabled = true;  // Prevent double-clicks
+
+                        try {
+                            const token = document.querySelector('[name="csrf-token"]').content;
+                            const response = await fetch('/world', {  // Changed URL format
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': token,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({id: <%= @world.id %>})  // Send ID in body
+                            });
+
+                            if (response.ok) {
+                                console.log('World deleted successfully');
+                                window.location.href = '/worlds';
+                            } else {
+                                console.error('Failed to delete world');
+                                deleteButton.disabled = false;
+                                alert('Failed to delete world. Please try again.');
+                            }
+                        } catch (error) {
+                            console.error('Error deleting world:', error);
+                            deleteButton.disabled = false;
+                            alert('Error deleting world. Please try again.');
+                        }
+                    };
+
+                    // Restart World button handler
+                    document.getElementById('restart-world-button').onclick = async () => {
+                        console.log('Restart button clicked');
+                        const restartButton = document.getElementById('restart-world-button');
+                        const deleteButton = document.getElementById('delete-world-button');
+                        const modalContent = document.querySelector('#victory-modal .modal-content');
+
+                        // Hide delete button and update modal content
+                        deleteButton.style.display = 'none';
+                        modalContent.innerHTML = `
                 <div class="victory-banner">
                   <h2 class="victory-title">Restarting world...</h2>
                 </div>
                 <div class="loading-spinner"></div>
               `;
-              
-              try {
-                const response = await fetch(`/worlds/<%= @world.id %>/restart`, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
-                  }
-                });
-                
-                if (response.ok) {
-                  console.log('World restarted successfully');
-                  
-                  // Broadcast world restart to all players
-                  App.gameChannel.perform('broadcast_world_restart', {
-                    world_id: '<%= @world.id %>'
-                  });
-                  
-                  // Move current player back to (0,0)
-                  await moveCharacterToTile(0, 0);
-                  
-                  // Add a small delay before reload
-                  setTimeout(() => {
-                    location.reload();
-                  }, 500);
+
+                        try {
+                            const response = await fetch(`/worlds/<%= @world.id %>/restart`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                                }
+                            });
+
+                            if (response.ok) {
+                                console.log('World restarted successfully');
+
+                                // Broadcast world restart to all players
+                                App.gameChannel.perform('broadcast_world_restart', {
+                                    world_id: '<%= @world.id %>'
+                                });
+
+                                // Move current player back to (0,0)
+                                await moveCharacterToTile(0, 0);
+
+                                // Add a small delay before reload
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 500);
+                            }
+                        } catch (error) {
+                            console.error('Error restarting world:', error);
+                        }
+                    };
+                } else {
+                    console.error('Victory modal not found in DOM');
                 }
-              } catch (error) {
-                console.error('Error restarting world:', error);
-              }
-            };
-          } else {
-            console.error('Victory modal not found in DOM');
-          }
-        }
+            }
 
-        // If this is the current user's movement, save to server
-        if (targetCharacter === character) {
-          const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
-            },
-            body: JSON.stringify({
-              x: x,
-              y: y
-            })
-          });
+            // If this is the current user's movement, save to server
+            if (targetCharacter === character) {
+                const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify({
+                        x: x,
+                        y: y
+                    })
+                });
 
-          const data = await response.json();
-          
-          if (!response.ok) {
-            console.error('Failed to save coordinates:', data.error);
-            return { success: false, error: data.error };
-          }
-          
-          return { success: true, data };
+                const data = await response.json();
+
+                if (!response.ok) {
+                    console.error('Failed to save coordinates:', data.error);
+                    return {success: false, error: data.error};
+                }
+
+                return {success: true, data};
+            }
+
+            return {success: true};
+        } catch (error) {
+            console.error('Error in moveCharacterToTile:', error);
+            return {success: false, error: error.message};
         }
-        
-        return { success: true };
-      } catch (error) {
-        console.error('Error in moveCharacterToTile:', error);
-        return { success: false, error: error.message };
-      }
     }
 
     // Center the character initially

@@ -401,6 +401,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   cucumber-rails (~> 1.8.0)
   database_cleaner
+  database_cleaner-active_record
   dotenv-rails
   ffi (= 1.16.3)
   httparty
