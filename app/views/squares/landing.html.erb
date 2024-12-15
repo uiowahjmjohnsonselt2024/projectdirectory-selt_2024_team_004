@@ -21,56 +21,51 @@
             console.log("Disconnected from game channel!");
           },
           received: function(data) {
-            console.log("Received websocket data:", data);
-            if (data.type === 'character_moved') {
-              const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
-              if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-                console.log("Moving other player:", data);
-                
-                // Update character position immediately
-                const gridContainer = document.querySelector('.grid');
-                const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
-                
-                if (gridContainer && targetSquare) {
-                  const gridRect = gridContainer.getBoundingClientRect();
-                  const squareRect = targetSquare.getBoundingClientRect();
-                  const characterWidth = targetCharacter.offsetWidth;
-                  const characterHeight = targetCharacter.offsetHeight;
-                  
-                  targetCharacter.setAttribute('data-x', data.x);
-                  targetCharacter.setAttribute('data-y', data.y);
-                  
-                  const relativeX = squareRect.left - gridRect.left;
-                  const relativeY = squareRect.top - gridRect.top;
-                  
-                  targetCharacter.style.transition = 'all 0.3s ease';
-                  targetCharacter.style.position = 'absolute';
-                  targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-                  targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-                }
-              }
-            } else if (data.type === 'square_updated') {
-              console.log("Square update received:", data);
+            console.log("Received data:", data);
+            
+            if (data.type === 'square_updated') {
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
               
               if (square) {
-                console.log("Found square element, updating...");
+                console.log("Updating square:", data.square_id, "with terrain:", data.terrain);
                 
-                // Update state
+                const canvas = square.querySelector('canvas');
+                if (canvas) {
+                  const ctx = canvas.getContext('2d');
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Set fill color based on terrain
+                  switch(data.terrain) {
+                    case 'water':
+                      ctx.fillStyle = '#4a90e2';
+                      break;
+                    case 'mountain':
+                      ctx.fillStyle = '#8b4513';
+                      break;
+                    case 'forest':
+                      ctx.fillStyle = '#228b22';
+                      break;
+                    default:
+                      ctx.fillStyle = '#f0f0f0';
+                  }
+                  
+                  // Fill the square
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Draw coordinates
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  const x = square.getAttribute('data-x');
+                  const y = square.getAttribute('data-y');
+                  ctx.fillText(`(${x}, ${y})`, 35, 55);
+                }
+                
+                // Update square attributes
+                square.setAttribute('data-terrain', data.terrain);
                 if (data.state === 'active') {
                   square.classList.remove('inactive');
                   square.classList.add('active');
-                  square.setAttribute('data-state', 'active');
                 }
-                
-                // Update terrain
-                if (data.terrain) {
-                  console.log(`Updating terrain for square ${data.square_id} to ${data.terrain}`);
-                  square.setAttribute('data-terrain', data.terrain);
-                  updateSquareAppearance(square, data.terrain);
-                }
-              } else {
-                console.log("Square element not found:", data.square_id);
               }
             }
           }
@@ -178,7 +173,6 @@
   // Add this function to handle square unlocking
   async function unlockSquare(squareId) {
     try {
-      console.log('Attempting to unlock square:', squareId);
       const response = await fetch(`/squares/${squareId}`, {
         method: 'PATCH',
         headers: {
@@ -191,15 +185,6 @@
 
       const data = await response.json();
       console.log('Unlock response:', data);
-      
-      if (data.success) {
-        console.log('Square unlocked successfully with terrain:', data.terrain);
-        // Update the square immediately for the current user
-        const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
-        if (square) {
-          updateSquareAppearance(square, data.terrain);
-        }
-      }
     } catch (error) {
       console.error('Error unlocking square:', error);
     }

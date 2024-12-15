@@ -233,45 +233,29 @@ class SquaresController < ApplicationController
 
   def update
     @square = Square.find(params[:id])
-    Rails.logger.info "Starting square update with params: #{params.inspect}"
 
     if params[:unlock] == 'true'
-      # Handle unlocking specifically
       @square.state = 'active'
-      @square.terrain = ['water', 'mountain', 'forest', 'empty'].sample
-      success = @square.save
+      @square.terrain = ['water', 'mountain', 'forest'].sample
       
-      Rails.logger.info "Square unlocked with terrain: #{@square.terrain}"
+      if @square.save
+        # Direct broadcast
+        ActionCable.server.broadcast(
+          "game_channel_#{@square.world_id}",
+          {
+            type: 'square_updated',
+            square_id: @square.id,
+            terrain: @square.terrain,
+            state: 'active'
+          }
+        )
 
-      if success
-        # Broadcast immediately after successful save
-        broadcast_data = {
-          type: 'square_updated',
+        render json: {
+          success: true,
           square_id: @square.id,
-          state: 'active',
-          terrain: @square.terrain
-        }
-        
-        Rails.logger.info "Broadcasting square update: #{broadcast_data}"
-        channel = "game_channel_#{@square.world_id}"
-        Rails.logger.info "Broadcasting to channel: #{channel}"
-        
-        ActionCable.server.broadcast(channel, broadcast_data)
-
-        render json: { 
-          success: true, 
           terrain: @square.terrain,
-          state: 'active',
-          square_id: @square.id
+          state: 'active'
         }
-      else
-        Rails.logger.error "Failed to save square: #{@square.errors.full_messages}"
-        render json: { success: false }, status: :unprocessable_entity
-      end
-    else
-      # Handle other updates
-      if @square.update(square_params)
-        render json: { success: true }
       else
         render json: { success: false }, status: :unprocessable_entity
       end

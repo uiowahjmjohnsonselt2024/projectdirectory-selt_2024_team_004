@@ -25,8 +25,8 @@ class GameChannel < ApplicationCable::Channel
       {
         type: 'square_updated',
         square_id: data['square_id'],
-        state: data['state'],
-        terrain: data['terrain']
+        terrain: data['terrain'],
+        state: data['state']
       }
     )
   end
