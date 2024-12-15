@@ -5,35 +5,23 @@ class CharactersController < ApplicationController
   def save_coordinates
     @character = Character.find(params[:id])
 
-    if @character.user_id == current_user.id
-      if @character.update!(x_coord: params[:x], y_coord: params[:y])
-        # Broadcast the movement to all players in the world
-        ActionCable.server.broadcast(
-          "game_channel_#{@character.world_id}",
-          {
-            type: 'character_moved',
-            character_id: @character.id,
-            x: @character.x_coord,
-            y: @character.y_coord
-          }
-        )
-
-        render json: {
-          success: true,
-          message: 'Coordinates saved successfully.',
+    if @character.update(x_coord: params[:x], y_coord: params[:y])
+      # Broadcast immediately after successful update
+      ActionCable.server.broadcast(
+        "game_channel_#{@character.world_id}",
+        {
+          type: 'character_moved',
+          character_id: @character.id,
           x: @character.x_coord,
           y: @character.y_coord
         }
-      else
-        render json: { success: false, errors: @character.errors.full_messages },
-               status: :unprocessable_entity
-      end
+      )
+
+      render json: { success: true }
     else
-      render json: { success: false, error: 'Unauthorized' },
-             status: :unauthorized
+      render json: { success: false }, status: :unprocessable_entity
     end
   rescue => e
-    Rails.logger.error("Error saving coordinates: #{e.message}")
     render json: { success: false, error: e.message }, status: :internal_server_error
   end
 

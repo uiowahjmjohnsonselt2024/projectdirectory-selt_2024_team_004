@@ -1,4 +1,66 @@
+<script>
+  // Action Cable setup
+  //= require action_cable
+  //= require_self
+  //= require_tree ./channels
 
+  (function() {
+    this.App || (this.App = {});
+    App.cable = ActionCable.createConsumer();
+  }).call(this);
+
+  // Rest of your existing JavaScript code
+  document.addEventListener('DOMContentLoaded', function() {
+    // Your existing DOMContentLoaded code...
+    
+    // Action Cable subscription
+    App.gameChannel = App.cable.subscriptions.create(
+      { 
+        channel: "GameChannel",
+        world_id: '<%= @world.id %>'
+      },
+      {
+        connected: function() {
+          console.log("Connected to game channel!");
+        },
+        disconnected: function() {
+          console.log("Disconnected from game channel!");
+        },
+        received: function(data) {
+          console.log("Received websocket data:", data);
+          if (data.type === 'character_moved') {
+            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
+              console.log("Moving other player:", data);
+              
+              // Update character position immediately
+              const gridContainer = document.querySelector('.grid');
+              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
+              
+              if (gridContainer && targetSquare) {
+                const gridRect = gridContainer.getBoundingClientRect();
+                const squareRect = targetSquare.getBoundingClientRect();
+                const characterWidth = targetCharacter.offsetWidth;
+                const characterHeight = targetCharacter.offsetHeight;
+                
+                targetCharacter.setAttribute('data-x', data.x);
+                targetCharacter.setAttribute('data-y', data.y);
+                
+                const relativeX = squareRect.left - gridRect.left;
+                const relativeY = squareRect.top - gridRect.top;
+                
+                targetCharacter.style.transition = 'all 0.3s ease';
+                targetCharacter.style.position = 'absolute';
+                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+              }
+            }
+          }
+        }
+      }
+    );
+  });
+</script>
 
 <div class="container">
   <meta charset="utf-8">
@@ -820,51 +882,6 @@
     document.querySelectorAll('.character').forEach(characterElement => {
       positionCharacter(characterElement);
     });
-
-    // Update the Action Cable subscription
-    App.gameChannel = App.cable.subscriptions.create(
-      { 
-        channel: "GameChannel",
-        world_id: '<%= @world.id %>'
-      },
-      {
-        connected: function() {
-          console.log("Connected to game channel!");
-        },
-        disconnected: function() {
-          console.log("Disconnected from game channel!");
-        },
-        received: function(data) {
-          console.log("Received websocket data:", data);
-          if (data.type === 'character_moved') {
-            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
-            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-              console.log("Moving other player:", data);
-              targetCharacter.setAttribute('data-x', data.x);
-              targetCharacter.setAttribute('data-y', data.y);
-              
-              // Use the existing positionCharacter function to update position
-              const gridContainer = document.querySelector('.grid');
-              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
-              
-              if (gridContainer && targetSquare) {
-                const gridRect = gridContainer.getBoundingClientRect();
-                const squareRect = targetSquare.getBoundingClientRect();
-                const characterWidth = targetCharacter.offsetWidth;
-                const characterHeight = targetCharacter.offsetHeight;
-                
-                const relativeX = squareRect.left - gridRect.left;
-                const relativeY = squareRect.top - gridRect.top;
-                
-                targetCharacter.style.position = 'absolute';
-                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-              }
-            }
-          }
-        }
-      }
-    );
 
     // Add window resize handler
     window.addEventListener('resize', () => {
