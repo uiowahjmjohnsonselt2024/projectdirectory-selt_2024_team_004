@@ -53,16 +53,47 @@
               console.log("Terrain update received:", data);
               const square = document.querySelector(`.grid-item[data-square-id="${data.square_id}"]`);
               if (square) {
-                // Update square appearance
-                updateSquareAppearance(square, data.terrain);
-                
-                // Update square state
+                // Update square state and appearance
                 square.setAttribute('data-state', data.state);
-                square.setAttribute('data-terrain', data.terrain);
-                
-                if (data.state === 'active') {
-                  square.classList.remove('inactive');
-                  square.classList.add('active');
+                square.classList.remove('inactive');
+                square.classList.add('active');
+
+                // Update the canvas with new terrain
+                const canvas = square.querySelector('canvas');
+                if (canvas) {
+                  const ctx = canvas.getContext('2d');
+                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  
+                  // Execute the new terrain code
+                  if (data.code) {
+                    eval(data.code);
+                  } else {
+                    // Fallback terrain coloring
+                    switch(data.terrain) {
+                      case 'water':
+                        ctx.fillStyle = '#4a90e2';
+                        break;
+                      case 'desert':
+                        ctx.fillStyle = '#ffd700';
+                        break;
+                      case 'forest':
+                        ctx.fillStyle = '#228b22';
+                        break;
+                      case 'plains':
+                        ctx.fillStyle = '#90ee90';
+                        break;
+                      default:
+                        ctx.fillStyle = '#f0f0f0';
+                    }
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                  }
+                  
+                  // Draw coordinates
+                  ctx.fillStyle = '#666';
+                  ctx.font = '12px Arial';
+                  const x = square.getAttribute('data-x');
+                  const y = square.getAttribute('data-y');
+                  ctx.fillText(`(${x}, ${y})`, 35, 55);
                 }
               }
             }

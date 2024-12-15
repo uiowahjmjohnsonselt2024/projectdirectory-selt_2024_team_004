@@ -138,6 +138,18 @@ class SquaresController < ApplicationController
           code: generated_code
         )
 
+        # Broadcast terrain update to all clients
+        ActionCable.server.broadcast(
+          "game_channel_#{@square.world_id}",
+          {
+            type: 'terrain_updated',
+            square_id: @square.square_id,
+            terrain: terrain,
+            state: 'active',
+            code: generated_code
+          }
+        )
+
         render json: {
           success: true,
           new_shards: @character.shards,
