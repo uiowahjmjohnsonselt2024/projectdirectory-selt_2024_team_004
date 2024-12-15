@@ -14,6 +14,6 @@ Feature: Moving amongst squares on the landing page
     And I have visited the Landing for "My World" page
     Then I should see "Pretty Pirates"
 
-  Scenario: Clicking on an unlocked square
+  Scenario: Clicking on locked square
     When I click on a square with coordinates 3, 3
     Then I should see my character at coordinates 0, 0
