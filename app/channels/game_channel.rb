@@ -8,24 +8,11 @@ class GameChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def broadcast_square_unlock(data)
-    ActionCable.server.broadcast(
-      "game_channel_#{params[:world_id]}", 
-      {
-        type: 'square_unlocked',
-        square_id: data['square_id'],
-        square_code: data['square_code']
-      }
-    )
-  end
-
   def receive(data)
     # Handle any incoming data from the client
     case data['action']
     when 'move'
       broadcast_movement(data)
-    when 'unlock_square'
-      broadcast_square_unlock(data)
     end
   end
 
