@@ -1,28 +1,45 @@
 class StoreService
+  PRICES = {
+    sea_shard_1: 0.75,
+    pile_of_shards_10: 7.50,
+    hat_of_shards_50: 30.00,
+    chest_of_shards_100: 50.00
+  }
+
   def self.fetch_prices(currency)
-    exchange_rates = fetch_exchange_rates
+    puts "\n=== Starting Price Conversion ==="
+    puts "Original USD prices: #{PRICES}"
+    puts "Target currency: #{currency}"
+    
+    return PRICES if currency.nil? || currency == 'USD'
 
-    # Base USD prices
-    usd_prices = {
-      sea_shard_1: 0.75,
-      pile_of_shards_10: 7.50,
-      hat_of_shards_50: 30.00,
-      chest_of_shards_100: 50.00
-    }
-    puts "FETCH_PRICES DATA: #{exchange_rates}, #{usd_prices}, #{currency}"
-
-    # Convert prices to the user's selected currency
-    new_prices = usd_prices.transform_values { |usd_price| (usd_price * exchange_rates[currency]).round(2).to_s }
-    new_prices.transform_values! { |value| '%.2f' % value.to_f }
-  end
-
-  def self.fetch_exchange_rates
-    cached_rates = Rails.cache.fetch('exchange_rates', expires_in: 12.hours) do
-      OpenExchangeService.fetch_exchange_rates
+    begin
+      rates_data = OpenExchangeService.fetch_exchange_rates
+      puts "Received exchange rates data: #{rates_data.inspect}"
+      
+      if rates_data && rates_data['rates'] && rates_data['rates'][currency]
+        rate = rates_data['rates'][currency].to_f
+        puts "\nExchange rate found: 1 USD = #{rate} #{currency}"
+        
+        converted_prices = {}
+        PRICES.each do |key, usd_price|
+          converted_price = (usd_price * rate).round(2)
+          puts "Converting #{key}: #{usd_price} USD -> #{converted_price} #{currency}"
+          converted_prices[key] = converted_price
+        end
+        
+        puts "\nFinal converted prices: #{converted_prices}"
+        puts "=== Conversion Complete ===\n"
+        converted_prices
+      else
+        Rails.logger.error "Failed to get exchange rate for #{currency}"
+        puts "Failed to get rate - returning USD prices"
+        PRICES
+      end
+    rescue => e
+      Rails.logger.error "Currency conversion error: #{e.message}"
+      puts "Error during conversion: #{e.message}"
+      PRICES
     end
-    cached_rates['rates']
-  rescue StandardError => e
-    Rails.logger.error "Exception fetching exchange rates: #{e.message}"
-    { 'USD' => 1.0 }
   end
 end

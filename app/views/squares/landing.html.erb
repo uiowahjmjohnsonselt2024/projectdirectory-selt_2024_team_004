@@ -1,3 +1,5 @@
+
+
 <div class="container">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -23,8 +25,22 @@
   <% if @squares.present? %>
   <% end %>
 
+  <% if Rails.env.development? %>
+  <div style="background: #f0f0f0; padding: 10px; margin: 10px; border-radius: 5px;">
+    <h4>Debug Info:</h4>
+    <% treasure_square = @world.squares.find_by(treasure: true) %>
+    <% if treasure_square %>
+      <p>Treasure Location: (<%= treasure_square.x %>, <%= treasure_square.y %>)</p>
+    <% else %>
+      <p>No treasure found in this world</p>
+    <% end %>
+  </div>
+<% end %>
+
   <div class="grid-teleport-container">
     <div class="grid">
+      <!-- Debug info - add this near the top of your grid section -->
+     
       <% if @squares.present? %>
         <% @squares.each do |square| %>
           <div class="grid-item"
@@ -87,13 +103,7 @@
     </div>
 
     <div class="teleport-container" data-character-id="<%= @character.id %>">
-      <%= form_with url: coordinates_path, method: :post, local: true do |form| %>
-        <%= form.hidden_field :id, value: @character&.id %>
-        <%= form.hidden_field :x, value: '', id: 'x-coord' %>
-        <%= form.hidden_field :y, value: '', id: 'y-coord' %>
-        <%= form.submit 'Save World', class: 'btn btn-primary', id:"teleport-button" %>
-      <% end %>
-      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count.y" %></p>
+      <p class="shards-count">Shards: <%= @character.shards || "Can't find shard count." %></p>
     </div>
   </div>
 
@@ -162,12 +172,32 @@
       </div>
     </div>
   </div>
+
+  <!-- Add this near the top of your view -->
+  <div id="flash-message-container" class="flash-message" style="display: none;">
+  </div>
+
+  <!-- Add this near your other modals in the HTML section -->
+  <div id="victory-modal" class="modal">
+    <div class="modal-content">
+      <div class="victory-banner">
+        <h2 class="victory-title">Congratulations!</h2>
+      </div>
+      <p>You have found the treasure and completed this world!</p>
+      <div class="button-container">
+        <button id="delete-world-button" class="button">Delete World</button>
+        <button id="restart-world-button" class="button">Restart World</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Get all the necessary elements and data
-    const character = document.querySelector(`.character[data-character-id="${<%= @character.id %>}"]`);
+    const character = document.querySelector(`.character[data-is-current-user="true"]`);
     const xCoordField = document.getElementById('x-coord');
     const yCoordField = document.getElementById('y-coord');
     const modal = document.getElementById('popup-modal');
@@ -193,11 +223,44 @@
         // Get current character position
         const currentX = parseInt(character.getAttribute('data-x'));
         const currentY = parseInt(character.getAttribute('data-y'));
-        const rowDifference = Math.abs(y - currentY);
-        const columnDifference = Math.abs(x - currentX);
-        const shardCost = rowDifference + columnDifference;
+        
+        if (state === 'active') {
+          // Check if the clicked tile is adjacent
+          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
 
-        if (state === 'inactive') {
+          if (isAdjacent) {
+            moveCharacterToTile(x, y);
+          } else {
+            // Calculate shard cost for non-adjacent movement
+            const calculatedShardCost = Math.abs(x - currentX) + Math.abs(y - currentY);
+            const currentShards = parseInt(document.querySelector('.shards-count').textContent.match(/\d+/)[0]);
+            
+            if (currentShards >= calculatedShardCost) {
+              const confirmMove = confirm(
+                `This move will cost ${calculatedShardCost} shards. Do you want to proceed?`
+              );
+
+              if (confirmMove) {
+                try {
+                  const moveResult = await moveCharacterToTile(x, y);
+                  
+                  if (moveResult && moveResult.success) {
+                    // Update shards display
+                    const shardsDisplay = document.querySelector('.shards-count');
+                    if (shardsDisplay) {
+                      shardsDisplay.textContent = `Shards: ${currentShards - calculatedShardCost}`;
+                    }
+                  }
+                } catch (error) {
+                  console.error('Movement failed:', error);
+                  alert('Unable to complete movement. Please try again.');
+                }
+              }
+            } else {
+              alert(`Not enough shards! You need ${calculatedShardCost} shards for this move, but you only have ${currentShards}.`);
+            }
+          }
+        } else if (state === 'inactive') {
           // Reset the button container to its original state
           const buttonContainer = document.querySelector('.button-container');
           const minigameUrl = `/matching_game?world_id=${worldId}&user_id=${userId}&square_id=${squareId}`;
@@ -221,89 +284,208 @@
           // Show popup for inactive tiles
           document.getElementById('square-coordinates').textContent = `Coordinates: (${x}, ${y})`;
           modal.style.display = 'flex';
-        } else if (state === 'active') {
-          // Check if the clicked tile is adjacent
-          const isAdjacent = (Math.abs(x - currentX) <= 1 && Math.abs(y - currentY) <= 1) && !(x === currentX && y === currentY);
-
-          if (isAdjacent) {
-            moveCharacterToTile(x, y);
-          } else {
-            const confirmMove = confirm(
-                `This move will cost ${shardCost} shards. Do you want to proceed?`
-            );
-
-            if (confirmMove) {
-              try {
-                const response = await fetch('/pay_shards', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-Token': csrfToken,
-                  },
-                  body: JSON.stringify({
-                    character_id: character.getAttribute('data-character-id'),
-                    square_id: squareId
-                  })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                  // Update shard count
-                  document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-                  moveCharacterToTile(x, y);
-                } else {
-                  alert(data.message || 'Failed to teleport.');
-                }
-              } catch (error) {
-                console.error('Error teleporting:', error);
-                alert('An error occurred while teleporting. Please try again.');
-              }
-            }
-          }
         }
       });
     });
 
     // Function to move character to the correct tile and save coordinates
-    async function moveCharacterToTile(x, y) {
-      const gridOffsets = calculateGridOffsets();
-
-      // Adjust the position to account for the misalignment
-      const characterX = gridOffsets.x_char + (x - 1) * tileSize + tileSize / 2 - 50; // Fix off-by-one issue
-      const characterY = gridOffsets.y_char + y * tileSize + tileSize / 2 - 50;
-
-      character.style.left = `${characterX}px`;
-      character.style.top = `${characterY}px`;
-
-      // Update hidden fields for form submission
-      xCoordField.value = x;
-      yCoordField.value = y;
-
-      // Save coordinates to the server
-      try {
-        const response = await fetch('/coordinates', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-          },
-          body: JSON.stringify({
-            id: <%= @character.id %>,
-            x: x,
-            y: y
-          })
-        });
-
-        if (!response.ok) {
-          console.error('Failed to save coordinates:', response.statusText);
-        }
-        else {
-          console.log('Coordinates saved successfully.');
-        }
+    async function moveCharacterToTile(x, y, specificCharacter = null) {
+      const targetCharacter = specificCharacter || character;
+      if (!targetCharacter) {
+        console.error('No character found');
+        return { success: false };
       }
-      catch (error) {
-        console.error('Error saving coordinates:', error);
+
+      const gridContainer = document.querySelector('.grid');
+      const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+      
+      if (!gridContainer || !targetSquare) {
+        console.error('Grid container or target square not found');
+        return { success: false };
+      }
+
+      try {
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        
+        const characterWidth = targetCharacter.offsetWidth;
+        const characterHeight = targetCharacter.offsetHeight;
+        
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+        
+        targetCharacter.style.position = 'absolute';
+        targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+        
+        // Update the data attributes
+        targetCharacter.setAttribute('data-x', x);
+        targetCharacter.setAttribute('data-y', y);
+
+        // Check for treasure after movement
+        console.log('Checking for treasure at:', x, y);
+        const treasureX = <%= treasure_square&.x || 'null' %>;
+        const treasureY = <%= treasure_square&.y || 'null' %>;
+        console.log('Treasure location:', treasureX, treasureY);
+        
+        if (x === treasureX && y === treasureY) {
+          console.log('TREASURE FOUND!');
+          
+          // Award shards to all characters in the world
+          try {
+            const response = await fetch(`/worlds/<%= @world.id %>/award_treasure_shards`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+              }
+            });
+            
+            if (response.ok) {
+              const data = await response.json();
+              console.log('Shards awarded successfully:', data);
+              // Update the shards display for the current user
+              const shardsDisplay = document.querySelector('.shards-count');
+              if (shardsDisplay) {
+                shardsDisplay.textContent = `Shards: ${data.current_user_shards}`;
+              }
+            }
+          } catch (error) {
+            console.error('Error awarding shards:', error);
+          }
+
+          const victoryModal = document.getElementById('victory-modal');
+          if (victoryModal) {
+            console.log('Showing victory modal');
+            victoryModal.style.display = 'flex';
+            
+            // Delete World button handler
+            document.getElementById('delete-world-button').onclick = async () => {
+              console.log('Delete button clicked');
+              const deleteButton = document.getElementById('delete-world-button');
+              deleteButton.disabled = true;  // Prevent double-clicks
+              
+              try {
+                const token = document.querySelector('[name="csrf-token"]').content;
+                const response = await fetch('/world', {  // Changed URL format
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token,
+                    'Accept': 'application/json'
+                  },
+                  body: JSON.stringify({ id: <%= @world.id %> })  // Send ID in body
+                });
+                
+                if (response.ok) {
+                  console.log('World deleted successfully');
+                  window.location.href = '/worlds';
+                } else {
+                  console.error('Failed to delete world');
+                  deleteButton.disabled = false;
+                  alert('Failed to delete world. Please try again.');
+                }
+              } catch (error) {
+                console.error('Error deleting world:', error);
+                deleteButton.disabled = false;
+                alert('Error deleting world. Please try again.');
+              }
+            };
+            
+            // Restart World button handler
+            document.getElementById('restart-world-button').onclick = async () => {
+              console.log('Restart button clicked');
+              const restartButton = document.getElementById('restart-world-button');
+              const deleteButton = document.getElementById('delete-world-button');
+              const modalContent = document.querySelector('#victory-modal .modal-content');
+              
+              // Hide delete button and update modal content
+              deleteButton.style.display = 'none';
+              modalContent.innerHTML = `
+                <div class="victory-banner">
+                  <h2 class="victory-title">Restarting world...</h2>
+                </div>
+                <div class="loading-spinner"></div>
+              `;
+              
+              try {
+                const response = await fetch(`/worlds/<%= @world.id %>/restart`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+                  }
+                });
+                
+                if (response.ok) {
+                  console.log('World restarted successfully');
+                  
+                  // First move character back to (0,0)
+                  const moveResponse = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                      'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                    },
+                    body: JSON.stringify({
+                      x: 0,
+                      y: 0
+                    })
+                  });
+
+                  if (moveResponse.ok) {
+                    console.log('Character position reset to (0,0)');
+                    await moveCharacterToTile(0, 0);
+                    // Add a small delay to see the character move
+                    setTimeout(() => {
+                      location.reload();
+                    }, 500);
+                  } else {
+                    console.error('Failed to reset character position');
+                    location.reload();
+                  }
+                } else {
+                  console.error('Failed to restart world');
+                }
+              } catch (error) {
+                console.error('Error restarting world:', error);
+              }
+            };
+          } else {
+            console.error('Victory modal not found in DOM');
+          }
+        }
+
+        // If this is the current user's movement, save to server
+        if (targetCharacter === character) {
+          const response = await fetch(`/characters/${targetCharacter.getAttribute('data-character-id')}/save_coordinates`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+            },
+            body: JSON.stringify({
+              x: x,
+              y: y
+            })
+          });
+
+          const data = await response.json();
+          
+          if (!response.ok) {
+            console.error('Failed to save coordinates:', data.error);
+            return { success: false, error: data.error };
+          }
+          
+          return { success: true, data };
+        }
+        
+        return { success: true };
+      } catch (error) {
+        console.error('Error in moveCharacterToTile:', error);
+        return { success: false, error: error.message };
       }
     }
 
@@ -327,91 +509,226 @@
 
     // Add this function at the top level of your JavaScript
     function animateDots() {
-        const dots = document.querySelector('.dots');
-        if (dots) {
-            let count = 0;
-            const interval = setInterval(() => {
-                count = (count + 1) % 4;
-                dots.textContent = '.'.repeat(count);
-            }, 500);
-            return interval;
-        }
-        return null;
+      const dots = document.querySelector('.dots');
+      if (dots) {
+        let count = 0;
+        const interval = setInterval(() => {
+          count = (count + 1) % 4;
+          dots.textContent = '.'.repeat(count);
+        }, 500);
+        return interval;
+      }
+      return null;
     }
 
     // Update the setupPayShardButton function
     function setupPayShardButton(button) {
-        button.addEventListener('click', async function() {
-            const squareId = this.getAttribute('data-square-id');
-            const square = document.querySelector(`[data-square-id="${squareId}"]`);
-            const buttonContainer = document.querySelector('.button-container');
-            
-            try {
-                const response = await fetch(`/pay_shards`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-Token': csrfToken,
-                    },
-                    body: JSON.stringify({
-                        square_id: squareId,
-                        character_id: '<%= @character.id %>',
-                        world_id: worldId
-                    })
-                });
+      $(button).on('click', function() {
+        console.log('Pay shard button clicked');
+        const squareId = $(this).data('square-id');
+        console.log('Square ID:', squareId);
+        
+        // Check shards before proceeding
+        const currentShards = parseInt(document.querySelector('.shards-count').textContent.match(/\d+/)[0]);
+        if (currentShards < 10) {
+          alert('Not enough shards! You need 10 shards to unlock this square.');
+          return;
+        }
+        
+        // Add loading message to modal
+        const modalContent = $('#popup-modal .modal-content');
+        const originalContent = modalContent.html();
+        modalContent.html(`
+          <h3>Generating terrain<span class="dots">...</span></h3>
+          <div class="loading-spinner"></div>
+        `);
 
-                const data = await response.json();
-                
-                if (data.success) {
-                    // Show loading state with animated dots
-                    buttonContainer.innerHTML = `
-                        <div class="loading-container">
-                            <div class="loading-text">
-                                Generating terrain<span class="dots"></span>
-                            </div>
-                        </div>
-                    `;
-                    
-                    const dotsInterval = animateDots();
-                    
-                    // Add a slight delay to show the loading state
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-
-                    // Clear the dots animation
-                    if (dotsInterval) clearInterval(dotsInterval);
-
-                    // Update the square's state and appearance
-                    square.setAttribute('data-state', 'active');
-                    if (data.square && data.square.code) {
-                        const canvas = square.querySelector('canvas');
-                        const ctx = canvas.getContext('2d');
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        eval(data.square.code);
-                    }
-                    
-                    // Update shards count in the UI
-                    document.querySelector('.shards-count').textContent = `Shards: ${data.new_shards}`;
-                    
-                    // Move character to the new square
-                    const x = parseInt(square.getAttribute('data-x'));
-                    const y = parseInt(square.getAttribute('data-y'));
-                    moveCharacterToTile(x, y);
-                    
-                    // Close modal
-                    modal.style.display = 'none';
-                } else {
-                    alert(data.message || 'Not enough shards');
+        // Add animation for dots
+        const dotsInterval = setInterval(() => {
+          const dots = modalContent.find('.dots');
+          const currentDots = dots.text();
+          dots.text(currentDots.length >= 3 ? '' : currentDots + '.');
+        }, 500);
+        
+        $.ajax({
+          url: '/pay_shards',
+          type: 'POST',
+          dataType: 'json',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+          },
+          data: {
+            square_id: squareId,
+            character_id: '<%= @character&.id %>',
+            user_id: '<%= current_user&.id %>',
+            world_id: '<%= @world&.id %>'
+          },
+          success: function(data) {
+            clearInterval(dotsInterval);  // Clear the dots animation
+            console.log('Success:', data);
+            if (data.success) {
+              // Update shards count
+              $('.shards-count').text(`Shards: ${data.new_shards}`);
+              
+              // Update square appearance
+              const square = $(`[data-square-id="${squareId}"]`);
+              square.attr('data-state', 'active');
+              square.find('canvas').removeClass('inactive').addClass('active');
+              
+              // Redraw the square as active
+              const canvas = square.find('canvas')[0];
+              const ctx = canvas.getContext('2d');
+              ctx.fillStyle = '#90EE90';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              
+              // First save the new coordinates to the server
+              fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                  'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+                },
+                body: JSON.stringify({
+                  x: data.square.x,
+                  y: data.square.y
+                })
+              })
+              .then(response => response.json())
+              .then(coordData => {
+                if (coordData.success) {
+                  // After coordinates are saved, move the character and refresh
+                  moveCharacterToTile(data.square.x, data.square.y)
+                    .then(() => {
+                      $('#popup-modal').hide();
+                      location.reload();
+                    });
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while processing payment');
+              })
+              .catch(error => {
+                console.error('Error saving coordinates:', error);
+                alert('Square unlocked but character movement failed');
+              });
+            } else {
+              modalContent.html(originalContent);
+              alert(data.message || 'Failed to unlock square');
             }
+          },
+          error: function(xhr, status, error) {
+            clearInterval(dotsInterval);  // Clear the dots animation
+            modalContent.html(originalContent);  // Restore original modal content
+            console.error('Error:', error);
+            console.error('Status:', status);
+            console.error('Response:', xhr.responseText);
+          }
         });
+      });
     }
+
+    // Add CSS for loading spinner
+    const style = document.createElement('style');
+    style.textContent = `
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .dots {
+        display: inline-block;
+        min-width: 30px;
+        text-align: left;
+      }
+    `;
+    document.head.appendChild(style);
 
     // Initial setup of pay shard button
     if (payShardButton) {
-        setupPayShardButton(payShardButton);
+      payShardButton.addEventListener('click', async function() {
+        const squareId = this.getAttribute('data-square-id');
+        const square = document.querySelector(`[data-square-id="${squareId}"]`);
+        
+        // Get the button container and create loading text
+        const buttonContainer = document.querySelector('.button-container');
+        const originalButtons = buttonContainer.innerHTML;
+        
+        // Replace buttons with loading message
+        buttonContainer.innerHTML = `
+          <div class="loading-text">
+            Generating terrain<span class="dots"></span>
+          </div>
+        `;
+
+        // Start the dots animation
+        let dotCount = 0;
+        const dotsInterval = setInterval(() => {
+          dotCount = (dotCount + 1) % 4;
+          const dots = document.querySelector('.dots');
+          if (dots) dots.textContent = '.'.repeat(dotCount);
+        }, 500);
+        
+        try {
+            const response = await fetch(`/worlds/<%= @world.id %>/pay_shards`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrfToken,
+                },
+                body: JSON.stringify({
+                    square_id: squareId,
+                    character_id: '<%= @character.id %>'
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                // Clear the interval and close modal
+                clearInterval(dotsInterval);
+                modal.style.display = 'none';
+                
+                // Update the square's state
+                square.setAttribute('data-state', 'active');
+                
+                // Update shards count
+                const shardsDisplay = document.querySelector('.shards-count');
+                if (shardsDisplay) {
+                    shardsDisplay.textContent = `Shards: ${data.new_shards}`;
+                }
+                
+                // Move character to the new square
+                const x = parseInt(square.getAttribute('data-x'));
+                const y = parseInt(square.getAttribute('data-y'));
+                await moveCharacterToTile(x, y);
+                
+                // Execute the new terrain code
+                const canvas = square.querySelector('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                eval(data.square.code);
+            } else {
+                // Restore original buttons if there's an error
+                buttonContainer.innerHTML = originalButtons;
+                clearInterval(dotsInterval);
+                alert(data.message || 'Failed to pay shards');
+            }
+        } catch (error) {
+            // Restore original buttons if there's an error
+            buttonContainer.innerHTML = originalButtons;
+            clearInterval(dotsInterval);
+            console.error('Error:', error);
+            alert('An error occurred while processing payment');
+        }
+    });
     }
 
     // Handle game result if present
@@ -420,27 +737,100 @@
     const squareId = urlParams.get('square_id');
     
     if (gameResult === 'true' && squareId) {
-        const winningSquare = document.querySelector(`.grid-item[data-square-id="${squareId}"]`);
-        if (winningSquare) {
-            const x = parseInt(winningSquare.getAttribute('data-x'));
-            const y = parseInt(winningSquare.getAttribute('data-y'));
-            winningSquare.setAttribute('data-state', 'active');
-            moveCharacterToTile(x, y);
-        }
+      const winningSquare = document.querySelector(`.grid-item[data-square-id="${squareId}"]`);
+      if (winningSquare) {
+        const x = parseInt(winningSquare.getAttribute('data-x'));
+        const y = parseInt(winningSquare.getAttribute('data-y'));
+        winningSquare.setAttribute('data-state', 'active');
+        moveCharacterToTile(x, y);
+      }
     }
 
     // Close modal when clicking X
     const closeButton = modal.querySelector('.close-button');
     if (closeButton) {
-        closeButton.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
+      closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
     }
+
+    // Function to update other characters' positions
+    function updateCharacterPosition(characterId, x, y) {
+      const characterElement = document.querySelector(`.character[data-character-id="${characterId}"]`);
+      if (characterElement && characterElement.getAttribute('data-is-current-user') !== 'true') {
+        const targetSquare = document.querySelector(`.grid-item[data-x="${x}"][data-y="${y}"]`);
+        if (!targetSquare) return;
+
+        const gridContainer = document.querySelector('.grid');
+        const gridRect = gridContainer.getBoundingClientRect();
+        const squareRect = targetSquare.getBoundingClientRect();
+        const characterWidth = characterElement.offsetWidth;
+        const characterHeight = characterElement.offsetHeight;
+
+        const relativeX = squareRect.left - gridRect.left;
+        const relativeY = squareRect.top - gridRect.top;
+
+        characterElement.style.position = 'absolute';
+        characterElement.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
+        characterElement.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
+        characterElement.setAttribute('data-x', x);
+        characterElement.setAttribute('data-y', y);
+      }
+    }
+
+    // Set up Action Cable subscription
+    if (typeof App !== 'undefined' && App.cable) {
+      App.game = App.cable.subscriptions.create(
+        { 
+          channel: "GameChannel", 
+          world_id: '<%= @world.id %>' 
+        },
+        {
+          received: function(data) {
+            if (data.type === 'character_moved') {
+              updateCharacterPosition(data.character_id, data.x, data.y);
+            }
+          }
+        }
+      );
+    }
+
+    // Add window resize handler to update all character positions
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.character').forEach(char => {
+        const x = parseInt(char.getAttribute('data-x'));
+        const y = parseInt(char.getAttribute('data-y'));
+        if (char.getAttribute('data-is-current-user') === 'true') {
+          moveCharacterToTile(x, y);
+        } else {
+          updateCharacterPosition(char.getAttribute('data-character-id'), x, y);
+        }
+      });
+    });
+
+    App.gameChannel = App.cable.subscriptions.create(
+      { 
+        channel: "GameChannel",
+        world_id: '<%= @world.id %>',
+        character_id: '<%= @character.id %>'
+      },
+      {
+        received: function(data) {
+          if (data.type === 'character_moved') {
+            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
+            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
+              moveCharacterToTile(data.x, data.y, targetCharacter);
+            }
+          }
+        }
+      }
+    );
   });
 </script>
 
 <style>
   .grid {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(6, 105px);
     gap: 2px;
@@ -506,6 +896,40 @@
     text-align: left;
   }
 
+  .character {
+    position: absolute;
+    z-index: 1000;
+  }
+
+  #victory-modal .modal-content {
+    text-align: center;
+    padding: 20px;
+  }
+
+  #victory-modal .button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+
+  #victory-modal .button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #delete-world-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+
+  #restart-world-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+  }
 </style>
 
 <% if Rails.env.development? %>

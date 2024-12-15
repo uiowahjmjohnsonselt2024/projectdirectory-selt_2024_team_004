@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
   root "sessions#new"  # Define a root path (e.g., a home or welcome page)
 
   # Session routes
@@ -25,6 +26,8 @@ Rails.application.routes.draw do
     member do
       post 'pay_shards'
       get :generate_square_code
+      post 'restart'
+      post 'award_treasure_shards'
     end
   end
   resources :characters do
@@ -56,6 +59,7 @@ Rails.application.routes.draw do
     member do
       post :activate_square
       post :pay_shards
+      post :validate_movement
     end
     collection do
       get :generate_square_code

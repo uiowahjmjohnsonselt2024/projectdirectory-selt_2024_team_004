@@ -4,13 +4,38 @@ class CharactersController < ApplicationController
 
   def save_coordinates
     @character = Character.find(params[:id])
-    if @character.update(x_coord: params[:x], y_coord: params[:y])
-      puts "kkkk#{@character.x_coord}"
-      puts "kkkk#{@character.y_coord}"
-      render json: { success: true, message: 'Coordinates saved successfully.' }
+
+    # Make sure the character belongs to the current user
+    if @character.user_id == current_user.id
+      if @character.update!(x_coord: params[:x], y_coord: params[:y])
+        # Broadcast the movement to all players in the world
+        ActionCable.server.broadcast(
+          "game_channel_#{@character.world_id}",
+          {
+            type: 'character_moved',
+            character_id: @character.id,
+            x: @character.x_coord,
+            y: @character.y_coord
+          }
+        )
+
+        render json: {
+          success: true,
+          message: 'Coordinates saved successfully.',
+          x: @character.x_coord,
+          y: @character.y_coord
+        }
+      else
+        render json: { success: false, errors: @character.errors.full_messages },
+               status: :unprocessable_entity
+      end
     else
-      render json: { success: false, errors: @character.errors.full_messages }, status: :unprocessable_entity
+      render json: { success: false, error: 'Unauthorized' },
+             status: :unauthorized
     end
+  rescue => e
+    Rails.logger.error("Error saving coordinates: #{e.message}")
+    render json: { success: false, error: e.message }, status: :internal_server_error
   end
 
   def update_shards
@@ -52,17 +77,33 @@ class CharactersController < ApplicationController
     end
   end
 
+  def update
+    @character = Character.find(params[:id])
+    
+    if @character.update(character_params)
+      render json: {
+        success: true,
+        message: "Position saved successfully!"
+      }
+    else
+      render json: {
+        success: false,
+        message: "Failed to save position"
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_character
-    @character = Character.find_by id: params[:id]
+    @character = Character.find_by(id: params[:id])
   end
 
   def current_user
-    @current_user ||= User.find_by id: params[:user_id]
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def character_params
-    params.require(:character).permit(:name, :image_code, :user_world_id)
+    params.require(:character).permit(:x_coord, :y_coord, :shards)
   end
 end

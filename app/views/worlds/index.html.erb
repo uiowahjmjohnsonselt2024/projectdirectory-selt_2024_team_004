@@ -17,7 +17,14 @@
               <% end %>
             </td>
             <td>
-              <%= button_to 'Delete', world_path(id: user_world.id), method: :delete, data: { confirm: 'Are you sure you want to delete this world?' }, class: 'btn btn-danger' %>
+              <%= button_to 'Delete',
+                  remove_world_path(id: user_world.world.id),
+                  method: :delete, 
+                  class: 'btn btn-danger',
+                  data: { 
+                    turbo_confirm: 'Are you sure you want to delete this world?',
+                    turbo_method: :delete 
+                  } %>
             </td>
             <td>
               <button class="btn btn-secondary" onclick="showInviteModal(<%= world.id %>)">Invite</button>
