@@ -18,15 +18,20 @@ class MatchingGame
 
   def flip_card(index)
     # Validate the index
-    return { error: "Invalid card index" } unless index.is_a?(Integer) && index >= 0 && index < @cards_idx.length
+    return { error: 'Invalid card index' } unless index.is_a?(Integer) && index >= 0 && index < @cards_idx.length
+
+    if @state[:flipped_cards].any? { |card| card[:index] == index }
+      return { status: 'invalid', reason: 'already flipped' }
+    end
+    if @state[:matched_pairs].flatten.include?(index)
+      return { status: 'invalid', reason: 'already matched' }
+    end
 
     # Get the card value at this index
     card_value = @cards_idx[index]
 
     # Add to flipped cards
-    @state[:flipped_cards] ||= []
-    render json: { status: 'invalid', reason: 'already flipped' } if @state[:flipped_cards].include? card_value
-    render json: { status: 'invalid', reason: 'already matched' } if @state[:matched_pairs].include? card_value
+    card_value = @cards_idx[index]
     @state[:flipped_cards] << { index: index, value: card_value }
 
     # Check for matches if we have 2 cards flipped

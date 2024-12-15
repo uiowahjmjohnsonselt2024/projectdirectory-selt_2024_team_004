@@ -8,8 +8,14 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rspec'
 Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, browser: :firefox, options: Selenium::WebDriver::Firefox::Options.new)
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless') # Optional: Run tests in headless mode
+  options.add_argument('--disable-gpu') # Improves performance in headless mode
+  options.add_argument('--no-sandbox') # Required for CI environments
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
+Capybara.javascript_driver = :selenium
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
