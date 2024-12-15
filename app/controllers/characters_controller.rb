@@ -6,7 +6,7 @@ class CharactersController < ApplicationController
     @character = Character.find(params[:id])
 
     if @character.update(x_coord: params[:x], y_coord: params[:y])
-      # Broadcast immediately after successful update
+      # Broadcast the movement immediately after saving
       ActionCable.server.broadcast(
         "game_channel_#{@character.world_id}",
         {

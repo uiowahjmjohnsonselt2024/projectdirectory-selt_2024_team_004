@@ -53,60 +53,45 @@
           }
         }
       );
-    });
-  }).call(this);
 
-  // Rest of your existing JavaScript code
-  document.addEventListener('DOMContentLoaded', function() {
-    // Your existing DOMContentLoaded code...
-    
-    // Action Cable subscription
-    App.gameChannel = App.cable.subscriptions.create(
-      { 
-        channel: "GameChannel",
-        world_id: '<%= @world.id %>'
-      },
-      {
-        connected: function() {
-          console.log("Connected to game channel!");
-        },
-        disconnected: function() {
-          console.log("Disconnected from game channel!");
-        },
-        received: function(data) {
-          console.log("Received websocket data:", data);
-          if (data.type === 'character_moved') {
-            const targetCharacter = document.querySelector(`.character[data-character-id="${data.character_id}"]`);
-            if (targetCharacter && targetCharacter.getAttribute('data-is-current-user') !== 'true') {
-              console.log("Moving other player:", data);
-              
-              // Update character position immediately
-              const gridContainer = document.querySelector('.grid');
-              const targetSquare = document.querySelector(`.grid-item[data-x="${data.x}"][data-y="${data.y}"]`);
-              
-              if (gridContainer && targetSquare) {
-                const gridRect = gridContainer.getBoundingClientRect();
-                const squareRect = targetSquare.getBoundingClientRect();
-                const characterWidth = targetCharacter.offsetWidth;
-                const characterHeight = targetCharacter.offsetHeight;
-                
-                targetCharacter.setAttribute('data-x', data.x);
-                targetCharacter.setAttribute('data-y', data.y);
-                
-                const relativeX = squareRect.left - gridRect.left;
-                const relativeY = squareRect.top - gridRect.top;
-                
-                targetCharacter.style.transition = 'all 0.3s ease';
-                targetCharacter.style.position = 'absolute';
-                targetCharacter.style.left = `${relativeX + (squareRect.width - characterWidth) / 2}px`;
-                targetCharacter.style.top = `${relativeY + (squareRect.height - characterHeight) / 2}px`;
-              }
-            }
+      // Function to broadcast movement
+      function broadcastMovement(x, y, characterId) {
+        App.gameChannel.perform('broadcast_movement', {
+          x: x,
+          y: y,
+          character_id: characterId
+        });
+      }
+
+      // Update the moveCharacterToTile function to broadcast movement
+      async function moveCharacterToTile(x, y) {
+        const character = document.querySelector('.character[data-is-current-user="true"]');
+        if (!character) return { success: false };
+
+        try {
+          const response = await fetch(`/characters/${character.getAttribute('data-character-id')}/save_coordinates`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-Token': document.querySelector('[name="csrf-token"]')?.content
+            },
+            body: JSON.stringify({ x, y })
+          });
+
+          if (response.ok) {
+            // Broadcast the movement after successful save
+            broadcastMovement(x, y, character.getAttribute('data-character-id'));
+            return { success: true };
           }
+          return { success: false };
+        } catch (error) {
+          console.error('Error in moveCharacterToTile:', error);
+          return { success: false };
         }
       }
-    );
-  });
+    });
+  }).call(this);
 </script>
 
 <div class="container">

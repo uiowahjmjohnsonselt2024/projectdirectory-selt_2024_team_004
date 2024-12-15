@@ -8,16 +8,6 @@ class GameChannel < ApplicationCable::Channel
     # Any cleanup needed when channel is unsubscribed
   end
 
-  def receive(data)
-    # Handle any incoming data from the client
-    case data['action']
-    when 'move'
-      broadcast_movement(data)
-    end
-  end
-
-  private
-
   def broadcast_movement(data)
     ActionCable.server.broadcast(
       "game_channel_#{params[:world_id]}", 
@@ -28,5 +18,12 @@ class GameChannel < ApplicationCable::Channel
         y: data['y']
       }
     )
+  end
+
+  def receive(data)
+    case data['action']
+    when 'broadcast_movement'
+      broadcast_movement(data)
+    end
   end
 end 
